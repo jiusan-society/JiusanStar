@@ -30,6 +30,9 @@ class Administrator implements Serializable {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "org_name")
+    private String orgName;
+
     public Long getSeq() {
         return seq;
     }
@@ -52,5 +55,13 @@ class Administrator implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 }
