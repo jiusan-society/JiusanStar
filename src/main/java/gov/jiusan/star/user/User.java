@@ -1,4 +1,4 @@
-package gov.jiusan.star.admin;
+package gov.jiusan.star.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +13,10 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "administrator")
-class Administrator implements Serializable {
+@Table(name = "user")
+class User implements Serializable {
 
-    public Administrator() {
+    public User() {
     }
 
     @Id
