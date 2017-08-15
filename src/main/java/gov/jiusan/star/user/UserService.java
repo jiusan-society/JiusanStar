@@ -1,22 +1,30 @@
 package gov.jiusan.star.user;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import org.apache.commons.lang3.StringUtils;
 
-@Path("/")
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Stateless
 public class UserService {
 
-    @Inject
+    @PersistenceContext
     private EntityManager em;
 
-    @Path("user")
-    @POST
-    public Long createUser() {
-        return 1L;
-    }
+    public CreateUserResponse createUser(UserRequest userRequest) {
+        if (StringUtils.isEmpty(userRequest.getUserName())) {
+            return CreateUserResponse.USER_NAME_ERROR;
+        }
+        if (StringUtils.isEmpty(userRequest.getOrgName())) {
+            return CreateUserResponse.ORG_NAME_ERROR;
+        }
+        if (StringUtils.isEmpty(userRequest.getPassword())) {
+            return CreateUserResponse.PASSWORD_ERROR;
+        }
 
+        User user = UserUtil.toEntity(userRequest);
+        em.persist(user);
+        return CreateUserResponse.SUCCESS(user.getSeq());
+    }
 }
