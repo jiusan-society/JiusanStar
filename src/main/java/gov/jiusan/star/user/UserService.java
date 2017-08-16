@@ -12,19 +12,19 @@ public class UserService {
     @PersistenceContext
     private EntityManager em;
 
-    public CreateUserResponse createUser(UserRequest userRequest) {
-        if (StringUtils.isEmpty(userRequest.getUserName())) {
-            return CreateUserResponse.USER_NAME_ERROR;
+    public UserCreateResponse createUser(UserCreateRequest userCreateRequest) {
+        if (StringUtils.isEmpty(userCreateRequest.getUserName())) {
+            return UserCreateResponse.USER_NAME_ERROR;
         }
-        if (StringUtils.isEmpty(userRequest.getOrgName())) {
-            return CreateUserResponse.ORG_NAME_ERROR;
+        if (StringUtils.isEmpty(userCreateRequest.getOrgName())) {
+            return UserCreateResponse.ORG_NAME_ERROR;
         }
-        if (StringUtils.isEmpty(userRequest.getPassword())) {
-            return CreateUserResponse.PASSWORD_ERROR;
+        if (StringUtils.isEmpty(userCreateRequest.getPassword())) {
+            return UserCreateResponse.PASSWORD_ERROR;
         }
 
-        User user = UserUtil.toEntity(userRequest);
+        User user = UserUtil.toEntity(userCreateRequest);
         em.persist(user);
-        return CreateUserResponse.SUCCESS(user.getSeq());
+        return UserCreateResponse.SUCCESS(user.getSeq());
     }
 }

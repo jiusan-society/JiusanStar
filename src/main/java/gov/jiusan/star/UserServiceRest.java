@@ -1,7 +1,7 @@
 package gov.jiusan.star;
 
-import gov.jiusan.star.user.CreateUserResponse;
-import gov.jiusan.star.user.UserRequest;
+import gov.jiusan.star.user.UserCreateRequest;
+import gov.jiusan.star.user.UserCreateResponse;
 import gov.jiusan.star.user.UserService;
 
 import javax.ejb.EJB;
@@ -22,8 +22,8 @@ public class UserServiceRest {
 
     @Path("user")
     @POST
-    public CreateUserResponse createUser(UserRequest userRequest) {
-        return userService.createUser(userRequest);
+    public UserCreateResponse createUser(UserCreateRequest userCreateRequest) {
+        return userService.createUser(userCreateRequest);
     }
 
 }

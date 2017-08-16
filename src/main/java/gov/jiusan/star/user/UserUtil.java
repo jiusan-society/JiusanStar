@@ -7,12 +7,12 @@ import gov.jiusan.star.util.PasswordStorage;
  */
 public class UserUtil {
 
-    public static User toEntity(UserRequest userRequest) {
+    public static User toEntity(UserCreateRequest userCreateRequest) {
         User user = new User();
-        user.setUserName(userRequest.getUserName());
-        user.setOrgName(userRequest.getOrgName());
+        user.setUserName(userCreateRequest.getUserName());
+        user.setOrgName(userCreateRequest.getOrgName());
         try {
-            user.setPassword(PasswordStorage.createHash(userRequest.getPassword()));
+            user.setPassword(PasswordStorage.createHash(userCreateRequest.getPassword()));
         } catch (PasswordStorage.CannotPerformOperationException e) {
             e.printStackTrace();
         }

@@ -2,13 +2,14 @@ package gov.jiusan.star.user;
 
 import java.io.Serializable;
 
-public class UserRequest implements Serializable {
+public class UserCreateRequest implements Serializable {
 
     private String orgName;
     private String userName;
     private String password;
 
-    public UserRequest() {}
+    public UserCreateRequest() {
+    }
 
     public String getOrgName() {
         return orgName;

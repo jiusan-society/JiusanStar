@@ -21,13 +21,13 @@ class User implements Serializable {
     @Column(name = "seq")
     private Long seq;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "org_name")
+    @Column(name = "org_name", nullable = false)
     private String orgName;
 
     public User() {

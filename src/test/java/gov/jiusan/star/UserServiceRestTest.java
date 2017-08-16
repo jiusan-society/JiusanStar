@@ -1,6 +1,6 @@
 package gov.jiusan.star;
 
-import gov.jiusan.star.user.UserRequest;
+import gov.jiusan.star.user.UserCreateRequest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,14 +29,14 @@ public class UserServiceRestTest {
 
     @Test
     public void testCreateUser() {
-        UserRequest userRequest = new UserRequest();
-        userRequest.setOrgName("ywjczz");
-        userRequest.setUserName("linfaimom");
-        userRequest.setPassword("linfai88");
+        UserCreateRequest userCreateRequest = new UserCreateRequest();
+        userCreateRequest.setOrgName("ywjczz");
+        userCreateRequest.setUserName("linfaimom");
+        userCreateRequest.setPassword("linfai88");
         client.target(API_ROOT)
                 .path("user")
                 .request()
-                .post(Entity.json(userRequest));
+                .post(Entity.json(userCreateRequest));
     }
 
 }

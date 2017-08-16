@@ -2,30 +2,30 @@ package gov.jiusan.star.user;
 
 import java.io.Serializable;
 
-public class CreateUserResponse implements Serializable {
+public class UserCreateResponse implements Serializable {
 
     private boolean success;
     private Status status;
     private Long content;
 
-    public static final CreateUserResponse USER_NAME_ERROR = new CreateUserResponse(false, Status.USER_NAME_ERROR);
-    public static final CreateUserResponse PASSWORD_ERROR = new CreateUserResponse(false, Status.PASSWORD_ERROR);
-    public static final CreateUserResponse ORG_NAME_ERROR = new CreateUserResponse(false, Status.ORG_NAME_ERROR);
+    public static final UserCreateResponse USER_NAME_ERROR = new UserCreateResponse(false, Status.USER_NAME_ERROR);
+    public static final UserCreateResponse PASSWORD_ERROR = new UserCreateResponse(false, Status.PASSWORD_ERROR);
+    public static final UserCreateResponse ORG_NAME_ERROR = new UserCreateResponse(false, Status.ORG_NAME_ERROR);
 
-    public static CreateUserResponse SUCCESS(Long content) {
-        CreateUserResponse createUserResponse = new CreateUserResponse(true, Status.SUCCESS);
-        createUserResponse.setContent(content);
-        return createUserResponse;
+    public static UserCreateResponse SUCCESS(Long content) {
+        UserCreateResponse userCreateResponse = new UserCreateResponse(true, Status.SUCCESS);
+        userCreateResponse.setContent(content);
+        return userCreateResponse;
     }
 
     public enum Status {
         SUCCESS, USER_NAME_ERROR, ORG_NAME_ERROR, PASSWORD_ERROR
     }
 
-    public CreateUserResponse() {
+    public UserCreateResponse() {
     }
 
-    private CreateUserResponse(boolean success, Status status) {
+    private UserCreateResponse(boolean success, Status status) {
         this.success = success;
         this.status = status;
     }
