@@ -16,9 +16,6 @@ import java.io.Serializable;
 @Table(name = "user")
 class User implements Serializable {
 
-    public User() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seq")
@@ -32,6 +29,9 @@ class User implements Serializable {
 
     @Column(name = "org_name")
     private String orgName;
+
+    public User() {
+    }
 
     public Long getSeq() {
         return seq;
