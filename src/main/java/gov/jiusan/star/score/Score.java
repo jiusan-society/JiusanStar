@@ -103,8 +103,8 @@ class Score {
         return subAssessmentScore;
     }
 
-    public void setSubAssessmentScore(int subAccessmentScore) {
-        this.subAssessmentScore = subAccessmentScore;
+    public void setSubAssessmentScore(int subAssessmentScore) {
+        this.subAssessmentScore = subAssessmentScore;
     }
 
     public int getTotalScore() {
