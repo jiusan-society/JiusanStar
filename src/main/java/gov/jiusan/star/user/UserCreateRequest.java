@@ -1,8 +1,6 @@
 package gov.jiusan.star.user;
 
-import java.io.Serializable;
-
-public class UserCreateRequest implements Serializable {
+public class UserCreateRequest {
 
     private String orgName;
     private String userName;

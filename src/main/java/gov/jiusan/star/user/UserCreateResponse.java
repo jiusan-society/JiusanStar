@@ -1,8 +1,6 @@
 package gov.jiusan.star.user;
 
-import java.io.Serializable;
-
-public class UserCreateResponse implements Serializable {
+public class UserCreateResponse {
 
     private boolean success;
     private Status status;

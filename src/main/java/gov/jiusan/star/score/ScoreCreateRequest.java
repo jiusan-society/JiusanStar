@@ -1,62 +1,33 @@
 package gov.jiusan.star.score;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 /**
  * @author Marcus Lin
  */
-
-@Entity
-@Table(name = "score")
-class Score {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "seq")
-    private Long seq;
+public class ScoreCreateRequest {
 
     // 会议活动得分，多个评选项，用 JSON 存放
-    @Column(name = "confer_activity")
     private String conferActivity;
 
     // 社务工作得分，多个评选项，用 JSON 存放
-    @Column(name = "social_work")
     private String socialWork;
 
     // 参政议政得分，多个评选项，用 JSON 存放
-    @Column(name = "politic_activity")
     private String politicActivity;
 
     // 社会服务得分，多个评选项，用 JSON 存放
-    @Column(name = "social_contribution")
     private String socialContribution;
 
     // 宣传报道得分
-    @Column(name = "publicity")
     private int publicity;
 
     // 下属支社年度考核结果得分
-    @Column(name = "sub_assessment")
     private int subAssessment;
 
     // 总分
-    @Column(name = "total")
     private int total;
 
-    public Score() {
-    }
+    public ScoreCreateRequest() {
 
-    public Long getSeq() {
-        return seq;
-    }
-
-    public void setSeq(Long seq) {
-        this.seq = seq;
     }
 
     public String getConferActivity() {
