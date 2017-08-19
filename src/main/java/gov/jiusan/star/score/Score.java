@@ -41,8 +41,8 @@ class Score {
     private int publicityScore;
 
     // 下属支社年度考核结果得分
-    @Column(name = "sub_accessment_score")
-    private int subAccessmentScore;
+    @Column(name = "sub_assessment_score")
+    private int subAssessmentScore;
 
     // 总分
     @Column(name = "total_score")
@@ -99,12 +99,12 @@ class Score {
         this.publicityScore = publicityScore;
     }
 
-    public int getSubAccessmentScore() {
-        return subAccessmentScore;
+    public int getSubAssessmentScore() {
+        return subAssessmentScore;
     }
 
-    public void setSubAccessmentScore(int subAccessmentScore) {
-        this.subAccessmentScore = subAccessmentScore;
+    public void setSubAssessmentScore(int subAccessmentScore) {
+        this.subAssessmentScore = subAccessmentScore;
     }
 
     public int getTotalScore() {
