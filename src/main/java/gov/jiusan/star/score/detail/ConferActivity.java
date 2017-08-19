@@ -1,4 +1,4 @@
-package gov.jiusan.star.score.content;
+package gov.jiusan.star.score.detail;
 
 /**
  * @author Marcus Lin
