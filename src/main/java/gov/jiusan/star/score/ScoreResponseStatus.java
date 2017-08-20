@@ -5,6 +5,7 @@ package gov.jiusan.star.score;
  */
 public enum ScoreResponseStatus {
     SUCCESS,
+    NO_SCORE,
     NO_CONFER_ACTIVITY_SCORE,
     NO_SOCIAL_WORK_SCORE,
     NO_SOCIAL_CONTRIBUTION_SCORE,
