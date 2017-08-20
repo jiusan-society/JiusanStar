@@ -32,7 +32,7 @@ public class UserServiceRestTest {
         UserCreateRequest userCreateRequest = new UserCreateRequest();
         userCreateRequest.setOrgName("ywjczz");
         userCreateRequest.setUserName("linfaimom");
-        userCreateRequest.setPassword("linfai88");
+        userCreateRequest.setPassword("xxxx");
         client.target(API_ROOT)
                 .path("user")
                 .request()
