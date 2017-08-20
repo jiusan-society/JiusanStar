@@ -9,11 +9,12 @@ import java.security.spec.InvalidKeySpecException;
 
 /**
  * @author Taylor Hornby
+ *
  * This util class is from github, the author is Taylor Hornby
  * Github Repo: https://github.com/defuse/password-hashing
  */
 
-public class PasswordStorage
+public class PasswordUtil
 {
 
     @SuppressWarnings("serial")

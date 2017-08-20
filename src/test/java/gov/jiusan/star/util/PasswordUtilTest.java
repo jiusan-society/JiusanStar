@@ -2,14 +2,14 @@ package gov.jiusan.star.util;
 
 import org.junit.Test;
 
-public class PasswordStorageTest {
+public class PasswordUtilTest {
 
     @Test
     public void testEncrypt() throws Exception {
         String password = "linfai88";
-        String hash = PasswordStorage.createHash(password);
+        String hash = PasswordUtil.createHash(password);
         System.out.println(hash);
-        System.out.println(PasswordStorage.verifyPassword(password, hash));
+        System.out.println(PasswordUtil.verifyPassword(password, hash));
     }
 
 }
