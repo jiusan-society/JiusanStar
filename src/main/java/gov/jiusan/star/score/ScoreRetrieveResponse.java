@@ -9,8 +9,9 @@ public class ScoreRetrieveResponse {
     private ScoreResponseStatus status;
     private Score content;
 
-    public static final ScoreRetrieveResponse NO_SCORE = new ScoreRetrieveResponse(false, ScoreResponseStatus.NO_SCORE);
-    public static ScoreRetrieveResponse SUCCESS(Score content) {
+    static final ScoreRetrieveResponse NO_SCORE = new ScoreRetrieveResponse(false, ScoreResponseStatus.NO_SCORE);
+
+    static ScoreRetrieveResponse SUCCESS(Score content) {
         return new ScoreRetrieveResponse(true, ScoreResponseStatus.SUCCESS, content);
     }
 

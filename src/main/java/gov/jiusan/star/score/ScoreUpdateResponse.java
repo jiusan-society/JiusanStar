@@ -9,12 +9,12 @@ public class ScoreUpdateResponse {
     private ScoreResponseStatus status;
     private Score content;
 
-    public static final ScoreUpdateResponse NO_CONFER_ACTIVITY_SCORE = new ScoreUpdateResponse(false, ScoreResponseStatus.NO_CONFER_ACTIVITY_SCORE);
-    public static final ScoreUpdateResponse NO_SOCIAL_WORK_SCORE = new ScoreUpdateResponse(false, ScoreResponseStatus.NO_SOCIAL_WORK_SCORE);
-    public static final ScoreUpdateResponse NO_SOCIAL_CONTRIBUTION_SCORE = new ScoreUpdateResponse(false, ScoreResponseStatus.NO_SOCIAL_CONTRIBUTION_SCORE);
-    public static final ScoreUpdateResponse NO_POLITIC_ACTIVITY_SCORE = new ScoreUpdateResponse(false, ScoreResponseStatus.NO_POLITIC_ACTIVITY_SCORE);
+    static final ScoreUpdateResponse NO_CONFER_ACTIVITY_SCORE = new ScoreUpdateResponse(false, ScoreResponseStatus.NO_CONFER_ACTIVITY_SCORE);
+    static final ScoreUpdateResponse NO_SOCIAL_WORK_SCORE = new ScoreUpdateResponse(false, ScoreResponseStatus.NO_SOCIAL_WORK_SCORE);
+    static final ScoreUpdateResponse NO_SOCIAL_CONTRIBUTION_SCORE = new ScoreUpdateResponse(false, ScoreResponseStatus.NO_SOCIAL_CONTRIBUTION_SCORE);
+    static final ScoreUpdateResponse NO_POLITIC_ACTIVITY_SCORE = new ScoreUpdateResponse(false, ScoreResponseStatus.NO_POLITIC_ACTIVITY_SCORE);
 
-    public static ScoreUpdateResponse SUCCESS(Score content) {
+    static ScoreUpdateResponse SUCCESS(Score content) {
         return new ScoreUpdateResponse(true, ScoreResponseStatus.SUCCESS, content);
     }
 

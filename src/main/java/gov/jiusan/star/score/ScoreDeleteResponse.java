@@ -5,8 +5,8 @@ public class ScoreDeleteResponse {
     private boolean success;
     private ScoreResponseStatus status;
 
-    public static final ScoreDeleteResponse NO_SCORE = new ScoreDeleteResponse(false, ScoreResponseStatus.NO_SCORE);
-    public static final ScoreDeleteResponse SUCCESS = new ScoreDeleteResponse(true, ScoreResponseStatus.SUCCESS);
+    static final ScoreDeleteResponse NO_SCORE = new ScoreDeleteResponse(false, ScoreResponseStatus.NO_SCORE);
+    static final ScoreDeleteResponse SUCCESS = new ScoreDeleteResponse(true, ScoreResponseStatus.SUCCESS);
 
     private ScoreDeleteResponse() {
 

@@ -8,11 +8,11 @@ public class ScoreCreateResponse {
     private boolean success;
     private ScoreResponseStatus status;
 
-    public static final ScoreCreateResponse SUCCESS = new ScoreCreateResponse(true, ScoreResponseStatus.SUCCESS);
-    public static final ScoreCreateResponse NO_CONFER_ACTIVITY_SCORE = new ScoreCreateResponse(false, ScoreResponseStatus.NO_CONFER_ACTIVITY_SCORE);
-    public static final ScoreCreateResponse NO_SOCIAL_WORK_SCORE = new ScoreCreateResponse(false, ScoreResponseStatus.NO_SOCIAL_WORK_SCORE);
-    public static final ScoreCreateResponse NO_SOCIAL_CONTRIBUTION_SCORE = new ScoreCreateResponse(false, ScoreResponseStatus.NO_SOCIAL_CONTRIBUTION_SCORE);
-    public static final ScoreCreateResponse NO_POLITIC_ACTIVITY_SCORE = new ScoreCreateResponse(false, ScoreResponseStatus.NO_POLITIC_ACTIVITY_SCORE);
+    static final ScoreCreateResponse SUCCESS = new ScoreCreateResponse(true, ScoreResponseStatus.SUCCESS);
+    static final ScoreCreateResponse NO_CONFER_ACTIVITY_SCORE = new ScoreCreateResponse(false, ScoreResponseStatus.NO_CONFER_ACTIVITY_SCORE);
+    static final ScoreCreateResponse NO_SOCIAL_WORK_SCORE = new ScoreCreateResponse(false, ScoreResponseStatus.NO_SOCIAL_WORK_SCORE);
+    static final ScoreCreateResponse NO_SOCIAL_CONTRIBUTION_SCORE = new ScoreCreateResponse(false, ScoreResponseStatus.NO_SOCIAL_CONTRIBUTION_SCORE);
+    static final ScoreCreateResponse NO_POLITIC_ACTIVITY_SCORE = new ScoreCreateResponse(false, ScoreResponseStatus.NO_POLITIC_ACTIVITY_SCORE);
 
 
     private ScoreCreateResponse() {
