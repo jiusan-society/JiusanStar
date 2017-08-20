@@ -1,9 +1,8 @@
 package gov.jiusan.star;
 
-import gov.jiusan.star.score.ScoreCreateRequest;
 import gov.jiusan.star.score.ScoreCreateResponse;
+import gov.jiusan.star.score.ScoreRequest;
 import gov.jiusan.star.score.ScoreService;
-import gov.jiusan.star.score.ScoreUpdateRequest;
 import gov.jiusan.star.score.ScoreUpdateResponse;
 
 import javax.ejb.EJB;
@@ -25,13 +24,13 @@ public class ScoreServiceRest {
 
     @Path("score")
     @POST
-    public ScoreCreateResponse createScore(ScoreCreateRequest scoreCreateRequest) {
-        return scoreService.createScore(scoreCreateRequest);
+    public ScoreCreateResponse createScore(ScoreRequest scoreRequest) {
+        return scoreService.createScore(scoreRequest);
     }
 
     @Path("score/{seq}")
     @PUT
-    public ScoreUpdateResponse updateScore(ScoreUpdateRequest scoreUpdateRequest, @PathParam("seq") Long seq) {
-        return scoreService.updateScore(scoreUpdateRequest, seq);
+    public ScoreUpdateResponse updateScore(ScoreRequest scoreRequest, @PathParam("seq") Long seq) {
+        return scoreService.updateScore(scoreRequest, seq);
     }
 }
