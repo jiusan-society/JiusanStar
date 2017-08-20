@@ -15,7 +15,6 @@ public class ScoreService {
     @PersistenceContext
     private EntityManager em;
 
-    // TODO[2017-08-19][Marcus Lin]: Need to change the return type to ScoreUpdateResponse
     public ScoreCreateResponse createScore(ScoreGeneralRequest scoreGeneralRequest) {
         if (StringUtils.isEmpty(scoreGeneralRequest.getConferActivity())) {
             return ScoreCreateResponse.NO_CONFER_ACTIVITY_SCORE;
