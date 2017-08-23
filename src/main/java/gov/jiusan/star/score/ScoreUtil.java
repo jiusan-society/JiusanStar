@@ -1,23 +1,25 @@
 package gov.jiusan.star.score;
 
+import gov.jiusan.star.score.api.GeneralRequest;
+
 /**
  * @author Marcus Lin
  */
 public class ScoreUtil {
 
-    public static Score transferToEntity(ScoreGeneralRequest scoreGeneralRequest) {
+    public static Score transferToEntity(GeneralRequest generalRequest) {
         Score score = new Score();
-        score.setConferActivity(scoreGeneralRequest.getConferActivity());
-        score.setSocialWork(scoreGeneralRequest.getSocialWork());
-        score.setSocialContribution(scoreGeneralRequest.getSocialContribution());
-        score.setPoliticActivity(scoreGeneralRequest.getPoliticActivity());
-        score.setPublicity(scoreGeneralRequest.getPublicity());
-        score.setSubAssessment(scoreGeneralRequest.getSubAssessment());
-        score.setTotal(scoreGeneralRequest.getTotal());
+        score.setConferActivity(generalRequest.getConferActivity());
+        score.setSocialWork(generalRequest.getSocialWork());
+        score.setSocialContribution(generalRequest.getSocialContribution());
+        score.setPoliticActivity(generalRequest.getPoliticActivity());
+        score.setPublicity(generalRequest.getPublicity());
+        score.setSubAssessment(generalRequest.getSubAssessment());
+        score.setTotal(generalRequest.getTotal());
         return score;
     }
 
-    public static void mergeToEntity(Score score, ScoreGeneralRequest scoreUpdateRequest) {
+    public static void mergeToEntity(Score score, GeneralRequest scoreUpdateRequest) {
         score.setConferActivity(scoreUpdateRequest.getConferActivity());
         score.setSocialWork(scoreUpdateRequest.getSocialWork());
         score.setSocialContribution(scoreUpdateRequest.getSocialContribution());

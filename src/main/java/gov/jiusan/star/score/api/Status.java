@@ -1,9 +1,9 @@
-package gov.jiusan.star.score;
+package gov.jiusan.star.score.api;
 
 /**
  * @author Marcus Lin
  */
-public enum ScoreResponseStatus {
+public enum Status {
     SUCCESS,
     NO_SCORE,
     NO_CONFER_ACTIVITY_SCORE,

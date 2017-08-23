@@ -1,9 +1,9 @@
-package gov.jiusan.star.score;
+package gov.jiusan.star.score.api;
 
 /**
  * @author Marcus Lin
  */
-public class ScoreGeneralRequest {
+public class GeneralRequest {
 
     // 会议活动得分，多个评选项，用 JSON 存放
     private String conferActivity;
@@ -26,7 +26,7 @@ public class ScoreGeneralRequest {
     // 总分
     private int total;
 
-    public ScoreGeneralRequest() {
+    public GeneralRequest() {
 
     }
 

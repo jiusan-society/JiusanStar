@@ -1,5 +1,10 @@
 package gov.jiusan.star.score;
 
+import gov.jiusan.star.score.api.CreateResponse;
+import gov.jiusan.star.score.api.DeleteResponse;
+import gov.jiusan.star.score.api.GeneralRequest;
+import gov.jiusan.star.score.api.RetrieveResponse;
+import gov.jiusan.star.score.api.UpdateResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ejb.Stateless;
@@ -15,60 +20,60 @@ public class ScoreService {
     @PersistenceContext
     private EntityManager em;
 
-    public ScoreCreateResponse createScore(ScoreGeneralRequest scoreGeneralRequest) {
-        if (StringUtils.isEmpty(scoreGeneralRequest.getConferActivity())) {
-            return ScoreCreateResponse.NO_CONFER_ACTIVITY_SCORE;
+    public CreateResponse createScore(GeneralRequest generalRequest) {
+        if (StringUtils.isEmpty(generalRequest.getConferActivity())) {
+            return CreateResponse.NO_CONFER_ACTIVITY_SCORE;
         }
-        if (StringUtils.isEmpty(scoreGeneralRequest.getSocialWork())) {
-            return ScoreCreateResponse.NO_SOCIAL_WORK_SCORE;
+        if (StringUtils.isEmpty(generalRequest.getSocialWork())) {
+            return CreateResponse.NO_SOCIAL_WORK_SCORE;
         }
-        if (StringUtils.isEmpty(scoreGeneralRequest.getSocialContribution())) {
-            return ScoreCreateResponse.NO_SOCIAL_CONTRIBUTION_SCORE;
+        if (StringUtils.isEmpty(generalRequest.getSocialContribution())) {
+            return CreateResponse.NO_SOCIAL_CONTRIBUTION_SCORE;
         }
-        if (StringUtils.isEmpty(scoreGeneralRequest.getPoliticActivity())) {
-            return ScoreCreateResponse.NO_POLITIC_ACTIVITY_SCORE;
+        if (StringUtils.isEmpty(generalRequest.getPoliticActivity())) {
+            return CreateResponse.NO_POLITIC_ACTIVITY_SCORE;
         }
 
-        Score score = ScoreUtil.transferToEntity(scoreGeneralRequest);
+        Score score = ScoreUtil.transferToEntity(generalRequest);
         em.persist(score);
-        return ScoreCreateResponse.SUCCESS;
+        return CreateResponse.SUCCESS;
     }
 
-    public ScoreRetrieveResponse retrieveScore(Long seq) {
+    public RetrieveResponse retrieveScore(Long seq) {
         Score score = em.find(Score.class, seq);
         if (score == null) {
-            return ScoreRetrieveResponse.NO_SCORE;
+            return RetrieveResponse.NO_SCORE;
         }
-        return ScoreRetrieveResponse.SUCCESS(score);
+        return RetrieveResponse.SUCCESS(score);
     }
 
-    public ScoreUpdateResponse updateScore(ScoreGeneralRequest scoreGeneralRequest, Long seq) {
-        if (StringUtils.isEmpty(scoreGeneralRequest.getConferActivity())) {
-            return ScoreUpdateResponse.NO_CONFER_ACTIVITY_SCORE;
+    public UpdateResponse updateScore(GeneralRequest generalRequest, Long seq) {
+        if (StringUtils.isEmpty(generalRequest.getConferActivity())) {
+            return UpdateResponse.NO_CONFER_ACTIVITY_SCORE;
         }
-        if (StringUtils.isEmpty(scoreGeneralRequest.getSocialWork())) {
-            return ScoreUpdateResponse.NO_SOCIAL_WORK_SCORE;
+        if (StringUtils.isEmpty(generalRequest.getSocialWork())) {
+            return UpdateResponse.NO_SOCIAL_WORK_SCORE;
         }
-        if (StringUtils.isEmpty(scoreGeneralRequest.getSocialContribution())) {
-            return ScoreUpdateResponse.NO_SOCIAL_CONTRIBUTION_SCORE;
+        if (StringUtils.isEmpty(generalRequest.getSocialContribution())) {
+            return UpdateResponse.NO_SOCIAL_CONTRIBUTION_SCORE;
         }
-        if (StringUtils.isEmpty(scoreGeneralRequest.getPoliticActivity())) {
-            return ScoreUpdateResponse.NO_POLITIC_ACTIVITY_SCORE;
+        if (StringUtils.isEmpty(generalRequest.getPoliticActivity())) {
+            return UpdateResponse.NO_POLITIC_ACTIVITY_SCORE;
         }
 
         Score toBeUpdated = em.find(Score.class, seq);
-        ScoreUtil.mergeToEntity(toBeUpdated, scoreGeneralRequest);
+        ScoreUtil.mergeToEntity(toBeUpdated, generalRequest);
         em.merge(toBeUpdated);
-        return ScoreUpdateResponse.SUCCESS(toBeUpdated);
+        return UpdateResponse.SUCCESS(toBeUpdated);
     }
 
-    public ScoreDeleteResponse deleteScore(Long seq) {
+    public DeleteResponse deleteScore(Long seq) {
         Score toBeDeleted = em.find(Score.class, seq);
         if (toBeDeleted == null) {
-            return ScoreDeleteResponse.NO_SCORE;
+            return DeleteResponse.NO_SCORE;
         }
         em.remove(toBeDeleted);
-        return ScoreDeleteResponse.SUCCESS;
+        return DeleteResponse.SUCCESS;
     }
 
 }

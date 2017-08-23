@@ -2,12 +2,12 @@ package gov.jiusan.star;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gov.jiusan.star.score.ScoreCreateResponse;
-import gov.jiusan.star.score.ScoreDeleteResponse;
-import gov.jiusan.star.score.ScoreGeneralRequest;
-import gov.jiusan.star.score.ScoreResponseStatus;
-import gov.jiusan.star.score.ScoreRetrieveResponse;
-import gov.jiusan.star.score.ScoreUpdateResponse;
+import gov.jiusan.star.score.api.CreateResponse;
+import gov.jiusan.star.score.api.DeleteResponse;
+import gov.jiusan.star.score.api.GeneralRequest;
+import gov.jiusan.star.score.api.Status;
+import gov.jiusan.star.score.api.RetrieveResponse;
+import gov.jiusan.star.score.api.UpdateResponse;
 import gov.jiusan.star.score.detail.ConferActivity;
 import gov.jiusan.star.score.detail.PoliticActivity;
 import gov.jiusan.star.score.detail.SocialContribution;
@@ -15,9 +15,7 @@ import gov.jiusan.star.score.detail.SocialWork;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -43,94 +41,94 @@ public class ScoreServiceRestTest {
 
     @Test
     public void testCreateScore() throws JsonProcessingException {
-        ScoreGeneralRequest scoreGeneralRequest = new ScoreGeneralRequest();
+        GeneralRequest generalRequest = new GeneralRequest();
         ConferActivity conferActivity = new ConferActivity();
         conferActivity.setScore1(10);
         conferActivity.setScore2(10);
         conferActivity.setScore3(30);
         // TODO[2017-08-20][Marcus Lin]: 需要对转化 JSON 的操作做一个封装
-        scoreGeneralRequest.setConferActivity(new ObjectMapper().writeValueAsString(conferActivity));
+        generalRequest.setConferActivity(new ObjectMapper().writeValueAsString(conferActivity));
         PoliticActivity politicActivity = new PoliticActivity();
         politicActivity.setScore1(10);
         politicActivity.setScore2(10);
-        scoreGeneralRequest.setPoliticActivity(new ObjectMapper().writeValueAsString(politicActivity));
+        generalRequest.setPoliticActivity(new ObjectMapper().writeValueAsString(politicActivity));
         SocialWork socialWork = new SocialWork();
         socialWork.setScore1(20);
-        scoreGeneralRequest.setSocialWork(new ObjectMapper().writeValueAsString(socialWork));
+        generalRequest.setSocialWork(new ObjectMapper().writeValueAsString(socialWork));
         SocialContribution socialContribution = new SocialContribution();
         socialContribution.setScore1(12);
-        scoreGeneralRequest.setSocialContribution(new ObjectMapper().writeValueAsString(socialContribution));
-        scoreGeneralRequest.setPublicity(10);
-        scoreGeneralRequest.setSubAssessment(20);
-        ScoreCreateResponse scoreCreateResponse = client.target(API_ROOT)
+        generalRequest.setSocialContribution(new ObjectMapper().writeValueAsString(socialContribution));
+        generalRequest.setPublicity(10);
+        generalRequest.setSubAssessment(20);
+        CreateResponse createResponse = client.target(API_ROOT)
                 .path("score")
                 .request()
-                .post(Entity.json(scoreGeneralRequest), ScoreCreateResponse.class);
-        Assert.assertEquals(true, scoreCreateResponse.isSuccess());
-        Assert.assertEquals(ScoreResponseStatus.SUCCESS, scoreCreateResponse.getScoreResponseStatus());
+                .post(Entity.json(generalRequest), CreateResponse.class);
+        Assert.assertEquals(true, createResponse.isSuccess());
+        Assert.assertEquals(Status.SUCCESS, createResponse.getScoreResponseStatus());
     }
 
     @Test
     public void testRetrieveScore() {
-        ScoreRetrieveResponse scoreRetrieveResponse = client.target(API_ROOT)
+        RetrieveResponse retrieveResponse = client.target(API_ROOT)
                 .path("score/{seq}")
                 .resolveTemplate("seq", 1)
                 .request()
-                .get(ScoreRetrieveResponse.class);
-        Assert.assertEquals(true, scoreRetrieveResponse.isSuccess());
-        Assert.assertEquals(ScoreResponseStatus.SUCCESS, scoreRetrieveResponse.getStatus());
-        Assert.assertNotEquals("", scoreRetrieveResponse.getContent().getConferActivity());
-        Assert.assertNotEquals("", scoreRetrieveResponse.getContent().getPoliticActivity());
-        Assert.assertNotEquals("", scoreRetrieveResponse.getContent().getSocialWork());
-        Assert.assertNotEquals("", scoreRetrieveResponse.getContent().getSocialContribution());
-        Assert.assertEquals(10, scoreRetrieveResponse.getContent().getPublicity());
-        Assert.assertEquals(20, scoreRetrieveResponse.getContent().getSubAssessment());
+                .get(RetrieveResponse.class);
+        Assert.assertEquals(true, retrieveResponse.isSuccess());
+        Assert.assertEquals(Status.SUCCESS, retrieveResponse.getStatus());
+        Assert.assertNotEquals("", retrieveResponse.getContent().getConferActivity());
+        Assert.assertNotEquals("", retrieveResponse.getContent().getPoliticActivity());
+        Assert.assertNotEquals("", retrieveResponse.getContent().getSocialWork());
+        Assert.assertNotEquals("", retrieveResponse.getContent().getSocialContribution());
+        Assert.assertEquals(10, retrieveResponse.getContent().getPublicity());
+        Assert.assertEquals(20, retrieveResponse.getContent().getSubAssessment());
     }
 
     @Test
     public void testUpdateScore() throws JsonProcessingException {
-        ScoreGeneralRequest scoreGeneralRequest = new ScoreGeneralRequest();
+        GeneralRequest generalRequest = new GeneralRequest();
         ConferActivity conferActivity = new ConferActivity();
         conferActivity.setScore1(1);
         conferActivity.setScore2(2);
         conferActivity.setScore3(3);
-        scoreGeneralRequest.setConferActivity(new ObjectMapper().writeValueAsString(conferActivity));
+        generalRequest.setConferActivity(new ObjectMapper().writeValueAsString(conferActivity));
         PoliticActivity politicActivity = new PoliticActivity();
         politicActivity.setScore1(4);
         politicActivity.setScore2(5);
-        scoreGeneralRequest.setPoliticActivity(new ObjectMapper().writeValueAsString(politicActivity));
+        generalRequest.setPoliticActivity(new ObjectMapper().writeValueAsString(politicActivity));
         SocialWork socialWork = new SocialWork();
         socialWork.setScore1(20);
-        scoreGeneralRequest.setSocialWork(new ObjectMapper().writeValueAsString(socialWork));
+        generalRequest.setSocialWork(new ObjectMapper().writeValueAsString(socialWork));
         SocialContribution socialContribution = new SocialContribution();
         socialContribution.setScore1(23);
-        scoreGeneralRequest.setSocialContribution(new ObjectMapper().writeValueAsString(socialContribution));
-        scoreGeneralRequest.setPublicity(10);
-        scoreGeneralRequest.setSubAssessment(20);
-        ScoreUpdateResponse scoreUpdateResponse = client.target(API_ROOT)
+        generalRequest.setSocialContribution(new ObjectMapper().writeValueAsString(socialContribution));
+        generalRequest.setPublicity(10);
+        generalRequest.setSubAssessment(20);
+        UpdateResponse updateResponse = client.target(API_ROOT)
                 .path("score/{seq}")
                 .resolveTemplate("seq", 1)
                 .request()
-                .put(Entity.json(scoreGeneralRequest), ScoreUpdateResponse.class);
-        Assert.assertEquals(true, scoreUpdateResponse.isSuccess());
-        Assert.assertEquals(ScoreResponseStatus.SUCCESS, scoreUpdateResponse.getScoreResponseStatus());
-        Assert.assertNotEquals("", scoreUpdateResponse.getContent().getConferActivity());
-        Assert.assertNotEquals("", scoreUpdateResponse.getContent().getPoliticActivity());
-        Assert.assertNotEquals("", scoreUpdateResponse.getContent().getSocialWork());
-        Assert.assertNotEquals("", scoreUpdateResponse.getContent().getSocialContribution());
-        Assert.assertEquals(10, scoreUpdateResponse.getContent().getPublicity());
-        Assert.assertEquals(20, scoreUpdateResponse.getContent().getSubAssessment());
+                .put(Entity.json(generalRequest), UpdateResponse.class);
+        Assert.assertEquals(true, updateResponse.isSuccess());
+        Assert.assertEquals(Status.SUCCESS, updateResponse.getScoreResponseStatus());
+        Assert.assertNotEquals("", updateResponse.getContent().getConferActivity());
+        Assert.assertNotEquals("", updateResponse.getContent().getPoliticActivity());
+        Assert.assertNotEquals("", updateResponse.getContent().getSocialWork());
+        Assert.assertNotEquals("", updateResponse.getContent().getSocialContribution());
+        Assert.assertEquals(10, updateResponse.getContent().getPublicity());
+        Assert.assertEquals(20, updateResponse.getContent().getSubAssessment());
     }
 
     @Test
     public void testDeleteScore() {
-        ScoreDeleteResponse scoreDeleteResponse = client.target(API_ROOT)
+        DeleteResponse deleteResponse = client.target(API_ROOT)
                 .path("score/{seq}")
                 .resolveTemplate("seq", 1)
                 .request()
-                .delete(ScoreDeleteResponse.class);
-        Assert.assertEquals(true, scoreDeleteResponse.isSuccess());
-        Assert.assertEquals(ScoreResponseStatus.SUCCESS, scoreDeleteResponse.getStatus());
+                .delete(DeleteResponse.class);
+        Assert.assertEquals(true, deleteResponse.isSuccess());
+        Assert.assertEquals(Status.SUCCESS, deleteResponse.getStatus());
     }
 
 }
