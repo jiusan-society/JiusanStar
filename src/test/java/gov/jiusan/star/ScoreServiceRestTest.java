@@ -12,6 +12,7 @@ import gov.jiusan.star.score.detail.ConferActivity;
 import gov.jiusan.star.score.detail.PoliticActivity;
 import gov.jiusan.star.score.detail.SocialContribution;
 import gov.jiusan.star.score.detail.SocialWork;
+import gov.jiusan.star.util.JacksonUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -47,17 +48,17 @@ public class ScoreServiceRestTest {
         conferActivity.setScore2(10);
         conferActivity.setScore3(30);
         // TODO[2017-08-20][Marcus Lin]: 需要对转化 JSON 的操作做一个封装
-        generalRequest.setConferActivity(new ObjectMapper().writeValueAsString(conferActivity));
+        generalRequest.setConferActivity(JacksonUtil.toString(conferActivity).get());
         PoliticActivity politicActivity = new PoliticActivity();
         politicActivity.setScore1(10);
         politicActivity.setScore2(10);
-        generalRequest.setPoliticActivity(new ObjectMapper().writeValueAsString(politicActivity));
+        generalRequest.setPoliticActivity(JacksonUtil.toString(politicActivity).get());
         SocialWork socialWork = new SocialWork();
         socialWork.setScore1(20);
-        generalRequest.setSocialWork(new ObjectMapper().writeValueAsString(socialWork));
+        generalRequest.setSocialWork(JacksonUtil.toString(socialWork).get());
         SocialContribution socialContribution = new SocialContribution();
         socialContribution.setScore1(12);
-        generalRequest.setSocialContribution(new ObjectMapper().writeValueAsString(socialContribution));
+        generalRequest.setSocialContribution(JacksonUtil.toString(socialContribution).get());
         generalRequest.setPublicity(10);
         generalRequest.setSubAssessment(20);
         CreateResponse createResponse = client.target(API_ROOT)
@@ -92,17 +93,17 @@ public class ScoreServiceRestTest {
         conferActivity.setScore1(1);
         conferActivity.setScore2(2);
         conferActivity.setScore3(3);
-        generalRequest.setConferActivity(new ObjectMapper().writeValueAsString(conferActivity));
+        generalRequest.setConferActivity(JacksonUtil.toString(conferActivity).get());
         PoliticActivity politicActivity = new PoliticActivity();
         politicActivity.setScore1(4);
         politicActivity.setScore2(5);
-        generalRequest.setPoliticActivity(new ObjectMapper().writeValueAsString(politicActivity));
+        generalRequest.setPoliticActivity(JacksonUtil.toString(politicActivity).get());
         SocialWork socialWork = new SocialWork();
         socialWork.setScore1(20);
-        generalRequest.setSocialWork(new ObjectMapper().writeValueAsString(socialWork));
+        generalRequest.setSocialWork(JacksonUtil.toString(socialWork).get());
         SocialContribution socialContribution = new SocialContribution();
         socialContribution.setScore1(23);
-        generalRequest.setSocialContribution(new ObjectMapper().writeValueAsString(socialContribution));
+        generalRequest.setSocialContribution(JacksonUtil.toString(socialContribution).get());
         generalRequest.setPublicity(10);
         generalRequest.setSubAssessment(20);
         UpdateResponse updateResponse = client.target(API_ROOT)

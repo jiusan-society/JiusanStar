@@ -1,5 +1,36 @@
 package gov.jiusan.star.util;
 
-// TODO[2017-08-20][Marcus Lin]: 进一步封装 Jackson，用于转化 JSON
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.util.Optional;
+
+/**
+ * @author Marcus Lin
+ */
 public class JacksonUtil {
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    public static Optional<String> toString(Object obj) {
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return Optional.ofNullable(json);
+    }
+
+    public static <T> Optional<T> toObj(String jsonString, Class<T> clz) {
+        T result = null;
+        try {
+            result = objectMapper.readValue(jsonString, clz);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Optional.ofNullable(result);
+    }
+
 }
