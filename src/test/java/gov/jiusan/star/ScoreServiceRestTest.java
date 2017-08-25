@@ -1,12 +1,10 @@
 package gov.jiusan.star;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.jiusan.star.score.api.CreateResponse;
 import gov.jiusan.star.score.api.DeleteResponse;
 import gov.jiusan.star.score.api.GeneralRequest;
-import gov.jiusan.star.score.api.Status;
 import gov.jiusan.star.score.api.RetrieveResponse;
+import gov.jiusan.star.score.api.Status;
 import gov.jiusan.star.score.api.UpdateResponse;
 import gov.jiusan.star.score.detail.ConferActivity;
 import gov.jiusan.star.score.detail.PoliticActivity;
@@ -41,7 +39,7 @@ public class ScoreServiceRestTest {
     }
 
     @Test
-    public void testCreateScore() throws JsonProcessingException {
+    public void testCreateScore() {
         GeneralRequest generalRequest = new GeneralRequest();
         ConferActivity conferActivity = new ConferActivity();
         conferActivity.setScore1(10);
@@ -87,7 +85,7 @@ public class ScoreServiceRestTest {
     }
 
     @Test
-    public void testUpdateScore() throws JsonProcessingException {
+    public void testUpdateScore() {
         GeneralRequest generalRequest = new GeneralRequest();
         ConferActivity conferActivity = new ConferActivity();
         conferActivity.setScore1(1);
