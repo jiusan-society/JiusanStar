@@ -1,10 +1,10 @@
 package gov.jiusan.star;
 
+import gov.jiusan.star.score.ScoreService;
 import gov.jiusan.star.score.api.CreateResponse;
 import gov.jiusan.star.score.api.DeleteResponse;
 import gov.jiusan.star.score.api.GeneralRequest;
 import gov.jiusan.star.score.api.RetrieveResponse;
-import gov.jiusan.star.score.ScoreService;
 import gov.jiusan.star.score.api.UpdateResponse;
 
 import javax.ejb.EJB;

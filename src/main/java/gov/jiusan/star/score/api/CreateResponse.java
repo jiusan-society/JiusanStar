@@ -14,7 +14,6 @@ public class CreateResponse {
     public static final CreateResponse NO_SOCIAL_CONTRIBUTION_SCORE = new CreateResponse(false, Status.NO_SOCIAL_CONTRIBUTION_SCORE);
     public static final CreateResponse NO_POLITIC_ACTIVITY_SCORE = new CreateResponse(false, Status.NO_POLITIC_ACTIVITY_SCORE);
 
-
     private CreateResponse() {
     }
 

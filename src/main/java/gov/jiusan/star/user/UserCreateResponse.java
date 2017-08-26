@@ -1,5 +1,8 @@
 package gov.jiusan.star.user;
 
+/**
+ * @author Marcus Lin
+ */
 public class UserCreateResponse {
 
     private boolean success;

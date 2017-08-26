@@ -7,7 +7,8 @@ public class UserDTO implements Serializable {
     private String orgName;
     private String userName;
 
-    public UserDTO() {}
+    public UserDTO() {
+    }
 
     public String getOrgName() {
         return orgName;

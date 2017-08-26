@@ -2,6 +2,9 @@ package gov.jiusan.star.util;
 
 import org.junit.Test;
 
+/**
+ * @author Marcus Lin
+ */
 public class PasswordUtilTest {
 
     @Test

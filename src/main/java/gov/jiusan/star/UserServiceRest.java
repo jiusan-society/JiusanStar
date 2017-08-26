@@ -12,7 +12,6 @@ import javax.ws.rs.Path;
 /**
  * @author Marcus Lin
  */
-
 @Path("/")
 @RequestScoped
 public class UserServiceRest {

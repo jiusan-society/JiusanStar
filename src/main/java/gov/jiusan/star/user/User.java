@@ -10,7 +10,6 @@ import javax.persistence.Table;
 /**
  * @author Marcus Lin
  */
-
 @Entity
 @Table(name = "user")
 class User {

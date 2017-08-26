@@ -1,5 +1,8 @@
 package gov.jiusan.star.score.api;
 
+/**
+ * @author Marcus Lin
+ */
 public class DeleteResponse {
 
     private boolean success;
