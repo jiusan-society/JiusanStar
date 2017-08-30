@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Calendar;
 
 /**
  * @author Marcus Lin
@@ -60,6 +61,18 @@ public class Score {
      */
     @Column(name = "total", nullable = false)
     private int total;
+
+    /**
+     * 创建时间
+     */
+    @Column(name = "create_time", nullable = false)
+    private Calendar createTime;
+
+    /**
+     * 更新时间
+     */
+    @Column(name = "last_update_time", nullable = false)
+    private Calendar lastUpdateTime;
 
     public Score() {
     }
@@ -126,5 +139,21 @@ public class Score {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public Calendar getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Calendar createTime) {
+        this.createTime = createTime;
+    }
+
+    public Calendar getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Calendar lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }
