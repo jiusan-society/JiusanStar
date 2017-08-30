@@ -81,7 +81,7 @@ public class Score {
         return seq;
     }
 
-    public void setSeq(Long seq) {
+    void setSeq(Long seq) {
         this.seq = seq;
     }
 
@@ -89,7 +89,7 @@ public class Score {
         return conferActivity;
     }
 
-    public void setConferActivity(String conferActivity) {
+    void setConferActivity(String conferActivity) {
         this.conferActivity = conferActivity;
     }
 
@@ -97,7 +97,7 @@ public class Score {
         return socialWork;
     }
 
-    public void setSocialWork(String socialWork) {
+    void setSocialWork(String socialWork) {
         this.socialWork = socialWork;
     }
 
@@ -105,7 +105,7 @@ public class Score {
         return politicActivity;
     }
 
-    public void setPoliticActivity(String politicActivity) {
+    void setPoliticActivity(String politicActivity) {
         this.politicActivity = politicActivity;
     }
 
@@ -113,7 +113,7 @@ public class Score {
         return socialContribution;
     }
 
-    public void setSocialContribution(String socialContribution) {
+    void setSocialContribution(String socialContribution) {
         this.socialContribution = socialContribution;
     }
 
@@ -121,7 +121,7 @@ public class Score {
         return publicity;
     }
 
-    public void setPublicity(int publicity) {
+    void setPublicity(int publicity) {
         this.publicity = publicity;
     }
 
@@ -129,7 +129,7 @@ public class Score {
         return subAssessment;
     }
 
-    public void setSubAssessment(int subAssessment) {
+    void setSubAssessment(int subAssessment) {
         this.subAssessment = subAssessment;
     }
 
@@ -137,7 +137,7 @@ public class Score {
         return total;
     }
 
-    public void setTotal(int total) {
+    void setTotal(int total) {
         this.total = total;
     }
 
@@ -145,7 +145,7 @@ public class Score {
         return createTime;
     }
 
-    public void setCreateTime(Calendar createTime) {
+    void setCreateTime(Calendar createTime) {
         this.createTime = createTime;
     }
 
@@ -153,7 +153,7 @@ public class Score {
         return lastUpdateTime;
     }
 
-    public void setLastUpdateTime(Calendar lastUpdateTime) {
+    void setLastUpdateTime(Calendar lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
 }
