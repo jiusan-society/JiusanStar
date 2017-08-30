@@ -10,7 +10,7 @@ import java.util.Optional;
  * @author Marcus Lin
  */
 @ApplicationScoped
-public class ScoreDAO {
+class ScoreDAO {
 
     @PersistenceContext
     private EntityManager em;

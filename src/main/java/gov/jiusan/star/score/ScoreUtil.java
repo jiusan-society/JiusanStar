@@ -5,9 +5,9 @@ import gov.jiusan.star.score.api.GeneralRequest;
 /**
  * @author Marcus Lin
  */
-public class ScoreUtil {
+class ScoreUtil {
 
-    public static Score transferToEntity(GeneralRequest generalRequest) {
+    static Score transferToEntity(GeneralRequest generalRequest) {
         Score score = new Score();
         score.setConferActivity(generalRequest.getConferActivity());
         score.setSocialWork(generalRequest.getSocialWork());
@@ -19,7 +19,7 @@ public class ScoreUtil {
         return score;
     }
 
-    public static void mergeToEntity(Score score, GeneralRequest scoreUpdateRequest) {
+    static void mergeToEntity(Score score, GeneralRequest scoreUpdateRequest) {
         score.setConferActivity(scoreUpdateRequest.getConferActivity());
         score.setSocialWork(scoreUpdateRequest.getSocialWork());
         score.setSocialContribution(scoreUpdateRequest.getSocialContribution());
