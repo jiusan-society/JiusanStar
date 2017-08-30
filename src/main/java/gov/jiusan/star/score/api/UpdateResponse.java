@@ -15,6 +15,7 @@ public class UpdateResponse {
     public static final UpdateResponse NO_SOCIAL_WORK_SCORE = new UpdateResponse(false, Status.NO_SOCIAL_WORK_SCORE);
     public static final UpdateResponse NO_SOCIAL_CONTRIBUTION_SCORE = new UpdateResponse(false, Status.NO_SOCIAL_CONTRIBUTION_SCORE);
     public static final UpdateResponse NO_POLITIC_ACTIVITY_SCORE = new UpdateResponse(false, Status.NO_POLITIC_ACTIVITY_SCORE);
+    public static final UpdateResponse NO_SCORE = new UpdateResponse(false, Status.NO_SCORE);
 
     public static UpdateResponse SUCCESS(Score content) {
         return new UpdateResponse(true, Status.SUCCESS, content);

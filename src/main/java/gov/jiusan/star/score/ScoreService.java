@@ -8,8 +8,10 @@ import gov.jiusan.star.score.api.UpdateResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.Optional;
 
 /**
  * @author Marcus Lin
@@ -17,8 +19,8 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class ScoreService {
 
-    @PersistenceContext
-    private EntityManager em;
+    @Inject
+    private ScoreDAO scoreDAO;
 
     public CreateResponse createScore(GeneralRequest generalRequest) {
         if (StringUtils.isEmpty(generalRequest.getConferActivity())) {
@@ -35,16 +37,13 @@ public class ScoreService {
         }
 
         Score score = ScoreUtil.transferToEntity(generalRequest);
-        em.persist(score);
+        scoreDAO.create(score);
         return CreateResponse.SUCCESS;
     }
 
     public RetrieveResponse retrieveScore(Long seq) {
-        Score score = em.find(Score.class, seq);
-        if (score == null) {
-            return RetrieveResponse.NO_SCORE;
-        }
-        return RetrieveResponse.SUCCESS(score);
+        Optional<Score> score = scoreDAO.retrieve(seq);
+        return score.map(RetrieveResponse::SUCCESS).orElse(RetrieveResponse.NO_SCORE);
     }
 
     public UpdateResponse updateScore(GeneralRequest generalRequest, Long seq) {
@@ -60,19 +59,21 @@ public class ScoreService {
         if (StringUtils.isEmpty(generalRequest.getPoliticActivity())) {
             return UpdateResponse.NO_POLITIC_ACTIVITY_SCORE;
         }
-
-        Score toBeUpdated = em.find(Score.class, seq);
-        ScoreUtil.mergeToEntity(toBeUpdated, generalRequest);
-        em.merge(toBeUpdated);
-        return UpdateResponse.SUCCESS(toBeUpdated);
+        Optional<Score> toBeUpdated = scoreDAO.retrieve(seq);
+        if (!toBeUpdated.isPresent()) {
+            return UpdateResponse.NO_SCORE;
+        }
+        ScoreUtil.mergeToEntity(toBeUpdated.get(), generalRequest);
+        Score updated = scoreDAO.update(toBeUpdated.get());
+        return UpdateResponse.SUCCESS(updated);
     }
 
     public DeleteResponse deleteScore(Long seq) {
-        Score toBeDeleted = em.find(Score.class, seq);
-        if (toBeDeleted == null) {
+        Optional<Score> toBeDeleted = scoreDAO.retrieve(seq);
+        if (!toBeDeleted.isPresent()) {
             return DeleteResponse.NO_SCORE;
         }
-        em.remove(toBeDeleted);
+        scoreDAO.delete(toBeDeleted.get());
         return DeleteResponse.SUCCESS;
     }
 
