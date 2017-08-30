@@ -1,9 +1,8 @@
 package gov.jiusan.star;
 
-import gov.jiusan.star.score.api.CreateResponse;
-import gov.jiusan.star.score.api.DeleteResponse;
-import gov.jiusan.star.score.api.GeneralRequest;
+import gov.jiusan.star.score.api.GeneralResponse;
 import gov.jiusan.star.score.api.RetrieveResponse;
+import gov.jiusan.star.score.api.Score;
 import gov.jiusan.star.score.api.Status;
 import gov.jiusan.star.score.api.UpdateResponse;
 import gov.jiusan.star.score.detail.ConferActivity;
@@ -40,31 +39,31 @@ public class ScoreServiceRestTest {
 
     @Test
     public void testCreateScore() {
-        GeneralRequest generalRequest = new GeneralRequest();
+        Score score = new Score();
         ConferActivity conferActivity = new ConferActivity();
         conferActivity.setScore1(10);
         conferActivity.setScore2(10);
         conferActivity.setScore3(30);
         // TODO[2017-08-20][Marcus Lin]: 需要对转化 JSON 的操作做一个封装
-        generalRequest.setConferActivity(JacksonUtil.toString(conferActivity).get());
+        score.setConferActivity(JacksonUtil.toString(conferActivity).get());
         PoliticActivity politicActivity = new PoliticActivity();
         politicActivity.setScore1(10);
         politicActivity.setScore2(10);
-        generalRequest.setPoliticActivity(JacksonUtil.toString(politicActivity).get());
+        score.setPoliticActivity(JacksonUtil.toString(politicActivity).get());
         SocialWork socialWork = new SocialWork();
         socialWork.setScore1(20);
-        generalRequest.setSocialWork(JacksonUtil.toString(socialWork).get());
+        score.setSocialWork(JacksonUtil.toString(socialWork).get());
         SocialContribution socialContribution = new SocialContribution();
         socialContribution.setScore1(12);
-        generalRequest.setSocialContribution(JacksonUtil.toString(socialContribution).get());
-        generalRequest.setPublicity(10);
-        generalRequest.setSubAssessment(20);
-        CreateResponse createResponse = client.target(API_ROOT)
+        score.setSocialContribution(JacksonUtil.toString(socialContribution).get());
+        score.setPublicity(10);
+        score.setSubAssessment(20);
+        GeneralResponse generalResponse = client.target(API_ROOT)
                 .path("score")
                 .request()
-                .post(Entity.json(generalRequest), CreateResponse.class);
-        Assert.assertEquals(true, createResponse.isSuccess());
-        Assert.assertEquals(Status.SUCCESS, createResponse.getScoreResponseStatus());
+                .post(Entity.json(score), GeneralResponse.class);
+        Assert.assertEquals(true, generalResponse.isSuccess());
+        Assert.assertEquals(Status.SUCCESS, generalResponse.getStatus());
     }
 
     @Test
@@ -86,31 +85,31 @@ public class ScoreServiceRestTest {
 
     @Test
     public void testUpdateScore() {
-        GeneralRequest generalRequest = new GeneralRequest();
+        Score score = new Score();
         ConferActivity conferActivity = new ConferActivity();
         conferActivity.setScore1(1);
         conferActivity.setScore2(2);
         conferActivity.setScore3(3);
-        generalRequest.setConferActivity(JacksonUtil.toString(conferActivity).get());
+        score.setConferActivity(JacksonUtil.toString(conferActivity).get());
         PoliticActivity politicActivity = new PoliticActivity();
         politicActivity.setScore1(4);
         politicActivity.setScore2(5);
-        generalRequest.setPoliticActivity(JacksonUtil.toString(politicActivity).get());
+        score.setPoliticActivity(JacksonUtil.toString(politicActivity).get());
         SocialWork socialWork = new SocialWork();
         socialWork.setScore1(20);
-        generalRequest.setSocialWork(JacksonUtil.toString(socialWork).get());
+        score.setSocialWork(JacksonUtil.toString(socialWork).get());
         SocialContribution socialContribution = new SocialContribution();
         socialContribution.setScore1(23);
-        generalRequest.setSocialContribution(JacksonUtil.toString(socialContribution).get());
-        generalRequest.setPublicity(10);
-        generalRequest.setSubAssessment(20);
+        score.setSocialContribution(JacksonUtil.toString(socialContribution).get());
+        score.setPublicity(10);
+        score.setSubAssessment(20);
         UpdateResponse updateResponse = client.target(API_ROOT)
                 .path("score/{seq}")
                 .resolveTemplate("seq", 1)
                 .request()
-                .put(Entity.json(generalRequest), UpdateResponse.class);
+                .put(Entity.json(score), UpdateResponse.class);
         Assert.assertEquals(true, updateResponse.isSuccess());
-        Assert.assertEquals(Status.SUCCESS, updateResponse.getScoreResponseStatus());
+        Assert.assertEquals(Status.SUCCESS, updateResponse.getStatus());
         Assert.assertNotEquals("", updateResponse.getContent().getConferActivity());
         Assert.assertNotEquals("", updateResponse.getContent().getPoliticActivity());
         Assert.assertNotEquals("", updateResponse.getContent().getSocialWork());
@@ -121,11 +120,11 @@ public class ScoreServiceRestTest {
 
     @Test
     public void testDeleteScore() {
-        DeleteResponse deleteResponse = client.target(API_ROOT)
+        GeneralResponse deleteResponse = client.target(API_ROOT)
                 .path("score/{seq}")
                 .resolveTemplate("seq", 1)
                 .request()
-                .delete(DeleteResponse.class);
+                .delete(GeneralResponse.class);
         Assert.assertEquals(true, deleteResponse.isSuccess());
         Assert.assertEquals(Status.SUCCESS, deleteResponse.getStatus());
     }

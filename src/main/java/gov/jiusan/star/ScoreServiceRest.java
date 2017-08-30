@@ -1,9 +1,8 @@
 package gov.jiusan.star;
 
 import gov.jiusan.star.score.ScoreService;
-import gov.jiusan.star.score.api.CreateResponse;
-import gov.jiusan.star.score.api.DeleteResponse;
-import gov.jiusan.star.score.api.GeneralRequest;
+import gov.jiusan.star.score.api.Score;
+import gov.jiusan.star.score.api.GeneralResponse;
 import gov.jiusan.star.score.api.RetrieveResponse;
 import gov.jiusan.star.score.api.UpdateResponse;
 
@@ -28,8 +27,8 @@ public class ScoreServiceRest {
 
     @Path("score")
     @POST
-    public CreateResponse createScore(GeneralRequest generalRequest) {
-        return scoreService.createScore(generalRequest);
+    public GeneralResponse createScore(Score score) {
+        return scoreService.createScore(score);
     }
 
     @Path("score/{seq}")
@@ -40,13 +39,13 @@ public class ScoreServiceRest {
 
     @Path("score/{seq}")
     @PUT
-    public UpdateResponse updateScore(GeneralRequest generalRequest, @PathParam("seq") Long seq) {
-        return scoreService.updateScore(generalRequest, seq);
+    public UpdateResponse updateScore(Score score, @PathParam("seq") Long seq) {
+        return scoreService.updateScore(score, seq);
     }
 
     @Path("score/{seq}")
     @DELETE
-    public DeleteResponse deleteScore(@PathParam("seq") Long seq) {
+    public GeneralResponse deleteScore(@PathParam("seq") Long seq) {
         return scoreService.deleteScore(seq);
     }
 }

@@ -1,7 +1,5 @@
 package gov.jiusan.star.score.api;
 
-import gov.jiusan.star.score.Score;
-
 /**
  * @author Marcus Lin
  */

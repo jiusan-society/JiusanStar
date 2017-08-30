@@ -1,25 +1,35 @@
 package gov.jiusan.star.score;
 
-import gov.jiusan.star.score.api.GeneralRequest;
-
 /**
  * @author Marcus Lin
  */
 class ScoreUtil {
 
-    static Score transferToEntity(GeneralRequest generalRequest) {
+    static Score transferToEntity(gov.jiusan.star.score.api.Score scoreDTO) {
         Score score = new Score();
-        score.setConferActivity(generalRequest.getConferActivity());
-        score.setSocialWork(generalRequest.getSocialWork());
-        score.setSocialContribution(generalRequest.getSocialContribution());
-        score.setPoliticActivity(generalRequest.getPoliticActivity());
-        score.setPublicity(generalRequest.getPublicity());
-        score.setSubAssessment(generalRequest.getSubAssessment());
-        score.setTotal(generalRequest.getTotal());
+        score.setConferActivity(scoreDTO.getConferActivity());
+        score.setSocialWork(scoreDTO.getSocialWork());
+        score.setSocialContribution(scoreDTO.getSocialContribution());
+        score.setPoliticActivity(scoreDTO.getPoliticActivity());
+        score.setPublicity(scoreDTO.getPublicity());
+        score.setSubAssessment(scoreDTO.getSubAssessment());
+        score.setTotal(scoreDTO.getTotal());
         return score;
     }
 
-    static void mergeToEntity(Score score, GeneralRequest scoreUpdateRequest) {
+    static gov.jiusan.star.score.api.Score transferToDTO(Score score) {
+        gov.jiusan.star.score.api.Score scoreDTO = new gov.jiusan.star.score.api.Score();
+        scoreDTO.setConferActivity(score.getConferActivity());
+        scoreDTO.setSocialWork(score.getSocialWork());
+        scoreDTO.setSocialContribution(score.getSocialContribution());
+        scoreDTO.setPoliticActivity(score.getPoliticActivity());
+        scoreDTO.setPublicity(score.getPublicity());
+        scoreDTO.setSubAssessment(score.getSubAssessment());
+        scoreDTO.setTotal(score.getTotal());
+        return scoreDTO;
+    }
+
+    static void mergeToEntity(Score score, gov.jiusan.star.score.api.Score scoreUpdateRequest) {
         score.setConferActivity(scoreUpdateRequest.getConferActivity());
         score.setSocialWork(scoreUpdateRequest.getSocialWork());
         score.setSocialContribution(scoreUpdateRequest.getSocialContribution());

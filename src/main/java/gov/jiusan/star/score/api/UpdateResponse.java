@@ -1,7 +1,5 @@
 package gov.jiusan.star.score.api;
 
-import gov.jiusan.star.score.Score;
-
 /**
  * @author Marcus Lin
  */
@@ -42,11 +40,11 @@ public class UpdateResponse {
         this.success = success;
     }
 
-    public Status getScoreResponseStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setScoreResponseStatus(Status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
