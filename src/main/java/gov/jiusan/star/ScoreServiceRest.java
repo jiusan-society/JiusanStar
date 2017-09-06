@@ -22,20 +22,19 @@ import javax.ws.rs.PathParam;
 /**
  * @author Marcus Lin
  */
-@Path("/")
+@Path("score")
 @RequestScoped
 public class ScoreServiceRest {
 
     @EJB
     private ScoreService scoreService;
 
-    @Path("score")
     @POST
     public CreateResponse createScore(CreateRequest request) {
         return scoreService.createScore(request);
     }
 
-    @Path("score/{seq}")
+    @Path("{seq}")
     @GET
     public RetrieveResponse retrieveScore(@PathParam("seq") Long seq) {
         RetrieveRequest request = new RetrieveRequest();
@@ -43,14 +42,14 @@ public class ScoreServiceRest {
         return scoreService.retrieveScore(request);
     }
 
-    @Path("score/{seq}")
+    @Path("{seq}")
     @PUT
     public UpdateResponse updateScore(UpdateRequest request, @PathParam("seq") Long seq) {
         request.setSeq(seq);
         return scoreService.updateScore(request);
     }
 
-    @Path("score/{seq}")
+    @Path("{seq}")
     @DELETE
     public DeleteResponse deleteScore(@PathParam("seq") Long seq) {
         DeleteRequest request = new DeleteRequest();

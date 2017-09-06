@@ -14,6 +14,8 @@ class ScoreUtil {
         scoreDTO.setPublicity(score.getPublicity());
         scoreDTO.setSubAssessment(score.getSubAssessment());
         scoreDTO.setTotal(score.getTotal());
+        scoreDTO.setCreateTime(score.getCreateTime());
+        scoreDTO.setLastUpdateTime(score.getLastUpdateTime());
         return scoreDTO;
     }
 }
