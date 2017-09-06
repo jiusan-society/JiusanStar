@@ -5,15 +5,15 @@ package gov.jiusan.star.score.api;
  */
 public class RetrieveResponse {
 
-    private boolean success;
-    private Status status;
-    private Score content;
-
     public static final RetrieveResponse NO_SCORE = new RetrieveResponse(false, Status.NO_SCORE);
 
     public static RetrieveResponse SUCCESS(Score content) {
         return new RetrieveResponse(true, Status.SUCCESS, content);
     }
+
+    private boolean success;
+    private Status status;
+    private Score content;
 
     private RetrieveResponse() {
 

@@ -5,15 +5,15 @@ package gov.jiusan.star.score.api;
  */
 public class GeneralResponse {
 
-    private boolean success;
-    private Status status;
-
     public static final GeneralResponse SUCCESS = new GeneralResponse(true, Status.SUCCESS);
     public static final GeneralResponse NO_SCORE = new GeneralResponse(true, Status.NO_SCORE);
     public static final GeneralResponse NO_CONFER_ACTIVITY_SCORE = new GeneralResponse(false, Status.NO_CONFER_ACTIVITY_SCORE);
     public static final GeneralResponse NO_SOCIAL_WORK_SCORE = new GeneralResponse(false, Status.NO_SOCIAL_WORK_SCORE);
     public static final GeneralResponse NO_SOCIAL_CONTRIBUTION_SCORE = new GeneralResponse(false, Status.NO_SOCIAL_CONTRIBUTION_SCORE);
     public static final GeneralResponse NO_POLITIC_ACTIVITY_SCORE = new GeneralResponse(false, Status.NO_POLITIC_ACTIVITY_SCORE);
+
+    private boolean success;
+    private Status status;
 
     private GeneralResponse() {
     }
