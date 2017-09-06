@@ -1,11 +1,9 @@
 package gov.jiusan.star.score.api;
 
-import java.util.Calendar;
-
 /**
  * @author Marcus Lin
  */
-public class Score {
+public class UpdateRequest {
 
     // Score 流水号
     private Long seq;
@@ -31,12 +29,7 @@ public class Score {
     // 总分
     private int total;
 
-    private Calendar createTime;
-
-    private Calendar lastUpdateTime;
-
-    public Score() {
-
+    public UpdateRequest() {
     }
 
     public Long getSeq() {
@@ -101,21 +94,5 @@ public class Score {
 
     public void setTotal(int total) {
         this.total = total;
-    }
-
-    public Calendar getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Calendar createTime) {
-        this.createTime = createTime;
-    }
-
-    public Calendar getLastUpdateTime() {
-        return lastUpdateTime;
-    }
-
-    public void setLastUpdateTime(Calendar lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
     }
 }

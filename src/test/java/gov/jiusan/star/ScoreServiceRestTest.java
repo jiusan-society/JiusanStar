@@ -1,6 +1,6 @@
 package gov.jiusan.star;
 
-import gov.jiusan.star.score.api.GeneralResponse;
+import gov.jiusan.star.score.api.CreateResponse;
 import gov.jiusan.star.score.api.RetrieveResponse;
 import gov.jiusan.star.score.api.Score;
 import gov.jiusan.star.score.api.Status;
@@ -58,12 +58,12 @@ public class ScoreServiceRestTest {
         score.setSocialContribution(JacksonUtil.toString(socialContribution).get());
         score.setPublicity(10);
         score.setSubAssessment(20);
-        GeneralResponse generalResponse = client.target(API_ROOT)
+        CreateResponse createResponse = client.target(API_ROOT)
                 .path("score")
                 .request()
-                .post(Entity.json(score), GeneralResponse.class);
-        Assert.assertEquals(true, generalResponse.isSuccess());
-        Assert.assertEquals(Status.SUCCESS, generalResponse.getStatus());
+                .post(Entity.json(score), CreateResponse.class);
+        Assert.assertEquals(true, createResponse.isSuccess());
+        Assert.assertEquals(Status.SUCCESS, createResponse.getStatus());
     }
 
     @Test
@@ -120,11 +120,11 @@ public class ScoreServiceRestTest {
 
     @Test
     public void testDeleteScore() {
-        GeneralResponse deleteResponse = client.target(API_ROOT)
+        CreateResponse deleteResponse = client.target(API_ROOT)
                 .path("score/{seq}")
                 .resolveTemplate("seq", 1)
                 .request()
-                .delete(GeneralResponse.class);
+                .delete(CreateResponse.class);
         Assert.assertEquals(true, deleteResponse.isSuccess());
         Assert.assertEquals(Status.SUCCESS, deleteResponse.getStatus());
     }

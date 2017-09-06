@@ -1,7 +1,12 @@
 package gov.jiusan.star.score;
 
-import gov.jiusan.star.score.api.GeneralResponse;
+import gov.jiusan.star.score.api.CreateRequest;
+import gov.jiusan.star.score.api.CreateResponse;
+import gov.jiusan.star.score.api.DeleteRequest;
+import gov.jiusan.star.score.api.DeleteResponse;
+import gov.jiusan.star.score.api.RetrieveRequest;
 import gov.jiusan.star.score.api.RetrieveResponse;
+import gov.jiusan.star.score.api.UpdateRequest;
 import gov.jiusan.star.score.api.UpdateResponse;
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,81 +26,98 @@ public class ScoreService {
     /**
      * create the score info
      *
-     * @param scoreDTO an incoming request that from the Frontend
+     * @param request
      * @return a response info
      */
-    public GeneralResponse createScore(gov.jiusan.star.score.api.Score scoreDTO) {
-        if (StringUtils.isEmpty(scoreDTO.getConferActivity())) {
-            return GeneralResponse.NO_CONFER_ACTIVITY_SCORE;
+    public CreateResponse createScore(CreateRequest request) {
+        if (StringUtils.isEmpty(request.getConferActivity())) {
+            return CreateResponse.NO_CONFER_ACTIVITY_SCORE;
         }
-        if (StringUtils.isEmpty(scoreDTO.getSocialWork())) {
-            return GeneralResponse.NO_SOCIAL_WORK_SCORE;
+        if (StringUtils.isEmpty(request.getSocialWork())) {
+            return CreateResponse.NO_SOCIAL_WORK_SCORE;
         }
-        if (StringUtils.isEmpty(scoreDTO.getSocialContribution())) {
-            return GeneralResponse.NO_SOCIAL_CONTRIBUTION_SCORE;
+        if (StringUtils.isEmpty(request.getSocialContribution())) {
+            return CreateResponse.NO_SOCIAL_CONTRIBUTION_SCORE;
         }
-        if (StringUtils.isEmpty(scoreDTO.getPoliticActivity())) {
-            return GeneralResponse.NO_POLITIC_ACTIVITY_SCORE;
+        if (StringUtils.isEmpty(request.getPoliticActivity())) {
+            return CreateResponse.NO_POLITIC_ACTIVITY_SCORE;
         }
 
-        Score score = ScoreUtil.transferToEntity(scoreDTO);
+        Score score = new Score();
+        score.setConferActivity(request.getConferActivity());
+        score.setSocialWork(request.getSocialWork());
+        score.setSocialContribution(request.getSocialContribution());
+        score.setPoliticActivity(request.getPoliticActivity());
+        score.setPublicity(request.getPublicity());
+        score.setSubAssessment(request.getSubAssessment());
+        score.setTotal(request.getTotal());
+
         scoreDAO.create(score);
-        return GeneralResponse.SUCCESS;
+        return CreateResponse.SUCCESS;
     }
 
     /**
      * retrieve the score info
      *
-     * @param seq the score info's seq
+     * @param request
      * @return a response info
      */
-    public RetrieveResponse retrieveScore(Long seq) {
-        Optional<Score> score = scoreDAO.retrieve(seq);
+    public RetrieveResponse retrieveScore(RetrieveRequest request) {
+        Optional<Score> score = scoreDAO.retrieve(request.getSeq());
         return score.map(score1 -> RetrieveResponse.SUCCESS(ScoreUtil.transferToDTO(score1))).orElse(RetrieveResponse.NO_SCORE);
     }
 
     /**
      * update the score info
      *
-     * @param score an incoming request that from the Frontend
-     * @param seq            the score info's seq
+     * @param request
      * @return a response info
      */
-    public UpdateResponse updateScore(gov.jiusan.star.score.api.Score score, Long seq) {
-        if (StringUtils.isEmpty(score.getConferActivity())) {
+    public UpdateResponse updateScore(UpdateRequest request) {
+        if (StringUtils.isEmpty(request.getConferActivity())) {
             return UpdateResponse.NO_CONFER_ACTIVITY_SCORE;
         }
-        if (StringUtils.isEmpty(score.getSocialWork())) {
+        if (StringUtils.isEmpty(request.getSocialWork())) {
             return UpdateResponse.NO_SOCIAL_WORK_SCORE;
         }
-        if (StringUtils.isEmpty(score.getSocialContribution())) {
+        if (StringUtils.isEmpty(request.getSocialContribution())) {
             return UpdateResponse.NO_SOCIAL_CONTRIBUTION_SCORE;
         }
-        if (StringUtils.isEmpty(score.getPoliticActivity())) {
+        if (StringUtils.isEmpty(request.getPoliticActivity())) {
             return UpdateResponse.NO_POLITIC_ACTIVITY_SCORE;
         }
-        Optional<Score> toBeUpdated = scoreDAO.retrieve(seq);
+
+        Optional<Score> toBeUpdated = scoreDAO.retrieve(request.getSeq());
         if (!toBeUpdated.isPresent()) {
             return UpdateResponse.NO_SCORE;
         }
-        ScoreUtil.mergeToEntity(toBeUpdated.get(), score);
-        Score updated = scoreDAO.update(toBeUpdated.get());
+
+        Score score = toBeUpdated.get();
+        score.setConferActivity(request.getConferActivity());
+        score.setSocialWork(request.getSocialWork());
+        score.setSocialContribution(request.getSocialContribution());
+        score.setPoliticActivity(request.getPoliticActivity());
+        score.setPublicity(request.getPublicity());
+        score.setSubAssessment(request.getSubAssessment());
+        score.setTotal(request.getTotal());
+
+        Score updated = scoreDAO.update(score);
         return UpdateResponse.SUCCESS(ScoreUtil.transferToDTO(updated));
     }
 
     /**
      * delete the score info
      *
-     * @param seq the score info's seq
+     * @param request
      * @return a response info
      */
-    public GeneralResponse deleteScore(Long seq) {
-        Optional<Score> toBeDeleted = scoreDAO.retrieve(seq);
+    public DeleteResponse deleteScore(DeleteRequest request) {
+        Optional<Score> toBeDeleted = scoreDAO.retrieve(request.getSeq());
         if (!toBeDeleted.isPresent()) {
-            return GeneralResponse.NO_SCORE;
+            return DeleteResponse.NO_SCORE;
         }
         scoreDAO.delete(toBeDeleted.get());
-        return GeneralResponse.SUCCESS;
+        return DeleteResponse.SUCCESS;
     }
 
 }

@@ -1,9 +1,13 @@
 package gov.jiusan.star;
 
 import gov.jiusan.star.score.ScoreService;
-import gov.jiusan.star.score.api.Score;
-import gov.jiusan.star.score.api.GeneralResponse;
+import gov.jiusan.star.score.api.CreateRequest;
+import gov.jiusan.star.score.api.CreateResponse;
+import gov.jiusan.star.score.api.DeleteRequest;
+import gov.jiusan.star.score.api.DeleteResponse;
+import gov.jiusan.star.score.api.RetrieveRequest;
 import gov.jiusan.star.score.api.RetrieveResponse;
+import gov.jiusan.star.score.api.UpdateRequest;
 import gov.jiusan.star.score.api.UpdateResponse;
 
 import javax.ejb.EJB;
@@ -27,25 +31,30 @@ public class ScoreServiceRest {
 
     @Path("score")
     @POST
-    public GeneralResponse createScore(Score score) {
-        return scoreService.createScore(score);
+    public CreateResponse createScore(CreateRequest request) {
+        return scoreService.createScore(request);
     }
 
     @Path("score/{seq}")
     @GET
     public RetrieveResponse retrieveScore(@PathParam("seq") Long seq) {
-        return scoreService.retrieveScore(seq);
+        RetrieveRequest request = new RetrieveRequest();
+        request.setSeq(seq);
+        return scoreService.retrieveScore(request);
     }
 
     @Path("score/{seq}")
     @PUT
-    public UpdateResponse updateScore(Score score, @PathParam("seq") Long seq) {
-        return scoreService.updateScore(score, seq);
+    public UpdateResponse updateScore(UpdateRequest request, @PathParam("seq") Long seq) {
+        request.setSeq(seq);
+        return scoreService.updateScore(request);
     }
 
     @Path("score/{seq}")
     @DELETE
-    public GeneralResponse deleteScore(@PathParam("seq") Long seq) {
-        return scoreService.deleteScore(seq);
+    public DeleteResponse deleteScore(@PathParam("seq") Long seq) {
+        DeleteRequest request = new DeleteRequest();
+        request.setSeq(seq);
+        return scoreService.deleteScore(request);
     }
 }
