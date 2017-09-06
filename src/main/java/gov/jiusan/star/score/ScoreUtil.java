@@ -16,8 +16,4 @@ class ScoreUtil {
         scoreDTO.setTotal(score.getTotal());
         return scoreDTO;
     }
-
-    static void mergeToEntity(Score score, gov.jiusan.star.score.api.Score scoreUpdateRequest) {
-
-    }
 }
