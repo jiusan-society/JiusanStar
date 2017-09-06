@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta name="renderer" content="webkit|ie-comp|ie-stand"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="viewport"
+              content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+        <meta http-equiv="Cache-Control" content="no-siteapp"/>
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/dashboard/h-ui/css/H-ui.min.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="#{request.contextPath}/resources/dashboard/h-ui.admin/css/H-ui.admin.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="#{request.contextPath}/resources/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+        <link rel="stylesheet" type="text/css"
+              href="#{request.contextPath}/resources/dashboard/h-ui.admin/skin/default/skin.css" id="skin"/>
+        <link rel="stylesheet" type="text/css"
+              href="#{request.contextPath}/resources/dashboard/h-ui.admin/css/style.css"/>
+        <!--/meta 作为公共模版分离出去-->
+        <title><ui:insert name="title">九三学社星级组织评分管理系统</ui:insert></title>
+    </h:head>
+    <h:body>
+        <!--_header 作为公共模版分离出去-->
+        <header class="navbar-wrapper">
+            <div class="navbar navbar-fixed-top">
+                <div class="container-fluid cl"><a class="logo navbar-logo f-l mr-10 hidden-xs"
+                                                   href="template.html">九三学社星级组织评分管理系统</a> <a
+                        class="logo navbar-logo-m f-l mr-10 visible-xs" href="/aboutHui.shtml">H-ui</a>
+                    <span class="logo navbar-slogan f-l mr-10 hidden-xs">1.0</span>
+                    <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+                    <nav class="nav navbar-nav">
+                        <ul class="cl">
+                            <li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i
+                                    class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
+                                <ul class="dropDown-menu menu radius box-shadow">
+                                    <!--还要修改onclick属性-->
+                                    <li><a href="javascript:;" onclick="article_add('添加资讯', 'article-add.html')"><i
+                                            class="Hui-iconfont">&#xe616;</i> 资讯</a></li>
+                                    <li><a href="javascript:;" onclick="picture_add('添加资讯', 'picture-add.html')"><i
+                                            class="Hui-iconfont">&#xe685;</i> 图片</a></li>
+                                    <li><a href="javascript:;" onclick="picture_add('添加资讯', 'picture-add.html')"><i
+                                            class="Hui-iconfont">&#xe64b;</i> 知识库</a></li>
+                                    <li><a href="javascript:;" onclick="product_add('添加资讯', 'product-add.html')"><i
+                                            class="Hui-iconfont">&#xe6a5;</i>直播消息</a></li>
+                                    <li><a href="javascript:;"
+                                           onclick="member_add('添加用户', 'member-add.html', '', '510')"><i
+                                            class="Hui-iconfont">&#xe607;</i> 客服人员用户</a></li>
+                                    <li><a href="javascript:;"
+                                           onclick="member_add('添加用户', 'member-add.html', '', '510')"><i
+                                            class="Hui-iconfont">&#xe60d;</i> 管理员用户</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+                        <ul class="cl">
+                            <li>超级管理员</li>
+                            <li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">God 翔 <i
+                                    class="Hui-iconfont">&#xe6d5;</i></a>
+                                <ul class="dropDown-menu menu radius box-shadow">
+                                    <li><a href="javascript:;" onClick="myselfinfo()">个人信息</a></li>
+                                    <li><a href="#">切换账户</a></li>
+                                    <li><a href="#">退出</a></li>
+                                </ul>
+                            </li>
+                            <li id="Hui-msg"><a href="#" title="消息"><span class="badge badge-danger">5</span><i
+                                    class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a></li>
+                            <li id="Hui-skin" class="dropDown right dropDown_hover"><a href="javascript:;"
+                                                                                       class="dropDown_A" title="换肤"><i
+                                    class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
+                                <ul class="dropDown-menu menu radius box-shadow">
+                                    <li><a href="javascript:;" data-val="default" title="默认（黑色）">默认（黑色）</a></li>
+                                    <li><a href="javascript:;" data-val="blue" title="蓝色">蓝色</a></li>
+                                    <li><a href="javascript:;" data-val="green" title="绿色">绿色</a></li>
+                                    <li><a href="javascript:;" data-val="red" title="红色">红色</a></li>
+                                    <li><a href="javascript:;" data-val="yellow" title="黄色">黄色</a></li>
+                                    <li><a href="javascript:;" data-val="orange" title="橙色">橙色</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <!--/_header 作为公共模版分离出去-->
+
+        <!--_menu 作为公共模版分离出去-->
+        <aside class="Hui-aside">
+
+            <div class="menu_dropdown bk_2">
+                <dl id="menu-article">
+                    <dt><i class="Hui-iconfont">&#xe616;</i> 评分管理<i
+                            class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                    <dd>
+                        <ul>
+                            <li><a href="message.html" title="评分">填写评分表</a></li>
+                            <li><a href="message.html" title="查看所有评分">查看所有评分表</a></li>
+                        </ul>
+                    </dd>
+                </dl>
+                <!--                <dl id="menu-picture">
+                                    <dt><i class="Hui-iconfont">&#xe613;</i> 图片管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                                    <dd>
+                                        <ul>
+                                            <li><a href="picture-list.html" title="图片管理">图片管理</a></li>
+                                        </ul>
+                                    </dd>
+                                </dl>-->
+                <dl id="menu-member">
+                    <dt><i class="Hui-iconfont">&#xe60d;</i> 用户管理<i
+                            class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                    <dd>
+                        <ul>
+                            <li><a href="member-all.html" title="all">所有用户</a></li>
+                            <li><a href="member-server.html" title="server">客服</a></li>
+                            <li><a href="member-normal.html" title="normal">普通用户</a></li>
+                        </ul>
+                    </dd>
+                </dl>
+                <!--                <dl id="menu-admin">
+                                    <dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                                    <dd>
+                                        <ul>
+                                            <li><a href="admin-role.html" title="角色管理">角色管理</a></li>
+                                            <li><a href="admin-permission.html" title="权限管理">权限管理</a></li>
+                                            <li><a href="admin-list.html" title="管理员列表">管理员列表</a></li>
+                                        </ul>
+                                    </dd>
+                                </dl>-->
+                <dl id="menu-tongji">
+                    <dt><i class="Hui-iconfont">&#xe61a;</i> 评分表统计<i
+                            class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                    <dd>
+                        <ul>
+                            <li><a href="charts-1.html" title="折线图">折线图</a></li>
+                            <li><a href="charts-2.html" title="时间轴折线图">时间轴折线图</a></li>
+                            <li><a href="charts-3.html" title="区域图">区域图</a></li>
+                            <li><a href="charts-4.html" title="柱状图">柱状图</a></li>
+                            <li><a href="charts-5.html" title="饼状图">饼状图</a></li>
+                            <li><a href="charts-6.html" title="3D柱状图">3D柱状图</a></li>
+                            <li><a href="charts-7.html" title="3D饼状图">3D饼状图</a></li>
+                        </ul>
+                    </dd>
+                </dl>
+                <dl id="menu-system">
+                    <dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i
+                            class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                    <dd>
+                        <ul>
+                            <li><a href="system-base.html" title="系统设置">系统设置</a></li>
+                            <li><a href="system-category.html" title="栏目管理">栏目管理</a></li>
+                            <li><a href="system-data.html" title="数据字典">数据字典</a></li>
+                            <li><a href="system-shielding.html" title="屏蔽词">屏蔽词</a></li>
+                            <li><a href="system-log.html" title="系统日志">系统日志</a></li>
+                        </ul>
+                    </dd>
+                </dl>
+            </div>
+        </aside>
+        <div class="dislpayArrow hidden-xs">
+            <a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a>
+        </div>
+        <!--/_menu 作为公共模版分离出去-->
+
+        <!--此处由自己来定义页面内容-->
+        <ui:insert name="section"></ui:insert>
+        <!--此处由自己来定义页面内容-->
+
+        <!--_footer 作为公共模版分离出去-->
+        <script type="text/javascript" src="#{request.contextPath}/resources/lib/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/lib/layer/2.4/layer.js"></script>
+        <script type="text/javascript"
+                src="#{request.contextPath}/resources/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+        <script type="text/javascript"
+                src="#{request.contextPath}/resources/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+        <script type="text/javascript"
+                src="#{request.contextPath}/resources/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/resources/dashboard/h-ui/js/H-ui.js"></script>
+        <script type="text/javascript"
+                src="#{request.contextPath}/resources/dashboard/h-ui.admin/js/H-ui.admin.page.js"></script>
+        <!--/_footer /作为公共模版分离出去-->
+
+        <!--添加行为脚本-->
+        <ui:insert name="biz_script"></ui:insert>
+        <!--添加行为脚本-->
+    </h:body>
+</html>
+
