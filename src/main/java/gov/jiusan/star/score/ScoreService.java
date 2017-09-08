@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -120,4 +121,7 @@ public class ScoreService {
         return DeleteResponse.SUCCESS;
     }
 
+    public List<gov.jiusan.star.score.Score> findAllScores() {
+        return scoreDAO.selectAll();
+    }
 }

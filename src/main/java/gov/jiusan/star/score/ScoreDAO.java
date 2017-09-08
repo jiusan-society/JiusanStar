@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,6 +31,10 @@ class ScoreDAO {
     Score update(Score score) {
         score.setLastUpdateTime(Calendar.getInstance());
         return em.merge(score);
+    }
+
+    List<Score> selectAll() {
+        return em.createNamedQuery("Score.findAll", Score.class).getResultList();
     }
 
     void delete(Score score) {

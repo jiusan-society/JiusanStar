@@ -314,11 +314,18 @@
         <script>
             function toJson() {
                 // 把整个表单 serialize 成 json 对象
-                let jsonObj = $("#scoreForm").serializeJSON({
+                let formObj = $("#scoreForm").serializeJSON({
                     // 转化为相应类型，如当 type 为 number 时，"1" -> 1
                     parseAll: true
                 });
-                console.log(jsonObj);
+                console.log(formObj);
+                let jsonObj = {};
+                jsonObj.conferActivity = JSON.stringify(formObj.conferActivity);
+                jsonObj.socialWork = JSON.stringify(formObj.socialWork);
+                jsonObj.socialContribution = JSON.stringify(formObj.socialContribution);
+                jsonObj.politicActivity = JSON.stringify(formObj.politicActivity);
+                jsonObj.publicity = JSON.stringify(formObj.publicity);
+                jsonObj.subAssessment = JSON.stringify(formObj.subAssessment);
                 let jsonString = JSON.stringify(jsonObj);
                 console.log(jsonString);
                 $.ajax({
@@ -327,10 +334,11 @@
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    method: "post",
+                    type: "post",
                     dataType: "json",
                     data: jsonString
                 });
+                alert("提交成功!");
             }
         </script>
 

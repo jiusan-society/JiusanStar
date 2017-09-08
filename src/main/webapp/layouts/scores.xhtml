@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">评分管理</ui:define>
+        <ui:define name="section">
+            <section class="Hui-article-box">
+                <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+                    <span class="c-gray en">&gt;</span>
+                    资讯管理
+                    <span class="c-gray en">&gt;</span>
+                    资讯列表
+                    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                       href="javascript:location.replace(location.href);" title="刷新"><i
+                            class="Hui-iconfont">&#xe68f;</i></a>
+                </nav>
+                <div class="Hui-article">
+                    <article class="cl pd-20">
+                        <div class="cl pd-5 bg-1 bk-gray mt-20">
+                            <span class="r">共有数据：<strong>#{scoreController.scores.size()}</strong> 条</span>
+                        </div>
+                        <div class="mt-20">
+                            <h:dataTable value="#{scoreController.scores}" var="score"
+                                         class="table table-border table-bordered table-hover table-bg">
+                                <h:column>
+                                    <f:facet name="header">SEQ</f:facet>
+                                    #{score.seq}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">CreateTime</f:facet>
+                                    #{score.createTime}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">LastUpdateTime</f:facet>
+                                    #{score.lastUpdateTime}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Total</f:facet>
+                                    #{score.total}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Operations</f:facet>
+                                    <div class="f-14 td-manage">
+                                        <a style="text-decoration:none" onClick="article_shenhe(this, '10001')"
+                                           href="javascript:" title="审核">审核</a>
+                                        <a style="text-decoration:none" class="ml-5"
+                                           onClick="article_edit('资讯编辑', 'article-add.html', '10001')"
+                                           href="javascript:" title="编辑">
+                                            <i class="Hui-iconfont">&#xe6df;</i>
+                                        </a>
+                                        <a style="text-decoration:none" class="ml-5"
+                                           onClick="article_del(this, '10001')" href="javascript:" title="删除">
+                                            <i class="Hui-iconfont">&#xe6e2;</i>
+                                        </a>
+                                    </div>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </ui:define>
+        <ui:define name="biz_script"></ui:define>
+    </ui:composition>
+</html>
+
