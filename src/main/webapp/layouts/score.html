@@ -2,7 +2,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>评分表</title>
+        <title>星级组织评分表</title>
         <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="../lib/bootstrap/css/bootstrap-grid.min.css" rel="stylesheet" type="text/css">
         <link href="../lib/bootstrap/css/bootstrap-reboot.min.css" rel="stylesheet" type="text/css">
@@ -295,14 +295,24 @@
                             <input style="text-align: center" type="number" disabled/>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="4">
+                            <p align="center">
+                                <strong>* 60 分以上合格，70 分及以上三星级，80 分及以上四星级，90 分及以上五星级。</strong>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div align="center">
+                                <input class="btn btn-primary" type="button" value="提交" onclick="toJson()">
+                                <input class="btn btn-danger" type="reset">
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <input class="btn btn-sm btn-primary" type="button" value="提交" onclick="toJson()">
-            <input class="btn btn-sm btn-danger" type="reset">
         </form>
-        <p>
-            * 60 分以上合格，70 分及以上三星级，80 分及以上四星级，90 分及以上五星级。
-        </p>
 
         <script>
             function toJson() {
