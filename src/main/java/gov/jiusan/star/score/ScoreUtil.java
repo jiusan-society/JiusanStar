@@ -3,9 +3,9 @@ package gov.jiusan.star.score;
 /**
  * @author Marcus Lin
  */
-class ScoreUtil {
+public class ScoreUtil {
 
-    static gov.jiusan.star.score.api.Score transferToDTO(Score score) {
+    public static gov.jiusan.star.score.api.Score transferToDTO(Score score) {
         gov.jiusan.star.score.api.Score scoreDTO = new gov.jiusan.star.score.api.Score();
         scoreDTO.setConferActivity(score.getConferActivity());
         scoreDTO.setSocialWork(score.getSocialWork());

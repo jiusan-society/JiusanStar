@@ -33,8 +33,11 @@ class ScoreDAO {
         return em.merge(score);
     }
 
-    List<Score> selectAll() {
-        return em.createNamedQuery("Score.findAll", Score.class).getResultList();
+    List<Score> select(int first, int amount) {
+        return em.createNamedQuery("Score.findAll", Score.class)
+                .setFirstResult(first)
+                .setMaxResults(amount)
+                .getResultList();
     }
 
     void delete(Score score) {

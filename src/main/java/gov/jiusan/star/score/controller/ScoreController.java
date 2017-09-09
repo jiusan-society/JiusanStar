@@ -25,7 +25,7 @@ public class ScoreController {
 
     @PostConstruct
     private void init() {
-        scores = ss.findAllScores();
+        scores = ss.findByPagination();
     }
 
     public ScoreService getSs() {
