@@ -55,7 +55,7 @@ public class ScoreServiceRest {
     @GET
     public RetrieveResponse retrieveScore(@PathParam("seq") Long seq) {
         Optional<Score> scoreEntity = scoreService.find(seq);
-        return scoreEntity.map(score -> RetrieveResponse.SUCCESS(ScoreUtil.transferToDTO(score))).orElse(RetrieveResponse.NO_SCORE);
+        return scoreEntity.map(score -> RetrieveResponse.SUCCESS(ScoreUtil.convertToDTO(score))).orElse(RetrieveResponse.NO_SCORE);
     }
 
     @Path("{seq}")
@@ -82,7 +82,7 @@ public class ScoreServiceRest {
 
         Score updatedScore = scoreService.update(request, score.get());
 
-        return UpdateResponse.SUCCESS(ScoreUtil.transferToDTO(updatedScore));
+        return UpdateResponse.SUCCESS(ScoreUtil.convertToDTO(updatedScore));
     }
 
     @Path("{seq}")
