@@ -33,8 +33,8 @@ class ScoreDAO {
         return em.merge(score);
     }
 
-    List<Score> select(int first, int amount) {
-        return em.createNamedQuery("Score.findAll", Score.class)
+    List<Score> selectByPagination(int first, int amount) {
+        return em.createNamedQuery("Score.selectAll", Score.class)
                 .setFirstResult(first)
                 .setMaxResults(amount)
                 .getResultList();

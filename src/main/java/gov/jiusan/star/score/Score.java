@@ -16,7 +16,7 @@ import java.util.Calendar;
 @Entity
 @Table(name = "score")
 @NamedQueries({
-        @NamedQuery(name = "Score.findAll", query = "select s from Score s")
+        @NamedQuery(name = "Score.selectAll", query = "select s from Score s")
 })
 public class Score {
 
