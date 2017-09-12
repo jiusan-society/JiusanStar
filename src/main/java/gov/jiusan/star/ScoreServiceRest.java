@@ -19,6 +19,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import java.util.Optional;
 
 /**
@@ -32,6 +34,7 @@ public class ScoreServiceRest {
     private ScoreService scoreService;
 
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     public CreateResponse createScore(CreateRequest request) {
         if (StringUtils.isEmpty(request.getConferActivity())) {
             return CreateResponse.NO_CONFER_ACTIVITY_SCORE;
@@ -53,6 +56,7 @@ public class ScoreServiceRest {
 
     @Path("{seq}")
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public RetrieveResponse retrieveScore(@PathParam("seq") Long seq) {
         Optional<Score> scoreEntity = scoreService.find(seq);
         return scoreEntity.map(score -> RetrieveResponse.SUCCESS(ScoreUtil.convertToDTO(score))).orElse(RetrieveResponse.NO_SCORE);
@@ -60,6 +64,7 @@ public class ScoreServiceRest {
 
     @Path("{seq}")
     @PUT
+    @Produces(MediaType.APPLICATION_JSON)
     public UpdateResponse updateScore(UpdateRequest request, @PathParam("seq") Long seq) {
         if (StringUtils.isEmpty(request.getConferActivity())) {
             return UpdateResponse.NO_CONFER_ACTIVITY_SCORE;
@@ -87,6 +92,7 @@ public class ScoreServiceRest {
 
     @Path("{seq}")
     @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
     public DeleteResponse deleteScore(@PathParam("seq") Long seq) {
         Optional<Score> score = scoreService.find(seq);
         if (!score.isPresent()) {
