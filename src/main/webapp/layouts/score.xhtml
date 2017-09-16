@@ -3,18 +3,19 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <ui:composition template="../template/tempalte.xhtml">
         <ui:define name="title">星级组织评分表</ui:define>
-        <ui:define name="head_js">
+        <ui:define name="js">
             <script type="text/javascript" src="#{request.contextPath}/lib/jquery/jquery.serializejson.min.js"></script>
         </ui:define>
         <ui:define name="layout">
             <div align="center">
                 <h1><strong>九三学社星级组织评分表</strong></h1>
             </div>
-            <h:form id="scoreForm">
+            <h:form>
                 <table class="table table-bordered">
                     <thead class="thead-inverse">
                         <tr>
@@ -40,12 +41,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="conferActivity[score1]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -55,12 +56,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="conferActivity[score2]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -70,12 +71,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="conferActivity[score3]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -93,12 +94,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="socialWork[score1]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -109,12 +110,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="socialWork[score2]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -124,12 +125,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="socialWork[score3]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -139,12 +140,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="socialWork[score4]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -154,12 +155,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="socialWork[score5]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -169,12 +170,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="socialWork[score6]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -184,12 +185,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="socialWork[score7]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -207,12 +208,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="politicActivity[score1]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -224,12 +225,12 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
+                                <h:inputText style="text-align: center" p:type="number" value="0"
                                              name="politicActivity[score2]"
-                                             required="required"/>
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -247,11 +248,11 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
-                                             name="socialContribution[score1]" required="required"/>
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialContribution[score1]" p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -261,11 +262,11 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0"
-                                             name="socialContribution[score2]" required="required"/>
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialContribution[score2]" p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -283,11 +284,11 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" value="0" name="publicity"
-                                             required="required"/>
+                                <h:inputText style="text-align: center" p:type="number" value="0" name="publicity"
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -305,11 +306,11 @@
                                 </p>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" name="subAssessment" type="number" value="0"
-                                             required="required"/>
+                                <h:inputText style="text-align: center" name="subAssessment" p:type="number" value="0"
+                                             p:required="required"/>
                             </td>
                             <td width="7%">
-                                <h:inputText style="text-align: center" type="number" disabled="disabled"/>
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
                             </td>
                         </tr>
                         <tr>
@@ -322,46 +323,14 @@
                         <tr>
                             <td colspan="4">
                                 <div align="center">
-                                    <h:inputText type="submit" class="btn btn-primary" value="提交" onclick="toJson()"/>
-                                    <h:inputText type="reset" value="重置" class="btn btn-danger"/>
+                                    <h:commandButton type="submit" class="btn btn-primary" value="提交"/>
+                                    <h:commandButton type="reset" value="重置" class="btn btn-danger"/>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </h:form>
-        </ui:define>
-        <ui:define name="body_js">
-            <h:outputScript>
-                function toJson() {
-                    // 把整个表单 serialize 成 json 对象
-                    let formObj = $("#scoreForm").serializeJSON({
-                        // 转化为相应类型，如当 type 为 number 时，"1" -> 1
-                        parseAll: true
-                    });
-                    console.log(formObj);
-                    let jsonObj = {};
-                    jsonObj.conferActivity = JSON.stringify(formObj.conferActivity);
-                    jsonObj.socialWork = JSON.stringify(formObj.socialWork);
-                    jsonObj.socialContribution = JSON.stringify(formObj.socialContribution);
-                    jsonObj.politicActivity = JSON.stringify(formObj.politicActivity);
-                    jsonObj.publicity = JSON.stringify(formObj.publicity);
-                    jsonObj.subAssessment = JSON.stringify(formObj.subAssessment);
-                    let jsonString = JSON.stringify(jsonObj);
-                    console.log(jsonString);
-                    $.ajax({
-                        url: "http://localhost:8080/JiusanStar/rs/score",
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        type: "post",
-                        dataType: "json",
-                        data: jsonString
-                    });
-                    alert("提交成功!");
-                }
-            </h:outputScript>
         </ui:define>
     </ui:composition>
 
