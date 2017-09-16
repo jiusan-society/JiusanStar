@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="../template/tempalte.xhtml">
+        <ui:define name="title">星级组织评分表</ui:define>
+        <ui:define name="js">
+            <script type="text/javascript" src="#{request.contextPath}/lib/jquery/jquery.serializejson.min.js"></script>
+        </ui:define>
+        <ui:define name="layout">
+            <div align="center">
+                <h1><strong>九三学社星级组织评分表</strong></h1>
+            </div>
+            <h:form>
+                <table class="table table-bordered">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th style="text-align: center">指标大类</th>
+                            <th style="text-align: center">指标小类及评分标准</th>
+                            <th style="text-align: center">自评分</th>
+                            <th style="text-align: center">考评分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="15%" rowspan="3">
+                                <p align="center">
+                                    会议活动
+                                </p>
+                                <p align="center">
+                                    （满分 25 分）
+                                </p>
+                            </td>
+                            <td width="75%">
+                                <p>
+                                    主委会议每次得 3 分。以工作手册记录和填报的材料为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="conferActivity[score1]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="75%">
+                                <p>
+                                    全体委员会议每次得 4 分。以工作手册记录和填报的材料为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="conferActivity[score2]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="75%">
+                                <p>
+                                    全体社员会议每次得 5 分。以工作手册记录和填报的材料为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="conferActivity[score3]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="7">
+                                <p align="center">
+                                    社务工作
+                                </p>
+                                <p align="center">
+                                    （满分 30 分）
+                                </p>
+                            </td>
+                            <td width="75%">
+                                <p>
+                                    委员会有书面的年度工作计划和总结，工作计划切实可行,工作总结全面、实事求是，并以工作计划指导活动，得 6 分，计划和总结少一项扣 3 分。以填报的材料为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialWork[score1]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="75%">
+                                <p>
+                                    正副主委和委员有分工，并按职责开展工作，得 3
+                                    分。为有效地开展社务工作和履行职能，建立起若干职能小组负责相关工作（如妇女、老年、青年、参政议政、社会服务等），并有效开展活动，得 5 分。以填报的材料和日常工作为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialWork[score2]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="75%">
+                                <p>
+                                    社员参加省级以上社内培训的每次加 1 分，或获省级以上社内奖励的每项加 1 分，满分 5 分。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialWork[score3]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="75%">
+                                <p>
+                                    注重委员会工作的制度化、规范化，建立并不断完善各项工作制度，得 3 分。以日常工作为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialWork[score4]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="75%">
+                                <p>
+                                    能将委员会会议或活动形成的文字、图片等材料整理归档，得 3 分。以日常工作为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialWork[score5]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="75%">
+                                <p>
+                                    规范填写社市委发放的基层工作手册，并进行年中检查、年末考核，得 3 分。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialWork[score6]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="75%">
+                                <p>
+                                    能与党委保持良好沟通，工作得到党委部门支持，与党委关系融洽，得 2 分。以日常工作为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialWork[score7]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">
+                                <p align="center">
+                                    参政议政
+                                </p>
+                                <p align="center">
+                                    （满分 20 分）
+                                </p>
+                            </td>
+                            <td width="75%">
+                                <p>
+                                    能围绕社市委和所在地方、单位中心工作召开参政议政方面的会议，得 4 分。开展专题调研活动得 4 分。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="politicActivity[score1]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="75%">
+                                <p>
+                                    能以委员会名义向社市委报送参政议政材料，或向所在地方、单位建言献策，提交合理化建议，每份材料得 3 分。其中上报社市委的参政议政材料，被社市委采用加 2
+                                    分；被社省委、中共市委、市人大、市政府、市政协或市委统战部采用加 4 分；被中共省委、省人大、省政府、省政协或省委统战部采用加 6
+                                    分。同一篇材料不累计加分，按最高加分计分。以填报的材料为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="politicActivity[score2]"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">
+                                <p align="center">
+                                    社会服务
+                                </p>
+                                <p align="center">
+                                    （满分 10 分）
+                                </p>
+                            </td>
+                            <td width="75%">
+                                <p>
+                                    能召开会议研究委员会的社会服务工作，得 4 分。以日常工作为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialContribution[score1]" p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="75%">
+                                <p>
+                                    以委员会名义组织开展的社会服务活动，不论人数，每次 3 分。以填报的材料为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0"
+                                             name="socialContribution[score2]" p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%">
+                                <p align="center">
+                                    宣传报道
+                                </p>
+                                <p align="center">
+                                    （满分 5 分）
+                                </p>
+                            </td>
+                            <td width="75%">
+                                <p>
+                                    以委员会名义撰写的报道，在社内媒体上发表文章，每篇得 2 分；在其他刊物上刊登九三工作文章，每篇得 3 分。同一篇稿件不累计得分，按最高得分计分。以填报的材料为依据。
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" value="0" name="publicity"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="9%">
+                                <p align="center">
+                                    下属支社年度考核结果
+                                </p>
+                                <p align="center">
+                                    （满分 10 分）
+                                </p>
+                            </td>
+                            <td width="75%">
+                                <p>
+                                    （所属支社的年度考核量化平均得分 × 实际参加考核支社数 ÷ 应参加考核支社数）÷ 10
+                                </p>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" name="subAssessment" p:type="number" value="0"
+                                             p:required="required"/>
+                            </td>
+                            <td width="7%">
+                                <h:inputText style="text-align: center" p:type="number" p:disabled="disabled"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p align="center" class="alert alert-danger">
+                                    <strong>60 分以上合格，70 分及以上三星级，80 分及以上四星级，90 分及以上五星级。</strong>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div align="center">
+                                    <h:commandButton type="submit" class="btn btn-primary" value="提交"/>
+                                    <h:commandButton type="reset" value="重置" class="btn btn-danger"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
