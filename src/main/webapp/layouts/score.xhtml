@@ -334,32 +334,32 @@
         <ui:define name="body_js">
             <h:outputScript>
                 function toJson() {
-                // 把整个表单 serialize 成 json 对象
-                let formObj = $("#scoreForm").serializeJSON({
-                // 转化为相应类型，如当 type 为 number 时，"1" -> 1
-                parseAll: true
-                });
-                console.log(formObj);
-                let jsonObj = {};
-                jsonObj.conferActivity = JSON.stringify(formObj.conferActivity);
-                jsonObj.socialWork = JSON.stringify(formObj.socialWork);
-                jsonObj.socialContribution = JSON.stringify(formObj.socialContribution);
-                jsonObj.politicActivity = JSON.stringify(formObj.politicActivity);
-                jsonObj.publicity = JSON.stringify(formObj.publicity);
-                jsonObj.subAssessment = JSON.stringify(formObj.subAssessment);
-                let jsonString = JSON.stringify(jsonObj);
-                console.log(jsonString);
-                $.ajax({
-                url: "http://localhost:8080/JiusanStar/rs/score",
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-                type: "post",
-                dataType: "json",
-                data: jsonString
-                });
-                alert("提交成功!");
+                    // 把整个表单 serialize 成 json 对象
+                    let formObj = $("#scoreForm").serializeJSON({
+                        // 转化为相应类型，如当 type 为 number 时，"1" -> 1
+                        parseAll: true
+                    });
+                    console.log(formObj);
+                    let jsonObj = {};
+                    jsonObj.conferActivity = JSON.stringify(formObj.conferActivity);
+                    jsonObj.socialWork = JSON.stringify(formObj.socialWork);
+                    jsonObj.socialContribution = JSON.stringify(formObj.socialContribution);
+                    jsonObj.politicActivity = JSON.stringify(formObj.politicActivity);
+                    jsonObj.publicity = JSON.stringify(formObj.publicity);
+                    jsonObj.subAssessment = JSON.stringify(formObj.subAssessment);
+                    let jsonString = JSON.stringify(jsonObj);
+                    console.log(jsonString);
+                    $.ajax({
+                        url: "http://localhost:8080/JiusanStar/rs/score",
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        type: "post",
+                        dataType: "json",
+                        data: jsonString
+                    });
+                    alert("提交成功!");
                 }
             </h:outputScript>
         </ui:define>
