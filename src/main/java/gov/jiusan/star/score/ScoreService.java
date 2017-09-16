@@ -79,6 +79,6 @@ public class ScoreService {
      * @return a list of scores
      */
     public List<Score> findByPagination(int first, int amount) {
-        return scoreDAO.select(first, amount);
+        return scoreDAO.selectByPagination(first, amount);
     }
 }
