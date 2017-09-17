@@ -6,8 +6,10 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title><ui:insert name="title"></ui:insert></title>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/lib/font-awesome/css/font-awesome.min.css"/>
         <link type="text/css" rel="stylesheet" href="#{request.contextPath}/lib/bootstrap/css/bootstrap.min.css"/>
         <link type="text/css" rel="stylesheet" href="#{request.contextPath}/lib/bootstrap/css/bootstrap-theme.min.css"/>
+        <ui:insert name="css"></ui:insert>
         <script type="text/javascript" src="#{request.contextPath}/lib/jquery/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="#{request.contextPath}/lib/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="#{request.contextPath}/lib/vue/vue.js"></script>
