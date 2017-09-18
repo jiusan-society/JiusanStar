@@ -11,10 +11,9 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
-group = 'com.example'
+group = 'gov.jiusan'
 version = '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
