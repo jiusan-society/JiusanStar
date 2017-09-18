@@ -1,15 +1,15 @@
 package gov.jiusan.star;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author Marcus Lin
  */
-@ApplicationPath("rs")
-public class StarApplication extends Application {
+@SpringBootApplication
+public class StarApplication {
 
-    public StarApplication() {
-
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(StarApplication.class, args);
     }
 }

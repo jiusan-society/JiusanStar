@@ -1,6 +1,7 @@
 package gov.jiusan.star.score;
 
-import javax.enterprise.context.ApplicationScoped;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Calendar;
@@ -10,8 +11,8 @@ import java.util.Optional;
 /**
  * @author Marcus Lin
  */
-@ApplicationScoped
-class ScoreDAO {
+@Repository
+class ScoreRepository {
 
     @PersistenceContext
     private EntityManager em;

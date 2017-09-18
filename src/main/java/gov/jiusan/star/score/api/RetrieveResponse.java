@@ -6,15 +6,9 @@ package gov.jiusan.star.score.api;
 public class RetrieveResponse {
 
     public static final RetrieveResponse NO_SCORE = new RetrieveResponse(false, Status.NO_SCORE);
-
-    public static RetrieveResponse SUCCESS(Score content) {
-        return new RetrieveResponse(true, Status.SUCCESS, content);
-    }
-
     private boolean success;
     private Status status;
     private Score content;
-
     private RetrieveResponse() {
 
     }
@@ -27,6 +21,10 @@ public class RetrieveResponse {
     private RetrieveResponse(boolean success, Status status, Score content) {
         this(success, status);
         this.content = content;
+    }
+
+    public static RetrieveResponse SUCCESS(Score content) {
+        return new RetrieveResponse(true, Status.SUCCESS, content);
     }
 
     public boolean isSuccess() {

@@ -2,20 +2,20 @@ package gov.jiusan.star.score;
 
 import gov.jiusan.star.score.api.CreateRequest;
 import gov.jiusan.star.score.api.UpdateRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * @author Marcus Lin
  */
-@Stateless
+@Service
 public class ScoreService {
 
-    @Inject
-    private ScoreDAO scoreDAO;
+    @Autowired
+    private ScoreRepository scoreRepository;
 
     /**
      * create the score info
@@ -31,7 +31,7 @@ public class ScoreService {
         score.setPublicity(request.getPublicity());
         score.setSubAssessment(request.getSubAssessment());
         score.setTotal(request.getTotal());
-        scoreDAO.create(score);
+        scoreRepository.create(score);
     }
 
     /**
@@ -41,13 +41,13 @@ public class ScoreService {
      * @return a response info
      */
     public Optional<Score> find(Long seq) {
-        return scoreDAO.retrieve(seq);
+        return scoreRepository.retrieve(seq);
     }
 
     /**
      * update the score info
      *
-     * @param request the request info
+     * @param request      the request info
      * @param existedScore the existed score entity
      * @return a response info
      */
@@ -59,7 +59,7 @@ public class ScoreService {
         existedScore.setPublicity(request.getPublicity());
         existedScore.setSubAssessment(request.getSubAssessment());
         existedScore.setTotal(request.getTotal());
-        return scoreDAO.update(existedScore);
+        return scoreRepository.update(existedScore);
     }
 
     /**
@@ -68,7 +68,7 @@ public class ScoreService {
      * @param score the score entity
      */
     public void delete(Score score) {
-        scoreDAO.delete(score);
+        scoreRepository.delete(score);
     }
 
     /**
@@ -79,6 +79,6 @@ public class ScoreService {
      * @return a list of scores
      */
     public List<Score> findByPagination(int first, int amount) {
-        return scoreDAO.selectByPagination(first, amount);
+        return scoreRepository.selectByPagination(first, amount);
     }
 }

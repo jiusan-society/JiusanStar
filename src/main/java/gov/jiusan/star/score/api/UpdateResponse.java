@@ -15,10 +15,6 @@ public class UpdateResponse {
     private Status status;
     private Score content;
 
-    public static UpdateResponse SUCCESS(Score content) {
-        return new UpdateResponse(true, Status.SUCCESS, content);
-    }
-
     private UpdateResponse() {
     }
 
@@ -30,6 +26,10 @@ public class UpdateResponse {
     private UpdateResponse(boolean success, Status status, Score content) {
         this(success, status);
         this.content = content;
+    }
+
+    public static UpdateResponse SUCCESS(Score content) {
+        return new UpdateResponse(true, Status.SUCCESS, content);
     }
 
     public boolean isSuccess() {

@@ -1,8 +1,5 @@
-package gov.jiusan.star;
+package gov.jiusan.star.score;
 
-import gov.jiusan.star.score.Score;
-import gov.jiusan.star.score.ScoreService;
-import gov.jiusan.star.score.ScoreUtil;
 import gov.jiusan.star.score.api.CreateRequest;
 import gov.jiusan.star.score.api.CreateResponse;
 import gov.jiusan.star.score.api.DeleteResponse;
@@ -10,31 +7,25 @@ import gov.jiusan.star.score.api.RetrieveResponse;
 import gov.jiusan.star.score.api.UpdateRequest;
 import gov.jiusan.star.score.api.UpdateResponse;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import java.util.Optional;
 
 /**
  * @author Marcus Lin
  */
-@Path("score")
-@RequestScoped
-public class ScoreServiceRest {
+@RequestMapping(path = "api/score")
+@RestController
+public class ScoreRestController {
 
-    @EJB
+    @Autowired
     private ScoreService scoreService;
 
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
+    @RequestMapping(method = RequestMethod.POST)
     public CreateResponse createScore(CreateRequest request) {
         if (StringUtils.isEmpty(request.getConferActivity())) {
             return CreateResponse.NO_CONFER_ACTIVITY_SCORE;
@@ -54,18 +45,14 @@ public class ScoreServiceRest {
         return CreateResponse.SUCCESS;
     }
 
-    @Path("{seq}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public RetrieveResponse retrieveScore(@PathParam("seq") Long seq) {
+    @RequestMapping(path = "{seq}", method = RequestMethod.GET)
+    public RetrieveResponse retrieveScore(@PathVariable("seq") Long seq) {
         Optional<Score> scoreEntity = scoreService.find(seq);
         return scoreEntity.map(score -> RetrieveResponse.SUCCESS(ScoreUtil.convertToDTO(score))).orElse(RetrieveResponse.NO_SCORE);
     }
 
-    @Path("{seq}")
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    public UpdateResponse updateScore(UpdateRequest request, @PathParam("seq") Long seq) {
+    @RequestMapping(path = "{seq}", method = RequestMethod.PUT)
+    public UpdateResponse updateScore(UpdateRequest request, @PathVariable("seq") Long seq) {
         if (StringUtils.isEmpty(request.getConferActivity())) {
             return UpdateResponse.NO_CONFER_ACTIVITY_SCORE;
         }
@@ -90,10 +77,8 @@ public class ScoreServiceRest {
         return UpdateResponse.SUCCESS(ScoreUtil.convertToDTO(updatedScore));
     }
 
-    @Path("{seq}")
-    @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
-    public DeleteResponse deleteScore(@PathParam("seq") Long seq) {
+    @RequestMapping(path = "{seq}", method = RequestMethod.DELETE)
+    public DeleteResponse deleteScore(@PathVariable("seq") Long seq) {
         Optional<Score> score = scoreService.find(seq);
         if (!score.isPresent()) {
             return DeleteResponse.NO_SCORE;
