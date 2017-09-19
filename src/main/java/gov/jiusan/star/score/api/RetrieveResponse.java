@@ -9,6 +9,7 @@ public class RetrieveResponse {
     private boolean success;
     private Status status;
     private Score content;
+
     private RetrieveResponse() {
 
     }
