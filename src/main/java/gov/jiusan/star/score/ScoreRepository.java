@@ -36,9 +36,9 @@ class ScoreRepository {
 
     List<Score> selectByPagination(int first, int amount) {
         return em.createNamedQuery("Score.selectAll", Score.class)
-                .setFirstResult(first)
-                .setMaxResults(amount)
-                .getResultList();
+            .setFirstResult(first)
+            .setMaxResults(amount)
+            .getResultList();
     }
 
     void delete(Score score) {
