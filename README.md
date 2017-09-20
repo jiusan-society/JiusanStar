@@ -44,12 +44,17 @@
 
    * Configurations -> server-config -> HTTP Service -> HTTP Listeners
 
-   * http-listener-x General 标签页开启 Security，SSL 页面填写 Certificate NickName
+   * http-listener-x General 标签页开启 Security，SSL 页面填写 Certificate NickName（此处 http-listener-1，即用于监听 8080 端口的监听器，修改失败，提示已有 ssl element，由于时间原因暂时放弃，TODO。admin-listener 与 http-listener-2 均正常）
    
+5. Restart Payara 以使更改生效，并查看效果
 
-***如需使用 CA 颁布的证书，其操作步骤中仅前置作业中的第一项与上述步骤有略微不同，其余均相同，以我在云服务器上的试验为例***
-试验环境：Ubuntu 16.04，Payara
-证书来源：通过 certbot 获取
+***如需使用 CA 颁布的证书，以我在云服务器上的试验为例***
+
+试验环境：Ubuntu 16.04，Oracle JDK 1.8.0_144，Payara 4.1.2.172 Full
+
+简述步骤：通过 certbot 获取 Let's Encrypt 提供的免费证书，获取的证书和秘钥分别为 cert.pem 与 privkey.pem，使用 openssl 将两者 bundle 成 PKCS12 格式，依次写入 keystore.jks，cacerts.jks，然后于 Admin GUI 中配置 http listener 信息，最后重启 Payara
+
+所以，首尾呼应，无论是自制证书还是 CA 颁发证书，两者仅在取得方式上有所区别，其他步骤基本一致
 
 ### 总结：
 
