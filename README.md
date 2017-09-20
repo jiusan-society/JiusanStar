@@ -1,4 +1,4 @@
-<h2 align="center">Payara 开启 HTTPS</h2>
+<h2 align="center">Enable HTTPS in Payara Server</h2>
 
 ### 参考资料：
 
