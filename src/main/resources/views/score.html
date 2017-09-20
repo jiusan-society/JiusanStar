@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8"/>
         <title>星级组织评分表</title>
-        <link type="text/css" rel="stylesheet" href="/resources/lib/bootstrap/css/bootstrap.min.css"/>
-        <link type="text/css" rel="stylesheet" href="/resources/lib/bootstrap/css/bootstrap-theme.min.css"/>
-        <script type="text/javascript" src="/resources/lib/jquery/jquery-3.2.1.min.js"></script>
+        <link type="text/css" rel="stylesheet" th:href="@{lib/bootstrap/css/bootstrap.min.css}"/>
+        <link type="text/css" rel="stylesheet" th:href="@{lib/bootstrap/css/bootstrap-theme.min.css}"/>
+        <script type="text/javascript" th:src="@{lib/jquery/jquery-3.2.1.min.js}"></script>
     </head>
     <body>
         <div align="center">
             <h1><strong>九三学社星级组织评分表</strong></h1>
         </div>
         <br/>
-        <form>
+        <form th:method="POST" th:action="@{/score}">
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead>
