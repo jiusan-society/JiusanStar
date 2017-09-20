@@ -13,7 +13,7 @@ public class ScoreController {
     @Autowired
     private ScoreService scoreService;
 
-    @GetMapping(value = {"/score"})
+    @GetMapping(path = {"/score"})
     public String welcomePage() {
         return "score";
     }

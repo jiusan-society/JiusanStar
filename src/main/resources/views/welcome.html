@@ -3,17 +3,19 @@
     <head>
         <meta charset="UTF-8"/>
         <title>星级组织评定系统</title>
-        <link type="text/css" rel="stylesheet" th:href="@{lib/bootstrap/css/bootstrap.min.css}"/>
-        <link type="text/css" rel="stylesheet" th:href="@{lib/bootstrap/css/bootstrap-theme.min.css}"/>
-        <link type="text/css" rel="stylesheet" th:href="@{lib/font-awesome/css/font-awesome.min.css}"/>
+        <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}"/>
+        <link type="text/css" rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}"/>
+        <link type="text/css" rel="stylesheet" th:href="@{css/font-awesome.min.css}"/>
         <link type="text/css" rel="stylesheet" th:href="@{css/templatemo_style.css}"/>
-        <script type="text/javascript" th:src="@{lib/jquery/jquery-3.2.1.min.js}"></script>
+        <script type="text/javascript" th:src="@{js/jquery-3.2.1.min.js}"></script>
     </head>
-    <body class="templatemo-bg-image-1">
+    <body class="templatemo-bg-image-1" onload="document.login_form.username.focus()">
         <div class="container">
             <div class="col-md-12">
                 <h1 class="margin-bottom-30" style="color: white">星级组织评定系统</h1>
-                <form class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" th:method="POST" th:action="@{/welcome}">
+                <form name="login_form"
+                      class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30"
+                      th:method="POST" th:action="@{/welcome}">
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="control-wrapper">
