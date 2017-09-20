@@ -16,7 +16,7 @@
 
 **前置作业**
 
-1. 使用 openssl 生成公钥和秘钥（Windows 下使用的是 Microsoft Management Console），在这里我生成 3MEdu.cer 和 3MEdu.key （如果是 CA 颁发的证书，则普遍提供的是 bundle file，格式有多种，这里用的是 PKCS12，生成名字形如 3MEdu.p12）
+1. 使用 openssl 生成公钥和秘钥（Windows 下使用的是 Microsoft Management Console），在这里我生成 3MEdu.cer 和 3MEdu.key （如果是 CA 颁发的证书，则普遍提供的是 bundle file，格式有多种，比如 PKCS12，生成的文件形如 3MEdu.p12）
 
    `openssl req -x509 -newkey rsa:4096 -keyout 3MEdu.key -out 3MEdu.crt -days 365`
 
@@ -28,13 +28,15 @@
 
 1. 推荐更改 payara 的 master password，默认为 changeit，答案找寻自 http://blog.payara.fish/administering-payara-server-with-the-cli 此处的密码后续要用到
 
+   `asadmin change-master-password`
+
 2. 将证书写入 keystore.jks
 
    * 首先，将前面提到的 3MEdu.cer 和 3MEdu.key 打包成为 PKCS12 bundle file，这里我取的名字为 3MEdu.p12
    
      `openssl pkcs12 -export -in 3MEdu.crt -inkey 3MEdu.key -out 3MEdu.p12 -name 3medu_cert`
 
-   * 然后，使用 openssl 将其写入 keystore.jks 中
+   * 然后，使用 keytool 将其写入 keystore.jks 中
    
      `keytool -importkeystore -destkeystore keystore.jks -srckeystore 3MEdu.p12 -srcstoretype PKCS12 -alias 3medu_cert`
 
