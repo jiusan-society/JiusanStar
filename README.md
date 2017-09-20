@@ -47,8 +47,8 @@
 4. 在 Admin GUI 中开启 HTTP Listener Security（本实验省略在命令行中使用 asadmin 的方式）
 
    * Configurations -> server-config -> HTTP Service -> HTTP Listeners
-
-   * http-listener-x General 标签页开启 Security，SSL 页面填写 Certificate NickName（此处 http-listener-1，即用于监听 8080 端口的监听器，修改失败，提示已有 ssl element，由于时间原因暂时放弃，TODO。admin-listener 与 http-listener-2 均正常）
+   
+   * http-listener-x General 标签页开启 Security，SSL 页面填写 Certificate NickName（此处 http-listener-1，即用于监听 8080 端口的监听器，修改失败，提示已有 ssl element，由于时间原因暂时放弃，TODO。admin-listener 与 http-listener-2 均正常）
    
 5. Restart Payara 以使更改生效，并查看效果
 
