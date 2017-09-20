@@ -20,11 +20,11 @@
 
    `openssl req -x509 -newkey rsa:4096 -keyout 3MEdu.key -out 3MEdu.crt -days 365`
 
-2. 将这两个文件（或那个 3MEdu.p12）放置到 <Payara_Install_Dir>/glassfish/domains/domain1/config 文件夹下
+2. 将这两个文件移动至 <Payara_Install_Dir>/glassfish/domains/domain1/config 文件夹下
 
 3. 进入后续步骤前推荐先关闭 payara
 
-**后续操作**（本实验中均在 <Payara_Install_Dir>/glassfish/domains/domain1/config 下执行命令行操作）
+**后续操作**（后续均在 <Payara_Install_Dir>/glassfish/domains/domain1/config 下执行命令行操作）
 
 1. 推荐更改 payara 的 master password，默认为 changeit，答案找寻自 http://blog.payara.fish/administering-payara-server-with-the-cli 此处的密码后续要用到
 
