@@ -18,7 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .formLogin().loginPage("/welcome")
             .and()
-            .authorizeRequests().antMatchers("/score").authenticated().anyRequest().permitAll();
+            .authorizeRequests().antMatchers("/score", "/dashboard").authenticated().anyRequest().permitAll();
     }
 
     @Override

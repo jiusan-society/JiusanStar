@@ -13,4 +13,9 @@ public class StarController {
     public String welcomePage() {
         return "welcome";
     }
+
+    @GetMapping(value = "/dashboard")
+    public String dashboardPage() {
+        return "dashboard";
+    }
 }
