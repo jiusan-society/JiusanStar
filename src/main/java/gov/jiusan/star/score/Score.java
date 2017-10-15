@@ -14,7 +14,7 @@ import java.util.Calendar;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "score")
+@Table(name = "org_score")
 @NamedQueries({
     @NamedQuery(name = "Score.selectAll", query = "select s from Score s")
 })
