@@ -32,7 +32,6 @@ public class ScoreController {
         return "score_editor";
     }
 
-
     @PostMapping
     public String createScore(gov.jiusan.star.score.model.Score score) {
         scoreService.create(score);
