@@ -23,9 +23,15 @@ public class ScoreController {
     private ScoreService scoreService;
 
     @GetMapping
-    public String scorePage() {
-        return "score";
+    public String scoreViewPage() {
+        return "score_viewer";
     }
+
+    @GetMapping(path = "editor")
+    public String scoreEditPage() {
+        return "score_editor";
+    }
+
 
     @PostMapping
     public String createScore(gov.jiusan.star.score.model.Score score) {
@@ -37,7 +43,7 @@ public class ScoreController {
     public String retrieveScore(@PathVariable("seq") Long seq, Model model) {
         Optional<Score> score = scoreService.find(seq);
         score.ifPresent(score1 -> model.addAttribute("score", ScoreUtil.convertToDTO(score1)));
-        return "score";
+        return "score_editor";
     }
 
     @PutMapping(path = "{seq}")
