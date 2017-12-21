@@ -1,9 +1,15 @@
-package gov.jiusan.star.score.api;
+package gov.jiusan.star.score.model;
+
+import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * @author Marcus Lin
  */
-public class CreateRequest {
+public class Score implements Serializable {
+
+    // Score 流水号
+    private Long seq;
 
     // 会议活动得分，多个评选项，用 JSON 存放
     private String conferActivity;
@@ -26,7 +32,20 @@ public class CreateRequest {
     // 总分
     private int total;
 
-    public CreateRequest() {
+    private Calendar createTime;
+
+    private Calendar lastUpdateTime;
+
+    public Score() {
+
+    }
+
+    public Long getSeq() {
+        return seq;
+    }
+
+    public void setSeq(Long seq) {
+        this.seq = seq;
     }
 
     public String getConferActivity() {
@@ -83,5 +102,21 @@ public class CreateRequest {
 
     public void setTotal(int total) {
         this.total = total;
+    }
+
+    public Calendar getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Calendar createTime) {
+        this.createTime = createTime;
+    }
+
+    public Calendar getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Calendar lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }

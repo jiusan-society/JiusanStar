@@ -15,9 +15,6 @@ import java.util.Calendar;
  */
 @Entity
 @Table(name = "org_score")
-@NamedQueries({
-    @NamedQuery(name = "Score.selectAll", query = "select s from Score s")
-})
 public class Score {
 
     @Id

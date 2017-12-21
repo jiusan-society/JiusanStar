@@ -1,5 +1,6 @@
 package gov.jiusan.star.score;
 
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -12,36 +13,5 @@ import java.util.Optional;
  * @author Marcus Lin
  */
 @Repository
-class ScoreRepository {
-
-    @PersistenceContext
-    private EntityManager em;
-
-    void create(Score score) {
-        Calendar calendar = Calendar.getInstance();
-        score.setCreateTime(calendar);
-        score.setLastUpdateTime(calendar);
-        em.persist(score);
-    }
-
-    Optional<Score> retrieve(Long id) {
-        Score score = em.find(Score.class, id);
-        return Optional.ofNullable(score);
-    }
-
-    Score update(Score score) {
-        score.setLastUpdateTime(Calendar.getInstance());
-        return em.merge(score);
-    }
-
-    List<Score> selectByPagination(int first, int amount) {
-        return em.createNamedQuery("Score.selectAll", Score.class)
-            .setFirstResult(first)
-            .setMaxResults(amount)
-            .getResultList();
-    }
-
-    void delete(Score score) {
-        em.remove(score);
-    }
+interface ScoreRepository extends CrudRepository<Score, Long> {
 }

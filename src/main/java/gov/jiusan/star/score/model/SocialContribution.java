@@ -1,9 +1,11 @@
-package gov.jiusan.star.score.detail;
+package gov.jiusan.star.score.model;
+
+import java.io.Serializable;
 
 /**
  * @author Marcus Lin
  */
-public class SocialContribution {
+public class SocialContribution implements Serializable {
 
     private int score1;
     private int score2;

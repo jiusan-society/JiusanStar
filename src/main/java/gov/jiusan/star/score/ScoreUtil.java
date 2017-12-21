@@ -5,8 +5,8 @@ package gov.jiusan.star.score;
  */
 public class ScoreUtil {
 
-    public static gov.jiusan.star.score.api.Score convertToDTO(Score score) {
-        gov.jiusan.star.score.api.Score scoreDTO = new gov.jiusan.star.score.api.Score();
+    public static gov.jiusan.star.score.model.Score convertToDTO(Score score) {
+        gov.jiusan.star.score.model.Score scoreDTO = new gov.jiusan.star.score.model.Score();
         scoreDTO.setConferActivity(score.getConferActivity());
         scoreDTO.setSocialWork(score.getSocialWork());
         scoreDTO.setSocialContribution(score.getSocialContribution());

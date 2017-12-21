@@ -1,11 +1,8 @@
 package gov.jiusan.star.score;
 
-import gov.jiusan.star.score.api.CreateRequest;
-import gov.jiusan.star.score.api.UpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,65 +17,58 @@ public class ScoreService {
     /**
      * create the score info
      *
-     * @param request the request info
+     * @param model
      */
-    public void create(CreateRequest request) {
+    public void create(gov.jiusan.star.score.model.Score model) {
         Score score = new Score();
-        score.setConferActivity(request.getConferActivity());
-        score.setSocialWork(request.getSocialWork());
-        score.setSocialContribution(request.getSocialContribution());
-        score.setPoliticActivity(request.getPoliticActivity());
-        score.setPublicity(request.getPublicity());
-        score.setSubAssessment(request.getSubAssessment());
-        score.setTotal(request.getTotal());
-        scoreRepository.create(score);
+        score.setConferActivity(model.getConferActivity());
+        score.setSocialWork(model.getSocialWork());
+        score.setSocialContribution(model.getSocialContribution());
+        score.setPoliticActivity(model.getPoliticActivity());
+        score.setPublicity(model.getPublicity());
+        score.setSubAssessment(model.getSubAssessment());
+        score.setTotal(model.getTotal());
+        scoreRepository.save(score);
     }
 
     /**
      * retrieve the score info
      *
-     * @param seq the score entity's seq
-     * @return a response info
+     * @param seq
+     * @return
      */
     public Optional<Score> find(Long seq) {
-        return scoreRepository.retrieve(seq);
+        return Optional.ofNullable(scoreRepository.findOne(seq));
     }
 
     /**
      * update the score info
      *
-     * @param request      the request info
-     * @param existedScore the existed score entity
-     * @return a response info
+     * @param seq
+     * @param model
+     * @return
      */
-    public Score update(UpdateRequest request, Score existedScore) {
-        existedScore.setConferActivity(request.getConferActivity());
-        existedScore.setSocialWork(request.getSocialWork());
-        existedScore.setSocialContribution(request.getSocialContribution());
-        existedScore.setPoliticActivity(request.getPoliticActivity());
-        existedScore.setPublicity(request.getPublicity());
-        existedScore.setSubAssessment(request.getSubAssessment());
-        existedScore.setTotal(request.getTotal());
-        return scoreRepository.update(existedScore);
+    public void update(Long seq, gov.jiusan.star.score.model.Score model) {
+        Optional<Score> score = find(seq);
+        if (score.isPresent()) {
+            Score existedScore = score.get();
+            existedScore.setConferActivity(model.getConferActivity());
+            existedScore.setSocialWork(model.getSocialWork());
+            existedScore.setSocialContribution(model.getSocialContribution());
+            existedScore.setPoliticActivity(model.getPoliticActivity());
+            existedScore.setPublicity(model.getPublicity());
+            existedScore.setSubAssessment(model.getSubAssessment());
+            existedScore.setTotal(model.getTotal());
+        }
     }
 
     /**
      * delete the score info
      *
-     * @param score the score entity
+     * @param seq
      */
-    public void delete(Score score) {
-        scoreRepository.delete(score);
+    public void delete(Long seq) {
+        scoreRepository.delete(seq);
     }
 
-    /**
-     * fetch a list of scores
-     *
-     * @param first  the position that we start to fetch
-     * @param amount the amount that we want to fetch
-     * @return a list of scores
-     */
-    public List<Score> findByPagination(int first, int amount) {
-        return scoreRepository.selectByPagination(first, amount);
-    }
 }
