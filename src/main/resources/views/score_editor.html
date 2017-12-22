@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
         <meta charset="UTF-8"/>
         <title>星级组织评分表</title>
@@ -11,6 +11,7 @@
                 th:src="@{/js/jquery-3.2.1.min.js}"></script>
     </head>
     <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
         <div class="container">
             <div align="center">
                 <h3><strong>星级组织评分表</strong></h3>

@@ -42,7 +42,7 @@ public class ScoreController {
     public String retrieveScore(@PathVariable("seq") Long seq, Model model) {
         Optional<Score> score = scoreService.find(seq);
         score.ifPresent(score1 -> model.addAttribute("score", ScoreUtil.convertToDTO(score1)));
-        return "score_editor";
+        return "score_viewer";
     }
 
     @PutMapping(path = "{seq}")
