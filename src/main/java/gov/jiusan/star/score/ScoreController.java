@@ -29,33 +29,42 @@ public class ScoreController {
         return new gov.jiusan.star.score.model.Score();
     }
 
-    @GetMapping
-    public String scoreViewPage() {
-        return "score_viewer";
-    }
-
-    @GetMapping(path = "editor")
-    public String scoreEditPage() {
-        return "score_editor";
+    // TODO[2017-12-24][Marcus Lin]: 页面显示查找到的数据功能待添加
+    @GetMapping(path = "editor/{seq}")
+    public String scoreEditPage(@PathVariable("seq") Long seq, Model model) {
+        Optional<Score> score = scoreService.find(seq);
+        if (score.isPresent()) {
+            model.addAttribute("score", ScoreUtil.convertToDTO(score.get()));
+            return "score_editor";
+        }
+        return "error";
     }
 
     @PostMapping
-    public String createScore(@ModelAttribute gov.jiusan.star.score.model.Score score) {
-        scoreService.create(score);
-        return "success";
-    }
-
-    @GetMapping(path = "{seq}")
-    public String retrieveScore(@PathVariable("seq") Long seq, Model model) {
-        Optional<Score> score = scoreService.find(seq);
-        score.ifPresent(score1 -> model.addAttribute("score", ScoreUtil.convertToDTO(score1)));
+    public String createScore(@ModelAttribute gov.jiusan.star.score.model.Score score, Model model) {
+        model.addAttribute("score", ScoreUtil.convertToDTO(scoreService.create(score)));
         return "score_viewer";
     }
 
-    @PutMapping(path = "{seq}")
-    public String updateScore(@PathVariable("seq") Long seq, @ModelAttribute gov.jiusan.star.score.model.Score score) {
-        scoreService.update(seq, score);
-        return "success";
+    // TODO[2017-12-24][Marcus Lin]: 页面显示查找到的数据功能待添加
+    @GetMapping(path = "{seq}")
+    public String retrieveScore(@PathVariable("seq") Long seq, Model model) {
+        Optional<Score> score = scoreService.find(seq);
+        if (score.isPresent()) {
+            model.addAttribute("score", ScoreUtil.convertToDTO(score.get()));
+            return "score_viewer";
+        }
+        return "error";
+    }
+
+    @PutMapping
+    public String updateScore(@ModelAttribute gov.jiusan.star.score.model.Score score, Model model) {
+        Optional<Score> existedScore = scoreService.find(score.getSeq());
+        if (existedScore.isPresent()) {
+            model.addAttribute("score", ScoreUtil.convertToDTO(scoreService.update(existedScore.get(), score)));
+            return "score_viewer";
+        }
+        return "error";
     }
 
     @DeleteMapping(path = "{seq}")

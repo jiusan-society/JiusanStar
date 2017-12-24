@@ -15,15 +15,16 @@ public class ScoreRepositoryImpl implements ScoreRepositoryCustom {
     private EntityManager em;
 
     @Override
-    public void create(Score entity) {
+    public Score create(Score entity) {
         entity.setCreateTime(Calendar.getInstance());
         entity.setLastUpdateTime(Calendar.getInstance());
         em.persist(entity);
+        return entity;
     }
 
     @Override
-    public void update(Score entity) {
+    public Score update(Score entity) {
         entity.setLastUpdateTime(Calendar.getInstance());
-        em.merge(entity);
+        return em.merge(entity);
     }
 }

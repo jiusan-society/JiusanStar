@@ -19,10 +19,10 @@ public class ScoreService {
      *
      * @param model
      */
-    public void create(gov.jiusan.star.score.model.Score model) {
+    public Score create(gov.jiusan.star.score.model.Score model) {
         Score score = new Score();
         ScoreUtil.setToEntity(score, model);
-        scoreRepository.create(score);
+        return scoreRepository.create(score);
     }
 
     /**
@@ -38,17 +38,12 @@ public class ScoreService {
     /**
      * update the score info
      *
-     * @param seq
+     * @param existedScore
      * @param model
-     * @return
      */
-    public void update(Long seq, gov.jiusan.star.score.model.Score model) {
-        Optional<Score> score = find(seq);
-        if (score.isPresent()) {
-            Score existedScore = score.get();
-            ScoreUtil.setToEntity(existedScore, model);
-            scoreRepository.update(existedScore);
-        }
+    public Score update(Score existedScore, gov.jiusan.star.score.model.Score model) {
+        ScoreUtil.setToEntity(existedScore, model);
+        return scoreRepository.update(existedScore);
     }
 
     /**

@@ -7,7 +7,7 @@ package gov.jiusan.star.score;
  */
 interface ScoreRepositoryCustom {
 
-    void create(Score entity);
+    Score create(Score entity);
 
-    void update(Score entity);
+    Score update(Score entity);
 }
