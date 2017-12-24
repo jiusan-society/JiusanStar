@@ -19,7 +19,7 @@
                 <h3><strong>星级组织评分表</strong></h3>
             </div>
             <br/>
-            <form th:method="POST" th:action="@{/score}">
+            <form th:method="POST" th:action="@{/score}" th:object="${score}">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                         <thead>
@@ -48,13 +48,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{conferActivity.score1}"
                                            value="0"
-                                           name="conferActivity[score1]" required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -66,14 +67,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{conferActivity.score2}"
                                            value="0"
-                                           name="conferActivity[score2]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -85,14 +86,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{conferActivity.score3}"
                                            value="0"
-                                           name="conferActivity[score3]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -111,15 +112,15 @@
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
+                                           th:field="*{socialWork.score1}"
                                            type="number"
                                            value="0"
-                                           name="socialWork[score1]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -133,14 +134,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{socialWork.score2}"
                                            value="0"
-                                           name="socialWork[score2]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -152,14 +153,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{socialWork.score3}"
                                            value="0"
-                                           name="socialWork[score3]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -171,14 +172,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{socialWork.score4}"
                                            value="0"
-                                           name="socialWork[score4]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -190,14 +191,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{socialWork.score5}"
                                            value="0"
-                                           name="socialWork[score5]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -209,14 +210,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{socialWork.score6}"
                                            value="0"
-                                           name="socialWork[score6]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -228,14 +229,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{socialWork.score7}"
                                            value="0"
-                                           name="socialWork[score7]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -255,14 +256,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{politicActivity.score1}"
                                            value="0"
-                                           name="politicActivity[score1]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -276,14 +277,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{politicActivity.score2}"
                                            value="0"
-                                           name="politicActivity[score2]"
-                                           required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -303,13 +304,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{socialContribution.score1}"
                                            value="0"
-                                           name="socialContribution[score1]" required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -321,13 +323,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
+                                           th:field="*{socialContribution.score2}"
                                            value="0"
-                                           name="socialContribution[score2]" required="true"/>
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -348,13 +351,14 @@
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           value="0" name="publicity"
-                                           required="true"/>
+                                           th:field="*{publicity}"
+                                           value="0"
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>
@@ -373,14 +377,15 @@
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
-                                           name="subAssessment"
-                                           type="number" value="0"
-                                           required="true"/>
+                                           type="number"
+                                           th:field="*{subAssessment}"
+                                           value="0"
+                                           th:required="required"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           disabled="true"/>
+                                           th:disabled="disabled"/>
                                 </td>
                             </tr>
                             <tr>

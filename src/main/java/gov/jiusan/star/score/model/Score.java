@@ -12,16 +12,16 @@ public class Score implements Serializable {
     private Long seq;
 
     // 会议活动得分，多个评选项，用 JSON 存放
-    private String conferActivity;
+    private ConferActivity conferActivity;
 
     // 社务工作得分，多个评选项，用 JSON 存放
-    private String socialWork;
+    private SocialWork socialWork;
 
     // 参政议政得分，多个评选项，用 JSON 存放
-    private String politicActivity;
+    private PoliticActivity politicActivity;
 
     // 社会服务得分，多个评选项，用 JSON 存放
-    private String socialContribution;
+    private SocialContribution socialContribution;
 
     // 宣传报道得分
     private int publicity;
@@ -48,35 +48,35 @@ public class Score implements Serializable {
         this.seq = seq;
     }
 
-    public String getConferActivity() {
+    public ConferActivity getConferActivity() {
         return conferActivity;
     }
 
-    public void setConferActivity(String conferActivity) {
+    public void setConferActivity(ConferActivity conferActivity) {
         this.conferActivity = conferActivity;
     }
 
-    public String getSocialWork() {
+    public SocialWork getSocialWork() {
         return socialWork;
     }
 
-    public void setSocialWork(String socialWork) {
+    public void setSocialWork(SocialWork socialWork) {
         this.socialWork = socialWork;
     }
 
-    public String getPoliticActivity() {
+    public PoliticActivity getPoliticActivity() {
         return politicActivity;
     }
 
-    public void setPoliticActivity(String politicActivity) {
+    public void setPoliticActivity(PoliticActivity politicActivity) {
         this.politicActivity = politicActivity;
     }
 
-    public String getSocialContribution() {
+    public SocialContribution getSocialContribution() {
         return socialContribution;
     }
 
-    public void setSocialContribution(String socialContribution) {
+    public void setSocialContribution(SocialContribution socialContribution) {
         this.socialContribution = socialContribution;
     }
 

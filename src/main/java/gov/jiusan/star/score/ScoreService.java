@@ -21,14 +21,8 @@ public class ScoreService {
      */
     public void create(gov.jiusan.star.score.model.Score model) {
         Score score = new Score();
-        score.setConferActivity(model.getConferActivity());
-        score.setSocialWork(model.getSocialWork());
-        score.setSocialContribution(model.getSocialContribution());
-        score.setPoliticActivity(model.getPoliticActivity());
-        score.setPublicity(model.getPublicity());
-        score.setSubAssessment(model.getSubAssessment());
-        score.setTotal(model.getTotal());
-        scoreRepository.save(score);
+        ScoreUtil.setToEntity(score, model);
+        scoreRepository.create(score);
     }
 
     /**
@@ -52,13 +46,8 @@ public class ScoreService {
         Optional<Score> score = find(seq);
         if (score.isPresent()) {
             Score existedScore = score.get();
-            existedScore.setConferActivity(model.getConferActivity());
-            existedScore.setSocialWork(model.getSocialWork());
-            existedScore.setSocialContribution(model.getSocialContribution());
-            existedScore.setPoliticActivity(model.getPoliticActivity());
-            existedScore.setPublicity(model.getPublicity());
-            existedScore.setSubAssessment(model.getSubAssessment());
-            existedScore.setTotal(model.getTotal());
+            ScoreUtil.setToEntity(existedScore, model);
+            scoreRepository.update(existedScore);
         }
     }
 

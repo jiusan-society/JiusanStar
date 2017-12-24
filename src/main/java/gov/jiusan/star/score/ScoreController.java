@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +23,12 @@ public class ScoreController {
     @Autowired
     private ScoreService scoreService;
 
+    // REMIND[2017-12-24][Marcus Lin]: 用于 thymleaf form 的 obj binding
+    @ModelAttribute("score")
+    public gov.jiusan.star.score.model.Score generateScoreObjForBinding() {
+        return new gov.jiusan.star.score.model.Score();
+    }
+
     @GetMapping
     public String scoreViewPage() {
         return "score_viewer";
@@ -33,7 +40,7 @@ public class ScoreController {
     }
 
     @PostMapping
-    public String createScore(gov.jiusan.star.score.model.Score score) {
+    public String createScore(@ModelAttribute gov.jiusan.star.score.model.Score score) {
         scoreService.create(score);
         return "success";
     }
@@ -46,7 +53,7 @@ public class ScoreController {
     }
 
     @PutMapping(path = "{seq}")
-    public String updateScore(@PathVariable("seq") Long seq, gov.jiusan.star.score.model.Score score) {
+    public String updateScore(@PathVariable("seq") Long seq, @ModelAttribute gov.jiusan.star.score.model.Score score) {
         scoreService.update(seq, score);
         return "success";
     }
