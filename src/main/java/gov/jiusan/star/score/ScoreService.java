@@ -32,6 +32,9 @@ public class ScoreService {
      * @return
      */
     public Optional<Score> find(Long seq) {
+        if (seq == null) {
+            return Optional.empty();
+        }
         return Optional.ofNullable(scoreRepository.findOne(seq));
     }
 
