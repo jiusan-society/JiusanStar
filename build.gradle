@@ -31,10 +31,8 @@ idea {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.8'
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+    compile('com.fasterxml.jackson.core:jackson-core:2.8.8')
+    compile('org.apache.commons:commons-lang3:3.4')
     compile('mysql:mysql-connector-java')
     compile('com.sendgrid:sendgrid-java:4.0.1')
     compile('org.springframework.boot:spring-boot-starter')
