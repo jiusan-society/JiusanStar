@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import java.util.Calendar;
 
 /**
@@ -16,7 +17,15 @@ import java.util.Calendar;
 public class Score {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableGenerator(
+        name = "SCORE_SEQ_GENERATOR",
+        table = "score_seq_gen",
+        pkColumnName = "seq_name",
+        pkColumnValue = "SCORE_SEQ",
+        valueColumnName = "seq_value",
+        initialValue = 50
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "SCORE_SEQ_GENERATOR")
     @Column(name = "seq", nullable = false)
     private Long seq;
 

@@ -13,6 +13,7 @@ public class ScoreUtil {
 
     public static gov.jiusan.star.score.model.Score convertToDTO(Score score) {
         gov.jiusan.star.score.model.Score scoreDTO = new gov.jiusan.star.score.model.Score();
+        scoreDTO.setSeq(score.getSeq());
         scoreDTO.setConferActivity(JacksonUtil.toObj(score.getConferActivity(), ConferActivity.class).get());
         scoreDTO.setSocialWork(JacksonUtil.toObj(score.getSocialWork(), SocialWork.class).get());
         scoreDTO.setSocialContribution(JacksonUtil.toObj(score.getSocialContribution(), SocialContribution.class).get());

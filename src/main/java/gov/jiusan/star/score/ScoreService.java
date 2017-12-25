@@ -19,7 +19,7 @@ public class ScoreService {
      *
      * @param model
      */
-    public Score create(gov.jiusan.star.score.model.Score model) {
+    public Long create(gov.jiusan.star.score.model.Score model) {
         Score score = new Score();
         ScoreUtil.setToEntity(score, model);
         return scoreRepository.create(score);
@@ -44,7 +44,7 @@ public class ScoreService {
      * @param existedScore
      * @param model
      */
-    public Score update(Score existedScore, gov.jiusan.star.score.model.Score model) {
+    public Long update(Score existedScore, gov.jiusan.star.score.model.Score model) {
         ScoreUtil.setToEntity(existedScore, model);
         return scoreRepository.update(existedScore);
     }

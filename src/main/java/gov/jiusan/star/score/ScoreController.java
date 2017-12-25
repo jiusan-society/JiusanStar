@@ -38,14 +38,13 @@ public class ScoreController {
     }
 
     @PostMapping
-    public String createScore(@ModelAttribute gov.jiusan.star.score.model.Score score, Model model) {
-        model.addAttribute("score", ScoreUtil.convertToDTO(scoreService.create(score)));
-        return "score_viewer";
+    public String createScore(@ModelAttribute gov.jiusan.star.score.model.Score score) {
+        return "redirect:/score?seq=" + scoreService.create(score);
     }
 
     // TODO[2017-12-24][Marcus Lin]: 页面显示查找到的数据功能待添加
     @GetMapping
-    public String retrieveScore(@RequestParam(value = "seq", required = false) Long seq, Model model) {
+    public String retrieveScore(@RequestParam(value = "seq") Long seq, Model model) {
         Optional<Score> score = scoreService.find(seq);
         if (score.isPresent()) {
             model.addAttribute("score", ScoreUtil.convertToDTO(score.get()));
@@ -55,13 +54,9 @@ public class ScoreController {
     }
 
     @PutMapping
-    public String updateScore(@ModelAttribute gov.jiusan.star.score.model.Score score, Model model) {
+    public String updateScore(@ModelAttribute gov.jiusan.star.score.model.Score score) {
         Optional<Score> existedScore = scoreService.find(score.getSeq());
-        if (existedScore.isPresent()) {
-            model.addAttribute("score", ScoreUtil.convertToDTO(scoreService.update(existedScore.get(), score)));
-            return "score_viewer";
-        }
-        return "error";
+        return existedScore.map(score1 -> "redirect:/score?seq=" + scoreService.update(score1, score)).orElse("error");
     }
 
     @DeleteMapping
