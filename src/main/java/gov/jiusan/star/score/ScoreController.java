@@ -42,7 +42,6 @@ public class ScoreController {
         return "redirect:/score?seq=" + scoreService.create(score);
     }
 
-    // TODO[2017-12-24][Marcus Lin]: 页面显示查找到的数据功能待添加
     @GetMapping
     public String retrieveScore(@RequestParam(value = "seq") Long seq, Model model) {
         Optional<Score> score = scoreService.find(seq);
