@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -52,9 +51,9 @@ public class ScoreController {
         return "error";
     }
 
-    @PutMapping
-    public String updateScore(@ModelAttribute gov.jiusan.star.score.model.Score score) {
-        Optional<Score> existedScore = scoreService.find(score.getSeq());
+    @PostMapping(path = "/update")
+    public String updateScore(@RequestParam(value = "seq") Long seq, @ModelAttribute gov.jiusan.star.score.model.Score score) {
+        Optional<Score> existedScore = scoreService.find(seq);
         return existedScore.map(s -> "redirect:/score?seq=" + scoreService.update(s, score)).orElse("error");
     }
 

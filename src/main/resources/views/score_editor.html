@@ -19,7 +19,9 @@
                 <h3><strong>星级组织评分表</strong></h3>
             </div>
             <br/>
-            <form th:method="POST" th:action="@{/score}" th:object="${score}">
+            <form th:method="POST"
+                  th:action="${#httpServletRequest.getParameter('seq')} != null ? '/score/update?seq=' + ${#httpServletRequest.getParameter('seq')} : '/score'"
+                  th:object="${score}">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                         <thead>
