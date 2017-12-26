@@ -56,7 +56,7 @@ public class ScoreController {
     @PutMapping
     public String updateScore(@ModelAttribute gov.jiusan.star.score.model.Score score) {
         Optional<Score> existedScore = scoreService.find(score.getSeq());
-        return existedScore.map(score1 -> "redirect:/score?seq=" + scoreService.update(score1, score)).orElse("error");
+        return existedScore.map(s -> "redirect:/score?seq=" + scoreService.update(s, score)).orElse("error");
     }
 
     @DeleteMapping
