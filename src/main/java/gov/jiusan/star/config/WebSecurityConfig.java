@@ -15,16 +15,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .formLogin().loginPage("/welcome")
+        http.formLogin().loginPage("/login")
             .and()
-            .authorizeRequests().antMatchers("/score/**", "/dashboard").authenticated().anyRequest().permitAll();
+            .authorizeRequests().antMatchers("/", "/index", "/score/**").authenticated()
+            .anyRequest().permitAll();
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .inMemoryAuthentication()
-            .withUser("user").password("password").roles("USER");
+            .withUser("admin").password("admin").roles("USER");
     }
 }

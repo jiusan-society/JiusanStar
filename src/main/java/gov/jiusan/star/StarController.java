@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class StarController {
 
-    @GetMapping(value = {"/", "/welcome"})
-    public String welcomePage() {
-        return "welcome";
+    @GetMapping(value = {"/", "/index"})
+    public String indexPage() {
+        return "index";
     }
 
-    @GetMapping(value = "/dashboard")
-    public String dashboardPage() {
-        return "dashboard";
+    @GetMapping(value = "/login")
+    public String loginPage() {
+        return "login";
     }
+
 }
