@@ -3,6 +3,8 @@ package gov.jiusan.star.score;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -43,6 +45,7 @@ public class ScoreService {
      *
      * @param existedScore
      * @param model
+     * @return
      */
     public Long update(Score existedScore, gov.jiusan.star.score.model.Score model) {
         ScoreUtil.setToEntity(existedScore, model);
@@ -50,12 +53,14 @@ public class ScoreService {
     }
 
     /**
-     * delete the score info
+     * find all scores
      *
-     * @param seq
+     * @return
      */
-    public void delete(Long seq) {
-        scoreRepository.delete(seq);
+    public List<Score> findAll() {
+        List<Score> scoreList = new ArrayList<>();
+        scoreRepository.findAll().forEach(scoreList::add);
+        return scoreList;
     }
 
 }
