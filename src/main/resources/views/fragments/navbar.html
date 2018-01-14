@@ -20,16 +20,24 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                                   aria-haspopup="true" aria-expanded="false">管理员 <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <!--TODO[2017-12-27][Marcus Lin]: 功能待添加-->
                                     <li><a href="#">个人信息</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <!--TODO[2017-12-27][Marcus Lin]: 功能待添加-->
-                                    <li><a href="#">安全登出</a></li>
+                                    <!--REMIND[2018-01-14][Marcus Lin]: 为了样式不变形，同时又能采用 form 的 post，故使用此法-->
+                                    <li><a onclick="logout()">安全登出</a></li>
+                                    <script>
+                                        function logout() {
+                                            $('#logoutBtn').click();
+                                        }
+                                    </script>
                                 </ul>
                             </li>
                         </ul>
+                        <form th:action="@{/logout}" method="post">
+                            <input id="logoutBtn" hidden="hidden" type="submit" value="安全登出"/>
+                        </form>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
             </nav>
