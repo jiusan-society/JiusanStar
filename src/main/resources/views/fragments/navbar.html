@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
     <body>
         <header th:fragment="navbar">
             <nav class="navbar navbar-default">
@@ -20,7 +20,10 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-haspopup="true" aria-expanded="false">管理员 <span class="caret"></span></a>
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <span sec:authentication="name">Marcus</span>
+                                    <span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <!--TODO[2017-12-27][Marcus Lin]: 功能待添加-->
                                     <li><a href="#">个人信息</a></li>
