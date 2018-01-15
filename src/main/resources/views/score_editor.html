@@ -52,12 +52,13 @@
                                            type="number"
                                            th:field="*{conferActivity.score1}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -71,12 +72,13 @@
                                            type="number"
                                            th:field="*{conferActivity.score2}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -90,12 +92,13 @@
                                            type="number"
                                            th:field="*{conferActivity.score3}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -117,12 +120,13 @@
                                            th:field="*{socialWork.score1}"
                                            type="number"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -138,12 +142,13 @@
                                            type="number"
                                            th:field="*{socialWork.score2}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -157,12 +162,13 @@
                                            type="number"
                                            th:field="*{socialWork.score3}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -176,12 +182,13 @@
                                            type="number"
                                            th:field="*{socialWork.score4}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -195,12 +202,13 @@
                                            type="number"
                                            th:field="*{socialWork.score5}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -214,12 +222,13 @@
                                            type="number"
                                            th:field="*{socialWork.score6}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -233,12 +242,13 @@
                                            type="number"
                                            th:field="*{socialWork.score7}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -260,12 +270,13 @@
                                            type="number"
                                            th:field="*{politicActivity.score1}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -281,12 +292,13 @@
                                            type="number"
                                            th:field="*{politicActivity.score2}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -308,12 +320,13 @@
                                            type="number"
                                            th:field="*{socialContribution.score1}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -327,12 +340,13 @@
                                            type="number"
                                            th:field="*{socialContribution.score2}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -355,12 +369,13 @@
                                            type="number"
                                            th:field="*{publicity}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -382,12 +397,13 @@
                                            type="number"
                                            th:field="*{subAssessment}"
                                            th:value="0"
-                                           th:required="required"/>
+                                           th:required="required"
+                                           th:disabled="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                                 <td width="10%">
                                     <input class="form-control input-sm" style="text-align: center"
                                            type="number"
-                                           th:disabled="disabled"/>
+                                           th:disabled="${#authorization.expression('!hasRole(''ROLE_ADMIN'')')}"/>
                                 </td>
                             </tr>
                             <tr>
