@@ -13,8 +13,12 @@ import java.util.Optional;
 @Service
 public class ScoreService {
 
+    private final ScoreRepository scoreRepository;
+
     @Autowired
-    private ScoreRepository scoreRepository;
+    public ScoreService(ScoreRepository scoreRepository) {
+        this.scoreRepository = scoreRepository;
+    }
 
     /**
      * create the score info

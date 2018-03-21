@@ -19,8 +19,12 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "score")
 public class ScoreController {
 
+    private final ScoreService scoreService;
+
     @Autowired
-    private ScoreService scoreService;
+    public ScoreController(ScoreService scoreService) {
+        this.scoreService = scoreService;
+    }
 
     // TODO[2017-12-24][Marcus Lin]: 页面显示查找到的数据功能待添加
     @GetMapping(path = "editor")
@@ -52,7 +56,7 @@ public class ScoreController {
         return "error";
     }
 
-    @PostMapping(path = "/update")
+    @PostMapping(path = "update")
     public String updateScore(@RequestParam(value = "seq") Long seq, @ModelAttribute gov.jiusan.star.score.model.Score score) {
         Optional<Score> existedScore = scoreService.find(seq);
         return existedScore.map(s -> "redirect:/score?seq=" + scoreService.update(s, score)).orElse("error");
