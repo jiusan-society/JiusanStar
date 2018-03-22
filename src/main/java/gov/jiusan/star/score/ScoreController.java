@@ -1,6 +1,7 @@
 package gov.jiusan.star.score;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +63,7 @@ public class ScoreController {
         return existedScore.map(s -> "redirect:/score?seq=" + scoreService.update(s, score)).orElse("error");
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(path = "list")
     public String retrieveScoreList(Model model) {
         model.addAttribute("scoreList", scoreService.findAll().stream().map(ScoreUtil::convertToDTO).collect(Collectors.toList()));
