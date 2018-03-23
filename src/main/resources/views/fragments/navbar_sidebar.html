@@ -118,22 +118,14 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="/index"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
                         </li>
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Flot Charts</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Morris.js Charts</a>
-                                </li>
-                            </ul>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+                            <a href="/score/editor"><i class="fa fa-bar-chart-o fa-fw"></i> 评分表</a>
                             <!-- /.nav-second-level -->
                         </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                            <a href="/score/list"><i class="fa fa-table fa-fw"></i> 所有评分</a>
                         </li>
                     </ul>
                 </div>

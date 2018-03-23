@@ -15,30 +15,42 @@
                 th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
     </head>
     <body>
-        <div th:replace="fragments/navbar :: navbar"></div>
-        <div class="container">
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>序列号</th>
-                        <th>创建时间</th>
-                        <th>更新时间</th>
-                        <th>自评总分</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="score : ${scoreList}">
-                        <td th:text="${score.seq}"></td>
-                        <td th:text="${#dates.format(score.createTime, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td th:text="${#dates.format(score.lastUpdateTime, 'yyyy-MM-dd HH:mm')}"></td>
-                        <td th:text="${score.total}"></td>
-                        <td>
-                            <a th:href="'/score/editor?seq=' + ${score.seq}">评分</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div id="wrapper">
+            <div th:replace="fragments/navbar_sidebar :: navbar_sidebar"></div>
+            <div id="page-wrapper" style="min-height: 808px;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">所有评分</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>序列号</th>
+                                    <th>创建时间</th>
+                                    <th>更新时间</th>
+                                    <th>自评总分</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="score : ${scoreList}">
+                                    <td th:text="${score.seq}"></td>
+                                    <td th:text="${#dates.format(score.createTime, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${#dates.format(score.lastUpdateTime, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${score.total}"></td>
+                                    <td>
+                                        <a th:href="'/score/editor?seq=' + ${score.seq}">评分</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
