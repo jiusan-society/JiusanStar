@@ -15,7 +15,7 @@ import java.util.Collection;
  * @author Marcus Lin
  */
 @Component
-public class RedirectComponent implements AuthenticationSuccessHandler {
+public class LoginRedirectComponent implements AuthenticationSuccessHandler {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
