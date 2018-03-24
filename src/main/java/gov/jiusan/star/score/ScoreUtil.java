@@ -9,9 +9,9 @@ import gov.jiusan.star.util.JacksonUtil;
 /**
  * @author Marcus Lin
  */
-public class ScoreUtil {
+class ScoreUtil {
 
-    public static gov.jiusan.star.score.model.Score convertToDTO(Score score) {
+    static gov.jiusan.star.score.model.Score convertToDTO(Score score) {
         gov.jiusan.star.score.model.Score scoreDTO = new gov.jiusan.star.score.model.Score();
         scoreDTO.setSeq(score.getSeq());
         scoreDTO.setConferActivity(JacksonUtil.toObj(score.getConferActivity(), ConferActivity.class).get());
@@ -26,7 +26,7 @@ public class ScoreUtil {
         return scoreDTO;
     }
 
-    public static void setToEntity(Score scoreEntity, gov.jiusan.star.score.model.Score score) {
+    static void setToEntity(Score scoreEntity, gov.jiusan.star.score.model.Score score) {
         scoreEntity.setConferActivity(JacksonUtil.toString(score.getConferActivity()).get());
         scoreEntity.setSocialWork(JacksonUtil.toString(score.getSocialWork()).get());
         scoreEntity.setSocialContribution(JacksonUtil.toString(score.getSocialContribution()).get());

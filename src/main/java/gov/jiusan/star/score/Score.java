@@ -14,7 +14,7 @@ import java.util.Calendar;
  */
 @Entity
 @Table(name = "org_score")
-public class Score {
+class Score {
 
     @Id
     @TableGenerator(
