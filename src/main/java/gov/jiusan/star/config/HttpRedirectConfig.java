@@ -9,11 +9,15 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+
+// 用于部署云服务器后的 http 强制跳转 https
 
 /**
  * @author Marcus Lin
  */
 @Configuration
+@Profile("prod")
 public class HttpRedirectConfig {
 
     @Value("${server.port}")
@@ -39,7 +43,7 @@ public class HttpRedirectConfig {
     private Connector initiateHttpConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("http");
-        connector.setPort(8080);
+        connector.setPort(80);
         connector.setSecure(false);
         connector.setRedirectPort(port);
         return connector;
