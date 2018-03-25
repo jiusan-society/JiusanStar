@@ -7,14 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "org_score")
-class Score {
+@Table(name = "score")
+class Score implements Serializable {
 
     @Id
     @TableGenerator(
