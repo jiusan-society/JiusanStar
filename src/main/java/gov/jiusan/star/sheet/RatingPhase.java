@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -78,7 +79,7 @@ class RatingPhase implements Serializable {
     }
 
     public List<RatingDetails> getRatingDetails() {
-        return ratingDetails;
+        return ratingDetails == null ? ratingDetails = new ArrayList<>() : ratingDetails;
     }
 
     void setRatingDetails(List<RatingDetails> ratingDetails) {

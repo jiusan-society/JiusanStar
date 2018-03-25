@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "rating_sheet")
-class RatingSheet implements Serializable {
+public class RatingSheet implements Serializable {
 
     @Id
     private Long seq;
@@ -91,7 +92,7 @@ class RatingSheet implements Serializable {
     }
 
     public List<RatingPhase> getRatingPhases() {
-        return ratingPhases;
+        return ratingPhases == null ? ratingPhases = new ArrayList<>() : ratingPhases;
     }
 
     void setRatingPhases(List<RatingPhase> ratingPhases) {
