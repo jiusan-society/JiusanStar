@@ -20,7 +20,7 @@ class Score implements Serializable {
     @Id
     @TableGenerator(
         name = "SCORE_SEQ_GENERATOR",
-        table = "score_seq_gen",
+        table = "star_seq_gen",
         pkColumnName = "seq_name",
         pkColumnValue = "SCORE_SEQ",
         valueColumnName = "seq_value",

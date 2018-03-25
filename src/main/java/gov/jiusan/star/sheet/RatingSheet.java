@@ -3,10 +3,13 @@ package gov.jiusan.star.sheet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +23,15 @@ import java.util.List;
 public class RatingSheet implements Serializable {
 
     @Id
+    @TableGenerator(
+        name = "SHEET_SEQ_GENERATOR",
+        table = "star_seq_gen",
+        pkColumnName = "seq_name",
+        pkColumnValue = "SHEET_SEQ",
+        valueColumnName = "seq_value",
+        initialValue = 50
+    )
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "SHEET_SEQ_GENERATOR")
     private Long seq;
 
     /**
@@ -35,10 +47,10 @@ public class RatingSheet implements Serializable {
     private String description;
 
     /**
-     * 该评分表的用户最高可得分
+     * 该评分表的最高可得分
      */
     @Column(name = "max_score", nullable = false)
-    private Integer maxScore;
+    private Integer maxScore = 100;
 
     /**
      * 评分大类

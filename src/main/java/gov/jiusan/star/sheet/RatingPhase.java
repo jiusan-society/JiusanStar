@@ -30,7 +30,7 @@ class RatingPhase implements Serializable {
 
 
     /**
-     * 该指标大类的用户最高可得分
+     * 该指标大类的最高可得分
      */
     @Column(name = "max_score", nullable = false)
     private Integer maxScore;

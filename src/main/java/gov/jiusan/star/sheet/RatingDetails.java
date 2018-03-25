@@ -24,7 +24,7 @@ class RatingDetails implements Serializable {
     private String description;
 
     /**
-     * 该指标细则的用户最高可得分
+     * 该指标细则的最高可得分
      */
     @Column(name = "max_score", nullable = false)
     private Integer maxScore;
