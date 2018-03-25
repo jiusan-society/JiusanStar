@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @Profile("prod")
-public class HttpRedirectConfig {
+public class HttpRedirectToHttpsConfig {
 
     @Value("${server.port}")
     private int port;
