@@ -1,4 +1,4 @@
-package gov.jiusan.star.config;
+package gov.jiusan.star.security;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
