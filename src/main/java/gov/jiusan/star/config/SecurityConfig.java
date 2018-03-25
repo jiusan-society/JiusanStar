@@ -1,13 +1,16 @@
 package gov.jiusan.star.config;
 
-import gov.jiusan.star.redirect.LoginRedirectComponent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
+
+import java.util.Collection;
 
 /**
  * @author Marcus Lin
@@ -17,12 +20,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final LoginRedirectComponent redirectBean;
-
-    @Autowired
-    public SecurityConfig(LoginRedirectComponent redirectBean) {
-        this.redirectBean = redirectBean;
-    }
+    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -32,7 +30,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin()
             .loginPage("/login").permitAll()
-            .successHandler(redirectBean)
+            .successHandler(((req, resp, auth) -> {
+                Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+                authorities.forEach(authority -> {
+                    switch (authority.getAuthority()) {
+                        case "ROLE_USER":
+                            try {
+                                redirectStrategy.sendRedirect(req, resp, "/index");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "ROLE_ADMIN":
+                            try {
+                                redirectStrategy.sendRedirect(req, resp, "/score/list");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }))
             .and()
             .logout();
     }
