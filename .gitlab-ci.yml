@@ -30,7 +30,7 @@ package_to_docker_image:
   only:
     - master
 
-deploy_on_aliyun:
+deploy_to_aliyun:
   stage: deploy
   before_script:
     - apk update && apk add sshpass
