@@ -10,19 +10,25 @@ stages:
   - package
 
 before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
 
 gradle-build:
   stage: build
   script:
-    - gradle bootRepackage
+    - ./gradlew bootRepackage
   only:
     - master
 
 package:
   stage: package
   script:
-    - gradle copyJarToDockerDir
+    - ./gradlew copyJarToDockerDir
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
   except:
