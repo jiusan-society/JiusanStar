@@ -9,7 +9,7 @@ stages:
   - deploy
 
 before_script:
-  - apt-get update -qq && apt-get install -y -qq sshpass
+  - apk update && apk add sshpass
 
 build_jar:
   image: gradle:latest
