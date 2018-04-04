@@ -37,6 +37,6 @@ deploy_on_aliyun:
   script:
     - sshpass -V
     - export SSHPASS="$REMOTE_SERVER_PASSWD"
-    - sshpass -e scp -o stricthostkeychecking=no -r . root@www.marcux.space
+    - sshpass -e scp -o stricthostkeychecking=no root@www.marcux.space
     - ls -al
     - docker pull registry.gitlab.com/linfaimom/jiusanstar
