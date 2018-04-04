@@ -4,21 +4,25 @@ image: docker:latest
 
 services:
   - docker:dind
+  
+stages:
+  - build
+  - package
 
 before_script:
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
-build-master:
+gradle-build:
   stage: build
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
-    - docker push "$CI_REGISTRY_IMAGE"
+    - gradle bootRepackage
   only:
     - master
 
-build:
-  stage: build
+package:
+  stage: package
   script:
+    - gradle copyJarToDockerDir
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
   except:
