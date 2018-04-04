@@ -1,4 +1,4 @@
-image: docker:latest
+image: openjdk:8
 
 services:
   - docker:dind
@@ -16,7 +16,6 @@ cache:
     - .gradle/caches
 
 gradle-build:
-  image: openjdk:8
   stage: build
   script:
     - ./gradlew bootRepackage
