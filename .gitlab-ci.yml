@@ -33,11 +33,9 @@ package_to_docker_image:
 deploy_on_aliyun:
   stage: deploy
   before_script:
-    - apk update && apk add sshpass rsync bzip2
+    - apk update && apk add sshpass
   script:
-    - ls -al
     - sshpass -V
-    - export SSHPASS="$REMOTE_SERVER_PASSWD"
-    - sshpass -e ssh root@www.marcux.space
-    - ls -al
-    - docker pull registry.gitlab.com/linfaimom/jiusanstar
+    - export SSHPASS=$REMOTE_SERVER_PASSWD
+    - echo $SSHPASS
+    - sshpass -e StrictHostKeyChecking=no ssh root@www.marcux.space "docker pull registry.gitlab.com/linfaimom/jiusanstar"
