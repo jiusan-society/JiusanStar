@@ -8,10 +8,10 @@ stages:
   - package
   - deploy
 
-before-script:
+before_script:
   - apt-get update -qq && apt-get install -y -qq sshpass
 
-build-jar:
+build_jar:
   image: gradle:latest
   stage: build
   script:
@@ -23,7 +23,7 @@ build-jar:
   only:
     - master
 
-package-as-docker-image:
+package_to_docker_image:
   stage: package
   script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
@@ -32,7 +32,7 @@ package-as-docker-image:
   only:
     - master
 
-deploy-on-aliyun:
+deploy_on_aliyun:
   stage: deploy
   script:
     - sshpass -V
