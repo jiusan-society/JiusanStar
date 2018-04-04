@@ -18,7 +18,7 @@ build_jar:
       - ./*.jar
   only:
     - master
-  tag:
+  tags:
     - run-on-mbp
 
 package_to_docker_image:
@@ -30,5 +30,5 @@ package_to_docker_image:
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
   only:
     - master
-  tag:
+  tags:
     - run-on-mbp
