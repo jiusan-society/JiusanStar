@@ -2,21 +2,13 @@ image: docker:latest
 
 services:
   - docker:dind
-  
+
 stages:
   - build
   - package
 
-before_script:
-  - export GRADLE_USER_HOME=`pwd`/.gradle
-
-cache:
-  paths:
-    - .gradle/wrapper
-    - .gradle/caches
-
 build-jar:
-  image: openjdk:8
+  image: gradle:latest
   stage: build
   script:
     - ./gradlew bootRepackage
@@ -24,7 +16,7 @@ build-jar:
     - master
 
 package-as-docker-image:
-  image: openjdk:8
+  image: gradle:latest
   stage: package
   script:
     - ./gradlew copyJarToRootDir
