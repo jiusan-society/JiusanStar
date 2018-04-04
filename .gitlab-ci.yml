@@ -1,4 +1,4 @@
-image: openjdk:8
+image: docker:latest
 
 services:
   - docker:dind
@@ -15,18 +15,19 @@ cache:
     - .gradle/wrapper
     - .gradle/caches
 
-gradle-build:
+build-jar:
+  image: openjdk:8
   stage: build
   script:
     - ./gradlew bootRepackage
   only:
     - master
 
-package:
-  image: docker:latest
+package-as-docker-image:
+  image: openjdk:8
   stage: package
   script:
-    - ./gradlew copyJarToDockerDir
+    - ./gradlew copyJarToRootDir
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"

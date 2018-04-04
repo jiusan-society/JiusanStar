@@ -31,7 +31,7 @@ idea {
 }
 
 // 用于将 jar 拷贝至 docker 文件夹，然后使用 IDEA 带的 docker 工具将该 jar build 为 image
-task copyJarToDockerDir(dependsOn: bootRepackage, type: Copy) {
+task copyJarToRootDir(dependsOn: bootRepackage, type: Copy) {
     from 'build/libs/'
     include '**/*.jar'
     rename { String jarName ->
