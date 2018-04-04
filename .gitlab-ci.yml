@@ -35,8 +35,9 @@ package_to_docker_image:
 deploy_on_aliyun:
   stage: deploy
   script:
+    - ls -al
     - sshpass -V
     - export SSHPASS="$REMOTE_SERVER_PASSWD"
-    - sshpass -e scp -o stricthostkeychecking=no root@www.marcux.space
+    - sshpass -e ssh root@www.marcux.space
     - ls -al
     - docker pull registry.gitlab.com/linfaimom/jiusanstar
