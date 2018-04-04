@@ -6,6 +6,7 @@ services:
 stages:
   - build
   - package
+  - deploy
 
 build-jar:
   image: gradle:latest
@@ -27,3 +28,13 @@ package-as-docker-image:
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
   only:
     - master
+
+deploy-on-aliyun:
+  stage: deploy
+  script:
+    - apt-get update -qq && apt-get install -y -qq sshpass
+    - sshpass -V
+    - export SSHPASS="$REMOTE_SERVER_PASSWD"
+    - sshpass -e scp -o stricthostkeychecking=no -r . root@www.marcux.space
+    - ls -al
+    - docker pull registry.gitlab.com/linfaimom/jiusanstar
