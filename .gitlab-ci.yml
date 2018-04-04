@@ -13,6 +13,9 @@ build-jar:
   script:
     - ./gradlew bootRepackage
     - ./gradlew copyJarToRootDir
+  artifacts:
+    path:
+      - ./*.jar
   only:
     - master
 
