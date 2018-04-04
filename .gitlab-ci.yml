@@ -8,6 +8,9 @@ stages:
   - package
   - deploy
 
+before-script:
+  - apt-get update -qq && apt-get install -y -qq sshpass
+
 build-jar:
   image: gradle:latest
   stage: build
@@ -32,7 +35,6 @@ package-as-docker-image:
 deploy-on-aliyun:
   stage: deploy
   script:
-    - apt-get update -qq && apt-get install -y -qq sshpass
     - sshpass -V
     - export SSHPASS="$REMOTE_SERVER_PASSWD"
     - sshpass -e scp -o stricthostkeychecking=no -r . root@www.marcux.space
