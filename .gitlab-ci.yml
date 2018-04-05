@@ -6,7 +6,6 @@ services:
 stages:
   - build
   - package
-  - deploy
 
 build_jar:
   image: gradle:latest
@@ -23,23 +22,9 @@ build_jar:
 package_to_docker_image:
   stage: package
   before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" $DOCKER_REGISTRY
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
   only:
     - master
-
-deploy_on_server:
-  stage: deploy
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  script:
-    - docker pull $CI_REGISTRY/$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-    - docker contain ls
-    - docker contain kill $CI_REGISTRY_IMAGE
-    - docker run --name $CI_REGISTRY_IMAGE -e "SPRING_PROFILES_ACTIVE=prod" -p 80:80 -p 443:443 --net="host" -d $CI_REGISTRY/$CI_REGISTRY_IMAGE
-  only:
-    - master
-  tags:
-    - run-on-aliyun
