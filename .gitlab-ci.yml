@@ -21,6 +21,7 @@ build_jar:
   script:
     - ./gradlew bootRepackage
     - ./gradlew copyJarToRootDir
+# 产出 jar，供 package 阶段生成 docker image 使用
   artifacts:
     paths:
       - ./*.jar
@@ -39,9 +40,11 @@ package_to_docker_image:
 
 deploy_on_server:
   stage: deploy
-  variables: # 不去 gitlab clone repository，毕竟 GFW 太强大
+# 不去 gitlab clone repository，毕竟 GFW 太强大
+  variables:
     GIT_STRATEGY: none
-  dependencies: # 不去下 build_jar 时候产生的 jar，毕竟 GFW 太强大
+# 不去下 build_jar 时候产生的 jar，毕竟 GFW 太强大
+  dependencies:
     - []
   script:
     - docker container ls
