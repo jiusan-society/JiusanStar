@@ -27,9 +27,8 @@ public class ScoreController {
         this.scoreService = scoreService;
     }
 
-    // TODO[2017-12-24][Marcus Lin]: 页面显示查找到的数据功能待添加
     @GetMapping(path = "editor")
-    public String scoreEditPage(@RequestParam(value = "seq", required = false) Long seq, Model model) {
+    public String editScore(@RequestParam(value = "seq", required = false) Long seq, Model model) {
         if (seq == null) {
             model.addAttribute("score", new gov.jiusan.star.score.model.Score());
             return "score_editor";
