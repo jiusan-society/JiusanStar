@@ -24,7 +24,7 @@ package_to_docker_image:
   before_script:
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" $DOCKER_REGISTRY
   script:
-    - docker build --pull -t "$DOCKER_REGISTRY_USER/jiusan-star:$CI_COMMIT_REF_SLUG" .
+    - docker build --pull -t "$DOCKER_REGISTRY/$DOCKER_REGISTRY_USER/jiusan-star:$CI_COMMIT_REF_SLUG" .
     - docker push "$DOCKER_REGISTRY/$DOCKER_REGISTRY_USER/jiusan-star:$CI_COMMIT_REF_SLUG"
   only:
     - master
