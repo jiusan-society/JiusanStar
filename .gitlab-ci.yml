@@ -43,3 +43,5 @@ deploy_on_server:
     - docker container ls
   only:
     - master
+  tags:
+    - run-on-aliyun
