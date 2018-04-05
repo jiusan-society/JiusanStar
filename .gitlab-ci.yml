@@ -39,8 +39,10 @@ package_to_docker_image:
 
 deploy_on_server:
   stage: deploy
-  variables:
+  variables: # 不去 gitlab clone repository，毕竟 GFW 太强大
     GIT_STRATEGY: none
+  dependencies: # 不去下 build_jar 时候产生的 jar，毕竟 GFW 太强大
+    - []
   script:
     - docker container ls
     - docker container stop $DOCKER_CN_REGISTRY_IMAGE
