@@ -44,8 +44,7 @@ deploy_on_server:
   variables:
     GIT_STRATEGY: none
 # 不去下 build_jar 时候产生的 jar，毕竟 GFW 太强大
-  dependencies:
-    - []
+  dependencies: []
   script:
     - docker container ls
     - docker container stop $DOCKER_CN_REGISTRY_IMAGE
