@@ -39,8 +39,13 @@ package_to_docker_image:
 
 deploy_on_server:
   stage: deploy
+  variables:
+    GIT_STRATEGY: none
   script:
     - docker container ls
+    - docker container stop $DOCKER_CN_REGISTRY_IMAGE
+    - docker pull $DOCKER_CN_REGISTRY_IMAGE:latest
+    - docker run --name $DOCKER_CN_REGISTRY_IMAGE -e "SPRING_PROFILES_ACTIVE=prod" -p 80:80 -p 443:443 --net="host" -d $DOCKER_CN_REGISTRY_IMAGE
   only:
     - master
   tags:
