@@ -30,7 +30,7 @@ package_to_docker_image:
   only:
     - master
 
-deploy_on_aliyun:
+deploy_on_server:
   stage: deploy
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
@@ -42,4 +42,4 @@ deploy_on_aliyun:
   only:
     - master
   tags:
-    - run-on-dg
+    - run-on-aliyun
