@@ -19,8 +19,6 @@ build_jar:
       - ./*.jar
   only:
     - master
-  tags:
-    - run-on-dg
 
 package_to_docker_image:
   stage: package
@@ -33,7 +31,6 @@ package_to_docker_image:
     - master
 
 deploy_on_aliyun:
-  image: registry.docker-cn.com/docker/docker:latest
   stage: deploy
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
@@ -42,5 +39,7 @@ deploy_on_aliyun:
     - docker contain ls
     - docker contain kill $CI_REGISTRY_IMAGE
     - docker run --name $CI_REGISTRY_IMAGE -e "SPRING_PROFILES_ACTIVE=prod" -p 80:80 -p 443:443 --net="host" -d $CI_REGISTRY/$CI_REGISTRY_IMAGE
+  only:
+    - master
   tags:
-    - run-on-aliyun
+    - run-on-dg
