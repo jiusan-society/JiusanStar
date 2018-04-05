@@ -33,6 +33,7 @@ package_to_docker_image:
     - master
 
 deploy_on_aliyun:
+  image: registry.docker-cn.com/docker/docker:latest
   stage: deploy
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
