@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>评分表编辑器</title>
+        <link type="text/css" rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css"
+              th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
+        <link type="text/css" rel="stylesheet" href="../static/dist/css/sb-admin-2.css"
+              th:href="@{/dist/css/sb-admin-2.css}"/>
+        <link href="../static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+              th:href="@{/vendor/font-awesome/css/font-awesome.min.css}"/>
+        <script type="text/javascript" src="../static/vendor/jquery/jquery.min.js"
+                th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script type="text/javascript" src="../static/vendor/bootstrap/js/bootstrap.min.js"
+                th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    </head>
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+        <div class="container">
+            <form th:method="POST"
+                  th:action="${#httpServletRequest.getParameter('seq')} != null ? '/sheet/update?seq=' + ${#httpServletRequest.getParameter('seq')} : '/sheet'"
+                  th:object="${sheet}">
+                <div align="center">
+                    <h3><input placeholder="请输入标题" th:field="*{name}"/></h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center">指标大类</th>
+                                <th style="text-align: center">指标小类及评分标准</th>
+                                <th style="text-align: center">小类每次可得</th>
+                                <th style="text-align: center">小类最高可得</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <p align="center" class="alert alert-danger">
+                                        <textarea placeholder="请输入注意事项" style="width: 100%;"
+                                                  th:field="*{description}"></textarea>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <div align="center">
+                                        <input type="submit" class="btn btn-primary" th:value="提交"/>
+                                        <input type="reset" class="btn btn-danger" th:value="重置"/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
