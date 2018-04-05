@@ -4,8 +4,15 @@ services:
   - docker:dind
 
 stages:
+  - test
   - build
   - package
+
+unit_test:
+ image: gradle:latest
+ stage: test
+ script:
+   - ./gradlew test
 
 build_jar:
   image: gradle:latest
