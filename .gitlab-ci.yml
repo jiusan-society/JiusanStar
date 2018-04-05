@@ -7,6 +7,7 @@ stages:
   - test
   - build
   - package
+  - deploy
 
 unit_test:
  image: gradle:latest
@@ -33,5 +34,12 @@ package_to_docker_image:
   script:
     - docker build --pull -t "$DOCKER_REGISTRY_IMAGE:latest" .
     - docker push "$DOCKER_REGISTRY_IMAGE:latest"
+  only:
+    - master
+
+deploy_on_server:
+  stage: deploy
+  script:
+    - docker container ls
   only:
     - master
