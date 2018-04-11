@@ -1,4 +1,4 @@
-package gov.jiusan.star.user;
+package gov.jiusan.star.org;
 
 /**
  * @author Marcus Lin
