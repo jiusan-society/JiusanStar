@@ -2,11 +2,15 @@ package gov.jiusan.star.org;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -35,11 +39,21 @@ class User implements Serializable {
     @Column(name = "lastname", nullable = false)
     private String lastName;
 
+    @Enumerated
+    @Column(name = "sex_type", nullable = false)
+    private SexType sexType;
+
     @Column(name = "account", nullable = false)
     private String account;
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @ManyToOne
+    private Org org;
+
+    @Column(name = "admin")
+    private boolean admin;
 
     @Column(name = "phone_number")
     private String phoneNum;
@@ -47,10 +61,12 @@ class User implements Serializable {
     @Column(name = "email")
     private String email;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time", nullable = false)
     private Calendar createTime;
 
-    @Column(name = "create_time", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_update_time", nullable = false)
     private Calendar lastUpdateTime;
 
     public Long getSeq() {
@@ -77,6 +93,14 @@ class User implements Serializable {
         this.lastName = lastName;
     }
 
+    public SexType getSexType() {
+        return sexType;
+    }
+
+    void setSexType(SexType sexType) {
+        this.sexType = sexType;
+    }
+
     public String getAccount() {
         return account;
     }
@@ -91,6 +115,22 @@ class User implements Serializable {
 
     void setPassword(String password) {
         this.password = password;
+    }
+
+    public Org getOrg() {
+        return org;
+    }
+
+    public void setOrg(Org org) {
+        this.org = org;
+    }
+
+    public boolean isAdmin() {
+        return getOrg().getRoot() == null;
+    }
+
+    void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     public String getPhoneNum() {
@@ -123,5 +163,10 @@ class User implements Serializable {
 
     void setLastUpdateTime(Calendar lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public enum SexType {
+        MALE,
+        FEMALE
     }
 }
