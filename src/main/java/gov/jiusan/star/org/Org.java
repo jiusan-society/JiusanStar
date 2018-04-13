@@ -1,4 +1,4 @@
-package gov.jiusan.star.sheet;
+package gov.jiusan.star.org;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -7,67 +7,52 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * @author Marcus Lin
- */
 @Entity
-@Table(name = "rating_sheet")
-class RatingSheet implements Serializable {
+@Table(name = "app_org")
+class Org implements Serializable {
 
     @Id
     @TableGenerator(
-        name = "SHEET_SEQ_GENERATOR",
+        name = "ORG_SEQ_GENERATOR",
         table = "star_seq_gen",
         pkColumnName = "seq_name",
-        pkColumnValue = "SHEET_SEQ",
+        pkColumnValue = "ORG_SEQ",
         valueColumnName = "seq_value",
         initialValue = 50
     )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "SHEET_SEQ_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "ORG_SEQ_GENERATOR")
     private Long seq;
 
-    /**
-     * 评分表名称
-     */
     @Column(name = "name", nullable = false)
     private String name;
 
-    /**
-     * 评分表描述
-     */
-    @Column(name = "description")
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "parent_seq")
+    private Org parent;
 
-    /**
-     * 该评分表的最高可得分
-     */
-    @Column(name = "max_score", nullable = false)
-    private Integer maxScore = 100;
+    @ManyToOne
+    @JoinColumn(name = "root_seq")
+    private Org root;
 
-    /**
-     * 评分大类
-     */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "sheet_seq")
-    private List<RatingPhase> ratingPhases;
+    @JoinColumn(name = "org_seq")
+    private List<User> users;
 
-    /**
-     * 创建时间
-     */
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time", nullable = false)
     private Calendar createTime;
 
-    /**
-     * 更新时间
-     */
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update_time", nullable = false)
     private Calendar lastUpdateTime;
 
@@ -87,28 +72,28 @@ class RatingSheet implements Serializable {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public Org getParent() {
+        return parent;
     }
 
-    void setDescription(String description) {
-        this.description = description;
+    void setParent(Org parent) {
+        this.parent = parent;
     }
 
-    public Integer getMaxScore() {
-        return maxScore;
+    public Org getRoot() {
+        return root;
     }
 
-    void setMaxScore(Integer maxScore) {
-        this.maxScore = maxScore;
+    void setRoot(Org root) {
+        this.root = root;
     }
 
-    public List<RatingPhase> getRatingPhases() {
-        return ratingPhases == null ? ratingPhases = new ArrayList<>() : ratingPhases;
+    public List<User> getUsers() {
+        return users;
     }
 
-    void setRatingPhases(List<RatingPhase> ratingPhases) {
-        this.ratingPhases = ratingPhases;
+    void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public Calendar getCreateTime() {
