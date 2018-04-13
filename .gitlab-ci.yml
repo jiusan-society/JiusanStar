@@ -49,6 +49,7 @@ deploy_on_server:
     - docker container ls
     - docker pull $DOCKER_CN_REGISTRY_IMAGE:latest
     - docker stop container jiusan-star
+  after_script:
     - docker run --name jiusan-star -e "SPRING_PROFILES_ACTIVE=prod" -p 80:80 -p 443:443 --net="host" -d $DOCKER_CN_REGISTRY_IMAGE
   only:
     - master
