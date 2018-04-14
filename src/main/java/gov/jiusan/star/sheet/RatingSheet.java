@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +42,9 @@ class RatingSheet implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "effective", nullable = false)
+    private boolean effective;
+
     /**
      * 评分表描述
      */
@@ -62,12 +67,14 @@ class RatingSheet implements Serializable {
     /**
      * 创建时间
      */
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time", nullable = false)
     private Calendar createTime;
 
     /**
      * 更新时间
      */
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update_time", nullable = false)
     private Calendar lastUpdateTime;
 
@@ -85,6 +92,14 @@ class RatingSheet implements Serializable {
 
     void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isEffective() {
+        return effective;
+    }
+
+    void setEffective(boolean effective) {
+        this.effective = effective;
     }
 
     public String getDescription() {

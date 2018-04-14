@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,12 +47,14 @@ class RatingPhase implements Serializable {
     /**
      * 创建时间
      */
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time", nullable = false)
     private Calendar createTime;
 
     /**
      * 更新时间
      */
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update_time", nullable = false)
     private Calendar lastUpdateTime;
 
