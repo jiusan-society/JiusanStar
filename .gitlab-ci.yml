@@ -21,6 +21,7 @@ build_jar:
   script:
     - ./gradlew bootRepackage
     - ./gradlew copyJarToRootDir
+# 产出 jar，供 package 阶段生成 docker image 使用
   artifacts:
     paths:
       - ./*.jar
@@ -39,8 +40,17 @@ package_to_docker_image:
 
 deploy_on_server:
   stage: deploy
+# 不去 gitlab clone repository，毕竟 GFW 太强大
+  variables:
+    GIT_STRATEGY: none
+# 不去下 build_jar 时候产生的 jar，毕竟 GFW 太强大
+  dependencies: []
   script:
     - docker container ls
+    - docker pull $DOCKER_CN_REGISTRY_IMAGE:latest
+    - docker container rm -f jiusan-star
+  after_script:
+    - docker run --name="jiusan-star" -e "SPRING_PROFILES_ACTIVE=prod" -p 80:80 -p 443:443 --net="host" -d $DOCKER_CN_REGISTRY_IMAGE
   only:
     - master
   tags:
