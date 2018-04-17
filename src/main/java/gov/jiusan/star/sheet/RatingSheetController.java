@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 /**
@@ -56,6 +57,26 @@ public class RatingSheetController {
             return "sheet_editor";
         }
         return "error";
+    }
+
+    @PostMapping(params = {"addPhase"})
+    public String addPhase(final gov.jiusan.star.sheet.model.RatingSheet ratingSheet) {
+        return "sheet_editor";
+    }
+
+    @PostMapping(params = {"removePhase"})
+    public String removePhase(final gov.jiusan.star.sheet.model.RatingSheet ratingSheet, final HttpServletRequest req) {
+        return "sheet_editor";
+    }
+
+    @PostMapping(params = {"addDetail"})
+    public String addDetail(final gov.jiusan.star.sheet.model.RatingSheet ratingSheet) {
+        return "sheet_editor";
+    }
+
+    @PostMapping(params = {"removeDetail"})
+    public String removeDetail(final gov.jiusan.star.sheet.model.RatingSheet ratingSheet, final HttpServletRequest req) {
+        return "sheet_editor";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
