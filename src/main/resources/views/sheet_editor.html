@@ -29,12 +29,27 @@
                             <tr>
                                 <th style="text-align: center">指标大类</th>
                                 <th style="text-align: center">指标小类及评分标准</th>
-                                <th style="text-align: center">小类每次可得</th>
-                                <th style="text-align: center">小类最高可得</th>
+                                <th style="text-align: center">
+                                    <button type="submit" name="addPhase">添加指标大类</button>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr th:each="phase, phaseRow : *{ratingPhases}">
+                                <td>
+                                    <input type="text" th:field="*{ratingPhases[__${phaseRow.index}__].name}"/>
+                                    <input type="number" th:field="*{ratingPhases[__${phaseRow.index}__].maxScore}"/>
+                                    <button type="submit" name="removePhase" th:value="${phaseRow.index}">Remove</button>
+                                    <!--<button type="submit" name="addDetails">添加小类</button>-->
+                                </td>
+                                <!--<td>-->
+                                    <!--<div th:each="details, detailRow : *{ratingPhases[__${phaseRow.index}__].ratingDetails}">-->
+                                        <!--<input type="text" th:field="*{ratingPhases[__${phaseRow.index}__].ratingDetails[__${detailRow.index}__].description}"/>-->
+                                        <!--<input type="number" th:field="*{ratingPhases[__${phaseRow.index}__].ratingDetails[__${detailRow.index}__].eachScore}"/>-->
+                                        <!--<input type="number" th:field="*{ratingPhases[__${phaseRow.index}__].ratingDetails[__${detailRow.index}__].maxScore}"/>-->
+                                        <!--<button type="submit" name="removeDetails" th:value="${detailRow.index}">Remove</button>-->
+                                    <!--</div>-->
+                                <!--</td>-->
                             </tr>
                             <tr>
                                 <td colspan="4">

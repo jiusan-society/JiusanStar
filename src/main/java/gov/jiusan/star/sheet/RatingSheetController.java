@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,22 +61,15 @@ public class RatingSheetController {
     }
 
     @PostMapping(params = {"addPhase"})
-    public String addPhase(final gov.jiusan.star.sheet.model.RatingSheet ratingSheet) {
+    public String addPhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet) {
+        sheet.getRatingPhases().add(new gov.jiusan.star.sheet.model.RatingPhase());
         return "sheet_editor";
     }
 
     @PostMapping(params = {"removePhase"})
-    public String removePhase(final gov.jiusan.star.sheet.model.RatingSheet ratingSheet, final HttpServletRequest req) {
-        return "sheet_editor";
-    }
-
-    @PostMapping(params = {"addDetail"})
-    public String addDetail(final gov.jiusan.star.sheet.model.RatingSheet ratingSheet) {
-        return "sheet_editor";
-    }
-
-    @PostMapping(params = {"removeDetail"})
-    public String removeDetail(final gov.jiusan.star.sheet.model.RatingSheet ratingSheet, final HttpServletRequest req) {
+    public String removePhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest req) {
+        final Integer rowId = Integer.valueOf(req.getParameter("removePhase"));
+        sheet.getRatingPhases().remove(rowId.intValue());
         return "sheet_editor";
     }
 
