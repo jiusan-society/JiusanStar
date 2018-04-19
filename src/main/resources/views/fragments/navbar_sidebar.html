@@ -121,11 +121,14 @@
                             <a href="/index"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
                         </li>
                         <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-                            <a href="/score/editor"><i class="fa fa-bar-chart-o fa-fw"></i> 评分表</a>
+                            <a href="/score/editor"><i class="fa fa-bar-chart-o fa-fw"></i> 自评</a>
                             <!-- /.nav-second-level -->
                         </li>
                         <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                            <a href="/score/list"><i class="fa fa-table fa-fw"></i> 所有评分</a>
+                            <a href="/sheet/editor"><i class="fa fa-table fa-fw"></i> 评分表</a>
+                        </li>
+                        <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                            <a href="/score/list"><i class="fa fa-table fa-fw"></i> 考评</a>
                         </li>
                     </ul>
                 </div>
