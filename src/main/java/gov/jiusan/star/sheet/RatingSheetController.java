@@ -38,7 +38,7 @@ public class RatingSheetController {
         Optional<RatingSheet> sheet = service.find(seq);
         if (sheet.isPresent()) {
             model.addAttribute("sheet", RatingSheetUtil.convertToModel(sheet.get()));
-            return "sheet_viewer";
+            return "sheet/sheet_viewer";
         }
         return "error";
     }
@@ -48,12 +48,12 @@ public class RatingSheetController {
     public String editSheet(@RequestParam(value = "seq", required = false) Long seq, Model model) {
         if (seq == null) {
             model.addAttribute("sheet", new gov.jiusan.star.sheet.model.RatingSheet());
-            return "sheet_editor";
+            return "sheet/sheet_editor";
         }
         Optional<RatingSheet> sheet = service.find(seq);
         if (sheet.isPresent()) {
             model.addAttribute("sheet", RatingSheetUtil.convertToModel(sheet.get()));
-            return "sheet_editor";
+            return "sheet/sheet_editor";
         }
         return "error";
     }
