@@ -31,12 +31,12 @@ public class ScoreController {
     public String editScore(@RequestParam(value = "seq", required = false) Long seq, Model model) {
         if (seq == null) {
             model.addAttribute("score", new gov.jiusan.star.score.model.Score());
-            return "score_editor";
+            return "score/score_editor";
         }
         Optional<Score> score = scoreService.find(seq);
         if (score.isPresent()) {
             model.addAttribute("score", ScoreUtil.convertToDTO(score.get()));
-            return "score_editor";
+            return "score/score_editor";
         }
         return "error";
     }
@@ -51,7 +51,7 @@ public class ScoreController {
         Optional<Score> score = scoreService.find(seq);
         if (score.isPresent()) {
             model.addAttribute("score", ScoreUtil.convertToDTO(score.get()));
-            return "score_viewer";
+            return "score/score_viewer";
         }
         return "error";
     }
@@ -66,7 +66,7 @@ public class ScoreController {
     @GetMapping(path = "list")
     public String retrieveScoreList(Model model) {
         model.addAttribute("scoreList", scoreService.findAll().stream().map(ScoreUtil::convertToDTO).collect(Collectors.toList()));
-        return "score_list";
+        return "score/score_list";
     }
 
 }
