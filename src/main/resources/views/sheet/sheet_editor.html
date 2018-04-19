@@ -35,21 +35,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="phase, phaseRow : *{ratingPhases}">
-                                <td>
-                                    <input type="text" th:field="*{ratingPhases[__${phaseRow.index}__].name}"/>
-                                    <input type="number" th:field="*{ratingPhases[__${phaseRow.index}__].maxScore}"/>
-                                    <button type="submit" name="removePhase" th:value="${phaseRow.index}">Remove</button>
-                                    <!--<button type="submit" name="addDetails">添加小类</button>-->
-                                </td>
-                                <!--<td>-->
-                                    <!--<div th:each="details, detailRow : *{ratingPhases[__${phaseRow.index}__].ratingDetails}">-->
-                                        <!--<input type="text" th:field="*{ratingPhases[__${phaseRow.index}__].ratingDetails[__${detailRow.index}__].description}"/>-->
-                                        <!--<input type="number" th:field="*{ratingPhases[__${phaseRow.index}__].ratingDetails[__${detailRow.index}__].eachScore}"/>-->
-                                        <!--<input type="number" th:field="*{ratingPhases[__${phaseRow.index}__].ratingDetails[__${detailRow.index}__].maxScore}"/>-->
-                                        <!--<button type="submit" name="removeDetails" th:value="${detailRow.index}">Remove</button>-->
-                                    <!--</div>-->
-                                <!--</td>-->
+                            <!--TODO 实在不晓得用 Thymeleaf 要怎么实现才能需求，很痛苦-->
+                            <tr>
                             </tr>
                             <tr>
                                 <td colspan="4">

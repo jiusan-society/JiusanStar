@@ -60,19 +60,6 @@ public class RatingSheetController {
         return "error";
     }
 
-    @PostMapping(params = {"addPhase"})
-    public String addPhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet) {
-        sheet.getRatingPhases().add(new gov.jiusan.star.sheet.model.RatingPhase());
-        return "sheet_editor";
-    }
-
-    @PostMapping(params = {"removePhase"})
-    public String removePhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest req) {
-        final Integer rowId = Integer.valueOf(req.getParameter("removePhase"));
-        sheet.getRatingPhases().remove(rowId.intValue());
-        return "sheet_editor";
-    }
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(path = "list")
     public String findAllSheets() {
