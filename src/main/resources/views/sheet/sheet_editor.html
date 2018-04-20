@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
         <meta charset="UTF-8"/>
+        <meta name="_csrf" th:content="${_csrf.token}"/>
         <title>评分表编辑器</title>
         <link type="text/css" rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css"
               th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
@@ -11,13 +12,15 @@
               th:href="@{/vendor/font-awesome/css/font-awesome.min.css}"/>
         <script type="text/javascript" src="../../static/vendor/jquery/jquery.min.js"
                 th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script type="text/javascript" src="../../static/vendor/jquery/jquery.serializejson.min.js"
+                th:src="@{/vendor/jquery/jquery.serializejson.min.js}"></script>
         <script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.min.js"
                 th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
     </head>
     <body>
         <div th:replace="fragments/navbar :: navbar"></div>
         <div class="container">
-            <form id="sheet_form" action="#">
+            <form id="sheet_form">
                 <div align="center">
                     <h3><input placeholder="请输入标题" name="name"/></h3>
                 </div>
@@ -40,25 +43,37 @@
                                     </p>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <div align="center">
-                                        <input type="submit" class="btn btn-primary" value="提交" onclick="submit()"/>
-                                        <input type="reset" class="btn btn-danger" value="重置"/>
-                                    </div>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             </form>
+            <div align="center">
+                <input type="button" class="btn btn-primary" value="提交" onclick="submit()"/>
+                <input type="reset" class="btn btn-danger" value="重置"/>
+            </div>
             <script>
+                const token = $("meta[name='_csrf']").attr("content");
+                console.log(token);
                 function submit() {
-                    var sheet = $("#sheet_form").serializeJSON();
+                    let sheet = $("#sheet_form").serializeJSON({
+                        useIntKeysAsArrayIndex: true,
+                        parseAll: true
+                    });
+                    console.log(sheet);
                     $.ajax({
-                        url: "",
-                        type: "post"
-                    })
+                        url: "/sheet",
+                        type: "post",
+                        headers: {
+                            'X-CSRF-Token' : token,
+                            'Content-Type': "application/json;charset=utf-8"
+                        },
+                        data: JSON.stringify(sheet),
+                        dataType: "json",
+                        success: function (resp) {
+                            console.log(resp);
+                        },
+                        async: false
+                    });
                 }
             </script>
         </div>

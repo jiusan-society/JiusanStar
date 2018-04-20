@@ -9,9 +9,18 @@ import java.util.List;
  */
 public class RatingSheet implements Serializable {
 
+    private Long seq;
     private String name;
     private String description;
     private List<RatingPhase> ratingPhases;
+
+    public Long getSeq() {
+        return seq;
+    }
+
+    public void setSeq(Long seq) {
+        this.seq = seq;
+    }
 
     public String getName() {
         return name;
