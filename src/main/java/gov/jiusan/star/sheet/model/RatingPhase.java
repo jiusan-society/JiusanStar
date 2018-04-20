@@ -1,6 +1,7 @@
 package gov.jiusan.star.sheet.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class RatingPhase implements Serializable {
     }
 
     public List<RatingDetails> getRatingDetails() {
-        return ratingDetails;
+        return ratingDetails == null ? ratingDetails = new ArrayList<>() : ratingDetails;
     }
 
     public void setRatingDetails(List<RatingDetails> ratingDetails) {

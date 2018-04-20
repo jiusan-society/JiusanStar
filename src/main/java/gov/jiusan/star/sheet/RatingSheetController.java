@@ -5,10 +5,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
 
@@ -28,8 +29,9 @@ public class RatingSheetController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public String createSheet(@ModelAttribute gov.jiusan.star.sheet.model.RatingSheet sheet) {
-        return "redirect:/sheet?seq=" + service.create(sheet);
+    public @ResponseBody gov.jiusan.star.sheet.model.RatingSheet createSheet(@RequestBody gov.jiusan.star.sheet.model.RatingSheet sheet) {
+        sheet.setSeq(service.create(sheet));
+        return sheet;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -37,7 +39,7 @@ public class RatingSheetController {
     public String retrieveSheet(@RequestParam(value = "seq") Long seq, Model model) {
         Optional<RatingSheet> sheet = service.find(seq);
         if (sheet.isPresent()) {
-            model.addAttribute("sheet", RatingSheetUtil.convertToModel(sheet.get()));
+            model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
             return "sheet/sheet_viewer";
         }
         return "error";
@@ -52,7 +54,7 @@ public class RatingSheetController {
         }
         Optional<RatingSheet> sheet = service.find(seq);
         if (sheet.isPresent()) {
-            model.addAttribute("sheet", RatingSheetUtil.convertToModel(sheet.get()));
+            model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
             return "sheet/sheet_editor";
         }
         return "error";
