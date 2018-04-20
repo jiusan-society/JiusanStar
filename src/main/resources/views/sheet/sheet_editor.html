@@ -29,12 +29,43 @@
                         <thead>
                             <tr>
                                 <th style="text-align: center">指标大类</th>
-                                <th style="text-align: center">指标小类及评分标准</th>
+                                <th style="text-align: center">指标小类</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
+                                <td width="15%" rowspan="3">
+                                    名称：<input type="text" name="phases[0][name]"/>
+                                    最高可得：<input type="number" name="phases[0][maxScore]"/>
+                                </td>
+                                <td>
+                                    评分标准：<textarea name="phases[0][details][0][description]"></textarea>
+                                    <br/>
+                                    每项可得：<input type="number" name="phases[0][details][0][eachScore]"/>
+                                    <br/>
+                                    最高可得：<input type="number" name="phases[0][details][0][maxScore]"/>
+                                </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    评分标准：<textarea name="phases[0][details][1][description]"></textarea>
+                                    <br/>
+                                    每项可得：<input type="number" name="phases[0][details][1][eachScore]"/>
+                                    <br/>
+                                    最高可得：<input type="number" name="phases[0][details][1][maxScore]"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    评分标准：<textarea name="phases[0][details][2][description]"></textarea>
+                                    <br/>
+                                    每项可得：<input type="number" name="phases[0][details][2][eachScore]"/>
+                                    <br/>
+                                    最高可得：<input type="number" name="phases[0][details][2][maxScore]"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
                             <tr>
                                 <td colspan="4">
                                     <p align="center" class="alert alert-danger">
@@ -43,7 +74,7 @@
                                     </p>
                                 </td>
                             </tr>
-                        </tbody>
+                        </tfoot>
                     </table>
                 </div>
             </form>
@@ -57,14 +88,15 @@
                 function submit() {
                     let sheet = $("#sheet_form").serializeJSON({
                         useIntKeysAsArrayIndex: true,
-                        parseAll: true
+                        parseAll: true,
+                        skipFalsyValuesForTypes: ["string", "null"]
                     });
                     console.log(sheet);
                     $.ajax({
                         url: "/sheet",
                         type: "post",
                         headers: {
-                            'X-CSRF-Token' : token,
+                            'X-CSRF-Token': token,
                             'Content-Type': "application/json;charset=utf-8"
                         },
                         data: JSON.stringify(sheet),
