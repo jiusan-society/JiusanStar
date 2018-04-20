@@ -17,11 +17,9 @@
     <body>
         <div th:replace="fragments/navbar :: navbar"></div>
         <div class="container">
-            <form th:method="POST"
-                  th:action="${#httpServletRequest.getParameter('seq')} != null ? '/sheet/update?seq=' + ${#httpServletRequest.getParameter('seq')} : '/sheet'"
-                  th:object="${sheet}">
+            <form id="sheet_form" action="#">
                 <div align="center">
-                    <h3><input placeholder="请输入标题" th:field="*{name}"/></h3>
+                    <h3><input placeholder="请输入标题" name="name"/></h3>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
@@ -29,28 +27,24 @@
                             <tr>
                                 <th style="text-align: center">指标大类</th>
                                 <th style="text-align: center">指标小类及评分标准</th>
-                                <th style="text-align: center">
-                                    <button type="submit" name="addPhase">添加指标大类</button>
-                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!--TODO 实在不晓得用 Thymeleaf 要怎么实现才能需求，很痛苦-->
                             <tr>
                             </tr>
                             <tr>
                                 <td colspan="4">
                                     <p align="center" class="alert alert-danger">
-                                        <textarea placeholder="请输入注意事项" style="width: 100%;"
-                                                  th:field="*{description}"></textarea>
+                                        <textarea name="description" placeholder="请输入注意事项"
+                                                  style="width: 100%;"></textarea>
                                     </p>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="4">
                                     <div align="center">
-                                        <input type="submit" class="btn btn-primary" th:value="提交"/>
-                                        <input type="reset" class="btn btn-danger" th:value="重置"/>
+                                        <input type="submit" class="btn btn-primary" value="提交" onclick="submit()"/>
+                                        <input type="reset" class="btn btn-danger" value="重置"/>
                                     </div>
                                 </td>
                             </tr>
@@ -58,6 +52,15 @@
                     </table>
                 </div>
             </form>
+            <script>
+                function submit() {
+                    var sheet = $("#sheet_form").serializeJSON();
+                    $.ajax({
+                        url: "",
+                        type: "post"
+                    })
+                }
+            </script>
         </div>
     </body>
 </html>
