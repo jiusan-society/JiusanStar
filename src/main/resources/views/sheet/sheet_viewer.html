@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <title>评分表查看器</title>
+        <link type="text/css" rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css"
+              th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
+        <link type="text/css" rel="stylesheet" href="../../static/dist/css/sb-admin-2.css"
+              th:href="@{/dist/css/sb-admin-2.css}"/>
+        <link href="../../static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+              th:href="@{/vendor/font-awesome/css/font-awesome.min.css}"/>
+        <script type="text/javascript" src="../../static/vendor/jquery/jquery.min.js"
+                th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.min.js"
+                th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    </head>
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+        <div class="container" th:object="${sheet}">
+            <div align="center">
+                <h3><strong th:text="*{name}"></strong></h3>
+            </div>
+            <br/>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">指标大类</th>
+                            <th style="text-align: center">指标小类</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="phase : *{ratingPhases}">
+                            <td>
+                                <p th:text="'名称：' + ${phase.name}"></p>
+                                <p th:text="'最高可得：' + ${phase.maxScore}"></p>
+                            </td>
+                            <td>
+                                <ul th:each="details : ${phase.ratingDetails}">
+                                    <li th:text="'评分标准：' + ${details.description}"></li>
+                                    <li th:text="'每项可得：' + ${details.eachScore}"></li>
+                                    <li th:text="'最高可得：' + ${details.maxScore}"></li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                           <td colspan="2">
+                               <p align="center" class="alert alert-danger">
+                                   <strong th:text="*{description}">60 分以上合格，70 分及以上三星级，80 分及以上四星级，90 分及以上五星级。</strong>
+                               </p>
+                           </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div align="center">
+                                    <a class="btn btn-primary" th:href="@{/index}">回到首页</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

@@ -104,7 +104,7 @@
                         dataType: "json",
                         success: function (resp) {
                             alert("创建成功！");
-                            window.location = "/sheet?" + resp["seq"];
+                            window.location = "/sheet?seq=" + resp["seq"];
                             console.log(resp);
                         }
                     });
