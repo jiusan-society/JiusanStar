@@ -35,33 +35,33 @@
                         <tbody>
                             <tr>
                                 <td width="15%" rowspan="3">
-                                    名称：<input type="text" name="phases[0][name]"/>
-                                    最高可得：<input type="number" name="phases[0][maxScore]"/>
+                                    名称：<input type="text" name="ratingPhases[0][name]"/>
+                                    最高可得：<input type="number" name="ratingPhases[0][maxScore]"/>
                                 </td>
                                 <td>
-                                    评分标准：<textarea name="phases[0][details][0][description]"></textarea>
+                                    评分标准：<textarea name="ratingPhases[0][ratingDetails][0][description]"></textarea>
                                     <br/>
-                                    每项可得：<input type="number" name="phases[0][details][0][eachScore]"/>
+                                    每项可得：<input type="number" name="ratingPhases[0][ratingDetails][0][eachScore]"/>
                                     <br/>
-                                    最高可得：<input type="number" name="phases[0][details][0][maxScore]"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    评分标准：<textarea name="phases[0][details][1][description]"></textarea>
-                                    <br/>
-                                    每项可得：<input type="number" name="phases[0][details][1][eachScore]"/>
-                                    <br/>
-                                    最高可得：<input type="number" name="phases[0][details][1][maxScore]"/>
+                                    最高可得：<input type="number" name="ratingPhases[0][ratingDetails][0][maxScore]"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    评分标准：<textarea name="phases[0][details][2][description]"></textarea>
+                                    评分标准：<textarea name="ratingPhases[0][ratingDetails][1][description]"></textarea>
                                     <br/>
-                                    每项可得：<input type="number" name="phases[0][details][2][eachScore]"/>
+                                    每项可得：<input type="number" name="ratingPhases[0][ratingDetails][1][eachScore]"/>
                                     <br/>
-                                    最高可得：<input type="number" name="phases[0][details][2][maxScore]"/>
+                                    最高可得：<input type="number" name="ratingPhases[0][ratingDetails][1][maxScore]"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    评分标准：<textarea name="ratingPhases[0][ratingDetails][2][description]"></textarea>
+                                    <br/>
+                                    每项可得：<input type="number" name="ratingPhases[0][ratingDetails][2][eachScore]"/>
+                                    <br/>
+                                    最高可得：<input type="number" name="ratingPhases[0][ratingDetails][2][maxScore]"/>
                                 </td>
                             </tr>
                         </tbody>
@@ -86,6 +86,7 @@
                 const token = $("meta[name='_csrf']").attr("content");
                 console.log(token);
                 function submit() {
+                    event.preventDefault();
                     let sheet = $("#sheet_form").serializeJSON({
                         useIntKeysAsArrayIndex: true,
                         parseAll: true,
@@ -97,14 +98,15 @@
                         type: "post",
                         headers: {
                             'X-CSRF-Token': token,
-                            'Content-Type': "application/json;charset=utf-8"
+                            'Content-Type': "application/json; charset=utf-8"
                         },
                         data: JSON.stringify(sheet),
                         dataType: "json",
                         success: function (resp) {
+                            alert("创建成功！");
+                            window.location = "/sheet?" + resp["seq"];
                             console.log(resp);
-                        },
-                        async: false
+                        }
                     });
                 }
             </script>

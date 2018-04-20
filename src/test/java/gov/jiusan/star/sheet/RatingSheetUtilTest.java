@@ -12,7 +12,7 @@ public class RatingSheetUtilTest {
         entity.setName("星级组织评分表");
         entity.setDescription("请各位认真填写评分表，切勿乱填!");
         entity.setMaxScore(100);
-        gov.jiusan.star.sheet.model.RatingSheet model = RatingSheetUtil.convertToModel(entity);
+        gov.jiusan.star.sheet.model.RatingSheet model = RatingSheetUtil.convert(entity);
         assertEquals("星级组织评分表", model.getName());
         assertNotEquals("Fuck The Jiusan Society", model.getDescription());
         assertTrue(model.getRatingPhases().isEmpty());
@@ -23,7 +23,7 @@ public class RatingSheetUtilTest {
         gov.jiusan.star.sheet.model.RatingSheet model = new gov.jiusan.star.sheet.model.RatingSheet();
         model.setName("星级组织评分表");
         model.setDescription("请各位认真填写评分表，切勿乱填!");
-        RatingSheet entity = RatingSheetUtil.convertToEntity(model);
+        RatingSheet entity = RatingSheetUtil.convert(model);
         assertEquals("星级组织评分表", entity.getName());
         assertNotEquals("Fuck The Jiusan Society", entity.getDescription());
         assertNull(entity.getCreateTime());

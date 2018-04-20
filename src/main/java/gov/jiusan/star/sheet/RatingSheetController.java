@@ -39,7 +39,7 @@ public class RatingSheetController {
     public String retrieveSheet(@RequestParam(value = "seq") Long seq, Model model) {
         Optional<RatingSheet> sheet = service.find(seq);
         if (sheet.isPresent()) {
-            model.addAttribute("sheet", RatingSheetUtil.convertToModel(sheet.get()));
+            model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
             return "sheet/sheet_viewer";
         }
         return "error";
@@ -54,7 +54,7 @@ public class RatingSheetController {
         }
         Optional<RatingSheet> sheet = service.find(seq);
         if (sheet.isPresent()) {
-            model.addAttribute("sheet", RatingSheetUtil.convertToModel(sheet.get()));
+            model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
             return "sheet/sheet_editor";
         }
         return "error";

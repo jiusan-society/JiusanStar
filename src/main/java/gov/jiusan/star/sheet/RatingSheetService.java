@@ -19,7 +19,7 @@ public class RatingSheetService {
     }
 
     public Long create(gov.jiusan.star.sheet.model.RatingSheet model) {
-        RatingSheet entity = RatingSheetUtil.convertToEntity(model);
+        RatingSheet entity = RatingSheetUtil.convert(model);
         return repository.create(entity);
     }
 

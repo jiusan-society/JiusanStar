@@ -3,6 +3,8 @@ package gov.jiusan.star.sheet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -22,6 +24,7 @@ import java.util.List;
 class RatingPhase implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long seq;
 
     /**
@@ -43,20 +46,6 @@ class RatingPhase implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "phase_seq")
     private List<RatingDetails> ratingDetails;
-
-    /**
-     * 创建时间
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_time", nullable = false)
-    private Calendar createTime;
-
-    /**
-     * 更新时间
-     */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_update_time", nullable = false)
-    private Calendar lastUpdateTime;
 
     public Long getSeq() {
         return seq;
@@ -88,21 +77,5 @@ class RatingPhase implements Serializable {
 
     void setRatingDetails(List<RatingDetails> ratingDetails) {
         this.ratingDetails = ratingDetails;
-    }
-
-    public Calendar getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Calendar createTime) {
-        this.createTime = createTime;
-    }
-
-    public Calendar getLastUpdateTime() {
-        return lastUpdateTime;
-    }
-
-    public void setLastUpdateTime(Calendar lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
     }
 }
