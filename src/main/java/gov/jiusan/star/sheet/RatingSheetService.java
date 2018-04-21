@@ -3,6 +3,7 @@ package gov.jiusan.star.sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,5 +29,9 @@ public class RatingSheetService {
             return Optional.empty();
         }
         return Optional.ofNullable(repository.findOne(seq));
+    }
+
+    public List<RatingSheet> findAll() {
+        return repository.findAll();
     }
 }

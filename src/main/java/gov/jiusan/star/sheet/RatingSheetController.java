@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Marcus Lin
@@ -29,7 +30,8 @@ public class RatingSheetController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public @ResponseBody gov.jiusan.star.sheet.model.RatingSheet createSheet(@RequestBody gov.jiusan.star.sheet.model.RatingSheet sheet) {
+    public @ResponseBody
+    gov.jiusan.star.sheet.model.RatingSheet createSheet(@RequestBody gov.jiusan.star.sheet.model.RatingSheet sheet) {
         sheet.setSeq(service.create(sheet));
         return sheet;
     }
@@ -62,8 +64,9 @@ public class RatingSheetController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(path = "list")
-    public String findAllSheets() {
-        return "";
+    public String findAllSheets(Model model) {
+        model.addAttribute("sheets", service.findAll().stream().map(RatingSheetUtil::convert).collect(Collectors.toList()));
+        return "sheet/sheet_list";
     }
 
 }

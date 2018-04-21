@@ -9,9 +9,12 @@ class RatingSheetUtil {
 
     static gov.jiusan.star.sheet.model.RatingSheet convert(RatingSheet entity) {
         gov.jiusan.star.sheet.model.RatingSheet model = new gov.jiusan.star.sheet.model.RatingSheet();
+        model.setSeq(entity.getSeq());
         model.setName(entity.getName());
         model.setDescription(entity.getDescription());
         model.setRatingPhases(entity.getRatingPhases().stream().map(RatingSheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        model.setCreateTime(entity.getCreateTime());
+        model.setLastUpdateTime(entity.getLastUpdateTime());
         return model;
     }
 
