@@ -125,7 +125,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                            <a href="/sheet/editor"><i class="fa fa-table fa-fw"></i> 评分表</a>
+                            <a href="/sheet/list"><i class="fa fa-table fa-fw"></i> 评分表</a>
                         </li>
                         <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                             <a href="/score/list"><i class="fa fa-table fa-fw"></i> 考评</a>

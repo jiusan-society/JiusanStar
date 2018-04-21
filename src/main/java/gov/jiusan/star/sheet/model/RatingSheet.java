@@ -2,6 +2,7 @@ package gov.jiusan.star.sheet.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -13,6 +14,8 @@ public class RatingSheet implements Serializable {
     private String name;
     private String description;
     private List<RatingPhase> ratingPhases;
+    private Calendar createTime;
+    private Calendar lastUpdateTime;
 
     public Long getSeq() {
         return seq;
@@ -44,5 +47,21 @@ public class RatingSheet implements Serializable {
 
     public void setRatingPhases(List<RatingPhase> ratingPhases) {
         this.ratingPhases = ratingPhases;
+    }
+
+    public Calendar getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Calendar createTime) {
+        this.createTime = createTime;
+    }
+
+    public Calendar getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Calendar lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }
