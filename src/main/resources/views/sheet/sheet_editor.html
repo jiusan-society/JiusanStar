@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
         <meta charset="UTF-8"/>
-        <meta name="_csrf" th:content="${_csrf.token}"/>
         <title>评分表编辑器</title>
         <link type="text/css" rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css"
               th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
@@ -12,17 +11,15 @@
               th:href="@{/vendor/font-awesome/css/font-awesome.min.css}"/>
         <script type="text/javascript" src="../../static/vendor/jquery/jquery.min.js"
                 th:src="@{/vendor/jquery/jquery.min.js}"></script>
-        <script type="text/javascript" src="../../static/vendor/jquery/jquery.serializejson.min.js"
-                th:src="@{/vendor/jquery/jquery.serializejson.min.js}"></script>
         <script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.min.js"
                 th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
     </head>
     <body>
         <div th:replace="fragments/navbar :: navbar"></div>
         <div class="container">
-            <form id="sheet_form">
+            <form th:action="@{/sheet}" th:object="${sheet}" method="post">
                 <div align="center">
-                    <h3><input placeholder="请输入标题" name="name"/></h3>
+                    <h3><input placeholder="请输入标题" name="name" th:field="*{name}"/></h3>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
@@ -30,38 +27,34 @@
                             <tr>
                                 <th style="text-align: center">指标大类</th>
                                 <th style="text-align: center">指标小类</th>
+                                <th>
+                                    <button name="addPhase" type="submit">添加大类</button>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td width="15%" rowspan="3">
-                                    名称：<input type="text" name="ratingPhases[0][name]"/>
-                                    最高可得：<input type="number" name="ratingPhases[0][maxScore]"/>
+                            <tr th:each="phase, phaseStat : *{ratingPhases}">
+                                <td>
+                                    名称：<input type="text" th:field="*{ratingPhases[__${phaseStat.index}__].name}" />
+                                    最高可得：<input type="number" th:field="*{ratingPhases[__${phaseStat.index}__].maxScore}" />
+                                    <button name="removePhase" type="submit" th:value="${phaseStat.index}">删除大类</button>
+                                    <button name="addDetails" type="submit" th:value="${phaseStat.index}">添加小类</button>
                                 </td>
                                 <td>
-                                    评分标准：<textarea name="ratingPhases[0][ratingDetails][0][description]"></textarea>
-                                    <br/>
-                                    每项可得：<input type="number" name="ratingPhases[0][ratingDetails][0][eachScore]"/>
-                                    <br/>
-                                    最高可得：<input type="number" name="ratingPhases[0][ratingDetails][0][maxScore]"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    评分标准：<textarea name="ratingPhases[0][ratingDetails][1][description]"></textarea>
-                                    <br/>
-                                    每项可得：<input type="number" name="ratingPhases[0][ratingDetails][1][eachScore]"/>
-                                    <br/>
-                                    最高可得：<input type="number" name="ratingPhases[0][ratingDetails][1][maxScore]"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    评分标准：<textarea name="ratingPhases[0][ratingDetails][2][description]"></textarea>
-                                    <br/>
-                                    每项可得：<input type="number" name="ratingPhases[0][ratingDetails][2][eachScore]"/>
-                                    <br/>
-                                    最高可得：<input type="number" name="ratingPhases[0][ratingDetails][2][maxScore]"/>
+                                    <ul th:each="details, detailsStat : ${phase.ratingDetails}">
+                                        <li>
+                                            评分标准：<input type="text" th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].description}"/>
+                                        </li>
+                                        <li>
+                                            每项可得：<input type="number" th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].eachScore}"/>
+                                        </li>
+                                        <li>
+                                            最高可得：<input type="number" th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].maxScore}"/>
+                                        </li>
+                                        <li>
+                                            <button name="removeDetails" type="submit" th:value="${phaseStat.index} + '|' + ${detailsStat.index}">删除小类</button>
+                                        </li>
+                                    </ul>
                                 </td>
                             </tr>
                         </tbody>
@@ -69,47 +62,23 @@
                             <tr>
                                 <td colspan="4">
                                     <p align="center" class="alert alert-danger">
-                                        <textarea name="description" placeholder="请输入注意事项"
+                                        <textarea name="description" placeholder="请输入注意事项" th:field="*{description}"
                                                   style="width: 100%;"></textarea>
                                     </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <div align="center">
+                                        <input type="submit" class="btn btn-primary" th:value="提交"/>
+                                        <input type="reset" class="btn btn-danger" th:value="重置"/>
+                                    </div>
                                 </td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </form>
-            <div align="center">
-                <input type="button" class="btn btn-primary" value="提交" onclick="submit()"/>
-                <input type="reset" class="btn btn-danger" value="重置"/>
-            </div>
-            <script>
-                const token = $("meta[name='_csrf']").attr("content");
-                console.log(token);
-                function submit() {
-                    event.preventDefault();
-                    let sheet = $("#sheet_form").serializeJSON({
-                        useIntKeysAsArrayIndex: true,
-                        parseAll: true,
-                        skipFalsyValuesForTypes: ["string", "null"]
-                    });
-                    console.log(sheet);
-                    $.ajax({
-                        url: "/sheet",
-                        type: "post",
-                        headers: {
-                            'X-CSRF-Token': token,
-                            'Content-Type': "application/json; charset=utf-8"
-                        },
-                        data: JSON.stringify(sheet),
-                        dataType: "json",
-                        success: function (resp) {
-                            alert("创建成功！");
-                            window.location = "/sheet?seq=" + resp["seq"];
-                            console.log(resp);
-                        }
-                    });
-                }
-            </script>
         </div>
     </body>
 </html>

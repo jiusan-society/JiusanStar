@@ -1,16 +1,18 @@
 package gov.jiusan.star.sheet;
 
+import gov.jiusan.star.sheet.model.RatingDetails;
+import gov.jiusan.star.sheet.model.RatingPhase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,10 +32,8 @@ public class RatingSheetController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public @ResponseBody
-    gov.jiusan.star.sheet.model.RatingSheet createSheet(@RequestBody gov.jiusan.star.sheet.model.RatingSheet sheet) {
-        sheet.setSeq(rsService.create(sheet));
-        return sheet;
+    public String createSheet(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet) {
+        return "redirect:/sheet?seq=" + rsService.create(sheet);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -60,6 +60,39 @@ public class RatingSheetController {
             return "error";
         }
         model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
+        return "sheet/sheet_editor";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(params = "addPhase")
+    public String addPhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet) {
+        sheet.getRatingPhases().add(new RatingPhase());
+        return "sheet/sheet_editor";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(params = "removePhase")
+    public String removePhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+        int rowId = Integer.valueOf(request.getParameter("removePhase"));
+        sheet.getRatingPhases().remove(rowId);
+        return "sheet/sheet_editor";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(params = "addDetails")
+    public String addDetails(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+        int rowId = Integer.valueOf(request.getParameter("addDetails"));
+        sheet.getRatingPhases().get(rowId).getRatingDetails().add(new RatingDetails());
+        return "sheet/sheet_editor";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(params = "removeDetails")
+    public String removeDetails(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+        String value = request.getParameter("removeDetails");
+        int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
+        int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
+        sheet.getRatingPhases().get(phaseIndex).getRatingDetails().remove(detailsIndex);
         return "sheet/sheet_editor";
     }
 
