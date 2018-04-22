@@ -1,12 +1,20 @@
 package gov.jiusan.star.score;
 
+import gov.jiusan.star.org.Org;
+import gov.jiusan.star.sheet.RatingSheet;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -15,7 +23,7 @@ import java.util.Calendar;
  */
 @Entity
 @Table(name = "score")
-class Score implements Serializable {
+public class Score implements Serializable {
 
     @Id
     @TableGenerator(
@@ -31,56 +39,73 @@ class Score implements Serializable {
     private Long seq;
 
     /**
-     * 会议活动得分，多个评选项，用 JSON 存放
+     * 关联评分表
      */
-    @Column(name = "confer_activity", nullable = false)
-    private String conferActivity;
+    @ManyToOne
+    @JoinColumn(name = "sheet_seq")
+    private RatingSheet sheet;
 
     /**
-     * 社务工作得分，多个评选项，用 JSON 存放
+     * 关联组织
      */
-    @Column(name = "social_work", nullable = false)
-    private String socialWork;
+    @OneToOne
+    @JoinColumn(name = "org_seq")
+    private Org org;
 
     /**
-     * 参政议政得分，多个评选项，用 JSON 存放
+     * 是否生效
      */
-    @Column(name = "politic_activity", nullable = false)
-    private String politicActivity;
+    @Column(name = "effective", nullable = false)
+    private boolean effective;
 
     /**
-     * 社会服务得分，多个评选项，用 JSON 存放
+     * 自评得分详情 sA -> selfAssessment
      */
-    @Column(name = "social_contribution", nullable = false)
-    private String socialContribution;
+    @Column(name = "sa_details")
+    private String sADetails;
 
     /**
-     * 宣传报道得分
+     * 考评得分详情 aA -> adminAssessment
      */
-    @Column(name = "publicity", nullable = false)
-    private int publicity;
+    @Column(name = "aa_details")
+    private String aADetails;
 
     /**
-     * 下属支社年度考核结果得分
+     * 自评总得分
      */
-    @Column(name = "sub_assessment", nullable = false)
-    private int subAssessment;
+    @Column(name = "sa_total_score")
+    private Integer sATotalScore;
 
     /**
-     * 总分
+     * 考评总得分
      */
-    @Column(name = "total", nullable = false)
-    private int total;
+    @Column(name = "aa_total_score")
+    private Integer aATotalScore;
+
+    /**
+     * 最终得分
+     */
+    @Column(name = "final_score")
+    private Integer finalScore;
+
+    /**
+     * 失效时间
+     */
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "expiration_time")
+    private Calendar expirationTime;
 
     /**
      * 创建时间
      */
+    @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "create_time", nullable = false)
     private Calendar createTime;
 
     /**
      * 更新时间
      */
+    @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "last_update_time", nullable = false)
     private Calendar lastUpdateTime;
 
@@ -95,60 +120,76 @@ class Score implements Serializable {
         this.seq = seq;
     }
 
-    public String getConferActivity() {
-        return conferActivity;
+    public RatingSheet getSheet() {
+        return sheet;
     }
 
-    void setConferActivity(String conferActivity) {
-        this.conferActivity = conferActivity;
+    public void setSheet(RatingSheet sheet) {
+        this.sheet = sheet;
     }
 
-    public String getSocialWork() {
-        return socialWork;
+    public Org getOrg() {
+        return org;
     }
 
-    void setSocialWork(String socialWork) {
-        this.socialWork = socialWork;
+    public void setOrg(Org org) {
+        this.org = org;
     }
 
-    public String getPoliticActivity() {
-        return politicActivity;
+    public boolean isEffective() {
+        return effective;
     }
 
-    void setPoliticActivity(String politicActivity) {
-        this.politicActivity = politicActivity;
+    public void setEffective(boolean effective) {
+        this.effective = effective;
     }
 
-    public String getSocialContribution() {
-        return socialContribution;
+    public String getsADetails() {
+        return sADetails;
     }
 
-    void setSocialContribution(String socialContribution) {
-        this.socialContribution = socialContribution;
+    public void setsADetails(String sADetails) {
+        this.sADetails = sADetails;
     }
 
-    public int getPublicity() {
-        return publicity;
+    public String getaADetails() {
+        return aADetails;
     }
 
-    void setPublicity(int publicity) {
-        this.publicity = publicity;
+    public void setaADetails(String aADetails) {
+        this.aADetails = aADetails;
     }
 
-    public int getSubAssessment() {
-        return subAssessment;
+    public Integer getsATotalScore() {
+        return sATotalScore;
     }
 
-    void setSubAssessment(int subAssessment) {
-        this.subAssessment = subAssessment;
+    public void setsATotalScore(Integer sATotalScore) {
+        this.sATotalScore = sATotalScore;
     }
 
-    public int getTotal() {
-        return total;
+    public Integer getaATotalScore() {
+        return aATotalScore;
     }
 
-    void setTotal(int total) {
-        this.total = total;
+    public void setaATotalScore(Integer aATotalScore) {
+        this.aATotalScore = aATotalScore;
+    }
+
+    public Integer getFinalScore() {
+        return finalScore;
+    }
+
+    public void setFinalScore(Integer finalScore) {
+        this.finalScore = finalScore;
+    }
+
+    public Calendar getExpirationTime() {
+        return expirationTime;
+    }
+
+    public void setExpirationTime(Calendar expirationTime) {
+        this.expirationTime = expirationTime;
     }
 
     public Calendar getCreateTime() {
