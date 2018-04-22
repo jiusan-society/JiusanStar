@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "rating_sheet")
-class RatingSheet implements Serializable {
+public class RatingSheet implements Serializable {
 
     @Id
     @TableGenerator(
