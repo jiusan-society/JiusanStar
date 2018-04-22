@@ -6,20 +6,20 @@ import javax.transaction.Transactional;
 import java.util.Calendar;
 
 @Transactional
-class OrgRepositoryImpl implements OrgRepositoryCustom {
+public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public Long create(Org entity) {
+    public Long create(User entity) {
         entity.setCreateTime(Calendar.getInstance());
         em.persist(entity);
         return entity.getSeq();
     }
 
     @Override
-    public Long update(Org entity) {
+    public Long update(User entity) {
         entity.setLastUpdateTime(Calendar.getInstance());
         em.merge(entity);
         return entity.getSeq();

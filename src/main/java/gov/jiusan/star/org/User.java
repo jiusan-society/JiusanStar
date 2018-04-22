@@ -6,6 +6,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -50,6 +51,7 @@ class User implements Serializable {
     private String password;
 
     @ManyToOne
+    @JoinColumn(name = "org_seq")
     private Org org;
 
     @Column(name = "admin")
@@ -121,7 +123,7 @@ class User implements Serializable {
         return org;
     }
 
-    public void setOrg(Org org) {
+    void setOrg(Org org) {
         this.org = org;
     }
 

@@ -1,5 +1,7 @@
 package gov.jiusan.star.org;
 
+import gov.jiusan.star.score.Score;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -44,9 +47,11 @@ public class Org implements Serializable {
     @JoinColumn(name = "root_seq")
     private Org root;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "org_seq")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "org", orphanRemoval = true)
     private List<User> users;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "org", orphanRemoval = true)
+    private Score score;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time", nullable = false)
@@ -94,6 +99,14 @@ public class Org implements Serializable {
 
     void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public Score getScore() {
+        return score;
+    }
+
+    void setScore(Score score) {
+        this.score = score;
     }
 
     public Calendar getCreateTime() {

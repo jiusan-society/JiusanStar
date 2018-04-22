@@ -1,5 +1,7 @@
 package gov.jiusan.star.sheet;
 
+import gov.jiusan.star.score.Score;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,6 +66,10 @@ public class RatingSheet implements Serializable {
     @JoinColumn(name = "sheet_seq")
     private List<RatingPhase> ratingPhases;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "sheet_seq")
+    private List<Score> scores;
+
     /**
      * 创建时间
      */
@@ -124,6 +130,14 @@ public class RatingSheet implements Serializable {
 
     void setRatingPhases(List<RatingPhase> ratingPhases) {
         this.ratingPhases = ratingPhases;
+    }
+
+    public List<Score> getScores() {
+        return scores;
+    }
+
+    void setScores(List<Score> scores) {
+        this.scores = scores;
     }
 
     public Calendar getCreateTime() {
