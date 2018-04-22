@@ -21,25 +21,25 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "sheet")
 public class RatingSheetController {
 
-    private final RatingSheetService service;
+    private final RatingSheetService rsService;
 
     @Autowired
     public RatingSheetController(RatingSheetService service) {
-        this.service = service;
+        this.rsService = service;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public @ResponseBody
     gov.jiusan.star.sheet.model.RatingSheet createSheet(@RequestBody gov.jiusan.star.sheet.model.RatingSheet sheet) {
-        sheet.setSeq(service.create(sheet));
+        sheet.setSeq(rsService.create(sheet));
         return sheet;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public String retrieveSheet(@RequestParam(value = "seq") Long seq, Model model) {
-        Optional<RatingSheet> sheet = service.find(seq);
+        Optional<RatingSheet> sheet = rsService.find(seq);
         if (sheet.isPresent()) {
             model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
             return "sheet/sheet_viewer";
@@ -54,18 +54,19 @@ public class RatingSheetController {
             model.addAttribute("sheet", new gov.jiusan.star.sheet.model.RatingSheet());
             return "sheet/sheet_editor";
         }
-        Optional<RatingSheet> sheet = service.find(seq);
-        if (sheet.isPresent()) {
-            model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
-            return "sheet/sheet_editor";
+        // TODO，前端用的是 JQuery 的方式来做，现在这样捞出来在前端页面是不能显示数据的
+        Optional<RatingSheet> sheet = rsService.find(seq);
+        if (!sheet.isPresent()) {
+            return "error";
         }
-        return "error";
+        model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
+        return "sheet/sheet_editor";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(path = "list")
     public String findAllSheets(Model model) {
-        model.addAttribute("sheets", service.findAll().stream().map(RatingSheetUtil::convert).collect(Collectors.toList()));
+        model.addAttribute("sheets", rsService.findAll().stream().map(RatingSheetUtil::convert).collect(Collectors.toList()));
         return "sheet/sheet_list";
     }
 

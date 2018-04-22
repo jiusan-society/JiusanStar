@@ -19,7 +19,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "app_org")
-class Org implements Serializable {
+public class Org implements Serializable {
 
     @Id
     @TableGenerator(
