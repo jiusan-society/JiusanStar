@@ -9,7 +9,7 @@ import java.util.Calendar;
  * @author Marcus Lin
  */
 @Transactional
-public class ScoreRepositoryImpl implements ScoreRepositoryCustom {
+class ScoreRepositoryImpl implements ScoreRepositoryCustom {
 
     @PersistenceContext
     private EntityManager em;

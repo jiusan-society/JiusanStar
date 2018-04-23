@@ -14,6 +14,7 @@ class OrgRepositoryImpl implements OrgRepositoryCustom {
     @Override
     public Long create(Org entity) {
         entity.setCreateTime(Calendar.getInstance());
+        entity.setLastUpdateTime(Calendar.getInstance());
         em.persist(entity);
         return entity.getSeq();
     }

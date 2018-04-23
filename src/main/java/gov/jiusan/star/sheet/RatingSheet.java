@@ -66,8 +66,7 @@ public class RatingSheet implements Serializable {
     @JoinColumn(name = "sheet_seq")
     private List<RatingPhase> ratingPhases;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "sheet_seq")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sheet", orphanRemoval = true)
     private List<Score> scores;
 
     /**

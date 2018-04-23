@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
  * @author Marcus Lin
  */
 @Repository
-interface ScoreRepository extends CrudRepository<Score, Long>, ScoreRepositoryCustom {
+public interface ScoreRepository extends CrudRepository<Score, Long>, ScoreRepositoryCustom {
 }

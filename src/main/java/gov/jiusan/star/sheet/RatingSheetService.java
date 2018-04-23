@@ -1,5 +1,8 @@
 package gov.jiusan.star.sheet;
 
+import gov.jiusan.star.org.Org;
+import gov.jiusan.star.score.Score;
+import gov.jiusan.star.score.ScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +18,12 @@ public class RatingSheetService {
 
     private final RatingSheetRepository repository;
 
+    private final ScoreRepository sRepository;
+
     @Autowired
-    public RatingSheetService(RatingSheetRepository repository) {
+    public RatingSheetService(RatingSheetRepository repository, ScoreRepository sRepository) {
         this.repository = repository;
+        this.sRepository = sRepository;
     }
 
     public Long create(gov.jiusan.star.sheet.model.RatingSheet model) {
@@ -42,5 +48,27 @@ public class RatingSheetService {
 
     public List<RatingSheet> findAll() {
         return repository.findAll();
+    }
+
+    public void dispatchSheet(RatingSheet sheet, List<Org> orgs) {
+        makeOtherSheetsInvalid();
+        sheet.setEffective(true);
+        if (!sheet.getScores().isEmpty()) {
+            sheet.getScores().clear();
+        }
+        for (Org o : orgs) {
+            Score score = new Score();
+            score.setOrg(o);
+            score.setSheet(sheet);
+            score.setEffective(true);
+            sRepository.create(score);
+        }
+    }
+
+    private void makeOtherSheetsInvalid() {
+        findAll().stream().filter(RatingSheet::isEffective).forEach(s -> {
+            s.setEffective(false);
+            s.getScores().forEach(score -> score.setEffective(false));
+        });
     }
 }

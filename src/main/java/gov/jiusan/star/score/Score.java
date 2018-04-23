@@ -1,6 +1,7 @@
 package gov.jiusan.star.score;
 
 import gov.jiusan.star.org.Org;
+import gov.jiusan.star.sheet.RatingSheet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -42,6 +44,10 @@ public class Score implements Serializable {
     @OneToOne
     @JoinColumn(name = "org_seq")
     private Org org;
+
+    @ManyToOne
+    @JoinColumn(name = "sheet_seq")
+    private RatingSheet sheet;
 
     /**
      * 是否生效
@@ -117,6 +123,14 @@ public class Score implements Serializable {
 
     public void setOrg(Org org) {
         this.org = org;
+    }
+
+    public RatingSheet getSheet() {
+        return sheet;
+    }
+
+    public void setSheet(RatingSheet sheet) {
+        this.sheet = sheet;
     }
 
     public boolean isEffective() {

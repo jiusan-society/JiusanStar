@@ -14,6 +14,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     @Override
     public Long create(User entity) {
         entity.setCreateTime(Calendar.getInstance());
+        entity.setLastUpdateTime(Calendar.getInstance());
         em.persist(entity);
         return entity.getSeq();
     }

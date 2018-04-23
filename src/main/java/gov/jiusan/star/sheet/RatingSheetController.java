@@ -1,5 +1,6 @@
 package gov.jiusan.star.sheet;
 
+import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.sheet.model.RatingDetails;
 import gov.jiusan.star.sheet.model.RatingPhase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,12 @@ public class RatingSheetController {
 
     private final RatingSheetService rsService;
 
+    private final OrgService oService;
+
     @Autowired
-    public RatingSheetController(RatingSheetService service) {
+    public RatingSheetController(RatingSheetService service, OrgService oService) {
         this.rsService = service;
+        this.oService = oService;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -118,6 +122,17 @@ public class RatingSheetController {
     public String findAllSheets(Model model) {
         model.addAttribute("sheets", rsService.findAll().stream().map(RatingSheetUtil::convert).collect(Collectors.toList()));
         return "sheet/sheet_list";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping(path = "/dispatch")
+    public String dispatchSheet(@RequestParam("seq") Long seq) {
+        Optional<RatingSheet> sheet = rsService.find(seq);
+        if (!sheet.isPresent()) {
+            return "error";
+        }
+        rsService.dispatchSheet(sheet.get(), oService.findAllNonRootOrgs());
+        return "success";
     }
 
 }
