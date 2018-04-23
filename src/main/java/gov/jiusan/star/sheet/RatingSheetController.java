@@ -47,17 +47,17 @@ public class RatingSheetController {
         return "sheet/sheet_viewer";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping(path = "update")
-    public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.RatingSheet sheetModel, Model model) {
-        Optional<RatingSheet> sheet = rsService.find(seq);
-        if (!sheet.isPresent()) {
-            return "error";
-        }
-        RatingSheet updatedSheet = rsService.update(sheet.get(), sheetModel);
-        model.addAttribute("sheet", RatingSheetUtil.convert(updatedSheet));
-        return "sheet/sheet_viewer";
-    }
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PostMapping(path = "update")
+//    public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.RatingSheet sheetModel, Model model) {
+//        Optional<RatingSheet> sheet = rsService.find(seq);
+//        if (!sheet.isPresent()) {
+//            return "error";
+//        }
+//        RatingSheet updatedSheet = rsService.update(sheet.get(), sheetModel);
+//        model.addAttribute("sheet", RatingSheetUtil.convert(updatedSheet));
+//        return "sheet/sheet_viewer";
+//    }
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -67,7 +67,6 @@ public class RatingSheetController {
             model.addAttribute("sheet", new gov.jiusan.star.sheet.model.RatingSheet());
             return "sheet/sheet_editor";
         }
-        // TODO，前端用的是 JQuery 的方式来做，现在这样捞出来在前端页面是不能显示数据的
         Optional<RatingSheet> sheet = rsService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
