@@ -18,8 +18,8 @@
         <div th:replace="fragments/navbar :: navbar"></div>
         <div class="container">
             <form th:action="@{/sheet}" th:object="${sheet}" method="post">
-                <div align="center">
-                    <h3><input placeholder="请输入标题" name="name" th:field="*{name}"/></h3>
+                <div>
+                    <h3><input class="form-control input-lg" placeholder="请输入标题" name="name" th:field="*{name}"/></h3>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
@@ -28,31 +28,28 @@
                                 <th style="text-align: center">指标大类</th>
                                 <th style="text-align: center">指标小类</th>
                                 <th>
-                                    <button name="addPhase" type="submit">添加大类</button>
+                                    <button class="btn btn-sm btn-primary" name="addPhase" type="submit">添加大类</button>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="phase, phaseStat : *{ratingPhases}">
-                                <td>
-                                    名称：<input type="text" th:field="*{ratingPhases[__${phaseStat.index}__].name}" />
-                                    最高可得：<input type="number" th:field="*{ratingPhases[__${phaseStat.index}__].maxScore}" />
-                                    <button name="removePhase" type="submit" th:value="${phaseStat.index}">删除大类</button>
-                                    <button name="addDetails" type="submit" th:value="${phaseStat.index}">添加小类</button>
+                                <td class="col-sm-2">
+                                    名称：<input class="form-control input-sm" type="text" th:field="*{ratingPhases[__${phaseStat.index}__].name}" />
+                                    最高可得：<input class="form-control input-sm" type="number" th:field="*{ratingPhases[__${phaseStat.index}__].maxScore}" />
+                                    <br/>
+                                    <button class="btn btn-sm btn-danger" name="removePhase" type="submit" th:value="${phaseStat.index}">删除大类</button>
+                                    <button class="btn btn-sm btn-primary" name="addDetails" type="submit" th:value="${phaseStat.index}">添加小类</button>
                                 </td>
                                 <td>
                                     <ul th:each="details, detailsStat : ${phase.ratingDetails}">
                                         <li>
-                                            评分标准：<input type="text" th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].description}"/>
+                                            评分标准：<input class="form-control input-sm" type="text" th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].description}"/>
+                                            每项可得：<input class="form-control input-sm" type="number" th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].eachScore}"/>
+                                            最高可得：<input class="form-control input-sm" type="number" th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].maxScore}"/>
                                         </li>
                                         <li>
-                                            每项可得：<input type="number" th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].eachScore}"/>
-                                        </li>
-                                        <li>
-                                            最高可得：<input type="number" th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].maxScore}"/>
-                                        </li>
-                                        <li>
-                                            <button name="removeDetails" type="submit" th:value="${phaseStat.index} + '|' + ${detailsStat.index}">删除小类</button>
+                                            <button class="btn btn-sm btn-danger" name="removeDetails" type="submit" th:value="${phaseStat.index} + '|' + ${detailsStat.index}">删除小类</button>
                                         </li>
                                     </ul>
                                 </td>
@@ -62,7 +59,7 @@
                             <tr>
                                 <td colspan="4">
                                     <p align="center" class="alert alert-danger">
-                                        <textarea name="description" placeholder="请输入注意事项" th:field="*{description}"
+                                        <textarea class="form-control input-lg" name="description" placeholder="请输入注意事项" th:field="*{description}"
                                                   style="width: 100%;"></textarea>
                                     </p>
                                 </td>
