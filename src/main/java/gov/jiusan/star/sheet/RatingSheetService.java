@@ -56,6 +56,7 @@ public class RatingSheetService {
         if (!sheet.getScores().isEmpty()) {
             sheet.getScores().clear();
         }
+        repository.update(sheet);
         for (Org o : orgs) {
             Score score = new Score();
             score.setOrg(o);

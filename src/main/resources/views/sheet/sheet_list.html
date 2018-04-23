@@ -42,7 +42,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="sheet : ${sheets}">
+                                <tr th:each="sheet : ${sheets}" th:class="${sheet.effective ? 'alert alert-info' : ''}">
                                     <td>
                                         <p th:text="${sheet.seq}"></p>
                                     </td>

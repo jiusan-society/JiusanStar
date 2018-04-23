@@ -18,7 +18,9 @@ public class RatingSheet implements Serializable {
     @NotEmpty
     @Size(min = 3, max = 20)
     private String name;
+
     private String description;
+    private boolean effective;
 
     @NotEmpty
     private List<RatingPhase> ratingPhases;
@@ -48,6 +50,14 @@ public class RatingSheet implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isEffective() {
+        return effective;
+    }
+
+    public void setEffective(boolean effective) {
+        this.effective = effective;
     }
 
     public List<RatingPhase> getRatingPhases() {
