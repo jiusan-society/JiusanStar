@@ -22,6 +22,7 @@
                 <div>
                     <h3><input class="form-control input-lg text-center" placeholder="请输入标题" name="name"
                                th:field="*{name}"/></h3>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger"></p>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">

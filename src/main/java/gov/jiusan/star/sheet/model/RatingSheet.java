@@ -1,5 +1,8 @@
 package gov.jiusan.star.sheet.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,9 +14,15 @@ import java.util.List;
 public class RatingSheet implements Serializable {
 
     private Long seq;
+
+    @NotEmpty
+    @Size(min = 3, max = 20)
     private String name;
     private String description;
+
+    @NotEmpty
     private List<RatingPhase> ratingPhases;
+
     private Calendar createTime;
     private Calendar lastUpdateTime;
 

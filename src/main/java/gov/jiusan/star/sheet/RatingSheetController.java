@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,7 +34,10 @@ public class RatingSheetController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public String createSheet(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet) {
+    public String createSheet(@ModelAttribute("sheet") @Valid gov.jiusan.star.sheet.model.RatingSheet sheet, final BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "sheet/sheet_editor";
+        }
         return "redirect:/sheet?seq=" + rsService.create(sheet);
     }
 
