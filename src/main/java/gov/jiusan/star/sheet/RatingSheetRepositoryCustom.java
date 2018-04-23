@@ -7,5 +7,5 @@ interface RatingSheetRepositoryCustom {
 
     Long create(RatingSheet entity);
 
-    Long update(RatingSheet entity);
+    RatingSheet update(RatingSheet entity);
 }

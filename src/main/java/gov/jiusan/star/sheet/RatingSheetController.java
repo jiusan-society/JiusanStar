@@ -40,12 +40,25 @@ public class RatingSheetController {
     @GetMapping
     public String retrieveSheet(@RequestParam(value = "seq") Long seq, Model model) {
         Optional<RatingSheet> sheet = rsService.find(seq);
-        if (sheet.isPresent()) {
-            model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
-            return "sheet/sheet_viewer";
+        if (!sheet.isPresent()) {
+            return "error";
         }
-        return "error";
+        model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
+        return "sheet/sheet_viewer";
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(path = "update")
+    public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.RatingSheet sheetModel, Model model) {
+        Optional<RatingSheet> sheet = rsService.find(seq);
+        if (!sheet.isPresent()) {
+            return "error";
+        }
+        RatingSheet updatedSheet = rsService.update(sheet.get(), sheetModel);
+        model.addAttribute("sheet", RatingSheetUtil.convert(updatedSheet));
+        return "sheet/sheet_viewer";
+    }
+
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(path = "editor")

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Marcus Lin
@@ -29,6 +30,14 @@ public class RatingSheetService {
             return Optional.empty();
         }
         return Optional.ofNullable(repository.findOne(seq));
+    }
+
+    public RatingSheet update(RatingSheet entity, gov.jiusan.star.sheet.model.RatingSheet model) {
+        entity.setName(model.getName());
+        entity.setDescription(model.getDescription());
+        entity.getRatingPhases().clear();
+        entity.getRatingPhases().addAll(model.getRatingPhases().stream().map(RatingSheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        return repository.update(entity);
     }
 
     public List<RatingSheet> findAll() {

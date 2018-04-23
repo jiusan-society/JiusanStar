@@ -28,7 +28,7 @@ class RatingSheetUtil {
         return entity;
     }
 
-    private static RatingPhase convertRatingPhase(gov.jiusan.star.sheet.model.RatingPhase model) {
+    static RatingPhase convertRatingPhase(gov.jiusan.star.sheet.model.RatingPhase model) {
         RatingPhase ratingPhase = new RatingPhase();
         ratingPhase.setName(model.getName());
         ratingPhase.setMaxScore(model.getMaxScore());
@@ -36,7 +36,7 @@ class RatingSheetUtil {
         return ratingPhase;
     }
 
-    private static gov.jiusan.star.sheet.model.RatingPhase convertRatingPhase(RatingPhase phase) {
+    static gov.jiusan.star.sheet.model.RatingPhase convertRatingPhase(RatingPhase phase) {
         gov.jiusan.star.sheet.model.RatingPhase model = new gov.jiusan.star.sheet.model.RatingPhase();
         model.setName(phase.getName());
         model.setMaxScore(phase.getMaxScore());
@@ -44,7 +44,7 @@ class RatingSheetUtil {
         return model;
     }
 
-    private static RatingDetails convertRatingDetails(gov.jiusan.star.sheet.model.RatingDetails model) {
+    static RatingDetails convertRatingDetails(gov.jiusan.star.sheet.model.RatingDetails model) {
         RatingDetails details = new RatingDetails();
         details.setDescription(model.getDescription());
         details.setEachScore(model.getEachScore());

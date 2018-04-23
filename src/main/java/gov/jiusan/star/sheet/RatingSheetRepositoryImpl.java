@@ -23,9 +23,8 @@ class RatingSheetRepositoryImpl implements RatingSheetRepositoryCustom {
     }
 
     @Override
-    public Long update(RatingSheet entity) {
+    public RatingSheet update(RatingSheet entity) {
         entity.setLastUpdateTime(Calendar.getInstance());
-        em.merge(entity);
-        return entity.getSeq();
+        return em.merge(entity);
     }
 }
