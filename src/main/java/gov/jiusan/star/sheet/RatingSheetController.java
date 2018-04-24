@@ -151,7 +151,7 @@ public class RatingSheetController {
             return "error";
         }
         rsService.dispatchSheet(sheet.get(), oService.findAllNonRootOrgs());
-        return "success";
+        return "sheet/sheet_list";
     }
 
 }

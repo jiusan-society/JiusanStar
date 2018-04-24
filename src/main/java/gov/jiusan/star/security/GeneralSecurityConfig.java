@@ -17,8 +17,6 @@ import org.springframework.security.web.RedirectStrategy;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class GeneralSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -27,26 +25,6 @@ public class GeneralSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin()
             .loginPage("/login").permitAll()
-            .successHandler(((req, resp, auth) -> auth.getAuthorities().forEach(a -> {
-                switch (a.getAuthority()) {
-                    case "ROLE_USER":
-                        try {
-                            redirectStrategy.sendRedirect(req, resp, "/index");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "ROLE_ADMIN":
-                        try {
-                            redirectStrategy.sendRedirect(req, resp, "/score/list");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            })))
             .and()
             .logout();
     }

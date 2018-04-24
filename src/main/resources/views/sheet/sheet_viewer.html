@@ -38,9 +38,9 @@
                             </td>
                             <td>
                                 <ul th:each="details : ${phase.ratingDetails}">
-                                    <li th:text="'评分标准：' + ${details.description}"></li>
-                                    <li th:text="'每项可得：' + ${details.eachScore}"></li>
-                                    <li th:text="'最高可得：' + ${details.maxScore}"></li>
+                                    <li>
+                                        <p th:text="'评分标准：' + ${details.description} + '，每项可得：' + ${details.eachScore} + '，最高可得：' + ${details.maxScore} + '。'"></p>
+                                    </li>
                                 </ul>
                             </td>
                         </tr>
