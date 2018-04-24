@@ -69,7 +69,11 @@ public class RatingSheetService {
     private void makeOtherSheetsInvalid() {
         findAll().stream().filter(RatingSheet::isEffective).forEach(s -> {
             s.setEffective(false);
-            s.getScores().forEach(score -> score.setEffective(false));
+            repository.update(s);
+            s.getScores().forEach(score -> {
+                score.setEffective(false);
+                sRepository.update(score);
+            });
         });
     }
 }

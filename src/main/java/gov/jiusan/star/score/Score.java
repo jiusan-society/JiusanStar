@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
@@ -41,7 +40,7 @@ public class Score implements Serializable {
     /**
      * 关联组织
      */
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "org_seq")
     private Org org;
 
