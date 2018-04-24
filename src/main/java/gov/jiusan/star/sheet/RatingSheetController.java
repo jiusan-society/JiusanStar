@@ -56,17 +56,17 @@ public class RatingSheetController {
         return "sheet/sheet_viewer";
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @PostMapping(path = "update")
-//    public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.RatingSheet sheetModel, Model model) {
-//        Optional<RatingSheet> sheet = rsService.find(seq);
-//        if (!sheet.isPresent()) {
-//            return "error";
-//        }
-//        RatingSheet updatedSheet = rsService.update(sheet.get(), sheetModel);
-//        model.addAttribute("sheet", RatingSheetUtil.convert(updatedSheet));
-//        return "sheet/sheet_viewer";
-//    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(path = "update")
+    public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.RatingSheet sheetModel, Model model) {
+        Optional<RatingSheet> sheet = rsService.find(seq);
+        if (!sheet.isPresent()) {
+            return "error";
+        }
+        RatingSheet updatedSheet = rsService.update(sheet.get(), sheetModel);
+        model.addAttribute("sheet", RatingSheetUtil.convert(updatedSheet));
+        return "sheet/sheet_viewer";
+    }
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -110,6 +110,39 @@ public class RatingSheetController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(params = "removeDetails")
     public String removeDetails(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+        String value = request.getParameter("removeDetails");
+        int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
+        int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
+        sheet.getRatingPhases().get(phaseIndex).getRatingDetails().remove(detailsIndex);
+        return "sheet/sheet_editor";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(path = "update", params = "addPhase")
+    public String addPhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet) {
+        sheet.getRatingPhases().add(new RatingPhase());
+        return "sheet/sheet_editor";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(path = "update", params = "removePhase")
+    public String removePhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+        int rowId = Integer.valueOf(request.getParameter("removePhase"));
+        sheet.getRatingPhases().remove(rowId);
+        return "sheet/sheet_editor";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(path = "update", params = "addDetails")
+    public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+        int rowId = Integer.valueOf(request.getParameter("addDetails"));
+        sheet.getRatingPhases().get(rowId).getRatingDetails().add(new RatingDetails());
+        return "sheet/sheet_editor";
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(path = "update", params = "removeDetails")
+    public String removeDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
         String value = request.getParameter("removeDetails");
         int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
         int detailsIndex = Integer.valueOf(value.split("\\|")[1]);

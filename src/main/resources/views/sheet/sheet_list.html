@@ -42,9 +42,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="sheet : ${sheets}" th:class="${sheet.effective ? 'alert alert-info' : ''}">
+                                <tr th:each="sheet, sheetStat : ${sheets}" th:class="${sheet.effective ? 'alert alert-info' : ''}">
                                     <td>
-                                        <p th:text="${sheet.seq}"></p>
+                                        <p th:text="${sheetStat.index + 1}"></p>
                                     </td>
                                     <td>
                                         <p th:text="${sheet.name}"></p>
@@ -57,7 +57,7 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-primary" th:href="'/sheet?seq=' + ${sheet.seq}">查看</a>
-                                        <!--<a class="btn btn-sm btn-warning" th:href="'/sheet/editor?seq=' + ${sheet.seq}">编辑</a>-->
+                                        <a class="btn btn-sm btn-warning" th:href="'/sheet/editor?seq=' + ${sheet.seq}">编辑</a>
                                         <a class="btn btn-sm btn-warning" th:href="'/sheet/dispatch?seq=' + ${sheet.seq}">派发</a>
                                         <a class="btn btn-sm btn-danger" th:href="'/sheet/delete?seq=' + ${sheet.seq}">删除</a>
                                     </td>
