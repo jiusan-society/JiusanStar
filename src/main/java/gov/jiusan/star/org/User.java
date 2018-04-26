@@ -19,19 +19,12 @@ import java.util.Calendar;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "app_user")
+@Table(name = "js_user")
 class User implements Serializable {
 
     @Id
-    @TableGenerator(
-        name = "USER_SEQ_GENERATOR",
-        table = "star_seq_gen",
-        pkColumnName = "seq_name",
-        pkColumnValue = "USER_SEQ",
-        valueColumnName = "seq_value",
-        initialValue = 50
-    )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "USER_SEQ_GENERATOR")
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
     @Column(name = "firstname", nullable = false)
@@ -54,8 +47,9 @@ class User implements Serializable {
     @JoinColumn(name = "org_seq")
     private Org org;
 
-    @Column(name = "admin")
-    private boolean admin;
+    @ManyToOne
+    @JoinColumn(name = "role_seq")
+    private Role role;
 
     @Column(name = "phone_number")
     private String phoneNum;
@@ -63,19 +57,14 @@ class User implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_time", nullable = false)
-    private Calendar createTime;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_update_time", nullable = false)
-    private Calendar lastUpdateTime;
+    public User() {
+    }
 
     public Long getSeq() {
         return seq;
     }
 
-    void setSeq(Long seq) {
+    public void setSeq(Long seq) {
         this.seq = seq;
     }
 
@@ -83,7 +72,7 @@ class User implements Serializable {
         return firstName;
     }
 
-    void setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -91,7 +80,7 @@ class User implements Serializable {
         return lastName;
     }
 
-    void setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -99,7 +88,7 @@ class User implements Serializable {
         return sexType;
     }
 
-    void setSexType(SexType sexType) {
+    public void setSexType(SexType sexType) {
         this.sexType = sexType;
     }
 
@@ -107,7 +96,7 @@ class User implements Serializable {
         return account;
     }
 
-    void setAccount(String account) {
+    public void setAccount(String account) {
         this.account = account;
     }
 
@@ -115,7 +104,7 @@ class User implements Serializable {
         return password;
     }
 
-    void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -123,23 +112,23 @@ class User implements Serializable {
         return org;
     }
 
-    void setOrg(Org org) {
+    public void setOrg(Org org) {
         this.org = org;
     }
 
-    public boolean isAdmin() {
-        return getOrg().getRoot() == null;
+    public Role getRole() {
+        return role;
     }
 
-    void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getPhoneNum() {
         return phoneNum;
     }
 
-    void setPhoneNum(String phoneNum) {
+    public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
 
@@ -147,24 +136,8 @@ class User implements Serializable {
         return email;
     }
 
-    void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Calendar getCreateTime() {
-        return createTime;
-    }
-
-    void setCreateTime(Calendar createTime) {
-        this.createTime = createTime;
-    }
-
-    public Calendar getLastUpdateTime() {
-        return lastUpdateTime;
-    }
-
-    void setLastUpdateTime(Calendar lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
     }
 
     public enum SexType {

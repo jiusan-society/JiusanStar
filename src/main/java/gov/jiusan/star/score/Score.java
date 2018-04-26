@@ -55,6 +55,12 @@ public class Score implements Serializable {
     private boolean effective;
 
     /**
+     * 是否完成填写
+     */
+    @Column(name = "finished", nullable = false)
+    private boolean finished;
+
+    /**
      * 自评得分详情 sA -> selfAssessment
      */
     @Column(name = "sa_details")
@@ -138,6 +144,14 @@ public class Score implements Serializable {
 
     public void setEffective(boolean effective) {
         this.effective = effective;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public String getsADetails() {

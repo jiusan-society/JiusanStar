@@ -20,19 +20,11 @@ import java.util.Calendar;
 import java.util.List;
 
 @Entity
-@Table(name = "app_org")
+@Table(name = "js_org")
 public class Org implements Serializable {
 
     @Id
-    @TableGenerator(
-        name = "ORG_SEQ_GENERATOR",
-        table = "star_seq_gen",
-        pkColumnName = "seq_name",
-        pkColumnValue = "ORG_SEQ",
-        valueColumnName = "seq_value",
-        initialValue = 50
-    )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "ORG_SEQ_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
     @Column(name = "name", nullable = false)
@@ -52,19 +44,14 @@ public class Org implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "org")
     private List<Score> score;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_time", nullable = false)
-    private Calendar createTime;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_update_time", nullable = false)
-    private Calendar lastUpdateTime;
+    public Org() {
+    }
 
     public Long getSeq() {
         return seq;
     }
 
-    void setSeq(Long seq) {
+    public void setSeq(Long seq) {
         this.seq = seq;
     }
 
@@ -72,7 +59,7 @@ public class Org implements Serializable {
         return name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -80,7 +67,7 @@ public class Org implements Serializable {
         return parent;
     }
 
-    void setParent(Org parent) {
+    public void setParent(Org parent) {
         this.parent = parent;
     }
 
@@ -88,7 +75,7 @@ public class Org implements Serializable {
         return root;
     }
 
-    void setRoot(Org root) {
+    public void setRoot(Org root) {
         this.root = root;
     }
 
@@ -96,7 +83,7 @@ public class Org implements Serializable {
         return users;
     }
 
-    void setUsers(List<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
@@ -106,21 +93,5 @@ public class Org implements Serializable {
 
     public void setScore(List<Score> score) {
         this.score = score;
-    }
-
-    public Calendar getCreateTime() {
-        return createTime;
-    }
-
-    void setCreateTime(Calendar createTime) {
-        this.createTime = createTime;
-    }
-
-    public Calendar getLastUpdateTime() {
-        return lastUpdateTime;
-    }
-
-    void setLastUpdateTime(Calendar lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
     }
 }
