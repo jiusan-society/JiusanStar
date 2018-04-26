@@ -1,6 +1,5 @@
 package gov.jiusan.star.sheet;
 
-import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.sheet.model.RatingDetails;
 import gov.jiusan.star.sheet.model.RatingPhase;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -152,11 +150,7 @@ public class RatingSheetController {
         if (!sheet.isPresent()) {
             return "error";
         }
-        List<Org> orgs = oService.findAllNonRootOrgs();
-        if (orgs.isEmpty()) {
-            return "error";
-        }
-        rsService.dispatchSheet(sheet.get(), orgs);
+        rsService.dispatchSheet(sheet.get(), oService.findAllNonRootOrgs());
         return "sheet/sheet_list";
     }
 
