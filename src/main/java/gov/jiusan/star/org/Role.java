@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "js_role")
+@Table(name = "app_role")
 public class Role implements Serializable {
 
     @Id

@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "js_org")
+@Table(name = "app_org")
 public class Org implements Serializable {
 
     @Id

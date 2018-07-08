@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "js_user")
+@Table(name = "app_user")
 class User implements Serializable {
 
     @Id
