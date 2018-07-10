@@ -34,11 +34,11 @@ public class Org implements Serializable {
     @JoinColumn(name = "root_seq")
     private Org root;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "org", orphanRemoval = true)
-    private List<User> users;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Role> roles;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "org")
-    private List<Score> score;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "org", orphanRemoval = true)
+    private List<Score> scores;
 
     public Org() {
     }
@@ -75,19 +75,19 @@ public class Org implements Serializable {
         this.root = root;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
-    public List<Score> getScore() {
-        return score;
+    public List<Score> getScores() {
+        return scores;
     }
 
-    public void setScore(List<Score> score) {
-        this.score = score;
+    public void setScores(List<Score> scores) {
+        this.scores = scores;
     }
 }

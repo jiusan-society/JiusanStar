@@ -1,4 +1,4 @@
-package gov.jiusan.star.file;
+package gov.jiusan.star.doc;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Controller
 @RequestMapping(path = "/upload")
-public class FileUploadController {
+public class DocUploadController {
 
     @GetMapping
     public String showUploadPage() {

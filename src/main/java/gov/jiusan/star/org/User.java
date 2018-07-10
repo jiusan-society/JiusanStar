@@ -19,7 +19,6 @@ import java.io.Serializable;
 class User implements Serializable {
 
     @Id
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 

@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
         <meta charset="UTF-8"/>
-        <title>星级组织评定系统</title>
+        <title>初始数据导入页面</title>
     </head>
     <body>
         <div class="container">
             <div class="col-md-12">
-                <form method="post" enctype="multipart/form-data" th:action="'/upload?' + ${_csrf.parameterName} + '=' + ${_csrf.token}">
-                    <input type="file" name="doc" value="请选择文件" />
+                <form method="post" enctype="multipart/form-data" th:action="'/import?' + ${_csrf.parameterName} + '=' + ${_csrf.token}">
+                    <input type="file" name="seedData" value="请选择文件" />
                     <input type="submit" value="上传" />
                 </form>
             </div>
