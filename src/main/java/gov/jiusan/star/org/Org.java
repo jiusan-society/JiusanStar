@@ -26,6 +26,9 @@ public class Org implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "code", nullable = false)
+    private String code;
+
     @ManyToOne
     @JoinColumn(name = "parent_seq")
     private Org parent;
@@ -35,6 +38,7 @@ public class Org implements Serializable {
     private Org root;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "org_seq")
     private List<Role> roles;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "org", orphanRemoval = true)
@@ -57,6 +61,14 @@ public class Org implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Org getParent() {

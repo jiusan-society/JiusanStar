@@ -25,7 +25,7 @@ public class Role implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role", orphanRemoval = true)
     private List<User> users;
 
     public Role() {

@@ -39,10 +39,6 @@ class User implements Serializable {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "org_seq")
-    private Org org;
-
-    @ManyToOne
     @JoinColumn(name = "role_seq")
     private Role role;
 
@@ -101,14 +97,6 @@ class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Org getOrg() {
-        return org;
-    }
-
-    public void setOrg(Org org) {
-        this.org = org;
     }
 
     public Role getRole() {
