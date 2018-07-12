@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -29,20 +28,18 @@ public class Org implements Serializable {
     @Column(name = "code", nullable = false)
     private String code;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_seq")
-    private Org parent;
+    @Column(name = "parent_code")
+    private String parentCode;
 
-    @ManyToOne
-    @JoinColumn(name = "root_seq")
-    private Org root;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "org_seq")
-    private List<Role> roles;
+    @Column(name = "root_code")
+    private String rootCode;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "org", orphanRemoval = true)
     private List<Score> scores;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "org_seq")
+    private List<User> users;
 
     public Org() {
     }
@@ -71,35 +68,35 @@ public class Org implements Serializable {
         this.code = code;
     }
 
-    public Org getParent() {
-        return parent;
-    }
-
-    public void setParent(Org parent) {
-        this.parent = parent;
-    }
-
-    public Org getRoot() {
-        return root;
-    }
-
-    public void setRoot(Org root) {
-        this.root = root;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
     public List<Score> getScores() {
         return scores;
     }
 
     public void setScores(List<Score> scores) {
         this.scores = scores;
+    }
+
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
+    }
+
+    public String getRootCode() {
+        return rootCode;
+    }
+
+    public void setRootCode(String rootCode) {
+        this.rootCode = rootCode;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

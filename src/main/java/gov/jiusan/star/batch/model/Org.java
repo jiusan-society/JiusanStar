@@ -1,15 +1,14 @@
 package gov.jiusan.star.batch.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class Org implements Serializable {
 
     private String name;
     private String code;
     private String parentCode;
-    private boolean root;
-    private List<Org> subOrgs;
+    private String rootCode;
+    private String adminUserName;
     private String adminUserAccount;
     private String adminUserPassword;
 
@@ -40,14 +39,6 @@ public class Org implements Serializable {
         this.parentCode = parentCode;
     }
 
-    public List<Org> getSubOrgs() {
-        return subOrgs;
-    }
-
-    public void setSubOrgs(List<Org> subOrgs) {
-        this.subOrgs = subOrgs;
-    }
-
     public String getAdminUserAccount() {
         return adminUserAccount;
     }
@@ -64,11 +55,19 @@ public class Org implements Serializable {
         this.adminUserPassword = adminUserPassword;
     }
 
-    public boolean isRoot() {
-        return root;
+    public String getRootCode() {
+        return rootCode;
     }
 
-    public void setRoot(boolean root) {
-        this.root = root;
+    public void setRootCode(String rootCode) {
+        this.rootCode = rootCode;
+    }
+
+    public String getAdminUserName() {
+        return adminUserName;
+    }
+
+    public void setAdminUserName(String adminUserName) {
+        this.adminUserName = adminUserName;
     }
 }

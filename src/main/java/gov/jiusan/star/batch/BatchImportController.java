@@ -39,7 +39,7 @@ public class BatchImportController {
             }
         } catch (IOException e) {
         }
-        service.processSeedData(file);
+        service.readSeedData(file);
         return "redirect:/";
     }
 

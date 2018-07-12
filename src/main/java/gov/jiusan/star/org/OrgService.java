@@ -15,8 +15,16 @@ public class OrgService {
         this.repository = repository;
     }
 
-    public List<Org> findAllNonRootOrgs() {
-        return repository.selectAllNonRootOrgs();
+    public List<Org> findNonRootOrgs() {
+        return repository.selectNonRootOrgs();
+    }
+
+    public List<Org> findOrgsByParentCode(String code) {
+        return repository.selectOrgsByParentCode(code);
+    }
+
+    public Org createOrg(Org org) {
+        return repository.save(org);
     }
 
 }

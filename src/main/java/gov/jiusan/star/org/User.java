@@ -6,8 +6,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -16,20 +14,17 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "app_user")
-class User implements Serializable {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
-    @Column(name = "firstname", nullable = false)
-    private String firstName;
-
-    @Column(name = "lastname", nullable = false)
-    private String lastName;
+    @Column(name = "user_name", nullable = false)
+    private String username;
 
     @Enumerated
-    @Column(name = "sex_type", nullable = false)
+    @Column(name = "sex_type")
     private SexType sexType;
 
     @Column(name = "account", nullable = false)
@@ -37,10 +32,6 @@ class User implements Serializable {
 
     @Column(name = "password", nullable = false)
     private String password;
-
-    @ManyToOne
-    @JoinColumn(name = "role_seq")
-    private Role role;
 
     @Column(name = "phone_number")
     private String phoneNum;
@@ -59,24 +50,8 @@ class User implements Serializable {
         this.seq = seq;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public SexType getSexType() {
-        return sexType;
+        return sexType == null ? sexType = SexType.UNKNOWN : sexType;
     }
 
     public void setSexType(SexType sexType) {
@@ -99,14 +74,6 @@ class User implements Serializable {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public String getPhoneNum() {
         return phoneNum;
     }
@@ -123,8 +90,17 @@ class User implements Serializable {
         this.email = email;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public enum SexType {
         MALE,
-        FEMALE
+        FEMALE,
+        UNKNOWN
     }
 }

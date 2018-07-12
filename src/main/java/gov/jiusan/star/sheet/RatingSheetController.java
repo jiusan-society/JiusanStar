@@ -152,7 +152,7 @@ public class RatingSheetController {
         if (!sheet.isPresent()) {
             return "error";
         }
-        List<Org> orgs = oService.findAllNonRootOrgs();
+        List<Org> orgs = oService.findNonRootOrgs();
         // REMIND，当非根组织为空时，不得派发
         if (orgs.isEmpty()) {
             return "error";
