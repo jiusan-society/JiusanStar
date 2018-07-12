@@ -67,7 +67,7 @@ public class BatchImportService {
             o.setRootCode(rootCode);
             o.setAdminUserName(username);
             o.setAdminUserAccount(account);
-            o.setAdminUserPassword(account);
+            o.setAdminUserPassword(pwd);
             orgs.add(o);
         }
         saveToDB(orgs);
