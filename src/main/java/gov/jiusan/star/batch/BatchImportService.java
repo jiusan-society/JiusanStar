@@ -22,4 +22,26 @@ public class BatchImportService {
         Sheet sheet = wb.getSheetAt(0);
     }
 
+    enum SeedDataColumn {
+        ORG_NAME(0),
+        ORG_CODE(1),
+        ORG_PARENT(2),
+        IS_ROOT_ORG(3),
+        ADMIN_USER_PWD(4);
+
+        private int colIndex;
+
+        SeedDataColumn(int colIndex) {
+            this.colIndex = colIndex;
+        }
+
+        public int getColIndex() {
+            return colIndex;
+        }
+
+        public void setColIndex(int colIndex) {
+            this.colIndex = colIndex;
+        }
+    }
+
 }
