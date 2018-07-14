@@ -5,6 +5,9 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 
+/**
+ * @author Marcus Lin
+ */
 public class ExcelUtil {
 
     private static final DataFormatter formatter = new DataFormatter();

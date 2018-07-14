@@ -13,6 +13,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * @author Marcus Lin
+ */
 @Controller
 @RequestMapping(path = "/import")
 public class BatchImportController {

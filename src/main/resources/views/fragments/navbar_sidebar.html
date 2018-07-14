@@ -66,13 +66,13 @@
                             <a th:href="@{/index}"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
                         </li>
                         <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
-                            <a th:href="@{/score/editor}"><i class="fa fa-bar-chart-o fa-fw"></i> 自评</a>
+                            <a th:href="@{/score/editor}"><i class="fa fa-edit fa-fw"></i> 自评</a>
                         </li>
                         <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                             <a th:href="@{/sheet/list}"><i class="fa fa-table fa-fw"></i> 评分表</a>
                         </li>
                         <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-                            <a th:href="@{/score/list}"><i class="fa fa-table fa-fw"></i> 考评</a>
+                            <a th:href="@{/score/list}"><i class="fa fa-edit fa-fw"></i> 考评</a>
                         </li>
                     </ul>
                 </div>

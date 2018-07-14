@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -22,6 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Marcus Lin
+ */
 @Service
 public class BatchImportService {
 
@@ -40,6 +44,27 @@ public class BatchImportService {
         this.orgService = orgService;
         this.userService = userService;
         this.roleService = roleService;
+    }
+
+    private static Org convertOrg(gov.jiusan.star.batch.model.Org org) {
+        Org o = new Org();
+        o.setName(org.getName());
+        o.setCode(org.getCode());
+        o.setParentCode(org.getParentCode());
+        o.setRootCode(org.getRootCode());
+        return o;
+    }
+
+    private static User convertUser(gov.jiusan.star.batch.model.Org org) {
+        User u = new User();
+        u.setUsername(org.getAdminUserName());
+        u.setAccount(org.getAdminUserAccount());
+        u.setPassword(new BCryptPasswordEncoder().encode(org.getAdminUserPassword()));
+        return u;
+    }
+
+    private static String parseCode(String code) {
+        return code.substring(0, 2);
     }
 
     void readSeedData(File file) {
@@ -130,27 +155,6 @@ public class BatchImportService {
             o.setUsers(Arrays.asList(user));
             orgService.createOrg(o);
         });
-    }
-
-    private static Org convertOrg(gov.jiusan.star.batch.model.Org org) {
-        Org o = new Org();
-        o.setName(org.getName());
-        o.setCode(org.getCode());
-        o.setParentCode(org.getParentCode());
-        o.setRootCode(org.getRootCode());
-        return o;
-    }
-
-    private static User convertUser(gov.jiusan.star.batch.model.Org org) {
-        User u = new User();
-        u.setUsername(org.getAdminUserName());
-        u.setAccount(org.getAdminUserAccount());
-        u.setPassword(org.getAdminUserPassword());
-        return u;
-    }
-
-    private static String parseCode(String code) {
-        return code.substring(0, 2);
     }
 
     private enum OrgDataColumn {

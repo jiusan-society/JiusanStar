@@ -2,6 +2,9 @@ package gov.jiusan.star.batch.model;
 
 import java.io.Serializable;
 
+/**
+ * @author Marcus Lin
+ */
 public class Org implements Serializable {
 
     private String name;
