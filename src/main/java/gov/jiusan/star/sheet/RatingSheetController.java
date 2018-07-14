@@ -158,7 +158,17 @@ public class RatingSheetController {
             return "error";
         }
         rsService.dispatchSheet(sheet.get(), orgs);
-        return "sheet/sheet_list";
+        return "redirect:/sheet/list";
+    }
+
+    @GetMapping(path = "/delete")
+    public String deleteSheet(@RequestParam("seq") Long seq) {
+        Optional<RatingSheet> sheet = rsService.find(seq);
+        if (!sheet.isPresent()) {
+            return "error";
+        }
+        rsService.delete(sheet.get());
+        return "redirect:/sheet/list";
     }
 
 }

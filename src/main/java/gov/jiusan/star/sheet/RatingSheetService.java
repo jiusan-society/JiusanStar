@@ -46,6 +46,10 @@ public class RatingSheetService {
         return repository.update(entity);
     }
 
+    public void delete(RatingSheet entity) {
+        repository.delete(entity);
+    }
+
     public List<RatingSheet> findAll() {
         return repository.findAll();
     }

@@ -32,7 +32,7 @@ public class Org implements Serializable {
     }
 
     public String getParentCode() {
-        return parentCode;
+        return "".equals(parentCode) ? null : parentCode;
     }
 
     public void setParentCode(String parentCode) {
@@ -56,7 +56,7 @@ public class Org implements Serializable {
     }
 
     public String getRootCode() {
-        return rootCode;
+        return "".equals(rootCode) ? null : rootCode;
     }
 
     public void setRootCode(String rootCode) {
