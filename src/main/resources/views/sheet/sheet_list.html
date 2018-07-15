@@ -58,9 +58,36 @@
                                     <td>
                                         <a class="btn btn-sm btn-primary" th:href="'/sheet?seq=' + ${sheet.seq}">查看</a>
                                         <a class="btn btn-sm btn-warning" th:href="'/sheet/editor?seq=' + ${sheet.seq}">编辑</a>
-                                        <a class="btn btn-sm btn-warning" th:href="'/sheet/dispatch?seq=' + ${sheet.seq}">派发</a>
-                                        <a class="btn btn-sm btn-danger" th:href="'/sheet/delete?seq=' + ${sheet.seq}">删除</a>
+                                        <a class="btn btn-sm btn-warning"
+                                           th:onclick="'javascript:dispatchSheet('+${sheet.seq}+', '+${sheet.effective}+')'">派发</a>
+                                        <a class="btn btn-sm btn-danger"
+                                           th:href="'javascript:deleteSheet('+${sheet.seq}+')'">删除</a>
                                     </td>
+                                    <script>
+                                        function dispatchSheet(seq, effective) {
+                                            var url = "/sheet/dispatch?seq=" + seq;
+                                            var dispatch = false;
+                                            if (effective) {
+                                                var result = confirm("重新派发将清空原先的评分数据，是否确定？");
+                                                if (result) {
+                                                    dispatch = true;
+                                                }
+                                            } else {
+                                                dispatch = true;
+                                            }
+                                            if (dispatch) {
+                                                window.location.replace(url);
+                                            }
+                                        }
+
+                                        function deleteSheet(seq) {
+                                            var url = "/sheet/delete?seq=" + seq;
+                                            var result = confirm("删除评分表将同时清空相应的评分数据，是否确定？");
+                                            if (result) {
+                                                window.location.replace(url);
+                                            }
+                                        }
+                                    </script>
                                 </tr>
                             </tbody>
                         </table>
