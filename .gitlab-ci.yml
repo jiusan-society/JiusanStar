@@ -54,4 +54,4 @@ deploy_on_server:
   only:
     - master
   tags:
-    - run-on-aliyun
+    - run-on-dg
