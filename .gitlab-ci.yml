@@ -7,7 +7,7 @@ stages:
   - test
   - build
   - package
-#  - deploy
+  - deploy
 
 unit_test:
  image: gradle:latest
@@ -38,20 +38,20 @@ package_to_docker_image:
   only:
     - master
 
-#deploy_on_server:
-#  stage: deploy
-## 不去 gitlab clone repository，毕竟 GFW 太强大
-#  variables:
-#    GIT_STRATEGY: none
-## 不去下 build_jar 时候产生的 jar，毕竟 GFW 太强大
-#  dependencies: []
-#  script:
-#    - docker container ls
-#    - docker pull $DOCKER_REGISTRY_IMAGE:latest
-#    - docker container rm -f jiusan-star
-#  after_script:
-#    - docker run --name="jiusan-star" -e "SPRING_PROFILES_ACTIVE=prod" -p 80:80 -p 443:443 --net="host" -d $DOCKER_REGISTRY_IMAGE
-#  only:
-#    - master
-#  tags:
-#    - run-on-dg
+deploy_on_server:
+  stage: deploy
+# 不去 gitlab clone repository，毕竟 GFW 太强大
+  variables:
+    GIT_STRATEGY: none
+# 不去下 build_jar 时候产生的 jar，毕竟 GFW 太强大
+  dependencies: []
+  script:
+    - docker container ls
+    - docker pull $DOCKER_REGISTRY_IMAGE:latest
+    - docker container rm -f jiusan-star
+  after_script:
+    - docker run --name="jiusan-star" -e "SPRING_PROFILES_ACTIVE=prod" -p 80:80 -p 443:443 --net="host" -d $DOCKER_CN_REGISTRY_IMAGE
+  only:
+    - master
+  tags:
+    - run-on-tencent
