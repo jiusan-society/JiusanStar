@@ -40,6 +40,7 @@ package_to_docker_image:
 
 deploy_on_server:
   stage: deploy
+  image: ubuntu
 # 不去 gitlab clone repository，毕竟 GFW 太强大
   variables:
     GIT_STRATEGY: none
