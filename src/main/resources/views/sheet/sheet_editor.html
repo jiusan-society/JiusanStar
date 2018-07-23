@@ -82,8 +82,17 @@
                                 <td colspan="4">
                                     <div class="text-center">
                                         <input type="submit" class="btn btn-primary" th:value="提交"/>
-                                        <input type="reset" class="btn btn-danger" th:value="重置"/>
+                                        <input type="button" class="btn btn-danger" th:value="退出"
+                                               onclick="confirmExit()"/>
                                     </div>
+                                    <script>
+                                        function confirmExit() {
+                                            var result = confirm("退出将不保存数据，是否确认该操作?");
+                                            if (result) {
+                                                window.location.replace("/sheet/list");
+                                            }
+                                        }
+                                    </script>
                                 </td>
                             </tr>
                         </tfoot>
