@@ -46,6 +46,7 @@ deploy_on_server:
 # 不去下 build_jar 时候产生的 jar，毕竟 GFW 太强大
   dependencies: []
   script:
+    - whoami
     - docker container ls
     - docker pull $DOCKER_CN_REGISTRY_IMAGE:latest
     - docker container rm -f jiusan-star
