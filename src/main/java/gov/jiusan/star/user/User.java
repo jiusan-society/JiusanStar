@@ -1,4 +1,6 @@
-package gov.jiusan.star.org;
+package gov.jiusan.star.user;
+
+import gov.jiusan.star.org.Role;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,6 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -38,6 +42,10 @@ public class User implements Serializable {
 
     @Column(name = "email")
     private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "role_seq")
+    private Role role;
 
     public User() {
     }
@@ -96,6 +104,14 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public enum SexType {

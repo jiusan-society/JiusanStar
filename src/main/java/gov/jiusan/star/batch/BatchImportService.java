@@ -4,8 +4,8 @@ import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.org.Role;
 import gov.jiusan.star.org.RoleService;
-import gov.jiusan.star.org.User;
-import gov.jiusan.star.org.UserService;
+import gov.jiusan.star.user.User;
+import gov.jiusan.star.user.UserService;
 import gov.jiusan.star.util.ExcelUtil;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
@@ -111,7 +111,7 @@ public class BatchImportService {
     private void initRoles(List<gov.jiusan.star.batch.model.Org> orgs, List<User> users) {
         // Level1
         Role l1Admin = new Role();
-        l1Admin.setName("根组织管理员");
+        l1Admin.setName("ROLE_L1_ADM");
         List<String> l1AdminAccounts = orgs.stream().filter(o -> LEVEL_1_ORG.equals(parseCode(o.getCode())))
             .map(gov.jiusan.star.batch.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
@@ -119,11 +119,11 @@ public class BatchImportService {
         l1Admin.setUsers(l1AdminUsers);
         roleService.createRole(l1Admin);
         Role l1Normal = new Role();
-        l1Normal.setName("根组织用户");
+        l1Normal.setName("ROLE_L1_USER");
         roleService.createRole(l1Normal);
         // Level2
         Role l2Admin = new Role();
-        l2Admin.setName("直属组织管理员");
+        l2Admin.setName("ROLE_L2_ADM");
         List<String> l2AdminAccounts = orgs.stream().filter(o -> LEVEL_2_ORG.equals(parseCode(o.getCode())))
             .map(gov.jiusan.star.batch.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
@@ -131,11 +131,11 @@ public class BatchImportService {
         l2Admin.setUsers(l2AdminUsers);
         roleService.createRole(l2Admin);
         Role l2Normal = new Role();
-        l2Normal.setName("直属组织用户");
+        l2Normal.setName("ROLE_L2_USER");
         roleService.createRole(l2Normal);
         // Level3
         Role l3Admin = new Role();
-        l3Admin.setName("二级支社管理员");
+        l3Admin.setName("ROLE_L3_ADM");
         List<String> l3AdminAccounts = orgs.stream().filter(o -> LEVEL_3_ORG.equals(parseCode(o.getCode())))
             .map(gov.jiusan.star.batch.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
@@ -143,7 +143,7 @@ public class BatchImportService {
         l3Admin.setUsers(l3AdminUsers);
         roleService.createRole(l3Admin);
         Role l3Normal = new Role();
-        l3Normal.setName("二级支社用户");
+        l3Normal.setName("ROLE_L3_USER");
         roleService.createRole(l3Normal);
     }
 

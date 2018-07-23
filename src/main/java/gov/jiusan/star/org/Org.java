@@ -1,6 +1,7 @@
 package gov.jiusan.star.org;
 
 import gov.jiusan.star.score.Score;
+import gov.jiusan.star.user.User;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

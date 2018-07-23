@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  */
 @Controller
 @RequestMapping(path = "sheet")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_L1_ADM')")
 public class RatingSheetController {
 
     private final RatingSheetService rsService;
