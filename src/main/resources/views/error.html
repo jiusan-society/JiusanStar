@@ -67,15 +67,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 color: rgb(114, 173, 38);
             }
         </style>
-        <script>
-            var hmt = hmt || [];
-            (function () {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?26ec974e7be9c751ae6b7b7cf0b86d5c";
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(hm, s);
-            })();
-        </script>
     </head>
     <body>
         <div class="wrap">
@@ -83,7 +74,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <p>OOPS! - 页面走丢啦~~</p>
                 <img th:src="@{/images/404.png}"/>
                 <div class="sub">
-                    <p><a href="/index">回到首页</a></p>
+                    <p><a th:href="@{/index}">回到首页</a></p>
                 </div>
             </div>
         </div>

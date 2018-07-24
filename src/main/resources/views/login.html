@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
+        <title>九三学社星级组织评定系统</title>
         <meta charset="UTF-8"/>
-        <title>星级组织评定系统</title>
-        <link type="text/css" rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css"
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../static/vendor/bootstrap/css/bootstrap.min.css"
               th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
-        <link type="text/css" rel="stylesheet" href="../static/vendor/font-awesome/css/font-awesome.min.css"
-              th:href="@{/vendor/font-awesome/css/font-awesome.min.css}"/>
-        <link type="text/css" rel="stylesheet" href="../static/dist/css/templatemo_style.css"
-              th:href="@{/dist/css/templatemo_style.css}"/>
-        <script type="text/javascript" src="../static/vendor/jquery/jquery.min.js"
-                th:src="@{/vendor/jquery/jquery.min.js}"></script>
-        <script type="text/javascript" src="../static/vendor/bootstrap/js/bootstrap.min.js"
-                th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+              th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css"
+              th:href="@{/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../static/vendor/animate/animate.css"
+              th:href="@{/vendor/animate/animate.css}"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../static/vendor/css-hamburgers/hamburgers.min.css"
+              th:href="@{/vendor/css-hamburgers/hamburgers.min.css}"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../static/vendor/animsition/css/animsition.min.css"
+              th:href="@{/vendor/animsition/css/animsition.min.css}"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../static/vendor/select2/select2.min.css"
+              th:href="@{/vendor/select2/select2.min.css}"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../static/vendor/daterangepicker/daterangepicker.css"
+              th:href="@{/vendor/daterangepicker/daterangepicker.css}"/>
+        <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href="../static/dist/css/util.css"
+              th:href="@{/dist/css/util.css}"/>
+        <link rel="stylesheet" type="text/css" href="../static/dist/css/main.css"
+              th:href="@{/dist/css/main.css}"/>
+        <!--===============================================================================================-->
         <script>
             var hmt = hmt || [];
             _hmt.push(['_setUserTag', '4440', '进入首页的男人']);
@@ -27,52 +48,71 @@
             })();
         </script>
     </head>
-    <body class="templatemo-bg-image-1" onload="document.login_form.username.focus()">
-        <div class="container">
-            <div class="col-md-12">
-                <h1 class="margin-bottom-30" style="color: white">星级组织评定系统</h1>
-                <form name="login_form"
-                      class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30"
-                      th:method="POST" th:action="@{/login}">
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <div class="control-wrapper">
-                                <label>
-                                    <i class="fa fa-user"></i> 用户名
-                                    <input required="true" class="form-control" name="username"/>
+    <body>
+
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100 p-t-50 p-b-90">
+                    <form class="login100-form validate-form flex-sb flex-w" method="post" th:action="@{/login}">
+					    <span class="login100-form-title p-b-51">
+						    Login
+					    </span>
+
+                        <div class="wrap-input100 validate-input m-b-16">
+                            <input class="input100" type="text" name="username" placeholder="Username" required="true"/>
+                            <span class="focus-input100"></span>
+                        </div>
+
+
+                        <div class="wrap-input100 validate-input m-b-16">
+                            <input class="input100" type="password" name="password" placeholder="Password" required="true"/>
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="flex-sb-m w-full p-t-3 p-b-24">
+                            <div class="contact100-form-checkbox">
+                                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me"/>
+                                <label class="label-checkbox100" for="ckb1">
+                                    Remember me
                                 </label>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <div class="control-wrapper">
-                                <label>
-                                    <i class="fa fa-lock"></i> 密码
-                                    <input required="true" type="password" class="form-control" name="password"/>
-                                </label>
+
+                            <div>
+                                <a href="#" class="txt1">
+                                    Forgot?
+                                </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <div class="checkbox control-wrapper">
-                                <label>
-                                    <input type="checkbox"/> 记住我，下次直接登录
-                                </label>
-                            </div>
+
+                        <div class="container-login100-form-btn m-t-17">
+                            <button class="login100-form-btn" type="submit">
+                                Login
+                            </button>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <div class="control-wrapper">
-                                <input type="submit" value="登录" class="btn btn-success"/>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                </form>
+
+                    </form>
+                </div>
             </div>
         </div>
+
+
+        <div id="dropDownSelect1"></div>
+
+        <!--===============================================================================================-->
+        <script src="../static/vendor/jquery/jquery-3.2.1.min.js" th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
+        <!--===============================================================================================-->
+        <script src="../static/vendor/animsition/js/animsition.min.js" th:src="@{/vendor/animsition/js/animsition.min.js}"></script>
+        <!--===============================================================================================-->
+        <script src="../static/vendor/bootstrap/js/bootstrap.min.js" th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <!--===============================================================================================-->
+        <script src="../static/vendor/select2/select2.min.js" th:src="@{/vendor/select2/select2.min.js}"></script>
+        <!--===============================================================================================-->
+        <script src="../static/vendor/daterangepicker/moment.min.js" th:src="@{/vendor/daterangepicker/moment.min.js}"></script>
+        <script src="../static/vendor/daterangepicker/daterangepicker.js" th:src="@{/vendor/daterangepicker/daterangepicker.js}"></script>
+        <!--===============================================================================================-->
+        <script src="../static/vendor/countdowntime/countdowntime.js" th:src="@{/vendor/countdowntime/countdowntime.js}"></script>
+        <!--===============================================================================================-->
+        <script src="../static/dist/js/main.js" th:src="@{/dist/js/main.js}"></script>
+
     </body>
 </html>
