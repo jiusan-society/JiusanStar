@@ -27,8 +27,7 @@ build_jar:
 
 package_to_docker_image:
   stage: package
-  image:
-    - docker:latest
+  image: docker:latest
   services:
     - docker:dind
   before_script:
