@@ -29,6 +29,8 @@ build_jar:
 
 package_to_docker_image:
   stage: package
+  services:
+    - docker:dind
   before_script:
     - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" $DOCKER_REGISTRY
   script:
