@@ -7,14 +7,16 @@ stages:
   - deploy
 
 unit_test:
- image: gradle:latest
  stage: test
+ image: gradle:latest
  script:
    - ./gradlew test
 
 build_jar:
-  image: gradle:latest
   stage: build
+  image: gradle:latest
+  variables:
+    GIT_STRATEGY: fetch
   script:
     - ./gradlew bootRepackage
     - ./gradlew copyJarToRootDir
