@@ -1,5 +1,3 @@
-image: docker:latest
-
 stages:
   - test
   - build
@@ -39,6 +37,7 @@ package_to_docker_image:
   only:
     - master
 
+# 自己服务器上架设的 gitlab-runner，运行模式为 shell，所以跑的这些命令都是服务器上自己装的
 deploy_on_server:
   stage: deploy
 # 不去 gitlab clone repository，毕竟 GFW 太强大
