@@ -30,6 +30,14 @@ public class UserService implements UserDetailsService {
         return new UserDetailsImpl(user);
     }
 
+    public User findUserByUsername(String account) throws UsernameNotFoundException {
+        User user = repository.findUserByAccount(account);
+        if (user == null) {
+            throw new UsernameNotFoundException(account);
+        }
+        return user;
+    }
+
     public UserProfile loadUserProfile(User user) {
         UserProfile profile = new UserProfile();
         profile.setName(user.getUsername());

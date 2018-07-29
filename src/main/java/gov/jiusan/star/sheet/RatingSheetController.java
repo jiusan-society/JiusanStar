@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -142,7 +143,11 @@ public class RatingSheetController {
 
     @GetMapping(path = "list")
     public String findAllSheets(Model model) {
-        model.addAttribute("sheets", rsService.findAll().stream().map(RatingSheetUtil::convert).collect(Collectors.toList()));
+        List<gov.jiusan.star.sheet.model.RatingSheet> sheets = rsService.findAll().stream()
+            .map(RatingSheetUtil::convert)
+            .sorted(Comparator.comparing(gov.jiusan.star.sheet.model.RatingSheet::getCreateTime))
+            .collect(Collectors.toList());
+        model.addAttribute("sheets", sheets);
         return "sheet/sheet_list";
     }
 

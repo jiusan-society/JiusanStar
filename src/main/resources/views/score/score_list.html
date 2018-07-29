@@ -31,17 +31,13 @@
                                 <tr>
                                     <th>序列号</th>
                                     <th>创建时间</th>
-                                    <th>更新时间</th>
-                                    <th>自评总分</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="score : ${scoreList}">
+                                <tr th:each="score : ${scores}">
                                     <td th:text="${score.seq}"></td>
                                     <td th:text="${#dates.format(score.createTime, 'yyyy-MM-dd HH:mm')}"></td>
-                                    <td th:text="${#dates.format(score.lastUpdateTime, 'yyyy-MM-dd HH:mm')}"></td>
-                                    <td th:text="${score.total}"></td>
                                     <td>
                                         <a th:href="'/score/editor?seq=' + ${score.seq}">评分</a>
                                     </td>
