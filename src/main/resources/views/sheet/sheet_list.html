@@ -51,10 +51,12 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>序列号</th>
+                                    <th>序号</th>
                                     <th>评分表名称</th>
                                     <th>创建时间</th>
                                     <th>更新时间</th>
+                                    <th>派发状态</th>
+                                    <th>完成情况</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -67,10 +69,16 @@
                                         <p th:text="${sheet.name}"></p>
                                     </td>
                                     <td>
-                                        <p th:text="${#dates.format(sheet.createTime, 'yyyy-MM-dd HH:mm')}"></p>
+                                        <p th:text="${#dates.format(sheet.createTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
                                     </td>
                                     <td>
-                                        <p th:text="${#dates.format(sheet.lastUpdateTime, 'yyyy-MM-dd HH:mm')}"></p>
+                                        <p th:text="${#dates.format(sheet.lastUpdateTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                                    </td>
+                                    <td>
+                                        <p th:text="${sheet.effective ? '已派发' : '未派发'}"></p>
+                                    </td>
+                                    <td>
+
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-primary" th:href="'/sheet?seq=' + ${sheet.seq}">查看</a>
