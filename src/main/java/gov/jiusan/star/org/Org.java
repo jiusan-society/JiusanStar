@@ -38,8 +38,7 @@ public class Org implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "org", orphanRemoval = true)
     private List<Score> scores;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "org_seq")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "org", orphanRemoval = true)
     private List<User> users;
 
     public Org() {

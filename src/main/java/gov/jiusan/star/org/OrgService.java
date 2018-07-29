@@ -16,11 +16,11 @@ public class OrgService {
     }
 
     public List<Org> findNonRootOrgs() {
-        return repository.selectNonRootOrgs();
+        return repository.findOrgsByRootCodeIsNotNull();
     }
 
     public List<Org> findOrgsByParentCode(String code) {
-        return repository.selectOrgsByParentCode(code);
+        return repository.findOrgsByParentCode(code);
     }
 
     public Org createOrg(Org org) {

@@ -1,5 +1,6 @@
 package gov.jiusan.star.user;
 
+import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.Role;
 
 import javax.persistence.Column;
@@ -42,6 +43,10 @@ public class User implements Serializable {
 
     @Column(name = "email")
     private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "org_seq")
+    private Org org;
 
     @ManyToOne
     @JoinColumn(name = "role_seq")
@@ -104,6 +109,14 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Org getOrg() {
+        return org;
+    }
+
+    public void setOrg(Org org) {
+        this.org = org;
     }
 
     public Role getRole() {

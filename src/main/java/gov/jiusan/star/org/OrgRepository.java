@@ -9,10 +9,7 @@ import java.util.List;
 @Repository
 interface OrgRepository extends JpaRepository<Org, Long> {
 
-    @Query(value = "SELECT o FROM Org o WHERE o.rootCode IS NOT NULL")
-    List<Org> selectNonRootOrgs();
+    List<Org> findOrgsByRootCodeIsNotNull();
 
-    @Query(value = "SELECT o FROM Org o WHERE o.parentCode = :code")
-    List<Org> selectOrgsByParentCode(String code);
-
+    List<Org> findOrgsByParentCode(String parentCode);
 }
