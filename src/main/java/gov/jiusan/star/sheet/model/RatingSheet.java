@@ -20,7 +20,8 @@ public class RatingSheet implements Serializable {
     private String name;
 
     private String description;
-    private boolean effective;
+
+    private Integer maxScore;
 
     @NotEmpty
     private List<RatingPhase> ratingPhases;
@@ -52,12 +53,12 @@ public class RatingSheet implements Serializable {
         this.description = description;
     }
 
-    public boolean isEffective() {
-        return effective;
+    public Integer getMaxScore() {
+        return maxScore;
     }
 
-    public void setEffective(boolean effective) {
-        this.effective = effective;
+    public void setMaxScore(Integer maxScore) {
+        this.maxScore = maxScore;
     }
 
     public List<RatingPhase> getRatingPhases() {

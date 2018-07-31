@@ -54,30 +54,30 @@ public class RatingSheetService {
         return repository.findAll();
     }
 
-    public void dispatchSheet(RatingSheet sheet, List<Org> orgs) {
-        makeOtherSheetsInvalid();
-        sheet.setEffective(true);
-        if (!sheet.getScores().isEmpty()) {
-            sheet.getScores().clear();
-        }
-        repository.update(sheet);
-        for (Org o : orgs) {
-            Score score = new Score();
-            score.setOrg(o);
-            score.setSheet(sheet);
-            score.setEffective(true);
-            sRepository.create(score);
-        }
-    }
-
-    private void makeOtherSheetsInvalid() {
-        findAll().stream().filter(RatingSheet::isEffective).forEach(s -> {
-            s.setEffective(false);
-            repository.update(s);
-            s.getScores().forEach(score -> {
-                score.setEffective(false);
-                sRepository.update(score);
-            });
-        });
-    }
+//    public void dispatchSheet(RatingSheet sheet, List<Org> orgs) {
+//        makeOtherSheetsInvalid();
+//        sheet.setEffective(true);
+//        if (!sheet.getScores().isEmpty()) {
+//            sheet.getScores().clear();
+//        }
+//        repository.update(sheet);
+//        for (Org o : orgs) {
+//            Score score = new Score();
+//            score.setOrg(o);
+//            score.setSheet(sheet);
+//            score.setEffective(true);
+//            sRepository.create(score);
+//        }
+//    }
+//
+//    private void makeOtherSheetsInvalid() {
+//        findAll().stream().filter(RatingSheet::isEffective).forEach(s -> {
+//            s.setEffective(false);
+//            repository.update(s);
+//            s.getScores().forEach(score -> {
+//                score.setEffective(false);
+//                sRepository.update(score);
+//            });
+//        });
+//    }
 }

@@ -115,8 +115,11 @@ public class BatchImportService {
         List<String> l1AdminAccounts = orgs.stream().filter(o -> LEVEL_1_ORG.equals(parseCode(o.getCode())))
             .map(gov.jiusan.star.batch.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
-        List<User> l1AdminUsers = users.stream().filter(u -> l1AdminAccounts.contains(u.getAccount())).collect(Collectors.toList());
+        List<User> l1AdminUsers = users.stream()
+            .filter(u -> l1AdminAccounts.contains(u.getAccount()))
+            .collect(Collectors.toList());
         l1Admin.setUsers(l1AdminUsers);
+        l1Admin.getUsers().forEach(u -> u.setRole(l1Admin));
         roleService.createRole(l1Admin);
         Role l1Normal = new Role();
         l1Normal.setName("ROLE_L1_USER");
@@ -127,8 +130,11 @@ public class BatchImportService {
         List<String> l2AdminAccounts = orgs.stream().filter(o -> LEVEL_2_ORG.equals(parseCode(o.getCode())))
             .map(gov.jiusan.star.batch.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
-        List<User> l2AdminUsers = users.stream().filter(u -> l2AdminAccounts.contains(u.getAccount())).collect(Collectors.toList());
+        List<User> l2AdminUsers = users.stream()
+            .filter(u -> l2AdminAccounts.contains(u.getAccount()))
+            .collect(Collectors.toList());
         l2Admin.setUsers(l2AdminUsers);
+        l2Admin.getUsers().forEach(u -> u.setRole(l2Admin));
         roleService.createRole(l2Admin);
         Role l2Normal = new Role();
         l2Normal.setName("ROLE_L2_USER");
@@ -139,8 +145,11 @@ public class BatchImportService {
         List<String> l3AdminAccounts = orgs.stream().filter(o -> LEVEL_3_ORG.equals(parseCode(o.getCode())))
             .map(gov.jiusan.star.batch.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
-        List<User> l3AdminUsers = users.stream().filter(u -> l3AdminAccounts.contains(u.getAccount())).collect(Collectors.toList());
+        List<User> l3AdminUsers = users.stream()
+            .filter(u -> l3AdminAccounts.contains(u.getAccount()))
+            .collect(Collectors.toList());
         l3Admin.setUsers(l3AdminUsers);
+        l3Admin.getUsers().forEach(u -> u.setRole(l3Admin));
         roleService.createRole(l3Admin);
         Role l3Normal = new Role();
         l3Normal.setName("ROLE_L3_USER");
@@ -152,6 +161,7 @@ public class BatchImportService {
         orgs.stream().map(BatchImportService::convertOrg).forEach(o -> {
             String account = orgs.stream().filter(org -> org.getCode().equals(o.getCode())).findFirst().get().getAdminUserAccount();
             User user = users.stream().filter(u -> u.getAccount().equals(account)).findFirst().get();
+            user.setOrg(o);
             o.setUsers(Arrays.asList(user));
             orgService.createOrg(o);
         });

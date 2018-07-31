@@ -33,16 +33,16 @@ public class ScoreController {
         return "score/score_list";
     }
 
-    @GetMapping
-    public String findOwnScoreBySheet(@RequestParam("sheetSeq") Long sheetSeq, Model model) {
-        String userAccount = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = uService.findUserByUsername(userAccount);
-        Optional<Score> score = user.getOrg().getScores().stream().filter(s -> s.getSheet().getSeq().equals(sheetSeq)).findAny();
-        if (!score.isPresent()) {
-            return "error";
-        }
-        model.addAttribute("score", score.get());
-        return "score/score_viewer";
-    }
+//    @GetMapping
+//    public String findOwnScoreBySheet(@RequestParam("sheetSeq") Long sheetSeq, Model model) {
+//        String userAccount = SecurityContextHolder.getContext().getAuthentication().getName();
+//        User user = uService.findUserByUsername(userAccount);
+//        Optional<Score> score = user.getOrg().getScores().stream().filter(s -> s.getSheet().getSeq().equals(sheetSeq)).findAny();
+//        if (!score.isPresent()) {
+//            return "error";
+//        }
+//        model.addAttribute("score", score.get());
+//        return "score/score_viewer";
+//    }
 
 }

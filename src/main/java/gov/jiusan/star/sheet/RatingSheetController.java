@@ -151,20 +151,20 @@ public class RatingSheetController {
         return "sheet/sheet_list";
     }
 
-    @GetMapping(path = "/dispatch")
-    public String dispatchSheet(@RequestParam("seq") Long seq) {
-        Optional<RatingSheet> sheet = rsService.find(seq);
-        if (!sheet.isPresent()) {
-            return "error";
-        }
-        List<Org> orgs = oService.findNonRootOrgs();
-        // REMIND，当非根组织为空时，不得派发
-        if (orgs.isEmpty()) {
-            return "error";
-        }
-        rsService.dispatchSheet(sheet.get(), orgs);
-        return "redirect:/sheet/list";
-    }
+//    @GetMapping(path = "/dispatch")
+//    public String dispatchSheet(@RequestParam("seq") Long seq) {
+//        Optional<RatingSheet> sheet = rsService.find(seq);
+//        if (!sheet.isPresent()) {
+//            return "error";
+//        }
+//        List<Org> orgs = oService.findNonRootOrgs();
+//        // REMIND，当非根组织为空时，不得派发
+//        if (orgs.isEmpty()) {
+//            return "error";
+//        }
+//        rsService.dispatchSheet(sheet.get(), orgs);
+//        return "redirect:/sheet/list";
+//    }
 
     @GetMapping(path = "/delete")
     public String deleteSheet(@RequestParam("seq") Long seq) {

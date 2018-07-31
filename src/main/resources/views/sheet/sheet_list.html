@@ -52,16 +52,15 @@
                             <thead>
                                 <tr>
                                     <th>序号</th>
-                                    <th>评分表名称</th>
+                                    <th>名称</th>
                                     <th>创建时间</th>
                                     <th>更新时间</th>
-                                    <th>派发状态</th>
-                                    <th>完成情况</th>
+                                    <th>总分</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="sheet, sheetStat : ${sheets}" th:class="${sheet.effective ? 'alert alert-info' : ''}">
+                                <tr th:each="sheet, sheetStat : ${sheets}">
                                     <td>
                                         <p th:text="${sheetStat.index + 1}"></p>
                                     </td>
@@ -75,16 +74,13 @@
                                         <p th:text="${#dates.format(sheet.lastUpdateTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
                                     </td>
                                     <td>
-                                        <p th:text="${sheet.effective ? '已派发' : '未派发'}"></p>
-                                    </td>
-                                    <td>
-
+                                        <p th:text="${sheet.maxScore}"></p>
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-primary" th:href="'/sheet?seq=' + ${sheet.seq}">查看</a>
                                         <a class="btn btn-sm btn-warning" th:href="'/sheet/editor?seq=' + ${sheet.seq}">编辑</a>
                                         <a class="btn btn-sm btn-warning"
-                                           th:onclick="'javascript:dispatchSheet('+${sheet.seq}+', '+${sheet.effective}+')'">派发</a>
+                                           th:onclick="'javascript:dispatchSheet('+${sheet.seq}+')'">派发</a>
                                         <a class="btn btn-sm btn-danger"
                                            th:href="'javascript:deleteSheet('+${sheet.seq}+')'">删除</a>
                                     </td>
@@ -114,6 +110,29 @@
                                         }
                                     </script>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">评分表派发情况</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>评分表名称</th>
+                                    <th>派发时间</th>
+                                    <th>生效时间</th>
+                                    <th>失效时间</th>
+                                    <th>完成情况</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             </tbody>
                         </table>
                     </div>

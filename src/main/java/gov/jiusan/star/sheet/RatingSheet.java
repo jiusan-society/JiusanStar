@@ -1,6 +1,6 @@
 package gov.jiusan.star.sheet;
 
-import gov.jiusan.star.score.Score;
+import gov.jiusan.star.sheet_plan.RatingSheetPlan;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
@@ -27,15 +26,7 @@ import java.util.List;
 public class RatingSheet implements Serializable {
 
     @Id
-    @TableGenerator(
-        name = "SHEET_SEQ_GENERATOR",
-        table = "star_seq_gen",
-        pkColumnName = "seq_name",
-        pkColumnValue = "SHEET_SEQ",
-        valueColumnName = "seq_value",
-        initialValue = 50
-    )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "SHEET_SEQ_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long seq;
 
     /**
@@ -43,9 +34,6 @@ public class RatingSheet implements Serializable {
      */
     @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "effective", nullable = false)
-    private boolean effective;
 
     /**
      * 评分表描述
@@ -67,7 +55,7 @@ public class RatingSheet implements Serializable {
     private List<RatingPhase> ratingPhases;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sheet", orphanRemoval = true)
-    private List<Score> scores;
+    private List<RatingSheetPlan> sheetPlans;
 
     /**
      * 创建时间
@@ -99,14 +87,6 @@ public class RatingSheet implements Serializable {
         this.name = name;
     }
 
-    public boolean isEffective() {
-        return effective;
-    }
-
-    void setEffective(boolean effective) {
-        this.effective = effective;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -131,14 +111,6 @@ public class RatingSheet implements Serializable {
         this.ratingPhases = ratingPhases;
     }
 
-    public List<Score> getScores() {
-        return scores;
-    }
-
-    void setScores(List<Score> scores) {
-        this.scores = scores;
-    }
-
     public Calendar getCreateTime() {
         return createTime;
     }
@@ -153,5 +125,13 @@ public class RatingSheet implements Serializable {
 
     void setLastUpdateTime(Calendar lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public List<RatingSheetPlan> getSheetPlans() {
+        return sheetPlans;
+    }
+
+    public void setSheetPlans(List<RatingSheetPlan> sheetPlans) {
+        this.sheetPlans = sheetPlans;
     }
 }
