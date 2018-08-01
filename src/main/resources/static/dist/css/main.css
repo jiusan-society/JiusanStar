@@ -1,16 +1,6 @@
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
-@font-face {
-    font-family: Ubuntu-Regular;
-    src: url('../../fonts/ubuntu/Ubuntu-Regular.ttf');
-}
-
-@font-face {
-    font-family: Ubuntu-Bold;
-    src: url('../../fonts/ubuntu/Ubuntu-Bold.ttf');
-}
-
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
