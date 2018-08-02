@@ -12,8 +12,8 @@ import java.io.Serializable;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "rating_details")
-class RatingDetails implements Serializable {
+@Table(name = "details")
+class Details implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,9 +1,8 @@
 package gov.jiusan.star.sheet;
 
-import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
-import gov.jiusan.star.sheet.model.RatingDetails;
-import gov.jiusan.star.sheet.model.RatingPhase;
+import gov.jiusan.star.sheet.model.Details;
+import gov.jiusan.star.sheet.model.Phase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,20 +27,20 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping(path = "sheet")
 @PreAuthorize("hasRole('ROLE_L1_ADM')")
-public class RatingSheetController {
+public class SheetController {
 
-    private final RatingSheetService rsService;
+    private final SheetService rsService;
 
     private final OrgService oService;
 
     @Autowired
-    public RatingSheetController(RatingSheetService service, OrgService oService) {
+    public SheetController(SheetService service, OrgService oService) {
         this.rsService = service;
         this.oService = oService;
     }
 
     @PostMapping
-    public String createSheet(@ModelAttribute("sheet") @Valid gov.jiusan.star.sheet.model.RatingSheet sheet, final BindingResult bindingResult) {
+    public String createSheet(@ModelAttribute("sheet") @Valid gov.jiusan.star.sheet.model.Sheet sheet, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sheet/sheet_editor";
         }
@@ -50,102 +49,102 @@ public class RatingSheetController {
 
     @GetMapping
     public String retrieveSheet(@RequestParam(value = "seq") Long seq, Model model) {
-        Optional<RatingSheet> sheet = rsService.find(seq);
+        Optional<Sheet> sheet = rsService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
-        model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
+        model.addAttribute("sheet", SheetUtil.convert(sheet.get()));
         return "sheet/sheet_viewer";
     }
 
     @PostMapping(path = "update")
-    public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.RatingSheet sheetModel, Model model) {
-        Optional<RatingSheet> sheet = rsService.find(seq);
+    public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.Sheet sheetModel, Model model) {
+        Optional<Sheet> sheet = rsService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
-        RatingSheet updatedSheet = rsService.update(sheet.get(), sheetModel);
-        model.addAttribute("sheet", RatingSheetUtil.convert(updatedSheet));
+        Sheet updatedSheet = rsService.update(sheet.get(), sheetModel);
+        model.addAttribute("sheet", SheetUtil.convert(updatedSheet));
         return "sheet/sheet_viewer";
     }
 
     @GetMapping(path = "editor")
     public String editSheet(@RequestParam(value = "seq", required = false) Long seq, Model model) {
         if (seq == null) {
-            model.addAttribute("sheet", new gov.jiusan.star.sheet.model.RatingSheet());
+            model.addAttribute("sheet", new gov.jiusan.star.sheet.model.Sheet());
             return "sheet/sheet_editor";
         }
-        Optional<RatingSheet> sheet = rsService.find(seq);
+        Optional<Sheet> sheet = rsService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
-        model.addAttribute("sheet", RatingSheetUtil.convert(sheet.get()));
+        model.addAttribute("sheet", SheetUtil.convert(sheet.get()));
         return "sheet/sheet_editor";
     }
 
     @PostMapping(params = "addPhase")
-    public String addPhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet) {
-        sheet.getRatingPhases().add(new RatingPhase());
+    public String addPhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet) {
+        sheet.getPhases().add(new Phase());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(params = "removePhase")
-    public String removePhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+    public String removePhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("removePhase"));
-        sheet.getRatingPhases().remove(rowId);
+        sheet.getPhases().remove(rowId);
         return "sheet/sheet_editor";
     }
 
     @PostMapping(params = "addDetails")
-    public String addDetails(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+    public String addDetails(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheet.getRatingPhases().get(rowId).getRatingDetails().add(new RatingDetails());
+        sheet.getPhases().get(rowId).getDetails().add(new Details());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(params = "removeDetails")
-    public String removeDetails(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+    public String removeDetails(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
         String value = request.getParameter("removeDetails");
         int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
         int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheet.getRatingPhases().get(phaseIndex).getRatingDetails().remove(detailsIndex);
+        sheet.getPhases().get(phaseIndex).getDetails().remove(detailsIndex);
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "addPhase")
-    public String addPhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet) {
-        sheet.getRatingPhases().add(new RatingPhase());
+    public String addPhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet) {
+        sheet.getPhases().add(new Phase());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "removePhase")
-    public String removePhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+    public String removePhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("removePhase"));
-        sheet.getRatingPhases().remove(rowId);
+        sheet.getPhases().remove(rowId);
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "addDetails")
-    public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+    public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheet.getRatingPhases().get(rowId).getRatingDetails().add(new RatingDetails());
+        sheet.getPhases().get(rowId).getDetails().add(new Details());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "removeDetails")
-    public String removeDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.RatingSheet sheet, final HttpServletRequest request) {
+    public String removeDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
         String value = request.getParameter("removeDetails");
         int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
         int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheet.getRatingPhases().get(phaseIndex).getRatingDetails().remove(detailsIndex);
+        sheet.getPhases().get(phaseIndex).getDetails().remove(detailsIndex);
         return "sheet/sheet_editor";
     }
 
     @GetMapping(path = "list")
     public String findAllSheets(Model model) {
-        List<gov.jiusan.star.sheet.model.RatingSheet> sheets = rsService.findAll().stream()
-            .map(RatingSheetUtil::convert)
-            .sorted(Comparator.comparing(gov.jiusan.star.sheet.model.RatingSheet::getCreateTime))
+        List<gov.jiusan.star.sheet.model.Sheet> sheets = rsService.findAll().stream()
+            .map(SheetUtil::convert)
+            .sorted(Comparator.comparing(gov.jiusan.star.sheet.model.Sheet::getCreateTime))
             .collect(Collectors.toList());
         model.addAttribute("sheets", sheets);
         return "sheet/sheet_list";
@@ -153,7 +152,7 @@ public class RatingSheetController {
 
 //    @GetMapping(path = "/dispatch")
 //    public String dispatchSheet(@RequestParam("seq") Long seq) {
-//        Optional<RatingSheet> sheet = rsService.find(seq);
+//        Optional<Sheet> sheet = rsService.find(seq);
 //        if (!sheet.isPresent()) {
 //            return "error";
 //        }
@@ -168,7 +167,7 @@ public class RatingSheetController {
 
     @GetMapping(path = "/delete")
     public String deleteSheet(@RequestParam("seq") Long seq) {
-        Optional<RatingSheet> sheet = rsService.find(seq);
+        Optional<Sheet> sheet = rsService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }

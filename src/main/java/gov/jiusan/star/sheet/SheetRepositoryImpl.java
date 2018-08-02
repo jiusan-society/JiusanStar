@@ -9,13 +9,13 @@ import java.util.Calendar;
  * @author Marcus Lin
  */
 @Transactional
-class RatingSheetRepositoryImpl implements RatingSheetRepositoryCustom {
+class SheetRepositoryImpl implements SheetRepositoryCustom {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public Long create(RatingSheet entity) {
+    public Long create(Sheet entity) {
         entity.setCreateTime(Calendar.getInstance());
         entity.setLastUpdateTime(Calendar.getInstance());
         em.persist(entity);
@@ -23,7 +23,7 @@ class RatingSheetRepositoryImpl implements RatingSheetRepositoryCustom {
     }
 
     @Override
-    public RatingSheet update(RatingSheet entity) {
+    public Sheet update(Sheet entity) {
         entity.setLastUpdateTime(Calendar.getInstance());
         return em.merge(entity);
     }

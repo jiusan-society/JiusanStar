@@ -1,6 +1,6 @@
 package gov.jiusan.star.sheet;
 
-import gov.jiusan.star.sheet_plan.RatingSheetPlan;
+import gov.jiusan.star.sheet_plan.SheetPlan;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,8 +22,8 @@ import java.util.List;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "rating_sheet")
-public class RatingSheet implements Serializable {
+@Table(name = "sheet")
+public class Sheet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,10 +52,10 @@ public class RatingSheet implements Serializable {
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "sheet_seq")
-    private List<RatingPhase> ratingPhases;
+    private List<Phase> phases;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sheet", orphanRemoval = true)
-    private List<RatingSheetPlan> sheetPlans;
+    private List<SheetPlan> sheetPlans;
 
     /**
      * 创建时间
@@ -103,12 +103,12 @@ public class RatingSheet implements Serializable {
         this.maxScore = maxScore;
     }
 
-    public List<RatingPhase> getRatingPhases() {
-        return ratingPhases == null ? ratingPhases = new ArrayList<>() : ratingPhases;
+    public List<Phase> getPhases() {
+        return phases == null ? phases = new ArrayList<>() : phases;
     }
 
-    void setRatingPhases(List<RatingPhase> ratingPhases) {
-        this.ratingPhases = ratingPhases;
+    void setPhases(List<Phase> phases) {
+        this.phases = phases;
     }
 
     public Calendar getCreateTime() {
@@ -127,11 +127,11 @@ public class RatingSheet implements Serializable {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public List<RatingSheetPlan> getSheetPlans() {
+    public List<SheetPlan> getSheetPlans() {
         return sheetPlans;
     }
 
-    public void setSheetPlans(List<RatingSheetPlan> sheetPlans) {
+    public void setSheetPlans(List<SheetPlan> sheetPlans) {
         this.sheetPlans = sheetPlans;
     }
 }

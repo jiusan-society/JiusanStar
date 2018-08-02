@@ -1,7 +1,7 @@
 package gov.jiusan.star.score;
 
 import gov.jiusan.star.org.Org;
-import gov.jiusan.star.sheet_plan.RatingSheetPlan;
+import gov.jiusan.star.sheet_plan.SheetPlan;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +37,7 @@ public class Score implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "sheet_plan_seq")
-    private RatingSheetPlan sheetPlan;
+    private SheetPlan sheetPlan;
 
     /**
      * 是否生效
@@ -201,11 +201,11 @@ public class Score implements Serializable {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public RatingSheetPlan getSheetPlan() {
+    public SheetPlan getSheetPlan() {
         return sheetPlan;
     }
 
-    public void setSheetPlan(RatingSheetPlan sheetPlan) {
+    public void setSheetPlan(SheetPlan sheetPlan) {
         this.sheetPlan = sheetPlan;
     }
 }

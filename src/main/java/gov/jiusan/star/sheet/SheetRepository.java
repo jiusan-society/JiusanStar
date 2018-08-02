@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
  * @author Marcus Lin
  */
 @Repository
-interface RatingSheetRepository extends JpaRepository<RatingSheet, Long>, RatingSheetRepositoryCustom {
+interface SheetRepository extends JpaRepository<Sheet, Long>, SheetRepositoryCustom {
 }

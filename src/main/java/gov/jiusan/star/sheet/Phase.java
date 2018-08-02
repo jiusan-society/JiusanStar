@@ -17,8 +17,8 @@ import java.util.List;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "rating_phase")
-class RatingPhase implements Serializable {
+@Table(name = "phase")
+class Phase implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,7 +42,7 @@ class RatingPhase implements Serializable {
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "phase_seq")
-    private List<RatingDetails> ratingDetails;
+    private List<Details> details;
 
     public Long getSeq() {
         return seq;
@@ -68,11 +68,11 @@ class RatingPhase implements Serializable {
         this.maxScore = maxScore;
     }
 
-    public List<RatingDetails> getRatingDetails() {
-        return ratingDetails == null ? ratingDetails = new ArrayList<>() : ratingDetails;
+    public List<Details> getDetails() {
+        return details == null ? details = new ArrayList<>() : details;
     }
 
-    void setRatingDetails(List<RatingDetails> ratingDetails) {
-        this.ratingDetails = ratingDetails;
+    void setDetails(List<Details> details) {
+        this.details = details;
     }
 }

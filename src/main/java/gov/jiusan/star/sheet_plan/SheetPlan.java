@@ -1,7 +1,7 @@
 package gov.jiusan.star.sheet_plan;
 
 import gov.jiusan.star.score.Score;
-import gov.jiusan.star.sheet.RatingSheet;
+import gov.jiusan.star.sheet.Sheet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,8 +20,8 @@ import java.util.Calendar;
 import java.util.List;
 
 @Entity
-@Table(name = "rating_sheet_plan")
-public class RatingSheetPlan implements Serializable {
+@Table(name = "sheet_plan")
+public class SheetPlan implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,7 +35,7 @@ public class RatingSheetPlan implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "sheet_seq")
-    private RatingSheet sheet;
+    private Sheet sheet;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sheetPlan", orphanRemoval = true)
     private List<Score> scores;
@@ -75,7 +75,7 @@ public class RatingSheetPlan implements Serializable {
     @Column(name = "expiration_time", nullable = false)
     private Calendar expirationTime;
 
-    public RatingSheetPlan() {
+    public SheetPlan() {
     }
 
     public Long getSeq() {
@@ -142,11 +142,11 @@ public class RatingSheetPlan implements Serializable {
         this.finishRate = finishRate;
     }
 
-    public RatingSheet getSheet() {
+    public Sheet getSheet() {
         return sheet;
     }
 
-    public void setSheet(RatingSheet sheet) {
+    public void setSheet(Sheet sheet) {
         this.sheet = sheet;
     }
 
