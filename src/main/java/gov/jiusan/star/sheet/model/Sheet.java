@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Marcus Lin
  */
-public class RatingSheet implements Serializable {
+public class Sheet implements Serializable {
 
     private Long seq;
 
@@ -24,7 +24,7 @@ public class RatingSheet implements Serializable {
     private Integer maxScore;
 
     @NotEmpty
-    private List<RatingPhase> ratingPhases;
+    private List<Phase> phases;
 
     private Calendar createTime;
     private Calendar lastUpdateTime;
@@ -61,12 +61,12 @@ public class RatingSheet implements Serializable {
         this.maxScore = maxScore;
     }
 
-    public List<RatingPhase> getRatingPhases() {
-        return ratingPhases == null ? ratingPhases = new ArrayList<>() : ratingPhases;
+    public List<Phase> getPhases() {
+        return phases == null ? phases = new ArrayList<>() : phases;
     }
 
-    public void setRatingPhases(List<RatingPhase> ratingPhases) {
-        this.ratingPhases = ratingPhases;
+    public void setPhases(List<Phase> phases) {
+        this.phases = phases;
     }
 
     public Calendar getCreateTime() {

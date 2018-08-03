@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * @author Marcus Lin
  */
-public class RatingPhase implements Serializable {
+public class Phase implements Serializable {
 
     private String name;
     private Integer maxScore;
-    private List<RatingDetails> ratingDetails;
+    private List<Details> details;
 
     public String getName() {
         return name;
@@ -29,11 +29,11 @@ public class RatingPhase implements Serializable {
         this.maxScore = maxScore;
     }
 
-    public List<RatingDetails> getRatingDetails() {
-        return ratingDetails == null ? ratingDetails = new ArrayList<>() : ratingDetails;
+    public List<Details> getDetails() {
+        return details == null ? details = new ArrayList<>() : details;
     }
 
-    public void setRatingDetails(List<RatingDetails> ratingDetails) {
-        this.ratingDetails = ratingDetails;
+    public void setDetails(List<Details> details) {
+        this.details = details;
     }
 }

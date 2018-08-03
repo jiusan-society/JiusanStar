@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author Marcus Lin
  */
-public class RatingDetails implements Serializable {
+public class Details implements Serializable {
 
     private String description;
     private Integer eachScore;
