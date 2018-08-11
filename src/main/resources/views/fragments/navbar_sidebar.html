@@ -72,7 +72,7 @@
                             <a th:href="@{/sheet/list}"><i class="fa fa-table fa-fw"></i> 评分表管理</a>
                         </li>
                         <li th:if="${#authorization.expression('hasRole(''ROLE_L1_ADM'')')}">
-                            <a th:href="@{/sheet_plan/list}"><i class="fa fa-table fa-fw"></i> 评分表派发情况</a>
+                            <a th:href="@{/sheet_plan/list}"><i class="fa fa-history fa-fw"></i> 评分表派发情况</a>
                         </li>
                         <li th:if="${#authorization.expression('hasAnyRole(''ROLE_L1_ADM'', ''ROLE_L2_ADM'')')}">
                             <a th:href="@{/score/list}"><i class="fa fa-edit fa-fw"></i> 考评</a>

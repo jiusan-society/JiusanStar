@@ -51,7 +51,7 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>序号</th>
+                                    <th>#</th>
                                     <th>名称</th>
                                     <th>创建时间</th>
                                     <th>更新时间</th>
@@ -86,16 +86,16 @@
                                     </td>
                                     <script>
                                         function dispatchSheet(seq) {
-                                            var url = "/sheet/dispatch?seq=" + seq;
-                                            var dispatch = confirm("派发后立即生效，截至时间为: " + new Date().getFullYear() + " 年 12 月 31 日，是否确定？");
+                                            let url = "/sheet/dispatch?seq=" + seq;
+                                            let dispatch = confirm("派发后立即生效，截至时间为: " + new Date().getFullYear() + " 年 12 月 31 日，是否确定？");
                                             if (dispatch) {
                                                 window.location.replace(url);
                                             }
                                         }
 
                                         function deleteSheet(seq) {
-                                            var url = "/sheet/delete?seq=" + seq;
-                                            var result = confirm("删除评分表将同时清空相应的评分数据，是否确定？");
+                                            let url = "/sheet/delete?seq=" + seq;
+                                            let result = confirm("删除评分表将同时清空相应的评分数据，是否确定？");
                                             if (result) {
                                                 window.location.replace(url);
                                             }
