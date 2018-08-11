@@ -1,11 +1,8 @@
-package gov.jiusan.star.sheet;
+package gov.jiusan.star.sheet_plan;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-/**
- * @author Marcus Lin
- */
 @Repository
-interface SheetRepository extends JpaRepository<Sheet, Long> {
+interface SheetPlanRepository extends JpaRepository<SheetPlan, Long> {
 }

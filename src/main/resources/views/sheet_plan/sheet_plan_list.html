@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>评分表派发情况</title>
+        <link type="text/css" rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css"
+              th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
+        <link type="text/css" rel="stylesheet" href="../../static/dist/css/sb-admin-2.css"
+              th:href="@{/dist/css/sb-admin-2.css}"/>
+        <link href="../../static/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+              th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}"/>
+        <script type="text/javascript" src="../../static/vendor/jquery/jquery-3.2.1.min.js"
+                th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
+        <script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.min.js"
+                th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div th:replace="fragments/navbar_sidebar :: navbar_sidebar"></div>
+            <div id="page-wrapper" style="min-height: 808px;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">评分表派发情况</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>评分表名称</th>
+                                    <th>派发时间</th>
+                                    <th>失效时间</th>
+                                    <th>完成情况</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="sP, sPStat : ${sheetPlans}">
+                                    <td>
+                                        <p th:text="${sPStat.index + 1}"></p>
+                                    </td>
+                                    <td>
+                                        <p th:text="${sP.sheet.name}"></p>
+                                    </td>
+                                    <td>
+                                        <p th:text="${#dates.format(sP.effectiveTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                                    </td>
+                                    <td>
+                                        <p th:text="${#dates.format(sP.expirationTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

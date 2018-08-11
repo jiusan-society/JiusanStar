@@ -1,5 +1,6 @@
 package gov.jiusan.star.sheet;
 
+import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.sheet.model.Details;
 import gov.jiusan.star.sheet.model.Phase;
@@ -29,13 +30,13 @@ import java.util.stream.Collectors;
 @PreAuthorize("hasRole('ROLE_L1_ADM')")
 public class SheetController {
 
-    private final SheetService rsService;
+    private final SheetService sService;
 
     private final OrgService oService;
 
     @Autowired
     public SheetController(SheetService service, OrgService oService) {
-        this.rsService = service;
+        this.sService = service;
         this.oService = oService;
     }
 
@@ -44,12 +45,12 @@ public class SheetController {
         if (bindingResult.hasErrors()) {
             return "sheet/sheet_editor";
         }
-        return "redirect:/sheet?seq=" + rsService.create(sheet);
+        return "redirect:/sheet?seq=" + sService.create(sheet);
     }
 
     @GetMapping
     public String retrieveSheet(@RequestParam(value = "seq") Long seq, Model model) {
-        Optional<Sheet> sheet = rsService.find(seq);
+        Optional<Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
@@ -59,11 +60,11 @@ public class SheetController {
 
     @PostMapping(path = "update")
     public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.Sheet sheetModel, Model model) {
-        Optional<Sheet> sheet = rsService.find(seq);
+        Optional<Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
-        Sheet updatedSheet = rsService.update(sheet.get(), sheetModel);
+        Sheet updatedSheet = sService.update(sheet.get(), sheetModel);
         model.addAttribute("sheet", SheetUtil.convert(updatedSheet));
         return "sheet/sheet_viewer";
     }
@@ -74,7 +75,7 @@ public class SheetController {
             model.addAttribute("sheet", new gov.jiusan.star.sheet.model.Sheet());
             return "sheet/sheet_editor";
         }
-        Optional<Sheet> sheet = rsService.find(seq);
+        Optional<Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
@@ -142,7 +143,7 @@ public class SheetController {
 
     @GetMapping(path = "list")
     public String findAllSheets(Model model) {
-        List<gov.jiusan.star.sheet.model.Sheet> sheets = rsService.findAll().stream()
+        List<gov.jiusan.star.sheet.model.Sheet> sheets = sService.findAll().stream()
             .map(SheetUtil::convert)
             .sorted(Comparator.comparing(gov.jiusan.star.sheet.model.Sheet::getCreateTime))
             .collect(Collectors.toList());
@@ -150,28 +151,28 @@ public class SheetController {
         return "sheet/sheet_list";
     }
 
-//    @GetMapping(path = "/dispatch")
-//    public String dispatchSheet(@RequestParam("seq") Long seq) {
-//        Optional<Sheet> sheet = rsService.find(seq);
-//        if (!sheet.isPresent()) {
-//            return "error";
-//        }
-//        List<Org> orgs = oService.findNonRootOrgs();
-//        // REMIND，当非根组织为空时，不得派发
-//        if (orgs.isEmpty()) {
-//            return "error";
-//        }
-//        rsService.dispatchSheet(sheet.get(), orgs);
-//        return "redirect:/sheet/list";
-//    }
-
-    @GetMapping(path = "/delete")
-    public String deleteSheet(@RequestParam("seq") Long seq) {
-        Optional<Sheet> sheet = rsService.find(seq);
+    @GetMapping(path = "/dispatch")
+    public String dispatchSheet(@RequestParam("seq") Long seq) {
+        Optional<Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
-        rsService.delete(sheet.get());
+        List<Org> orgs = oService.findNonRootOrgs();
+        // REMIND，当非根组织为空时，不得派发
+        if (orgs.isEmpty()) {
+            return "error";
+        }
+        sService.dispatchSheet(sheet.get(), orgs);
+        return "redirect:/sheet_plan/list";
+    }
+
+    @GetMapping(path = "/delete")
+    public String deleteSheet(@RequestParam("seq") Long seq) {
+        Optional<Sheet> sheet = sService.find(seq);
+        if (!sheet.isPresent()) {
+            return "error";
+        }
+        sService.delete(sheet.get());
         return "redirect:/sheet/list";
     }
 

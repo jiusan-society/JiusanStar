@@ -58,7 +58,7 @@ public class SheetPlan implements Serializable {
      * 完成时间
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "finish_time", nullable = false)
+    @Column(name = "finish_time")
     private Calendar finishTime;
 
     /**

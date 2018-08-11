@@ -1,11 +1,11 @@
 package gov.jiusan.star.score;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  * @author Marcus Lin
  */
 @Repository
-public interface ScoreRepository extends CrudRepository<Score, Long>, ScoreRepositoryCustom {
+interface ScoreRepository extends JpaRepository<Score, Long> {
 }
