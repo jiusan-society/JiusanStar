@@ -65,9 +65,12 @@ public class SheetService {
     }
 
     public void dispatchSheet(Sheet sheet, List<Org> orgs) {
+        // 同一年只能有一张 plan 生效
+        invalidateOtherPlansInCurrentYear();
         SheetPlan sheetPlan = new SheetPlan();
         sheetPlan.setSheet(sheet);
         sheetPlan.setEffective(true);
+        sheetPlan.setStatus(SheetPlan.Status.NORMAL);
         sheetPlan.setEffectiveTime(Calendar.getInstance());
         Calendar expirationTime = Calendar.getInstance();
         expirationTime.clear();
@@ -83,6 +86,18 @@ public class SheetService {
         }
         sheet.getSheetPlans().add(savedSP);
         repository.save(sheet);
+    }
+
+    /**
+     * 如果同一年有其他生效的 plans，均需使它们失效
+     */
+    private void invalidateOtherPlansInCurrentYear() {
+        sPService.findByCurrentYear().stream()
+            .filter(SheetPlan::isEffective)
+            .forEach(p -> {
+                p.setEffective(false);
+                p.setStatus(SheetPlan.Status.INVALID);
+            });
     }
 
 //

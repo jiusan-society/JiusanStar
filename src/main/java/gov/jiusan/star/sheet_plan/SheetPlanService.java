@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Marcus Lin
@@ -27,7 +29,17 @@ public class SheetPlanService {
     }
 
     public List<SheetPlan> findAll() {
-        return repository.findAll();
+        List<SheetPlan> sheetPlans = repository.findAll();
+        sheetPlans.sort(Comparator.comparing(SheetPlan::getCreateTime).reversed());
+        return sheetPlans;
+    }
+
+    public List<SheetPlan> findByCurrentYear() {
+        Calendar now = Calendar.getInstance();
+        return repository.findAll().stream()
+            .filter(p -> p.getCreateTime().get(Calendar.YEAR) == now.get(Calendar.YEAR))
+            .sorted(Comparator.comparing(SheetPlan::getCreateTime).reversed())
+            .collect(Collectors.toList());
     }
 
 }

@@ -6,6 +6,8 @@ import gov.jiusan.star.sheet.Sheet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,9 +29,22 @@ public class SheetPlan implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long seq;
 
+    /**
+     * 是否有效
+     */
     @Column(name = "effective")
     private boolean effective;
 
+    /**
+     * 状态情况
+     */
+    @Column(name = "status")
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
+
+    /**
+     * 完成率
+     */
     @Column(name = "finish_rate")
     private double finishRate;
 
@@ -134,6 +149,14 @@ public class SheetPlan implements Serializable {
         this.effective = effective;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public double getFinishRate() {
         return finishRate;
     }
@@ -156,5 +179,20 @@ public class SheetPlan implements Serializable {
 
     public void setScores(List<Score> scores) {
         this.scores = scores;
+    }
+
+    public enum Status {
+        /**
+         * 正常可用状态
+         */
+        NORMAL,
+        /**
+         * 超过截止时间后变为逾期失效状态
+         */
+        EXPIRED,
+        /**
+         * 同一年下仅可有一张可用的 SheetPlan，其他需变为不可用状态
+         */
+        INVALID
     }
 }

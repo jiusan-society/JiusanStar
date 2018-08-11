@@ -30,18 +30,23 @@
                                 <tr>
                                     <th>#</th>
                                     <th>评分表名称</th>
+                                    <th>是否可用</th>
                                     <th>生效时间</th>
                                     <th>失效时间</th>
                                     <th>完成情况</th>
+                                    <th>不可用原因</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="sP, sPStat : ${sheetPlans}">
+                                <tr th:each="sP, sPStat : ${sheetPlans}" th:class="${sP.effective ? 'success' : null}">
                                     <td>
                                         <p th:text="${sPStat.index + 1}"></p>
                                     </td>
                                     <td>
                                         <p th:text="${sP.sheet.name}"></p>
+                                    </td>
+                                    <td>
+                                        <p th:text="${sP.effective ? '√' : '×'}"></p>
                                     </td>
                                     <td>
                                         <p th:text="${#dates.format(sP.effectiveTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
@@ -50,6 +55,10 @@
                                         <p th:text="${#dates.format(sP.expirationTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
                                     </td>
                                     <td>
+                                    </td>
+                                    <td>
+                                        <p th:if="${sP.status != null and sP.status.name() == 'INVALID'}">同一年仅可有一张可用的评分表</p>
+                                        <p th:if="${sP.status != null and sP.status.name() == 'EXPIRED'}">已逾期</p>
                                     </td>
                                 </tr>
                             </tbody>
