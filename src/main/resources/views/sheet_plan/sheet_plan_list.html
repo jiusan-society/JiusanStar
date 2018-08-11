@@ -38,7 +38,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="sP, sPStat : ${sheetPlans}" th:class="${sP.effective ? 'success' : null}">
+                                <tr th:each="sP, sPStat : ${sheetPlans}" th:class="${sP.effective ? 'success' : 'danger'}">
                                     <td>
                                         <p th:text="${sPStat.index + 1}"></p>
                                     </td>
