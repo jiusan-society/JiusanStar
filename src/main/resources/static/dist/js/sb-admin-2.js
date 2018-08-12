@@ -3,9 +3,6 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
-$(function () {
-    $('#side-menu').metisMenu();
-});
 
 //Loads the correct sidebar on window load,
 //collapses the sidebar on window resize.
@@ -28,20 +25,4 @@ $(function () {
             $("#page-wrapper").css("min-height", (height) + "px");
         }
     });
-
-    var url = window.location;
-    // var element = $('ul.nav a').filter(function() {
-    //     return this.href == url;
-    // }).addClass('active').parent().parent().addClass('in').parent();
-    var element = $('ul.nav a').filter(function () {
-        return this.href == url;
-    }).addClass('active').parent();
-
-    while (true) {
-        if (element.is('li')) {
-            element = element.parent().addClass('in').parent();
-        } else {
-            break;
-        }
-    }
 });
