@@ -46,7 +46,8 @@
                                         <p th:text="${sP.sheet.name}"></p>
                                     </td>
                                     <td>
-                                        <p th:text="${sP.effective ? '√' : '×'}"></p>
+                                        <i th:if="${sP.effective}" class="fa fa-check"></i>
+                                        <i th:unless="${sP.effective}" class="fa fa-times"></i>
                                     </td>
                                     <td>
                                         <p th:text="${#dates.format(sP.effectiveTime, 'yyyy-MM-dd HH:mm:ss')}"></p>

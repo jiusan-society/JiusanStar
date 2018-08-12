@@ -13,6 +13,8 @@
                 th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
         <script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.min.js"
                 th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" src="../../static/vendor/bootbox/bootbox.min.js"
+                th:src="@{/vendor/bootbox/bootbox.min.js}"></script>
         <script>
             var _hmt = _hmt || [];
             _hmt.push(['_setUserTag', '4441', '进入评价列表的人']);
@@ -86,19 +88,46 @@
                                     </td>
                                     <script>
                                         function dispatchSheet(seq) {
-                                            let url = "/sheet/dispatch?seq=" + seq;
-                                            let dispatch = confirm("派发后立即生效，截至时间为: " + new Date().getFullYear() + " 年 12 月 31 日，是否确定？");
-                                            if (dispatch) {
-                                                window.location.replace(url);
-                                            }
+                                            bootbox.confirm({
+                                                title: "确认派发？",
+                                                message: "派发后立即生效，截至时间为 " + new Date().getFullYear() + " 年 12 月 31 日，" +
+                                                    "同一年下仅可有一张可用的评分表，重复派发将使其他已派发的评分表不可用",
+                                                buttons: {
+                                                    cancel: {
+                                                        label: '<i class="fa fa-times"></i> 取消'
+                                                    },
+                                                    confirm: {
+                                                        label: '<i class="fa fa-check"></i> 确定'
+                                                    }
+                                                },
+                                                callback: function (result) {
+                                                    if (result) {
+                                                        let url = "/sheet/dispatch?seq=" + seq;
+                                                        window.location.replace(url);
+                                                    }
+                                                }
+                                            });
                                         }
 
                                         function deleteSheet(seq) {
-                                            let url = "/sheet/delete?seq=" + seq;
-                                            let result = confirm("删除评分表将同时清空相应的评分数据，是否确定？");
-                                            if (result) {
-                                                window.location.replace(url);
-                                            }
+                                            bootbox.confirm({
+                                                title: "确认删除？",
+                                                message: "删除评分表将同时清空相应的派发情况以及评分数据",
+                                                buttons: {
+                                                    cancel: {
+                                                        label: '<i class="fa fa-times"></i> 取消'
+                                                    },
+                                                    confirm: {
+                                                        label: '<i class="fa fa-check"></i> 确定'
+                                                    }
+                                                },
+                                                callback: function (result) {
+                                                    if (result) {
+                                                        let url = "/sheet/delete?seq=" + seq;
+                                                        window.location.replace(url);
+                                                    }
+                                                }
+                                            });
                                         }
                                     </script>
                                 </tr>
