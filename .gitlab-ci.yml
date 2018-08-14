@@ -52,7 +52,7 @@ deploy_on_server:
     - docker pull $DOCKER_CN_REGISTRY_IMAGE:latest
     - docker container rm -f jiusan-star
   after_script:
-    - docker run --name="jiusan-star" -e "SPRING_PROFILES_ACTIVE=prod" -e TZ=Asia/Shanghai -v 93Star:/root/93Star --net="host" -d $DOCKER_CN_REGISTRY_IMAGE
+    - docker run --name="jiusan-star" -e "SPRING_PROFILES_ACTIVE=prod" -e TZ=Asia/Shanghai -v 93Star:/Data --net="host" -d $DOCKER_CN_REGISTRY_IMAGE
   only:
     - master
   tags:

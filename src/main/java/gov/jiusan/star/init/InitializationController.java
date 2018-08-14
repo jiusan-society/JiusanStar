@@ -58,7 +58,7 @@ public class InitializationController {
     public String generateDirForEachOrg() {
         List<Org> orgs = oService.findNonRootOrgs();
         orgs.forEach(o -> {
-            File dir = new File("/root/93Star/Documents" + o.getCode());
+            File dir = new File("/Data/Documents/" + o.getCode());
             try {
                 Files.createDirectories(dir.toPath());
             } catch (IOException e) {
