@@ -99,16 +99,4 @@ public class SheetService {
                 p.setStatus(SheetPlan.Status.INVALID);
             });
     }
-
-//
-//    private void makeOtherSheetsInvalid() {
-//        findAll().stream().filter(Sheet::isEffective).forEach(s -> {
-//            s.setEffective(false);
-//            repository.update(s);
-//            s.getScores().forEach(score -> {
-//                score.setEffective(false);
-//                sRepository.update(score);
-//            });
-//        });
-//    }
 }
