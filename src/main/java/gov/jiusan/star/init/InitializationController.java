@@ -1,5 +1,7 @@
-package gov.jiusan.star.batch;
+package gov.jiusan.star.init;
 
+import gov.jiusan.star.org.Org;
+import gov.jiusan.star.org.OrgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,24 +14,30 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author Marcus Lin
  */
 @Controller
-@RequestMapping(path = "/import")
-public class BatchImportController {
+@RequestMapping(path = "/init")
+public class InitializationController {
 
-    private final BatchImportService service;
+    private final InitializationService iService;
+
+    private final OrgService oService;
 
     @Autowired
-    public BatchImportController(BatchImportService service) {
-        this.service = service;
+    public InitializationController(InitializationService iService, OrgService oService) {
+        this.iService = iService;
+        this.oService = oService;
     }
 
     @GetMapping
-    public String showImportPage() {
-        return "import";
+    public String showInitPage() {
+        return "init";
     }
 
     @PostMapping
@@ -42,7 +50,20 @@ public class BatchImportController {
             }
         } catch (IOException e) {
         }
-        service.readSeedData(file);
+        iService.readSeedData(file);
+        return "redirect:/";
+    }
+
+    @GetMapping(path = "dirs")
+    public String generateDirForEachOrg() {
+        List<Org> orgs = oService.findNonRootOrgs();
+        orgs.forEach(o -> {
+            File dir = new File("93Star_Docs/" + o.getCode());
+            try {
+                Files.createDirectories(dir.toPath());
+            } catch (IOException e) {
+            }
+        });
         return "redirect:/";
     }
 

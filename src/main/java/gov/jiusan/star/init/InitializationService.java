@@ -1,4 +1,4 @@
-package gov.jiusan.star.batch;
+package gov.jiusan.star.init;
 
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @author Marcus Lin
  */
 @Service
-public class BatchImportService {
+public class InitializationService {
 
     private static final String LEVEL_1_ORG = "01";
     private static final String LEVEL_2_ORG = "02";
@@ -40,13 +40,13 @@ public class BatchImportService {
     private final RoleService roleService;
 
     @Autowired
-    public BatchImportService(OrgService orgService, UserService userService, RoleService roleService) {
+    public InitializationService(OrgService orgService, UserService userService, RoleService roleService) {
         this.orgService = orgService;
         this.userService = userService;
         this.roleService = roleService;
     }
 
-    private static Org convertOrg(gov.jiusan.star.batch.model.Org org) {
+    private static Org convertOrg(gov.jiusan.star.init.model.Org org) {
         Org o = new Org();
         o.setName(org.getName());
         o.setCode(org.getCode());
@@ -55,7 +55,7 @@ public class BatchImportService {
         return o;
     }
 
-    private static User convertUser(gov.jiusan.star.batch.model.Org org) {
+    private static User convertUser(gov.jiusan.star.init.model.Org org) {
         User u = new User();
         u.setUsername(org.getAdminUserName());
         u.setAccount(org.getAdminUserAccount());
@@ -75,10 +75,10 @@ public class BatchImportService {
             e.printStackTrace();
         }
         Sheet sheet = wb.getSheetAt(DATA_SHEET_INDEX);
-        List<gov.jiusan.star.batch.model.Org> orgs = new ArrayList<>();
+        List<gov.jiusan.star.init.model.Org> orgs = new ArrayList<>();
         for (int i = DATA_START_INDEX; !ExcelUtil.isRowNullOrEmpty(sheet.getRow(i)); i++) {
             Row r = sheet.getRow(i);
-            gov.jiusan.star.batch.model.Org o = new gov.jiusan.star.batch.model.Org();
+            gov.jiusan.star.init.model.Org o = new gov.jiusan.star.init.model.Org();
             String orgName = ExcelUtil.extractStringData(r, OrgDataColumn.ORG_NAME.getColIndex());
             String orgCode = ExcelUtil.extractStringData(r, OrgDataColumn.ORG_CODE.getColIndex());
             String parentCode = ExcelUtil.extractStringData(r, OrgDataColumn.ORG_PARENT_CODE.getColIndex());
@@ -98,22 +98,22 @@ public class BatchImportService {
         saveToDB(orgs);
     }
 
-    private void saveToDB(List<gov.jiusan.star.batch.model.Org> orgs) {
+    private void saveToDB(List<gov.jiusan.star.init.model.Org> orgs) {
         List<User> users = initUsers(orgs);
         initRoles(orgs, users);
         initOrgs(orgs, users);
     }
 
-    private List<User> initUsers(List<gov.jiusan.star.batch.model.Org> orgs) {
-        return orgs.stream().map(BatchImportService::convertUser).map(userService::createUser).collect(Collectors.toList());
+    private List<User> initUsers(List<gov.jiusan.star.init.model.Org> orgs) {
+        return orgs.stream().map(InitializationService::convertUser).map(userService::createUser).collect(Collectors.toList());
     }
 
-    private void initRoles(List<gov.jiusan.star.batch.model.Org> orgs, List<User> users) {
+    private void initRoles(List<gov.jiusan.star.init.model.Org> orgs, List<User> users) {
         // Level1
         Role l1Admin = new Role();
         l1Admin.setName("ROLE_L1_ADM");
         List<String> l1AdminAccounts = orgs.stream().filter(o -> LEVEL_1_ORG.equals(parseCode(o.getCode())))
-            .map(gov.jiusan.star.batch.model.Org::getAdminUserAccount)
+            .map(gov.jiusan.star.init.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
         List<User> l1AdminUsers = users.stream()
             .filter(u -> l1AdminAccounts.contains(u.getAccount()))
@@ -128,7 +128,7 @@ public class BatchImportService {
         Role l2Admin = new Role();
         l2Admin.setName("ROLE_L2_ADM");
         List<String> l2AdminAccounts = orgs.stream().filter(o -> LEVEL_2_ORG.equals(parseCode(o.getCode())))
-            .map(gov.jiusan.star.batch.model.Org::getAdminUserAccount)
+            .map(gov.jiusan.star.init.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
         List<User> l2AdminUsers = users.stream()
             .filter(u -> l2AdminAccounts.contains(u.getAccount()))
@@ -143,7 +143,7 @@ public class BatchImportService {
         Role l3Admin = new Role();
         l3Admin.setName("ROLE_L3_ADM");
         List<String> l3AdminAccounts = orgs.stream().filter(o -> LEVEL_3_ORG.equals(parseCode(o.getCode())))
-            .map(gov.jiusan.star.batch.model.Org::getAdminUserAccount)
+            .map(gov.jiusan.star.init.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
         List<User> l3AdminUsers = users.stream()
             .filter(u -> l3AdminAccounts.contains(u.getAccount()))
@@ -156,9 +156,9 @@ public class BatchImportService {
         roleService.createRole(l3Normal);
     }
 
-    private void initOrgs(List<gov.jiusan.star.batch.model.Org> orgs, List<User> users) {
+    private void initOrgs(List<gov.jiusan.star.init.model.Org> orgs, List<User> users) {
         // REMIND[2018-07-13][Marcus Lin]: 初始时一个组织仅有一个管理员用户
-        orgs.stream().map(BatchImportService::convertOrg).forEach(o -> {
+        orgs.stream().map(InitializationService::convertOrg).forEach(o -> {
             String account = orgs.stream().filter(org -> org.getCode().equals(o.getCode())).findFirst().get().getAdminUserAccount();
             User user = users.stream().filter(u -> u.getAccount().equals(account)).findFirst().get();
             user.setOrg(o);

@@ -1,4 +1,4 @@
-package gov.jiusan.star.batch.model;
+package gov.jiusan.star.init.model;
 
 import java.io.Serializable;
 
