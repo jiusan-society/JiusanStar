@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Marcus Lin
+ */
 @Repository
 interface OrgRepository extends JpaRepository<Org, Long> {
 

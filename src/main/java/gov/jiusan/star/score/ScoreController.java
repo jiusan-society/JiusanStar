@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * @author Marcus Lin
+ */
 @Controller
 @RequestMapping(path = "score")
 public class ScoreController {

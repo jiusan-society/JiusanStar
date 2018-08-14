@@ -14,6 +14,9 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author Marcus Lin
+ */
 @Entity
 @Table(name = "app_org")
 public class Org implements Serializable {

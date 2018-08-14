@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 
+/**
+ * @author Marcus Lin
+ */
 @Service
 public class ScoreService {
 

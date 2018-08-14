@@ -2,6 +2,9 @@ package gov.jiusan.star.user.model;
 
 import java.io.Serializable;
 
+/**
+ * @author Marcus Lin
+ */
 public class UserProfile implements Serializable {
 
     private String name;

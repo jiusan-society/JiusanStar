@@ -21,6 +21,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * @author Marcus Lin
+ */
 @Entity
 @Table(name = "sheet_plan")
 public class SheetPlan implements Serializable {
