@@ -77,7 +77,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 评定资料管理</a>
+                            <a th:href="@{/doc/list}"><i class="fa fa-files-o fa-fw"></i> 评定资料管理</a>
                         </li>
                         <li th:if="${#authorization.expression('hasAnyRole(''ROLE_L1_ADM'', ''ROLE_L2_ADM'')')}">
                             <a th:href="@{/score/list}"><i class="fa fa-edit fa-fw"></i> 考评</a>

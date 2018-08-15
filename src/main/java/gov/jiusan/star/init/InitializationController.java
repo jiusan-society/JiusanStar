@@ -22,7 +22,7 @@ import java.util.List;
  * @author Marcus Lin
  */
 @Controller
-@RequestMapping(path = "/init")
+@RequestMapping(path = "init")
 public class InitializationController {
 
     private final InitializationService iService;

@@ -11,17 +11,17 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Marcus Lin
  */
 @Controller
-@RequestMapping(path = "/upload")
+@RequestMapping(path = "doc")
 public class DocUploadController {
 
-    @GetMapping
+    @GetMapping(path = "list")
     public String showUploadPage() {
-        return "upload";
+        return "doc/doc_list";
     }
 
-    @PostMapping
-    public String uploadDocument(@RequestParam("doc") MultipartFile doc) {
-        return "redirect:/";
+    @PostMapping(path = "upload")
+    public String uploadDocument(@RequestParam("file") MultipartFile file) {
+        return "redirect:/doc/list";
     }
 
 }

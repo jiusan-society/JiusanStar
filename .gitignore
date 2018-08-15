@@ -3,6 +3,7 @@
 .gradle/
 build/
 out/
+bower_components/
 
 # files
 *.iml
