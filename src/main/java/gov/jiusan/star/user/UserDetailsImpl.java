@@ -1,5 +1,6 @@
 package gov.jiusan.star.user;
 
+import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,5 +55,13 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Org getOrg() {
+        return user.getOrg();
+    }
+
+    public Role getRole() {
+        return user.getRole();
     }
 }
