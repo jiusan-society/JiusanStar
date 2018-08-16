@@ -3,6 +3,7 @@ package gov.jiusan.star.init;
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -28,6 +28,9 @@ public class InitializationController {
     private final InitializationService iService;
 
     private final OrgService oService;
+
+    @Value("${app.root-dir}")
+    private String rootDir;
 
     @Autowired
     public InitializationController(InitializationService iService, OrgService oService) {
@@ -58,7 +61,7 @@ public class InitializationController {
     public String generateDirForEachOrg() {
         List<Org> orgs = oService.findNonRootOrgs();
         orgs.forEach(o -> {
-            File dir = new File("/Data/Documents/" + o.getCode());
+            File dir = new File(rootDir + o.getCode());
             try {
                 Files.createDirectories(dir.toPath());
             } catch (IOException e) {

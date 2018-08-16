@@ -31,10 +31,10 @@
                         <h1 class="page-header">所有资料</h1>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" th:if="${#authorization.expression('hasAnyRole(''ROLE_L2_ADM'', ''ROLE_L3_ADM'')')}">
                     <div class="col-lg-12">
                         <form method="post" enctype="multipart/form-data"
-                              th:action="'/doc/upload?' + ${_csrf.parameterName} + '=' + ${_csrf.token}">
+                              th:action="'/file/upload?' + ${_csrf.parameterName} + '=' + ${_csrf.token}">
                             <input id="input-file" type="file" name="file"/>
                         </form>
                         <script>
@@ -63,19 +63,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <a class="btn btn-sm btn-primary">查看</a>
-                                    <a class="btn btn-sm btn-primary">下载</a>
-                                    <a class="btn btn-sm btn-danger">删除</a>
-                                </td>
+                                <tr th:each="file, fileStat : ${files}">
+                                    <td>
+                                        <p th:text="${fileStat.index + 1}"></p>
+                                    </td>
+                                    <td>
+                                        <p th:text="${file.name}"></p>
+                                    </td>
+                                    <td>
+                                        <p th:text="${file.length() / 1024} + ' KB'"></p>
+                                    </td>
+                                    <td>
+                                        <p th:text="${#dates.format(new java.util.Date(file.lastModified()), 'yyyy-MM-dd HH:mm:ss')}"></p>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-primary">查看</a>
+                                        <a class="btn btn-sm btn-primary" th:href="'/file/download?name=' + ${file.name}">下载</a>
+                                        <a class="btn btn-sm btn-danger" th:href="'/file/delete?name=' + ${file.name}">删除</a>
+                                    </td>
+                                </tr>
                                 <script>
                                 </script>
                             </tbody>
