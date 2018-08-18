@@ -14,4 +14,6 @@ interface OrgRepository extends JpaRepository<Org, Long> {
     List<Org> findOrgsByRootCodeIsNotNull();
 
     List<Org> findOrgsByParentCode(String parentCode);
+
+    Org findByCode(String code);
 }

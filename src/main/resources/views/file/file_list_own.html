@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
         <meta charset="UTF-8"/>
-        <title>评分表编辑列表</title>
+        <title>评分资料管理</title>
         <link type="text/css" rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css"
               th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
         <link type="text/css" rel="stylesheet" href="../../static/dist/css/sb-admin-2.css"
@@ -31,7 +31,7 @@
                         <h1 class="page-header">所有资料</h1>
                     </div>
                 </div>
-                <div class="row" th:if="${#authorization.expression('hasAnyRole(''ROLE_L2_ADM'', ''ROLE_L3_ADM'')')}">
+                <div class="row">
                     <div class="col-lg-12">
                         <form method="post" enctype="multipart/form-data"
                               th:action="'/file/upload?' + ${_csrf.parameterName} + '=' + ${_csrf.token}">
@@ -63,9 +63,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="file, fileStat : ${files}">
+                                <tr th:each="file, stat : ${files}">
                                     <td>
-                                        <p th:text="${fileStat.index + 1}"></p>
+                                        <p th:text="${stat.index + 1}"></p>
                                     </td>
                                     <td>
                                         <p th:text="${file.name}"></p>
@@ -78,12 +78,11 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-primary">查看</a>
-                                        <a class="btn btn-sm btn-primary" th:href="'/file/download?name=' + ${file.name}">下载</a>
+                                        <a class="btn btn-sm btn-primary"
+                                           th:href="'/file/download?name=' + ${file.name}">下载</a>
                                         <a class="btn btn-sm btn-danger" th:href="'/file/delete?name=' + ${file.name}">删除</a>
                                     </td>
                                 </tr>
-                                <script>
-                                </script>
                             </tbody>
                         </table>
                     </div>

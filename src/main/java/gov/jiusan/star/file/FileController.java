@@ -1,12 +1,16 @@
 package gov.jiusan.star.file;
 
 import gov.jiusan.star.annotation.LoggedUser;
+import gov.jiusan.star.org.Org;
+import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.user.UserDetailsImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +26,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author Marcus Lin
@@ -36,19 +38,38 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "file")
 public class FileController {
 
+    private final OrgService oService;
+    private final FileService fService;
     @Value("${app.root-dir}")
     private String rootDir;
 
-    @GetMapping(path = "list")
-    public String getFileList(Model model, @LoggedUser UserDetailsImpl user) {
-        String position = rootDir + user.getOrg().getCode();
-        Set<File> files = Arrays.stream(Objects.requireNonNull(new File(position).listFiles()))
-            .sorted(Comparator.comparing(File::lastModified).reversed())
-            .collect(Collectors.toCollection(LinkedHashSet::new));
-        model.addAttribute("files", files);
-        return "file/file_list";
+    @Autowired
+    public FileController(OrgService oService, FileService fService) {
+        this.oService = oService;
+        this.fService = fService;
     }
 
+    @GetMapping(path = "list/own")
+    public String getOwnFiles(Model model, @LoggedUser UserDetailsImpl user) {
+        String dir = rootDir + user.getOrg().getCode();
+        model.addAttribute("files", fService.getDirFiles(dir));
+        return "file/file_list_own";
+    }
+
+    @PreAuthorize("hasRole('ROLE_L1_ADM')")
+    @GetMapping(path = "list/all")
+    public String getAllFiles(Model model) {
+        File[] dirs = Objects.requireNonNull(new File(rootDir).listFiles());
+        Map<Org, List<File>> orgFilesMap = new HashMap<>();
+        for (File dir : dirs) {
+            Org org = oService.findByCode(dir.getName());
+            orgFilesMap.put(org, fService.getDirFiles(dir));
+        }
+        model.addAttribute("orgFilesMap", orgFilesMap);
+        return "file/file_list_all";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @GetMapping(path = "delete")
     public String deleteFile(@RequestParam("name") String name, @LoggedUser UserDetailsImpl user) {
         String position = rootDir + user.getOrg().getCode();
@@ -56,13 +77,12 @@ public class FileController {
         if (!file.exists()) {
             return "error";
         }
-        return file.delete() ? "redirect:/file/list" : "error";
+        return file.delete() ? "redirect:/file/list/own" : "error";
     }
 
     @GetMapping(path = "download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam("name") String name, @LoggedUser UserDetailsImpl user) throws MalformedURLException, UnsupportedEncodingException {
-        String position = rootDir + user.getOrg().getCode();
-        File file = new File(position + "/" + name);
+    public ResponseEntity<Resource> downloadFile(@RequestParam("path") String path, @RequestParam("name") String name) throws MalformedURLException, UnsupportedEncodingException {
+        File file = new File(rootDir + path + "/" + name);
         if (!file.exists()) {
             return ResponseEntity.notFound().build();
         }
@@ -72,6 +92,7 @@ public class FileController {
             .body(resource);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @PostMapping(path = "upload")
     public String uploadDocument(@RequestParam("file") MultipartFile file, @LoggedUser UserDetailsImpl user) {
         String position = rootDir + user.getOrg().getCode();
@@ -83,7 +104,7 @@ public class FileController {
             }
         } catch (IOException e) {
         }
-        return "redirect:/file/list";
+        return "redirect:/file/list/own";
     }
 
 }

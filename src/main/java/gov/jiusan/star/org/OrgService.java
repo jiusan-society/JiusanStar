@@ -30,4 +30,8 @@ public class OrgService {
         return repository.save(org);
     }
 
+    public Org findByCode(String code) {
+        return repository.findByCode(code);
+    }
+
 }

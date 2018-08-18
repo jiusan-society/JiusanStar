@@ -77,7 +77,8 @@
                             </ul>
                         </li>
                         <li>
-                            <a th:href="@{/file/list}"><i class="fa fa-files-o fa-fw"></i> 评定资料管理</a>
+                            <a th:if="${#authorization.expression('hasRole(''ROLE_L1_ADM'')')}" th:href="@{/file/list/all}"><i class="fa fa-files-o fa-fw"></i> 评定资料管理</a>
+                            <a th:if="${#authorization.expression('hasAnyRole(''ROLE_L2_ADM'', ''ROLE_L3_ADM'')')}" th:href="@{/file/list/own}"><i class="fa fa-files-o fa-fw"></i> 评定资料管理</a>
                         </li>
                         <li th:if="${#authorization.expression('hasAnyRole(''ROLE_L1_ADM'', ''ROLE_L2_ADM'')')}">
                             <a th:href="@{/score/list}"><i class="fa fa-edit fa-fw"></i> 考评</a>
