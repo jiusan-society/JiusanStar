@@ -57,7 +57,7 @@ public class InitializationService {
 
     private static User convertUser(gov.jiusan.star.init.model.Org org) {
         User u = new User();
-        u.setUsername(org.getAdminUserName());
+        u.setNickname(org.getAdminUserName());
         u.setAccount(org.getAdminUserAccount());
         u.setPassword(new BCryptPasswordEncoder().encode(org.getAdminUserPassword()));
         return u;

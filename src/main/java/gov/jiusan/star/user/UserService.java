@@ -1,6 +1,5 @@
 package gov.jiusan.star.user;
 
-import gov.jiusan.star.user.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,23 +37,6 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(account);
         }
-        return user;
-    }
-
-    public UserProfile loadUserProfile(User user) {
-        UserProfile profile = new UserProfile();
-        profile.setName(user.getUsername());
-        profile.setPhoneNum(user.getPhoneNum());
-        profile.setEmail(user.getEmail());
-        profile.setOrgName(user.getOrg().getName());
-        profile.setRoleName(user.getRole().getName());
-        return profile;
-    }
-
-    public User updateUser(User user, UserProfile profile) {
-        user.setUsername(profile.getName());
-        user.setPhoneNum(profile.getPhoneNum());
-        user.setEmail(profile.getEmail());
         return user;
     }
 }

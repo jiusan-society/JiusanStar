@@ -25,8 +25,8 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
-    @Column(name = "user_name", nullable = false)
-    private String username;
+    @Column(name = "nick_name", nullable = false)
+    private String nickname;
 
     @Enumerated
     @Column(name = "sex_type")
@@ -103,12 +103,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public Org getOrg() {
