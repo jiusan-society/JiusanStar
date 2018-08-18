@@ -59,14 +59,13 @@ public class SheetController {
     }
 
     @PostMapping(path = "update")
-    public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.Sheet sheetModel, Model model) {
+    public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.Sheet sheetModel) {
         Optional<Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
-        Sheet updatedSheet = sService.update(sheet.get(), sheetModel);
-        model.addAttribute("sheet", SheetUtil.convert(updatedSheet));
-        return "sheet/sheet_viewer";
+        sService.update(sheet.get(), sheetModel);
+        return "redirect:/sheet?seq=" + seq;
     }
 
     @GetMapping(path = "editor")
