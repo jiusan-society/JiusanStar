@@ -77,7 +77,6 @@
                                         <p th:text="${#dates.format(new java.util.Date(file.lastModified()), 'yyyy-MM-dd HH:mm:ss')}"></p>
                                     </td>
                                     <td>
-                                        <a class="btn btn-sm btn-primary">查看</a>
                                         <a class="btn btn-sm btn-primary"
                                            th:href="'/file/download?name=' + ${file.name}">下载</a>
                                         <a class="btn btn-sm btn-danger" th:href="'/file/delete?name=' + ${file.name}">删除</a>
