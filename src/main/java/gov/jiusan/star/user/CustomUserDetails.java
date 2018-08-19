@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * @author Marcus Lin
  */
-public class UserDetailsImpl implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
     private User user;
 
-    public UserDetailsImpl(User user) {
+    public CustomUserDetails(User user) {
         this.user = user;
     }
 

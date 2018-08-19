@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(account);
         }
-        return new UserDetailsImpl(user);
+        return new CustomUserDetails(user);
     }
 
     public User findUserByUsername(String account) throws UsernameNotFoundException {

@@ -3,7 +3,7 @@ package gov.jiusan.star.file;
 import gov.jiusan.star.annotation.LoggedUser;
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
-import gov.jiusan.star.user.UserDetailsImpl;
+import gov.jiusan.star.user.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -50,7 +50,7 @@ public class FileController {
     }
 
     @GetMapping(path = "list/own")
-    public String getOwnFiles(Model model, @LoggedUser UserDetailsImpl user) {
+    public String getOwnFiles(Model model, @LoggedUser CustomUserDetails user) {
         String dir = rootDir + user.getOrg().getCode();
         model.addAttribute("files", fService.getDirFiles(dir));
         return "file/file_list_own";
@@ -71,7 +71,7 @@ public class FileController {
 
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @GetMapping(path = "delete")
-    public String deleteFile(@RequestParam("name") String name, @LoggedUser UserDetailsImpl user) {
+    public String deleteFile(@RequestParam("name") String name, @LoggedUser CustomUserDetails user) {
         String position = rootDir + user.getOrg().getCode();
         File file = new File(position + "/" + name);
         if (!file.exists()) {
@@ -94,7 +94,7 @@ public class FileController {
 
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @PostMapping(path = "upload")
-    public String uploadDocument(@RequestParam("file") MultipartFile file, @LoggedUser UserDetailsImpl user) {
+    public String uploadDocument(@RequestParam("file") MultipartFile file, @LoggedUser CustomUserDetails user) {
         String position = rootDir + user.getOrg().getCode();
         File f = new File(position + "/" + file.getOriginalFilename());
         try (FileOutputStream fos = new FileOutputStream(f); BufferedInputStream bis = new BufferedInputStream(file.getInputStream())) {

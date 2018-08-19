@@ -25,40 +25,48 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <form th:object="${profile}" th:action="@{/user/profile}" method="post">
-                            <div class="form-group-sm">
-                                <label>
-                                    账号：<input class="form-control" th:field="*{account}" disabled="disabled"/>
-                                </label>
+                        <form class="form-horizontal" th:object="${profile}" th:action="@{/user/profile}" method="post">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">账号</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" th:field="*{account}" disabled="disabled"/>
+                                </div>
                             </div>
-                            <div class="form-group-sm">
-                                <label>
-                                    组织：<input class="form-control" th:field="*{org.name}" disabled="disabled"/>
-                                </label>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">组织</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" th:field="*{orgName}" disabled="disabled"/>
+                                </div>
                             </div>
-                            <div class="form-group-sm">
-                                <label>
-                                    角色：<input class="form-control" th:field="*{role.name}" disabled="disabled"/>
-                                </label>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">角色</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" th:field="*{roleName}" disabled="disabled"/>
+                                </div>
                             </div>
-                            <div class="form-group-sm">
-                                <label>
-                                    昵称：<input class="form-control" th:field="*{nickname}" />
-                                </label>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">昵称</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" th:field="*{nickName}"/>
+                                </div>
                             </div>
-                            <div class="form-group-sm">
-                                <label>
-                                    手机：<input class="form-control" th:field="*{phoneNum}" />
-                                </label>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">手机</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" th:field="*{phoneNum}"/>
+                                </div>
                             </div>
-                            <div class="form-group-sm">
-                                <label>
-                                    邮箱：<input class="form-control" th:field="*{email}" />
-                                </label>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">邮箱</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" th:field="*{email}"/>
+                                </div>
                             </div>
-                            <div class="form-group-sm">
-                                <button class="btn btn-primary" type="submit">更新</button>
-                                <button class="btn btn-danger" type="reset">重置</button>
+                            <div class="form-group">
+                                <div class="col-sm-offset-1 col-sm-2">
+                                    <button class="btn btn-primary" type="submit">更新</button>
+                                    <button class="btn btn-danger" type="reset">重置</button>
+                                </div>
                             </div>
                         </form>
                     </div>
