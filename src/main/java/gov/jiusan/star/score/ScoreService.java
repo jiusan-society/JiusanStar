@@ -24,4 +24,8 @@ public class ScoreService {
         score.setLastUpdateTime(now);
         return repository.save(score);
     }
+
+    public Score find(Long seq) {
+        return repository.findOne(seq);
+    }
 }
