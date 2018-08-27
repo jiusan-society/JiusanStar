@@ -38,7 +38,7 @@ public class ScoreController {
         return "score/score_list";
     }
 
-    @GetMapping(path = "edit")
+    @GetMapping(path = "editor")
     public String editScore(@RequestParam("seq") Long seq, Model model) {
         Score score = sService.find(seq);
         return "score/score_editor";

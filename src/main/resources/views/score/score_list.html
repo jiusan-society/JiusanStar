@@ -30,14 +30,18 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>创建时间</th>
+                                    <th>评分表名称</th>
+                                    <th>生效时间</th>
+                                    <th>截止时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="score, scoreStatus : ${scores}">
                                     <td th:text="${scoreStatus.index + 1}"></td>
-                                    <td th:text="${#dates.format(score.createTime, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${score.getSheetPlan().getSheet().getName()}"></td>
+                                    <td th:text="${#dates.format(score.getSheetPlan().getEffectiveTime(), 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${#dates.format(score.getSheetPlan().getExpirationTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                     <td>
                                         <a th:href="'/score/editor?seq=' + ${score.seq}">评分</a>
                                     </td>
