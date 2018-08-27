@@ -29,14 +29,14 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>序列号</th>
+                                    <th>#</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="score : ${scores}">
-                                    <td th:text="${score.seq}"></td>
+                                <tr th:each="score, scoreStatus : ${scores}">
+                                    <td th:text="${scoreStatus.index + 1}"></td>
                                     <td th:text="${#dates.format(score.createTime, 'yyyy-MM-dd HH:mm')}"></td>
                                     <td>
                                         <a th:href="'/score/editor?seq=' + ${score.seq}">评分</a>

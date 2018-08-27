@@ -1,12 +1,14 @@
 package gov.jiusan.star.user;
 
-import gov.jiusan.star.user.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Marcus Lin
+ */
 @Service
 public class UserService implements UserDetailsService {
 
@@ -27,7 +29,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(account);
         }
-        return new UserDetailsImpl(user);
+        return new CustomUserDetails(user);
     }
 
     public User findUserByUsername(String account) throws UsernameNotFoundException {
@@ -35,23 +37,6 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(account);
         }
-        return user;
-    }
-
-    public UserProfile loadUserProfile(User user) {
-        UserProfile profile = new UserProfile();
-        profile.setName(user.getUsername());
-        profile.setPhoneNum(user.getPhoneNum());
-        profile.setEmail(user.getEmail());
-        profile.setOrgName(user.getOrg().getName());
-        profile.setRoleName(user.getRole().getName());
-        return profile;
-    }
-
-    public User updateUser(User user, UserProfile profile) {
-        user.setUsername(profile.getName());
-        user.setPhoneNum(profile.getPhoneNum());
-        user.setEmail(profile.getEmail());
         return user;
     }
 }

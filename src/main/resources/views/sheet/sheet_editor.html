@@ -13,6 +13,8 @@
                 th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
         <script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.min.js"
                 th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" src="../../static/vendor/bootbox/bootbox.min.js"
+                th:src="@{/vendor/bootbox/bootbox.min.js}"></script>
         <script>
             var _hmt = _hmt || [];
             (function () {
@@ -45,12 +47,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="phase, phaseStat : *{ratingPhases}">
+                            <tr th:each="phase, phaseStat : *{phases}">
                                 <td class="col-sm-2">
                                     名称：<input class="form-control input-sm" type="text"
-                                              th:field="*{ratingPhases[__${phaseStat.index}__].name}"/>
+                                              th:field="*{phases[__${phaseStat.index}__].name}"/>
                                     最高可得：<input class="form-control input-sm" type="number"
-                                                th:field="*{ratingPhases[__${phaseStat.index}__].maxScore}"/>
+                                                th:field="*{phases[__${phaseStat.index}__].maxScore}"/>
                                     <br/>
                                     <button class="btn btn-sm btn-danger" name="removePhase" type="submit"
                                             th:value="${phaseStat.index}">删除大类
@@ -60,14 +62,14 @@
                                     </button>
                                 </td>
                                 <td>
-                                    <ul th:each="details, detailsStat : ${phase.ratingDetails}">
+                                    <ul th:each="details, detailsStat : ${phase.details}">
                                         <li>
                                             评分标准：<input class="form-control input-sm" type="text"
-                                                        th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].description}"/>
+                                                        th:field="*{phases[__${phaseStat.index}__].details[__${detailsStat.index}__].description}"/>
                                             每项可得：<input class="form-control input-sm" type="number"
-                                                        th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].eachScore}"/>
+                                                        th:field="*{phases[__${phaseStat.index}__].details[__${detailsStat.index}__].eachScore}"/>
                                             最高可得：<input class="form-control input-sm" type="number"
-                                                        th:field="*{ratingPhases[__${phaseStat.index}__].ratingDetails[__${detailsStat.index}__].maxScore}"/>
+                                                        th:field="*{phases[__${phaseStat.index}__].details[__${detailsStat.index}__].maxScore}"/>
                                             <br/>
                                             <button class="btn btn-sm btn-danger" name="removeDetails" type="submit"
                                                     th:value="${phaseStat.index} + '|' + ${detailsStat.index}">删除小类
@@ -96,10 +98,23 @@
                                     </div>
                                     <script>
                                         function confirmExit() {
-                                            var result = confirm("退出将不保存此次更改的数据，是否确认该操作?");
-                                            if (result) {
-                                                window.location.replace("/sheet/list");
-                                            }
+                                            bootbox.confirm({
+                                                title: "确认退出？",
+                                                message: "退出将不保存此次更改的数据",
+                                                buttons: {
+                                                    cancel: {
+                                                        label: '<i class="fa fa-times"></i> 取消'
+                                                    },
+                                                    confirm: {
+                                                        label: '<i class="fa fa-check"></i> 确定'
+                                                    }
+                                                },
+                                                callback: function (result) {
+                                                    if (result) {
+                                                        window.location.replace("/sheet/list");
+                                                    }
+                                                }
+                                            });
                                         }
                                     </script>
                                 </td>

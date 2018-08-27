@@ -1,7 +1,7 @@
 package gov.jiusan.star.score;
 
 import gov.jiusan.star.org.Org;
-import gov.jiusan.star.sheet.RatingSheet;
+import gov.jiusan.star.sheet_plan.SheetPlan;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
@@ -25,15 +24,7 @@ import java.util.Calendar;
 public class Score implements Serializable {
 
     @Id
-    @TableGenerator(
-        name = "SCORE_SEQ_GENERATOR",
-        table = "star_seq_gen",
-        pkColumnName = "seq_name",
-        pkColumnValue = "SCORE_SEQ",
-        valueColumnName = "seq_value",
-        initialValue = 50
-    )
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "SCORE_SEQ_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "seq", nullable = false)
     private Long seq;
 
@@ -45,8 +36,8 @@ public class Score implements Serializable {
     private Org org;
 
     @ManyToOne
-    @JoinColumn(name = "sheet_seq")
-    private RatingSheet sheet;
+    @JoinColumn(name = "sheet_plan_seq")
+    private SheetPlan sheetPlan;
 
     /**
      * 是否生效
@@ -130,14 +121,6 @@ public class Score implements Serializable {
         this.org = org;
     }
 
-    public RatingSheet getSheet() {
-        return sheet;
-    }
-
-    public void setSheet(RatingSheet sheet) {
-        this.sheet = sheet;
-    }
-
     public boolean isEffective() {
         return effective;
     }
@@ -216,5 +199,13 @@ public class Score implements Serializable {
 
     void setLastUpdateTime(Calendar lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public SheetPlan getSheetPlan() {
+        return sheetPlan;
+    }
+
+    public void setSheetPlan(SheetPlan sheetPlan) {
+        this.sheetPlan = sheetPlan;
     }
 }

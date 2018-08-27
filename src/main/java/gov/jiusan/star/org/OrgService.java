@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author Marcus Lin
+ */
 @Service
 public class OrgService {
 
@@ -25,6 +28,10 @@ public class OrgService {
 
     public Org createOrg(Org org) {
         return repository.save(org);
+    }
+
+    public Org findByCode(String code) {
+        return repository.findByCode(code);
     }
 
 }

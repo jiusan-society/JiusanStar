@@ -40,12 +40,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="phase : *{ratingPhases}">
+                        <tr th:each="phase : *{phases}">
                             <td>
                                 <p th:text="'名称：' + ${phase.name} + '，最高可得：' + ${phase.maxScore} + '。'"></p>
                             </td>
                             <td>
-                                <ul th:each="details : ${phase.ratingDetails}">
+                                <ul th:each="details : ${phase.details}">
                                     <li>
                                         <p th:text="'评分标准：' + ${details.description} + '，每项可得：' + ${details.eachScore} + '，最高可得：' + ${details.maxScore} + '。'"></p>
                                     </li>

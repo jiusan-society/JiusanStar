@@ -3,6 +3,9 @@ package gov.jiusan.star.org;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Marcus Lin
+ */
 @Service
 public class RoleService {
 

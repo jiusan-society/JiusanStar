@@ -13,6 +13,8 @@
                 th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
         <script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.min.js"
                 th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" src="../../static/vendor/bootbox/bootbox.min.js"
+                th:src="@{/vendor/bootbox/bootbox.min.js}"></script>
         <script>
             var _hmt = _hmt || [];
             _hmt.push(['_setUserTag', '4441', '进入评价列表的人']);
@@ -51,17 +53,16 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>序号</th>
-                                    <th>评分表名称</th>
+                                    <th>#</th>
+                                    <th>名称</th>
                                     <th>创建时间</th>
                                     <th>更新时间</th>
-                                    <th>派发状态</th>
-                                    <th>完成情况</th>
+                                    <th>总分</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="sheet, sheetStat : ${sheets}" th:class="${sheet.effective ? 'alert alert-info' : ''}">
+                                <tr th:each="sheet, sheetStat : ${sheets}">
                                     <td>
                                         <p th:text="${sheetStat.index + 1}"></p>
                                     </td>
@@ -75,42 +76,58 @@
                                         <p th:text="${#dates.format(sheet.lastUpdateTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
                                     </td>
                                     <td>
-                                        <p th:text="${sheet.effective ? '已派发' : '未派发'}"></p>
-                                    </td>
-                                    <td>
-
+                                        <p th:text="${sheet.maxScore}"></p>
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-primary" th:href="'/sheet?seq=' + ${sheet.seq}">查看</a>
                                         <a class="btn btn-sm btn-warning" th:href="'/sheet/editor?seq=' + ${sheet.seq}">编辑</a>
                                         <a class="btn btn-sm btn-warning"
-                                           th:onclick="'javascript:dispatchSheet('+${sheet.seq}+', '+${sheet.effective}+')'">派发</a>
+                                           th:onclick="'javascript:dispatchSheet('+${sheet.seq}+')'">派发</a>
                                         <a class="btn btn-sm btn-danger"
                                            th:href="'javascript:deleteSheet('+${sheet.seq}+')'">删除</a>
                                     </td>
                                     <script>
-                                        function dispatchSheet(seq, effective) {
-                                            var url = "/sheet/dispatch?seq=" + seq;
-                                            var dispatch = false;
-                                            if (effective) {
-                                                var result = confirm("重新派发将清空原先的评分数据，是否确定？");
-                                                if (result) {
-                                                    dispatch = true;
+                                        function dispatchSheet(seq) {
+                                            bootbox.confirm({
+                                                title: "确认派发？",
+                                                message: "派发后立即生效，截至时间为 " + new Date().getFullYear() + " 年 12 月 31 日，" +
+                                                    "同一年下仅可有一张可用的评分表，重复派发将使其他已派发的评分表不可用",
+                                                buttons: {
+                                                    cancel: {
+                                                        label: '<i class="fa fa-times"></i> 取消'
+                                                    },
+                                                    confirm: {
+                                                        label: '<i class="fa fa-check"></i> 确定'
+                                                    }
+                                                },
+                                                callback: function (result) {
+                                                    if (result) {
+                                                        let url = "/sheet/dispatch?seq=" + seq;
+                                                        window.location.replace(url);
+                                                    }
                                                 }
-                                            } else {
-                                                dispatch = true;
-                                            }
-                                            if (dispatch) {
-                                                window.location.replace(url);
-                                            }
+                                            });
                                         }
 
                                         function deleteSheet(seq) {
-                                            var url = "/sheet/delete?seq=" + seq;
-                                            var result = confirm("删除评分表将同时清空相应的评分数据，是否确定？");
-                                            if (result) {
-                                                window.location.replace(url);
-                                            }
+                                            bootbox.confirm({
+                                                title: "确认删除？",
+                                                message: "删除评分表将同时清空相应的派发情况以及评分数据",
+                                                buttons: {
+                                                    cancel: {
+                                                        label: '<i class="fa fa-times"></i> 取消'
+                                                    },
+                                                    confirm: {
+                                                        label: '<i class="fa fa-check"></i> 确定'
+                                                    }
+                                                },
+                                                callback: function (result) {
+                                                    if (result) {
+                                                        let url = "/sheet/delete?seq=" + seq;
+                                                        window.location.replace(url);
+                                                    }
+                                                }
+                                            });
                                         }
                                     </script>
                                 </tr>

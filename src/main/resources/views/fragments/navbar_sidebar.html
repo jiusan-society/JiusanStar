@@ -11,7 +11,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index">星级组织评定系统</a>
+                <a class="navbar-brand" th:href="@{/index}">星级组织评定系统</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -38,7 +38,7 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> 个人信息</a>
+                        <li><a th:href="@{/user/profile}"><i class="fa fa-user fa-fw"></i> 个人信息</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> 修改密码</a>
                         </li>
@@ -69,7 +69,16 @@
                             <a th:href="@{/score/editor}"><i class="fa fa-edit fa-fw"></i> 自评</a>
                         </li>
                         <li th:if="${#authorization.expression('hasRole(''ROLE_L1_ADM'')')}">
-                            <a th:href="@{/sheet/list}"><i class="fa fa-table fa-fw"></i> 评分表</a>
+                            <a th:href="@{/sheet/list}"><i class="fa fa-table fa-fw"></i> 评分表管理</a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a th:href="@{/sheet_plan/list}"><i class="fa fa-history fa-fw"></i> 评分表派发情况</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a th:if="${#authorization.expression('hasRole(''ROLE_L1_ADM'')')}" th:href="@{/file/list/all}"><i class="fa fa-files-o fa-fw"></i> 评定资料管理</a>
+                            <a th:if="${#authorization.expression('hasAnyRole(''ROLE_L2_ADM'', ''ROLE_L3_ADM'')')}" th:href="@{/file/list/own}"><i class="fa fa-files-o fa-fw"></i> 评定资料管理</a>
                         </li>
                         <li th:if="${#authorization.expression('hasAnyRole(''ROLE_L1_ADM'', ''ROLE_L2_ADM'')')}">
                             <a th:href="@{/score/list}"><i class="fa fa-edit fa-fw"></i> 考评</a>
