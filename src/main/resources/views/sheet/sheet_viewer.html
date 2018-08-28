@@ -41,23 +41,31 @@
                     </thead>
                     <tbody>
                         <tr th:each="phase : *{phases}">
-                            <td>
-                                <p th:text="'名称：' + ${phase.name} + '，最高可得：' + ${phase.maxScore} + '。'"></p>
+                            <td style="text-align: center; vertical-align: middle">
+                                <div>
+                                    <p th:text="${phase.name}"></p>
+                                    <p th:text="'(满分 ' + ${phase.maxScore} + ' 分)'"></p>
+                                </div>
                             </td>
                             <td>
                                 <ul th:each="details : ${phase.details}">
                                     <li>
-                                        <p th:text="'评分标准：' + ${details.description} + '，每项可得：' + ${details.eachScore} + '，最高可得：' + ${details.maxScore} + '。'"></p>
+                                        <p th:text="${details.description}"></p>
+                                        <ul>
+                                            <li>
+                                                <p th:text="'每项可得：' + ${details.eachScore} + ' 分；最高可得：' + ${details.maxScore} + ' 分'"></p>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                             </td>
                         </tr>
                         <tr>
-                           <td colspan="2">
-                               <p align="center" class="alert alert-danger">
-                                   <strong th:text="*{description}">60 分以上合格，70 分及以上三星级，80 分及以上四星级，90 分及以上五星级。</strong>
-                               </p>
-                           </td>
+                            <td colspan="2">
+                                <p align="center" class="alert alert-danger">
+                                    <strong th:text="*{description}">60 分以上合格，70 分及以上三星级，80 分及以上四星级，90 分及以上五星级。</strong>
+                                </p>
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="4">

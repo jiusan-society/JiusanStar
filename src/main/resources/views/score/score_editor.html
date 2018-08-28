@@ -17,9 +17,99 @@
     <body>
         <div th:replace="fragments/navbar :: navbar"></div>
         <div class="container">
-            <div align="center">
-                <h3><strong>星级组织评分表</strong></h3>
-            </div>
+            <form th:action="${#httpServletRequest.getParameter('seq')} != null ? '/score/update?seq='+ ${#httpServletRequest.getParameter('seq')} :'/score'"
+                  th:object="${score}" method="post">
+                <div>
+                    <h3></h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center">指标大类</th>
+                                <th style="text-align: center">指标小类</th>
+                                <th class="text-center">
+                                    <button class="btn btn-sm btn-primary" name="addPhase" type="submit">添加大类</button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="phase, phaseStat : *{phases}">
+                                <td class="col-sm-2">
+                                    名称：<input class="form-control input-sm" type="text"
+                                              th:field="*{phases[__${phaseStat.index}__].name}"/>
+                                    最高可得：<input class="form-control input-sm" type="number"
+                                                th:field="*{phases[__${phaseStat.index}__].maxScore}"/>
+                                    <br/>
+                                    <button class="btn btn-sm btn-danger" name="removePhase" type="submit"
+                                            th:value="${phaseStat.index}">删除大类
+                                    </button>
+                                    <button class="btn btn-sm btn-primary" name="addDetails" type="submit"
+                                            th:value="${phaseStat.index}">添加小类
+                                    </button>
+                                </td>
+                                <td>
+                                    <ul th:each="details, detailsStat : ${phase.details}">
+                                        <li>
+                                            评分标准：<input class="form-control input-sm" type="text"
+                                                        th:field="*{phases[__${phaseStat.index}__].details[__${detailsStat.index}__].description}"/>
+                                            每项可得：<input class="form-control input-sm" type="number"
+                                                        th:field="*{phases[__${phaseStat.index}__].details[__${detailsStat.index}__].eachScore}"/>
+                                            最高可得：<input class="form-control input-sm" type="number"
+                                                        th:field="*{phases[__${phaseStat.index}__].details[__${detailsStat.index}__].maxScore}"/>
+                                            <br/>
+                                            <button class="btn btn-sm btn-danger" name="removeDetails" type="submit"
+                                                    th:value="${phaseStat.index} + '|' + ${detailsStat.index}">删除小类
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <p align="center" class="alert alert-danger">
+                                        <textarea class="form-control input-lg" name="description" placeholder="请输入注意事项"
+                                                  th:field="*{description}"
+                                                  style="width: 100%;"></textarea>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="text-center">
+                                        <input type="submit" class="btn btn-primary" th:value="提交"/>
+                                        <input type="button" class="btn btn-danger" th:value="退出"
+                                               onclick="confirmExit()"/>
+                                    </div>
+                                    <script>
+                                        function confirmExit() {
+                                            bootbox.confirm({
+                                                title: "确认退出？",
+                                                message: "退出将不保存此次更改的数据",
+                                                buttons: {
+                                                    cancel: {
+                                                        label: '<i class="fa fa-times"></i> 取消'
+                                                    },
+                                                    confirm: {
+                                                        label: '<i class="fa fa-check"></i> 确定'
+                                                    }
+                                                },
+                                                callback: function (result) {
+                                                    if (result) {
+                                                        window.location.replace("/sheet/list");
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    </script>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </form>
         </div>
     </body>
 </html>
