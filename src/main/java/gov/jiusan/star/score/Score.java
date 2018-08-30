@@ -40,12 +40,6 @@ public class Score implements Serializable {
     private SheetPlan sheetPlan;
 
     /**
-     * 是否生效
-     */
-    @Column(name = "effective", nullable = false)
-    private boolean effective;
-
-    /**
      * 是否完成填写
      */
     @Column(name = "finished", nullable = false)
@@ -82,13 +76,6 @@ public class Score implements Serializable {
     private Integer finalScore;
 
     /**
-     * 失效时间
-     */
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "expiration_time")
-    private Calendar expirationTime;
-
-    /**
      * 创建时间
      */
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -119,14 +106,6 @@ public class Score implements Serializable {
 
     public void setOrg(Org org) {
         this.org = org;
-    }
-
-    public boolean isEffective() {
-        return effective;
-    }
-
-    public void setEffective(boolean effective) {
-        this.effective = effective;
     }
 
     public boolean isFinished() {
@@ -175,14 +154,6 @@ public class Score implements Serializable {
 
     public void setFinalScore(Integer finalScore) {
         this.finalScore = finalScore;
-    }
-
-    public Calendar getExpirationTime() {
-        return expirationTime;
-    }
-
-    public void setExpirationTime(Calendar expirationTime) {
-        this.expirationTime = expirationTime;
     }
 
     public Calendar getCreateTime() {
