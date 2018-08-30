@@ -29,7 +29,7 @@ class SheetUtil {
         return entity;
     }
 
-    static Phase convertRatingPhase(gov.jiusan.star.sheet.model.Phase model) {
+    static Phase convertRatingPhase(gov.jiusan.star.sheet.model.Sheet.Phase model) {
         Phase phase = new Phase();
         phase.setName(model.getName());
         phase.setMaxScore(model.getMaxScore());
@@ -37,15 +37,15 @@ class SheetUtil {
         return phase;
     }
 
-    static gov.jiusan.star.sheet.model.Phase convertRatingPhase(Phase phase) {
-        gov.jiusan.star.sheet.model.Phase model = new gov.jiusan.star.sheet.model.Phase();
+    private static gov.jiusan.star.sheet.model.Sheet.Phase convertRatingPhase(Phase phase) {
+        gov.jiusan.star.sheet.model.Sheet.Phase model = new gov.jiusan.star.sheet.model.Sheet.Phase();
         model.setName(phase.getName());
         model.setMaxScore(phase.getMaxScore());
         model.setDetails(phase.getDetails().stream().map(SheetUtil::convertRatingDetails).collect(Collectors.toList()));
         return model;
     }
 
-    static Details convertRatingDetails(gov.jiusan.star.sheet.model.Details model) {
+    private static Details convertRatingDetails(gov.jiusan.star.sheet.model.Sheet.Details model) {
         Details details = new Details();
         details.setDescription(model.getDescription());
         details.setEachScore(model.getEachScore());
@@ -53,8 +53,8 @@ class SheetUtil {
         return details;
     }
 
-    private static gov.jiusan.star.sheet.model.Details convertRatingDetails(Details details) {
-        gov.jiusan.star.sheet.model.Details model = new gov.jiusan.star.sheet.model.Details();
+    private static gov.jiusan.star.sheet.model.Sheet.Details convertRatingDetails(Details details) {
+        gov.jiusan.star.sheet.model.Sheet.Details model = new gov.jiusan.star.sheet.model.Sheet.Details();
         model.setDescription(details.getDescription());
         model.setEachScore(details.getEachScore());
         model.setMaxScore(details.getMaxScore());

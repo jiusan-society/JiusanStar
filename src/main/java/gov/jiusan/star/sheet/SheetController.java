@@ -2,8 +2,6 @@ package gov.jiusan.star.sheet;
 
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
-import gov.jiusan.star.sheet.model.Details;
-import gov.jiusan.star.sheet.model.Phase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -84,7 +82,7 @@ public class SheetController {
 
     @PostMapping(params = "addPhase")
     public String addPhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet) {
-        sheet.getPhases().add(new Phase());
+        sheet.getPhases().add(new gov.jiusan.star.sheet.model.Sheet.Phase());
         return "sheet/sheet_editor";
     }
 
@@ -98,7 +96,7 @@ public class SheetController {
     @PostMapping(params = "addDetails")
     public String addDetails(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheet.getPhases().get(rowId).getDetails().add(new Details());
+        sheet.getPhases().get(rowId).getDetails().add(new gov.jiusan.star.sheet.model.Sheet.Details());
         return "sheet/sheet_editor";
     }
 
@@ -113,7 +111,7 @@ public class SheetController {
 
     @PostMapping(path = "update", params = "addPhase")
     public String addPhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet) {
-        sheet.getPhases().add(new Phase());
+        sheet.getPhases().add(new gov.jiusan.star.sheet.model.Sheet.Phase());
         return "sheet/sheet_editor";
     }
 
@@ -127,7 +125,7 @@ public class SheetController {
     @PostMapping(path = "update", params = "addDetails")
     public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheet.getPhases().get(rowId).getDetails().add(new Details());
+        sheet.getPhases().get(rowId).getDetails().add(new gov.jiusan.star.sheet.model.Sheet.Details());
         return "sheet/sheet_editor";
     }
 

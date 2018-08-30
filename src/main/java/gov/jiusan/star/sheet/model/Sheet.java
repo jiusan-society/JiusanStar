@@ -84,4 +84,66 @@ public class Sheet implements Serializable {
     public void setLastUpdateTime(Calendar lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
     }
+
+    public static class Phase implements Serializable {
+
+        private String name;
+        private Integer maxScore;
+        private List<Details> details;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getMaxScore() {
+            return maxScore;
+        }
+
+        public void setMaxScore(Integer maxScore) {
+            this.maxScore = maxScore;
+        }
+
+        public List<Details> getDetails() {
+            return details == null ? details = new ArrayList<>() : details;
+        }
+
+        public void setDetails(List<Details> details) {
+            this.details = details;
+        }
+    }
+
+    public static class Details implements Serializable {
+
+        private String description;
+        private Integer eachScore;
+        private Integer maxScore;
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public Integer getEachScore() {
+            return eachScore;
+        }
+
+        public void setEachScore(Integer eachScore) {
+            this.eachScore = eachScore;
+        }
+
+        public Integer getMaxScore() {
+            return maxScore;
+        }
+
+        public void setMaxScore(Integer maxScore) {
+            this.maxScore = maxScore;
+        }
+    }
 }

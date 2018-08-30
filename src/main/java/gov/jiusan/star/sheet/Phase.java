@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "phase")
-class Phase implements Serializable {
+public class Phase implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

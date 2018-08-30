@@ -81,7 +81,6 @@ public class SheetService {
             Score score = new Score();
             score.setOrg(o);
             score.setSheetPlan(savedSP);
-            score.setEffective(true);
             sService.create(score);
         }
         sheet.getSheetPlans().add(savedSP);

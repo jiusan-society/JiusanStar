@@ -41,6 +41,7 @@ public class ScoreController {
     @GetMapping(path = "editor")
     public String editScore(@RequestParam("seq") Long seq, Model model) {
         Score score = sService.find(seq);
+        model.addAttribute("score", ScoreUtil.convert(score));
         return "score/score_editor";
     }
 
