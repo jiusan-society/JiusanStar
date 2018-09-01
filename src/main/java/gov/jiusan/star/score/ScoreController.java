@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Marcus Lin
@@ -31,10 +32,12 @@ public class ScoreController {
     }
 
     @GetMapping(path = "list")
-    public String findOwnScores(Model model) {
+    public String findOwnEffectiveScores(Model model) {
         String userAccount = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = uService.findUserByUsername(userAccount);
-        List<Score> scores = user.getOrg().getScores();
+        List<Score> scores = user.getOrg().getScores().stream()
+            .filter(s -> s.getSheetPlan().isEffective())
+            .collect(Collectors.toList());
         model.addAttribute("scores", scores);
         return "score/score_list";
     }
@@ -53,7 +56,14 @@ public class ScoreController {
     }
 
     @PostMapping(path = "update")
-    public String updateScore(@RequestParam("seq") Long seq, gov.jiusan.star.score.model.Score score) {
+    public String updateScore(@RequestParam("seq") Long seq, gov.jiusan.star.score.model.Score model) {
+        int totalSAScores = model.getPhases().stream()
+            .flatMap(p -> p.getDetails().stream())
+            .mapToInt(d -> d.getsAScore())
+            .sum();
+        Score score = sService.find(seq);
+        score.setsATotalScore(totalSAScores);
+        sService.update(score);
         return "redirect:/score?seq=" + seq;
     }
 

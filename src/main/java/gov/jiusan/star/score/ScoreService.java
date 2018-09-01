@@ -25,6 +25,11 @@ public class ScoreService {
         return repository.save(score);
     }
 
+    public Score update(Score score) {
+        score.setLastUpdateTime(Calendar.getInstance());
+        return repository.save(score);
+    }
+
     public Score find(Long seq) {
         return repository.findOne(seq);
     }
