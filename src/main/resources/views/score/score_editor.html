@@ -17,7 +17,7 @@
     <body>
         <div th:replace="fragments/navbar :: navbar"></div>
         <div class="container">
-            <form th:action="${#httpServletRequest.getParameter('seq')} != null ? '/score/update?seq='+ ${#httpServletRequest.getParameter('seq')} :'/score'"
+            <form th:action="'/score/update?seq='+ ${#httpServletRequest.getParameter('seq')}"
                   th:object="${score}" method="post">
                 <div align="center">
                     <h3 th:text="*{sheetName}"></h3>

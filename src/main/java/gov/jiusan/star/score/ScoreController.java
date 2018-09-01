@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -49,6 +50,11 @@ public class ScoreController {
     public String viewScore(@RequestParam("seq") Long seq, Model model) {
         Score score = sService.find(seq);
         return "score/score_viewer";
+    }
+
+    @PostMapping(path = "update")
+    public String updateScore(@RequestParam("seq") Long seq, gov.jiusan.star.score.model.Score score) {
+        return "redirect:/score?seq=" + seq;
     }
 
 }
