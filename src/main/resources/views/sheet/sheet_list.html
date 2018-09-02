@@ -64,7 +64,7 @@
                             <tbody>
                                 <tr th:each="sheet, sheetStat : ${sheets}">
                                     <td>
-                                        <p th:text="${sheetStat.index + 1}"></p>
+                                        <p th:text="${sheetStat.count}"></p>
                                     </td>
                                     <td>
                                         <p th:text="${sheet.name}"></p>

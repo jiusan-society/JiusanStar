@@ -38,7 +38,7 @@
                             </thead>
                             <tbody>
                                 <tr th:each="score, scoreStatus : ${scores}">
-                                    <td th:text="${scoreStatus.index + 1}"></td>
+                                    <td th:text="${scoreStatus.count}"></td>
                                     <td th:text="${score.getSheetPlan().getSheet().getName()}"></td>
                                     <td th:text="${#dates.format(score.getSheetPlan().getEffectiveTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                     <td th:text="${#dates.format(score.getSheetPlan().getExpirationTime(), 'yyyy-MM-dd HH:mm')}"></td>
