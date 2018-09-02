@@ -1,7 +1,9 @@
 package gov.jiusan.star.score;
 
+import gov.jiusan.star.score.model.ScoreDTO;
 import gov.jiusan.star.user.User;
 import gov.jiusan.star.user.UserService;
+import gov.jiusan.star.util.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -44,8 +46,8 @@ public class ScoreController {
 
     @GetMapping(path = "editor")
     public String editScore(@RequestParam("seq") Long seq, Model model) {
-        Score score = sService.find(seq);
-        model.addAttribute("score", ScoreUtil.convert(score));
+        model.addAttribute("sheet",  sService.find(seq).getSheetPlan().getSheet());
+        model.addAttribute("score", new ScoreDTO());
         return "score/score_editor";
     }
 
@@ -56,13 +58,13 @@ public class ScoreController {
     }
 
     @PostMapping(path = "update")
-    public String updateScore(@RequestParam("seq") Long seq, gov.jiusan.star.score.model.Score model) {
-        int totalSAScores = model.getPhases().stream()
-            .flatMap(p -> p.getDetails().stream())
-            .mapToInt(d -> d.getsAScore())
-            .sum();
+    public String updateScore(@RequestParam("seq") Long seq, ScoreDTO scoreDTO) {
+        int sATotalScore = scoreDTO.getsADetails().values().stream().mapToInt(score -> score).sum();
+        String sADetailsString = JacksonUtil.toString(scoreDTO.getsADetails()).get();
         Score score = sService.find(seq);
-        score.setsATotalScore(totalSAScores);
+        score.setsATotalScore(sATotalScore);
+        score.setsADetails(sADetailsString);
+        score.setsAFinished(true);
         sService.update(score);
         return "redirect:/score?seq=" + seq;
     }

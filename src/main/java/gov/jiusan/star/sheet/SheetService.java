@@ -3,6 +3,7 @@ package gov.jiusan.star.sheet;
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.score.Score;
 import gov.jiusan.star.score.ScoreService;
+import gov.jiusan.star.sheet.model.SheetDTO;
 import gov.jiusan.star.sheet_plan.SheetPlan;
 import gov.jiusan.star.sheet_plan.SheetPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class SheetService {
         this.sPService = sPService;
     }
 
-    public Long create(gov.jiusan.star.sheet.model.Sheet model) {
+    public Long create(SheetDTO model) {
         Sheet entity = SheetUtil.convert(model);
         Calendar now = Calendar.getInstance();
         entity.setCreateTime(now);
@@ -47,11 +48,11 @@ public class SheetService {
         return Optional.ofNullable(repository.findOne(seq));
     }
 
-    public Sheet update(Sheet entity, gov.jiusan.star.sheet.model.Sheet model) {
+    public Sheet update(Sheet entity, SheetDTO model) {
         entity.setName(model.getName());
         entity.setDescription(model.getDescription());
         entity.getPhases().clear();
-        entity.getPhases().addAll(model.getPhases().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        entity.getPhases().addAll(model.getPhaseDTOs().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
         entity.setLastUpdateTime(Calendar.getInstance());
         return repository.save(entity);
     }

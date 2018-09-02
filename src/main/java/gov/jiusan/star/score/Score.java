@@ -40,10 +40,16 @@ public class Score implements Serializable {
     private SheetPlan sheetPlan;
 
     /**
-     * 是否完成填写
+     * 是否完成自评
      */
-    @Column(name = "finished", nullable = false)
-    private boolean finished;
+    @Column(name = "sa_finished", nullable = false)
+    private boolean sAFinished;
+
+    /**
+     * 是否完成考评
+     */
+    @Column(name = "aa_finished", nullable = false)
+    private boolean aAFinished;
 
     /**
      * 自评得分详情 sA -> selfAssessment
@@ -108,12 +114,20 @@ public class Score implements Serializable {
         this.org = org;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public boolean issAFinished() {
+        return sAFinished;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setsAFinished(boolean sAFinished) {
+        this.sAFinished = sAFinished;
+    }
+
+    public boolean isaAFinished() {
+        return aAFinished;
+    }
+
+    public void setaAFinished(boolean aAFinished) {
+        this.aAFinished = aAFinished;
     }
 
     public String getsADetails() {

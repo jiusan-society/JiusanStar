@@ -2,6 +2,7 @@ package gov.jiusan.star.sheet;
 
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
+import gov.jiusan.star.sheet.model.SheetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -39,11 +40,11 @@ public class SheetController {
     }
 
     @PostMapping
-    public String createSheet(@ModelAttribute("sheet") @Valid gov.jiusan.star.sheet.model.Sheet sheet, final BindingResult bindingResult) {
+    public String createSheet(@ModelAttribute("sheet") @Valid SheetDTO sheetDTO, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sheet/sheet_editor";
         }
-        return "redirect:/sheet?seq=" + sService.create(sheet);
+        return "redirect:/sheetDTO?seq=" + sService.create(sheetDTO);
     }
 
     @GetMapping
@@ -57,19 +58,19 @@ public class SheetController {
     }
 
     @PostMapping(path = "update")
-    public String updateSheet(@RequestParam(value = "seq") Long seq, gov.jiusan.star.sheet.model.Sheet sheetModel) {
+    public String updateSheet(@RequestParam(value = "seq") Long seq, SheetDTO sheetDTO) {
         Optional<Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
-        sService.update(sheet.get(), sheetModel);
+        sService.update(sheet.get(), sheetDTO);
         return "redirect:/sheet?seq=" + seq;
     }
 
     @GetMapping(path = "editor")
     public String editSheet(@RequestParam(value = "seq", required = false) Long seq, Model model) {
         if (seq == null) {
-            model.addAttribute("sheet", new gov.jiusan.star.sheet.model.Sheet());
+            model.addAttribute("sheet", new SheetDTO());
             return "sheet/sheet_editor";
         }
         Optional<Sheet> sheet = sService.find(seq);
@@ -81,70 +82,70 @@ public class SheetController {
     }
 
     @PostMapping(params = "addPhase")
-    public String addPhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet) {
-        sheet.getPhases().add(new gov.jiusan.star.sheet.model.Sheet.Phase());
+    public String addPhase(@ModelAttribute("sheet") SheetDTO sheetDTO) {
+        sheetDTO.getPhaseDTOs().add(new SheetDTO.PhaseDTO());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(params = "removePhase")
-    public String removePhase(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
+    public String removePhase(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("removePhase"));
-        sheet.getPhases().remove(rowId);
+        sheetDTO.getPhaseDTOs().remove(rowId);
         return "sheet/sheet_editor";
     }
 
     @PostMapping(params = "addDetails")
-    public String addDetails(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
+    public String addDetails(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheet.getPhases().get(rowId).getDetails().add(new gov.jiusan.star.sheet.model.Sheet.Details());
+        sheetDTO.getPhaseDTOs().get(rowId).getDetailsDTOs().add(new SheetDTO.DetailsDTO());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(params = "removeDetails")
-    public String removeDetails(@ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
+    public String removeDetails(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         String value = request.getParameter("removeDetails");
         int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
         int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheet.getPhases().get(phaseIndex).getDetails().remove(detailsIndex);
+        sheetDTO.getPhaseDTOs().get(phaseIndex).getDetailsDTOs().remove(detailsIndex);
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "addPhase")
-    public String addPhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet) {
-        sheet.getPhases().add(new gov.jiusan.star.sheet.model.Sheet.Phase());
+    public String addPhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO) {
+        sheetDTO.getPhaseDTOs().add(new SheetDTO.PhaseDTO());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "removePhase")
-    public String removePhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
+    public String removePhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("removePhase"));
-        sheet.getPhases().remove(rowId);
+        sheetDTO.getPhaseDTOs().remove(rowId);
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "addDetails")
-    public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
+    public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheet.getPhases().get(rowId).getDetails().add(new gov.jiusan.star.sheet.model.Sheet.Details());
+        sheetDTO.getPhaseDTOs().get(rowId).getDetailsDTOs().add(new SheetDTO.DetailsDTO());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "removeDetails")
-    public String removeDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") gov.jiusan.star.sheet.model.Sheet sheet, final HttpServletRequest request) {
+    public String removeDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         String value = request.getParameter("removeDetails");
         int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
         int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheet.getPhases().get(phaseIndex).getDetails().remove(detailsIndex);
+        sheetDTO.getPhaseDTOs().get(phaseIndex).getDetailsDTOs().remove(detailsIndex);
         return "sheet/sheet_editor";
     }
 
     @GetMapping(path = "list")
     public String findAllSheets(Model model) {
-        List<gov.jiusan.star.sheet.model.Sheet> sheets = sService.findAll().stream()
+        List<SheetDTO> sheetDTOs = sService.findAll().stream()
             .map(SheetUtil::convert)
-            .sorted(Comparator.comparing(gov.jiusan.star.sheet.model.Sheet::getCreateTime))
+            .sorted(Comparator.comparing(SheetDTO::getCreateTime))
             .collect(Collectors.toList());
-        model.addAttribute("sheets", sheets);
+        model.addAttribute("sheets", sheetDTOs);
         return "sheet/sheet_list";
     }
 

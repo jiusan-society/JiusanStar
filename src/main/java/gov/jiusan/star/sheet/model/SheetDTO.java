@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Marcus Lin
  */
-public class Sheet implements Serializable {
+public class SheetDTO implements Serializable {
 
     private Long seq;
 
@@ -24,7 +24,7 @@ public class Sheet implements Serializable {
     private Integer maxScore;
 
     @NotEmpty
-    private List<Phase> phases;
+    private List<PhaseDTO> phaseDTOs;
 
     private Calendar createTime;
     private Calendar lastUpdateTime;
@@ -61,12 +61,12 @@ public class Sheet implements Serializable {
         this.maxScore = maxScore;
     }
 
-    public List<Phase> getPhases() {
-        return phases == null ? phases = new ArrayList<>() : phases;
+    public List<PhaseDTO> getPhaseDTOs() {
+        return phaseDTOs == null ? phaseDTOs = new ArrayList<>() : phaseDTOs;
     }
 
-    public void setPhases(List<Phase> phases) {
-        this.phases = phases;
+    public void setPhaseDTOs(List<PhaseDTO> phaseDTOs) {
+        this.phaseDTOs = phaseDTOs;
     }
 
     public Calendar getCreateTime() {
@@ -85,11 +85,11 @@ public class Sheet implements Serializable {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public static class Phase implements Serializable {
+    public static class PhaseDTO implements Serializable {
 
         private String name;
         private Integer maxScore;
-        private List<Details> details;
+        private List<DetailsDTO> detailsDTOs;
 
         public String getName() {
             return name;
@@ -107,16 +107,16 @@ public class Sheet implements Serializable {
             this.maxScore = maxScore;
         }
 
-        public List<Details> getDetails() {
-            return details == null ? details = new ArrayList<>() : details;
+        public List<DetailsDTO> getDetailsDTOs() {
+            return detailsDTOs == null ? detailsDTOs = new ArrayList<>() : detailsDTOs;
         }
 
-        public void setDetails(List<Details> details) {
-            this.details = details;
+        public void setDetailsDTOs(List<DetailsDTO> detailsDTOs) {
+            this.detailsDTOs = detailsDTOs;
         }
     }
 
-    public static class Details implements Serializable {
+    public static class DetailsDTO implements Serializable {
 
         private String description;
         private Integer eachScore;
