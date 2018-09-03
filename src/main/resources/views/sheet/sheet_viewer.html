@@ -40,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="phase : *{phases}">
+                        <tr th:each="phase : *{phaseDTOs}">
                             <td style="text-align: center; vertical-align: middle">
                                 <div>
                                     <p th:text="${phase.name}"></p>
@@ -48,7 +48,7 @@
                                 </div>
                             </td>
                             <td>
-                                <ul th:each="details : ${phase.details}">
+                                <ul th:each="details : ${phase.detailsDTOs}">
                                     <li>
                                         <p th:text="${details.description}"></p>
                                         <ul>

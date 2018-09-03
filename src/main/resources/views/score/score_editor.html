@@ -17,7 +17,8 @@
     <body>
         <div th:replace="fragments/navbar :: navbar"></div>
         <div class="container">
-            <form th:action="'/score/update?seq='+ ${#httpServletRequest.getParameter('seq')}" method="post" th:object="${score}">
+            <form th:action="'/score/update?seq='+ ${#httpServletRequest.getParameter('seq')}" method="post"
+                  th:object="${score}">
                 <div align="center">
                     <h3 th:text="${sheet.name}"></h3>
                 </div>
@@ -32,7 +33,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <div th:remove="tag" th:each="phase, phaseStats : ${sheet.phases}" th:with="details0Seq=${phase.details[0].seq}">
+                            <div th:remove="tag" th:each="phase, phaseStats : ${sheet.phases}"
+                                 th:with="details0Seq=${phase.details[0].seq}">
                                 <tr>
                                     <td style="text-align: center; vertical-align: middle"
                                         th:rowspan="${phase.details.size()}">
@@ -44,22 +46,29 @@
                                         <p th:text="'(每项可得：' + ${phase.details[0].eachScore} + ' 分；最高可得：' + ${phase.details[0].maxScore} + ' 分)'"></p>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
-                                        <input class="form-control input-sm" type="number" required="required" th:field="*{sADetails[__${details0Seq}__]}"/>
+                                        <input class="form-control input-sm" type="number" required="required"
+                                               th:field="*{sADetails[__${details0Seq}__]}"/>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
-                                        <input class="form-control input-sm" type="number" th:field="*{aADetails[__${details0Seq}__]}"/>
+                                        <!--<input class="form-control input-sm" type="number"-->
+                                        <!--th:value="*{aADetails[__${details0Seq}__]}"-->
+                                        <!--th:field="*{aADetails[__${details0Seq}__]}"/>-->
                                     </td>
                                 </tr>
-                                <tr th:each="detail, stats : ${phase.details}" th:if="${!stats.first}" th:with="detailsSeq=${detail.seq}">
+                                <tr th:each="detail, stats : ${phase.details}" th:if="${!stats.first}"
+                                    th:with="detailsSeq=${detail.seq}">
                                     <td style="text-align: center; vertical-align: middle">
                                         <p th:text="${detail.description}"></p>
                                         <p th:text="'(每项可得：' + ${detail.eachScore} + ' 分；最高可得：' + ${detail.maxScore} + ' 分)'"></p>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
-                                        <input class="form-control input-sm" type="number" required="required" th:field="*{sADetails[__${detailsSeq}__]}"/>
+                                        <input class="form-control input-sm" type="number" required="required"
+                                               th:field="*{sADetails[__${detailsSeq}__]}"/>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
-                                        <input class="form-control input-sm" type="number" th:field="*{aADetails[__${detailsSeq}__]}"/>
+                                        <!--<input class="form-control input-sm" type="number"-->
+                                        <!--th:value="*{aADetails[__${detailsSeq}__]}"-->
+                                        <!--th:field="*{aADetails[__${detailsSeq}__]}"/>-->
                                     </td>
                                 </tr>
                             </div>
@@ -80,6 +89,27 @@
                                         <input type="button" class="btn btn-danger" th:value="退出"
                                                onclick="confirmExit()"/>
                                     </div>
+                                    <script>
+                                        function confirmExit() {
+                                            bootbox.confirm({
+                                                title: "确认退出？",
+                                                message: "退出将不保存此次更改的数据",
+                                                buttons: {
+                                                    cancel: {
+                                                        label: '<i class="fa fa-times"></i> 取消'
+                                                    },
+                                                    confirm: {
+                                                        label: '<i class="fa fa-check"></i> 确定'
+                                                    }
+                                                },
+                                                callback: function (result) {
+                                                    if (result) {
+                                                        window.location.replace("/index");
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    </script>
                                 </td>
                             </tr>
                         </tfoot>

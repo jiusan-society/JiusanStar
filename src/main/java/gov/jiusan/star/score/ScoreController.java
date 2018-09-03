@@ -33,7 +33,7 @@ public class ScoreController {
         this.sService = sService;
     }
 
-    @GetMapping(path = "list")
+    @GetMapping(path = "list/own")
     public String findOwnEffectiveScores(Model model) {
         String userAccount = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = uService.findUserByUsername(userAccount);
@@ -46,14 +46,17 @@ public class ScoreController {
 
     @GetMapping(path = "editor")
     public String editScore(@RequestParam("seq") Long seq, Model model) {
-        model.addAttribute("sheet",  sService.find(seq).getSheetPlan().getSheet());
-        model.addAttribute("score", new ScoreDTO());
+        Score score = sService.find(seq);
+        model.addAttribute("sheet", score.getSheetPlan().getSheet());
+        model.addAttribute("score", ScoreUtil.convert(score));
         return "score/score_editor";
     }
 
     @GetMapping
     public String viewScore(@RequestParam("seq") Long seq, Model model) {
         Score score = sService.find(seq);
+        model.addAttribute("sheet", score.getSheetPlan().getSheet());
+        model.addAttribute("score", ScoreUtil.convert(score));
         return "score/score_viewer";
     }
 
