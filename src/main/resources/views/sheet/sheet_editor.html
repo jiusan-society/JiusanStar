@@ -15,15 +15,6 @@
                 th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
         <script type="text/javascript" src="../../static/vendor/bootbox/bootbox.min.js"
                 th:src="@{/vendor/bootbox/bootbox.min.js}"></script>
-        <script>
-            var _hmt = _hmt || [];
-            (function () {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?26ec974e7be9c751ae6b7b7cf0b86d5c";
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(hm, s);
-            })();
-        </script>
     </head>
     <body>
         <div th:replace="fragments/navbar :: navbar"></div>
@@ -47,12 +38,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="phase, phaseStat : *{phases}">
+                            <tr th:each="phase, phaseStat : *{phaseDTOs}">
                                 <td class="col-sm-2">
                                     名称：<input class="form-control input-sm" type="text"
-                                              th:field="*{phases[__${phaseStat.index}__].name}"/>
+                                              th:field="*{phaseDTOs[__${phaseStat.index}__].name}"/>
                                     最高可得：<input class="form-control input-sm" type="number"
-                                                th:field="*{phases[__${phaseStat.index}__].maxScore}"/>
+                                                th:field="*{phaseDTOs[__${phaseStat.index}__].maxScore}"/>
                                     <br/>
                                     <button class="btn btn-sm btn-danger" name="removePhase" type="submit"
                                             th:value="${phaseStat.index}">删除大类
@@ -62,14 +53,14 @@
                                     </button>
                                 </td>
                                 <td>
-                                    <ul th:each="details, detailsStat : ${phase.details}">
+                                    <ul th:each="details, detailsStat : ${phase.detailsDTOs}">
                                         <li>
                                             评分标准：<input class="form-control input-sm" type="text"
-                                                        th:field="*{phases[__${phaseStat.index}__].details[__${detailsStat.index}__].description}"/>
+                                                        th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].description}"/>
                                             每项可得：<input class="form-control input-sm" type="number"
-                                                        th:field="*{phases[__${phaseStat.index}__].details[__${detailsStat.index}__].eachScore}"/>
+                                                        th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].eachScore}"/>
                                             最高可得：<input class="form-control input-sm" type="number"
-                                                        th:field="*{phases[__${phaseStat.index}__].details[__${detailsStat.index}__].maxScore}"/>
+                                                        th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].maxScore}"/>
                                             <br/>
                                             <button class="btn btn-sm btn-danger" name="removeDetails" type="submit"
                                                     th:value="${phaseStat.index} + '|' + ${detailsStat.index}">删除小类

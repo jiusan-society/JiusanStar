@@ -16,314 +16,67 @@
     </head>
     <body>
         <div th:replace="fragments/navbar :: navbar"></div>
-        <div class="container">
+        <div class="container" th:object="${score}">
             <div align="center">
-                <h3><strong>星级组织评分表</strong></h3>
+                <h3 th:text="${sheet.name}"></h3>
             </div>
-            <br/>
-            <div class="table-responsive">
+            <div>
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th style="text-align: center">指标大类</th>
-                            <th style="text-align: center">指标小类及评分标准</th>
-                            <th style="text-align: center">自评分</th>
-                            <th style="text-align: center">考评分</th>
+                            <th style="text-align: center">指标小类</th>
+                            <th style="text-align: center" class="col-sm-1">自评分</th>
+                            <th style="text-align: center" class="col-sm-1">考评分</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td width="10%" rowspan="3">
-                                <p align="center">
-                                    会议活动
-                                </p>
-                                <p align="center">
-                                    （满分 25 分）
-                                </p>
-                            </td>
-                            <td width="70%">
-                                <p>
-                                    主委会议每次得 3 分。以工作手册记录和填报的材料为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.conferActivity.score1}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="70%">
-                                <p>
-                                    全体委员会议每次得 4 分。以工作手册记录和填报的材料为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.conferActivity.score2}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="70%">
-                                <p>
-                                    全体社员会议每次得 5 分。以工作手册记录和填报的材料为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.conferActivity.score3}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td rowspan="7">
-                                <p align="center">
-                                    社务工作
-                                </p>
-                                <p align="center">
-                                    （满分 30 分）
-                                </p>
-                            </td>
-                            <td width="70%">
-                                <p>
-                                    委员会有书面的年度工作计划和总结，工作计划切实可行,工作总结全面、实事求是，并以工作计划指导活动，得 6 分，计划和总结少一项扣 3 分。以填报的材料为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.socialWork.score1}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="70%">
-                                <p>
-                                    正副主委和委员有分工，并按职责开展工作，得 3
-                                    分。为有效地开展社务工作和履行职能，建立起若干职能小组负责相关工作（如妇女、老年、青年、参政议政、社会服务等），并有效开展活动，得 5
-                                    分。以填报的材料和日常工作为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.socialWork.score2}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="70%">
-                                <p>
-                                    社员参加省级以上社内培训的每次加 1 分，或获省级以上社内奖励的每项加 1 分，满分 5 分。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.socialWork.score3}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="70%">
-                                <p>
-                                    注重委员会工作的制度化、规范化，建立并不断完善各项工作制度，得 3 分。以日常工作为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.socialWork.score4}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="70%">
-                                <p>
-                                    能将委员会会议或活动形成的文字、图片等材料整理归档，得 3 分。以日常工作为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.socialWork.score5}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="70%">
-                                <p>
-                                    规范填写社市委发放的基层工作手册，并进行年中检查、年末考核，得 3 分。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.socialWork.score6}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="70%">
-                                <p>
-                                    能与党委保持良好沟通，工作得到党委部门支持，与党委关系融洽，得 2 分。以日常工作为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.socialWork.score7}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">
-                                <p align="center">
-                                    参政议政
-                                </p>
-                                <p align="center">
-                                    （满分 20 分）
-                                </p>
-                            </td>
-                            <td width="70%">
-                                <p>
-                                    能围绕社市委和所在地方、单位中心工作召开参政议政方面的会议，得 4 分。开展专题调研活动得 4 分。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.politicActivity.score1}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="70%">
-                                <p>
-                                    能以委员会名义向社市委报送参政议政材料，或向所在地方、单位建言献策，提交合理化建议，每份材料得 3 分。其中上报社市委的参政议政材料，被社市委采用加 2
-                                    分；被社省委、中共市委、市人大、市政府、市政协或市委统战部采用加 4 分；被中共省委、省人大、省政府、省政协或省委统战部采用加 6
-                                    分。同一篇材料不累计加分，按最高加分计分。以填报的材料为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.politicActivity.score2}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">
-                                <p align="center">
-                                    社会服务
-                                </p>
-                                <p align="center">
-                                    （满分 10 分）
-                                </p>
-                            </td>
-                            <td width="70%">
-                                <p>
-                                    能召开会议研究委员会的社会服务工作，得 4 分。以日常工作为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.socialContribution.score1}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="70%">
-                                <p>
-                                    以委员会名义组织开展的社会服务活动，不论人数，每次 3 分。以填报的材料为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.socialContribution.score2}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="10%">
-                                <p align="center">
-                                    宣传报道
-                                </p>
-                                <p align="center">
-                                    （满分 5 分）
-                                </p>
-                            </td>
-                            <td width="70%">
-                                <p>
-                                    以委员会名义撰写的报道，在社内媒体上发表文章，每篇得 2 分；在其他刊物上刊登九三工作文章，每篇得 3
-                                    分。同一篇稿件不累计得分，按最高得分计分。以填报的材料为依据。
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.publicity}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td width="10%">
-                                <p align="center">
-                                    下属支社年度考核结果
-                                </p>
-                                <p align="center">
-                                    （满分 10 分）
-                                </p>
-                            </td>
-                            <td width="70%">
-                                <p>
-                                    （所属支社的年度考核量化平均得分 × 实际参加考核支社数 ÷ 应参加考核支社数）÷ 10
-                                </p>
-                            </td>
-                            <td width="10%">
-                                <input class="form-control input-sm" style="text-align: center" th:disabled="disabled"
-                                       th:value="${score.subAssessment}"/>
-                            </td>
-                            <td width="10%">
-
-                            </td>
-                        </tr>
+                        <div th:remove="tag" th:each="phase, phaseStats : ${sheet.phases}"
+                             th:with="details0Seq=${phase.details[0].seq}">
+                            <tr>
+                                <td style="text-align: center; vertical-align: middle"
+                                    th:rowspan="${phase.details.size()}">
+                                    <p th:text="${phase.name}"></p>
+                                    <p th:text="'(满分 ' + ${phase.maxScore} + ' 分）'"></p>
+                                </td>
+                                <td style="text-align: center; vertical-align: middle">
+                                    <p th:text="${phase.details[0].description}"></p>
+                                    <p th:text="'(每项可得：' + ${phase.details[0].eachScore} + ' 分；最高可得：' + ${phase.details[0].maxScore} + ' 分)'"></p>
+                                </td>
+                                <td style="text-align: center; vertical-align: middle">
+                                    <input class="form-control input-sm" style="text-align: center;" type="number" readonly="readonly"
+                                           th:value="*{sADetails[__${details0Seq}__]}"/>
+                                </td>
+                                <td style="text-align: center; vertical-align: middle">
+                                    <!--<input class="form-control input-sm" type="number" readonly="readonly" th:value="*{aADetails[__${details0Seq}__]}"/>-->
+                                </td>
+                            </tr>
+                            <tr th:each="detail, stats : ${phase.details}" th:if="${!stats.first}"
+                                th:with="detailsSeq=${detail.seq}">
+                                <td style="text-align: center; vertical-align: middle">
+                                    <p th:text="${detail.description}"></p>
+                                    <p th:text="'(每项可得：' + ${detail.eachScore} + ' 分；最高可得：' + ${detail.maxScore} + ' 分)'"></p>
+                                </td>
+                                <td style="text-align: center; vertical-align: middle">
+                                    <input class="form-control input-sm" style="text-align: center;" type="number" readonly="readonly"
+                                           th:value="*{sADetails[__${detailsSeq}__]}"/>
+                                </td>
+                                <td style="text-align: center; vertical-align: middle">
+                                    <!--<input class="form-control input-sm" type="number" readonly="readonly" th:value="*{aADetails[__${detailsSeq}__]}"/>-->
+                                </td>
+                            </tr>
+                        </div>
+                    </tbody>
+                    <tfoot>
                         <tr>
                             <td colspan="4">
                                 <p align="center" class="alert alert-danger">
-                                    <strong>60 分以上合格，70 分及以上三星级，80 分及以上四星级，90 分及以上五星级。</strong>
+                                    <strong th:text="${sheet.description}">60 分以上合格，70 分及以上三星级，80 分及以上四星级，90
+                                        分及以上五星级。</strong>
                                 </p>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="4">
-                                <div align="center">
-                                    <a class="btn btn-primary" th:href="'/score/editor?seq=' + ${score.seq}">返回修改</a>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
+                    </tfoot>
                 </table>
             </div>
         </div>

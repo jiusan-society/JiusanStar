@@ -40,7 +40,7 @@
                             <tbody>
                                 <tr th:each="sP, sPStat : ${sheetPlans}" th:class="${sP.effective ? 'success' : 'danger'}">
                                     <td>
-                                        <p th:text="${sPStat.index + 1}"></p>
+                                        <p th:text="${sPStat.count}"></p>
                                     </td>
                                     <td>
                                         <p th:text="${sP.sheet.name}"></p>

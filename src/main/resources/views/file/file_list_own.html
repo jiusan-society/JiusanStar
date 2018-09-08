@@ -65,7 +65,7 @@
                             <tbody>
                                 <tr th:each="file, stat : ${files}">
                                     <td>
-                                        <p th:text="${stat.index + 1}"></p>
+                                        <p th:text="${stat.count}"></p>
                                     </td>
                                     <td>
                                         <p th:text="${file.name}"></p>

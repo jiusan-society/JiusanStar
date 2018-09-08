@@ -40,7 +40,7 @@
                                 <tbody>
                                     <tr th:each="file, stat : ${map.value}">
                                         <td>
-                                            <p th:text="${stat.index + 1}"></p>
+                                            <p th:text="${stat.count}"></p>
                                         </td>
                                         <td>
                                             <p th:text="${file.name}"></p>

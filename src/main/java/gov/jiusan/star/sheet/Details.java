@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "details")
-class Details implements Serializable {
+public class Details implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

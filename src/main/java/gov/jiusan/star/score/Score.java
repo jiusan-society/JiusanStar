@@ -40,16 +40,16 @@ public class Score implements Serializable {
     private SheetPlan sheetPlan;
 
     /**
-     * 是否生效
+     * 是否完成自评
      */
-    @Column(name = "effective", nullable = false)
-    private boolean effective;
+    @Column(name = "sa_finished", nullable = false)
+    private boolean sAFinished;
 
     /**
-     * 是否完成填写
+     * 是否完成考评
      */
-    @Column(name = "finished", nullable = false)
-    private boolean finished;
+    @Column(name = "aa_finished", nullable = false)
+    private boolean aAFinished;
 
     /**
      * 自评得分详情 sA -> selfAssessment
@@ -80,13 +80,6 @@ public class Score implements Serializable {
      */
     @Column(name = "final_score")
     private Integer finalScore;
-
-    /**
-     * 失效时间
-     */
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "expiration_time")
-    private Calendar expirationTime;
 
     /**
      * 创建时间
@@ -121,20 +114,20 @@ public class Score implements Serializable {
         this.org = org;
     }
 
-    public boolean isEffective() {
-        return effective;
+    public boolean issAFinished() {
+        return sAFinished;
     }
 
-    public void setEffective(boolean effective) {
-        this.effective = effective;
+    public void setsAFinished(boolean sAFinished) {
+        this.sAFinished = sAFinished;
     }
 
-    public boolean isFinished() {
-        return finished;
+    public boolean isaAFinished() {
+        return aAFinished;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
+    public void setaAFinished(boolean aAFinished) {
+        this.aAFinished = aAFinished;
     }
 
     public String getsADetails() {
@@ -175,14 +168,6 @@ public class Score implements Serializable {
 
     public void setFinalScore(Integer finalScore) {
         this.finalScore = finalScore;
-    }
-
-    public Calendar getExpirationTime() {
-        return expirationTime;
-    }
-
-    public void setExpirationTime(Calendar expirationTime) {
-        this.expirationTime = expirationTime;
     }
 
     public Calendar getCreateTime() {

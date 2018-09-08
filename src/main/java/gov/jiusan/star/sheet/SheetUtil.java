@@ -1,5 +1,7 @@
 package gov.jiusan.star.sheet;
 
+import gov.jiusan.star.sheet.model.SheetDTO;
+
 import java.util.stream.Collectors;
 
 /**
@@ -7,45 +9,45 @@ import java.util.stream.Collectors;
  */
 class SheetUtil {
 
-    static gov.jiusan.star.sheet.model.Sheet convert(Sheet entity) {
-        gov.jiusan.star.sheet.model.Sheet model = new gov.jiusan.star.sheet.model.Sheet();
+    static SheetDTO convert(Sheet entity) {
+        SheetDTO model = new SheetDTO();
         model.setSeq(entity.getSeq());
         model.setName(entity.getName());
         model.setDescription(entity.getDescription());
         model.setMaxScore(entity.getMaxScore());
-        model.setPhases(entity.getPhases().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        model.setPhaseDTOs(entity.getPhases().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
         model.setCreateTime(entity.getCreateTime());
         model.setLastUpdateTime(entity.getLastUpdateTime());
         return model;
     }
 
-    static Sheet convert(gov.jiusan.star.sheet.model.Sheet model) {
+    static Sheet convert(SheetDTO model) {
         Sheet entity = new Sheet();
         entity.setName(model.getName());
         entity.setDescription(model.getDescription());
         // 目前均为百分制
         entity.setMaxScore(100);
-        entity.setPhases(model.getPhases().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        entity.setPhases(model.getPhaseDTOs().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
         return entity;
     }
 
-    static Phase convertRatingPhase(gov.jiusan.star.sheet.model.Phase model) {
+    static Phase convertRatingPhase(SheetDTO.PhaseDTO model) {
         Phase phase = new Phase();
         phase.setName(model.getName());
         phase.setMaxScore(model.getMaxScore());
-        phase.setDetails(model.getDetails().stream().map(SheetUtil::convertRatingDetails).collect(Collectors.toList()));
+        phase.setDetails(model.getDetailsDTOs().stream().map(SheetUtil::convertRatingDetails).collect(Collectors.toList()));
         return phase;
     }
 
-    static gov.jiusan.star.sheet.model.Phase convertRatingPhase(Phase phase) {
-        gov.jiusan.star.sheet.model.Phase model = new gov.jiusan.star.sheet.model.Phase();
+    private static SheetDTO.PhaseDTO convertRatingPhase(Phase phase) {
+        SheetDTO.PhaseDTO model = new SheetDTO.PhaseDTO();
         model.setName(phase.getName());
         model.setMaxScore(phase.getMaxScore());
-        model.setDetails(phase.getDetails().stream().map(SheetUtil::convertRatingDetails).collect(Collectors.toList()));
+        model.setDetailsDTOs(phase.getDetails().stream().map(SheetUtil::convertRatingDetails).collect(Collectors.toList()));
         return model;
     }
 
-    static Details convertRatingDetails(gov.jiusan.star.sheet.model.Details model) {
+    private static Details convertRatingDetails(SheetDTO.DetailsDTO model) {
         Details details = new Details();
         details.setDescription(model.getDescription());
         details.setEachScore(model.getEachScore());
@@ -53,8 +55,8 @@ class SheetUtil {
         return details;
     }
 
-    private static gov.jiusan.star.sheet.model.Details convertRatingDetails(Details details) {
-        gov.jiusan.star.sheet.model.Details model = new gov.jiusan.star.sheet.model.Details();
+    private static SheetDTO.DetailsDTO convertRatingDetails(Details details) {
+        SheetDTO.DetailsDTO model = new SheetDTO.DetailsDTO();
         model.setDescription(details.getDescription());
         model.setEachScore(details.getEachScore());
         model.setMaxScore(details.getMaxScore());
