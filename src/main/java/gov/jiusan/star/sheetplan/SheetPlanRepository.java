@@ -1,4 +1,4 @@
-package gov.jiusan.star.sheet_plan;
+package gov.jiusan.star.sheetplan;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package gov.jiusan.star.sheet_plan;
+package gov.jiusan.star.sheetplan;
 
 import gov.jiusan.star.score.Score;
 import gov.jiusan.star.sheet.Sheet;

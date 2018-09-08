@@ -4,8 +4,8 @@ import gov.jiusan.star.org.Org;
 import gov.jiusan.star.score.Score;
 import gov.jiusan.star.score.ScoreService;
 import gov.jiusan.star.sheet.model.SheetDTO;
-import gov.jiusan.star.sheet_plan.SheetPlan;
-import gov.jiusan.star.sheet_plan.SheetPlanService;
+import gov.jiusan.star.sheetplan.SheetPlan;
+import gov.jiusan.star.sheetplan.SheetPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

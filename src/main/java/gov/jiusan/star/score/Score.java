@@ -1,7 +1,7 @@
 package gov.jiusan.star.score;
 
 import gov.jiusan.star.org.Org;
-import gov.jiusan.star.sheet_plan.SheetPlan;
+import gov.jiusan.star.sheetplan.SheetPlan;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

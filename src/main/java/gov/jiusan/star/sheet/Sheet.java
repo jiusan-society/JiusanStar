@@ -1,6 +1,6 @@
 package gov.jiusan.star.sheet;
 
-import gov.jiusan.star.sheet_plan.SheetPlan;
+import gov.jiusan.star.sheetplan.SheetPlan;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

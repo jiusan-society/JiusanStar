@@ -1,4 +1,4 @@
-package gov.jiusan.star.sheet_plan;
+package gov.jiusan.star.sheetplan;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
