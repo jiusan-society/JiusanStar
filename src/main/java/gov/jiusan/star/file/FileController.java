@@ -66,7 +66,7 @@ public class FileController {
             orgFilesMap.put(org, fService.getDirFiles(dir));
         }
         model.addAttribute("orgFilesMap", orgFilesMap);
-        return "file_list_children";
+        return "file/file_list_children";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")

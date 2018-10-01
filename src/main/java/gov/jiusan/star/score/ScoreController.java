@@ -1,5 +1,7 @@
 package gov.jiusan.star.score;
 
+import gov.jiusan.star.org.Org;
+import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.score.model.ScoreDTO;
 import gov.jiusan.star.user.User;
 import gov.jiusan.star.user.UserService;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -27,10 +30,13 @@ public class ScoreController {
 
     private final ScoreService sService;
 
+    private final OrgService oService;
+
     @Autowired
-    public ScoreController(UserService uService, ScoreService sService) {
+    public ScoreController(UserService uService, ScoreService sService, OrgService oService) {
         this.uService = uService;
         this.sService = sService;
+        this.oService = oService;
     }
 
     @GetMapping(path = "list/own")
@@ -41,7 +47,19 @@ public class ScoreController {
             .filter(s -> s.getSheetPlan().isEffective())
             .collect(Collectors.toList());
         model.addAttribute("scores", scores);
-        return "score_list_own";
+        return "score/score_list_own";
+    }
+
+    @GetMapping(path = "list/children")
+    public String findChildrenEffectiveScores(Model model) {
+        String userAccount = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = uService.findUserByUsername(userAccount);
+        // 找到该组织下的子组织
+        List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
+        Map<String, List<Score>> orgScoresMap = subOrgs.stream()
+            .collect(Collectors.toMap(Org::getName, o -> o.getScores().stream().filter(s -> s.getSheetPlan().isEffective()).collect(Collectors.toList())));
+        model.addAttribute("orgScoresMap", orgScoresMap);
+        return "score/score_list_children";
     }
 
     @GetMapping(path = "editor")

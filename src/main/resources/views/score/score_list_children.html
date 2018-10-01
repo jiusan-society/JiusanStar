@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
         <meta charset="UTF-8"/>
-        <title>评分资料管理</title>
+        <title>星级组织评分系统</title>
         <link type="text/css" rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css"
               th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
         <link type="text/css" rel="stylesheet" href="../../static/dist/css/sb-admin-2.css"
@@ -18,10 +18,10 @@
         <div id="wrapper">
             <div th:replace="fragments/navbar_sidebar :: navbar_sidebar"></div>
             <div id="page-wrapper" style="min-height: 808px;">
-                <div th:each="entry : ${orgFilesMap}">
+                <div th:each="entry : ${orgScoresMap}">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header" th:text="${entry.key.name}"></h1>
+                            <h1 class="page-header" th:text="${entry.key}"></h1>
                         </div>
                     </div>
                     <br/>
@@ -31,29 +31,21 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>名称</th>
-                                        <th>大小</th>
-                                        <th>创建时间</th>
+                                        <th>评分表名称</th>
+                                        <th>生效时间</th>
+                                        <th>截止时间</th>
                                         <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="file, stat : ${entry.value}">
+                                    <tr th:each="score, stat : ${entry.value}">
+                                        <td th:text="${stat.count}"></td>
+                                        <td th:text="${score.getSheetPlan().getSheet().getName()}"></td>
+                                        <td th:text="${#dates.format(score.getSheetPlan().getEffectiveTime(), 'yyyy-MM-dd HH:mm')}"></td>
+                                        <td th:text="${#dates.format(score.getSheetPlan().getExpirationTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                         <td>
-                                            <p th:text="${stat.count}"></p>
-                                        </td>
-                                        <td>
-                                            <p th:text="${file.name}"></p>
-                                        </td>
-                                        <td>
-                                            <p th:text="${file.length() / 1024} + ' KB'"></p>
-                                        </td>
-                                        <td>
-                                            <p th:text="${#dates.format(new java.util.Date(file.lastModified()), 'yyyy-MM-dd HH:mm:ss')}"></p>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-sm btn-primary"
-                                               th:href="'/file/download' + '?path=' + ${entry.key.code} + '&amp;name=' + ${file.name}">下载</a>
+                                            <a class="btn btn-sm btn-primary" th:href="'/score/editor?seq=' + ${score.seq}">评分</a>
+                                            <a class="btn btn-sm btn-primary" th:href="'/score?seq=' + ${score.seq}">查看</a>
                                         </td>
                                     </tr>
                                 </tbody>

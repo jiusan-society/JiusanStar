@@ -37,14 +37,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="score, scoreStatus : ${scores}">
-                                    <td th:text="${scoreStatus.count}"></td>
+                                <tr th:each="score, stat : ${scores}">
+                                    <td th:text="${stat.count}"></td>
                                     <td th:text="${score.getSheetPlan().getSheet().getName()}"></td>
                                     <td th:text="${#dates.format(score.getSheetPlan().getEffectiveTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                     <td th:text="${#dates.format(score.getSheetPlan().getExpirationTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                     <td>
                                         <a class="btn btn-sm btn-primary" th:href="'/score/editor?seq=' + ${score.seq}">评分</a>
-                                        <a class="btn btn-sm btn-primary" th:href="'/score/?seq=' + ${score.seq}">查看</a>
+                                        <a class="btn btn-sm btn-primary" th:href="'/score?seq=' + ${score.seq}">查看</a>
                                     </td>
                                 </tr>
                             </tbody>
