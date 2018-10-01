@@ -41,7 +41,7 @@ public class ScoreController {
             .filter(s -> s.getSheetPlan().isEffective())
             .collect(Collectors.toList());
         model.addAttribute("scores", scores);
-        return "score/score_list";
+        return "score_list_own";
     }
 
     @GetMapping(path = "editor")
