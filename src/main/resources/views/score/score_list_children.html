@@ -44,9 +44,20 @@
                                         <td th:text="${#dates.format(score.getSheetPlan().getEffectiveTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                         <td th:text="${#dates.format(score.getSheetPlan().getExpirationTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary" th:href="'/score/editor?seq=' + ${score.seq}">评分</a>
-                                            <a class="btn btn-sm btn-primary" th:href="'/score?seq=' + ${score.seq}">查看</a>
+                                            <button class="btn btn-sm btn-primary" th:disabled="${!score.issAFinished()}" th:onclick="'javascript:rate('+${score.seq}+')'">评分</button>
+                                            <button class="btn btn-sm btn-primary" th:disabled="${!score.issAFinished()}" th:onclick="'javascript:view('+${score.seq}+')'">查看</button>
                                         </td>
+                                        <script>
+                                            function rate(seq) {
+                                                let url = "/score/editor?seq=" + seq;
+                                                window.open(url, "_blank");
+                                            }
+
+                                            function view(seq) {
+                                                let url = "/score?seq=" + seq;
+                                                window.open(url, "_blank");
+                                            }
+                                        </script>
                                     </tr>
                                 </tbody>
                             </table>
