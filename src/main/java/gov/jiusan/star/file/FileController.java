@@ -29,7 +29,6 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Marcus Lin
@@ -56,13 +55,13 @@ public class FileController {
         return "file/file_list_own";
     }
 
-    @PreAuthorize("hasRole('ROLE_L1_ADM')")
-    @GetMapping(path = "list/all")
-    public String getAllFiles(Model model) {
-        File[] dirs = Objects.requireNonNull(new File(rootDir).listFiles());
+    @PreAuthorize("hasAnyRole('ROLE_L1_ADM', 'ROLE_L2_ADM')")
+    @GetMapping(path = "list/children")
+    public String getChildrenFiles(Model model, @LoggedUser CustomUserDetails user) {
+        List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
         Map<Org, List<File>> orgFilesMap = new HashMap<>();
-        for (File dir : dirs) {
-            Org org = oService.findByCode(dir.getName());
+        for (Org org : subOrgs) {
+            String dir = rootDir + org.getCode();
             orgFilesMap.put(org, fService.getDirFiles(dir));
         }
         model.addAttribute("orgFilesMap", orgFilesMap);
