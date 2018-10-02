@@ -13,7 +13,7 @@ public class ScoreDTO implements Serializable {
 
     /**
      * K -> Details' Id
-     * V -> Details' SA ScoreDTO
+     * V -> Details' AA ScoreDTO
      */
     private Map<Long, Integer> aADetails;
 

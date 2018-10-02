@@ -6,12 +6,15 @@ import gov.jiusan.star.score.ScoreService;
 import gov.jiusan.star.sheet.model.SheetDTO;
 import gov.jiusan.star.sheetplan.SheetPlan;
 import gov.jiusan.star.sheetplan.SheetPlanService;
+import gov.jiusan.star.util.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -78,10 +81,17 @@ public class SheetService {
         expirationTime.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR) + 1);
         sheetPlan.setExpirationTime(expirationTime);
         SheetPlan savedSP = sPService.create(sheetPlan);
+        Map<Long, Integer> initScore = new TreeMap<>();
+        List<Details> detailsList = sheet.getPhases().stream().flatMap(p -> p.getDetails().stream()).collect(Collectors.toList());
+        for (Details details : detailsList) {
+            initScore.put(details.getSeq(), 0);
+        }
         for (Org o : orgs) {
             Score score = new Score();
             score.setOrg(o);
             score.setSheetPlan(savedSP);
+            score.setsADetails(JacksonUtil.toString(initScore).get());
+            score.setaADetails(JacksonUtil.toString(initScore).get());
             sService.create(score);
         }
         sheet.getSheetPlans().add(savedSP);

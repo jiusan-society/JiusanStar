@@ -161,7 +161,7 @@ public class SheetController {
             return "error";
         }
         sService.dispatchSheet(sheet.get(), orgs);
-        return "redirect:/sheet_plan/list";
+        return "redirect:/sheetplan/list";
     }
 
     @GetMapping(path = "/delete")

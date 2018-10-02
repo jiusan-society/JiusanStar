@@ -44,7 +44,7 @@
                                         <td th:text="${#dates.format(score.getSheetPlan().getEffectiveTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                         <td th:text="${#dates.format(score.getSheetPlan().getExpirationTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary" th:disabled="${!score.issAFinished()}" th:onclick="'javascript:rate('+${score.seq}+')'">评分</button>
+                                            <button class="btn btn-sm btn-primary" th:disabled="${!score.issAFinished()}" th:onclick="'javascript:rate('+${score.seq}+')'">考评</button>
                                             <button class="btn btn-sm btn-primary" th:disabled="${!score.issAFinished()}" th:onclick="'javascript:view('+${score.seq}+')'">查看</button>
                                         </td>
                                         <script>
