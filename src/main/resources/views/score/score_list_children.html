@@ -21,7 +21,7 @@
                 <div th:each="entry : ${orgScoresMap}">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header" th:text="${entry.key}"></h1>
+                            <h1 class="page-header" th:text="${entry.key.getName()}"></h1>
                         </div>
                     </div>
                     <br/>

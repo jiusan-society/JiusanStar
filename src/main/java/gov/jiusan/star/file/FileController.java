@@ -3,6 +3,8 @@ package gov.jiusan.star.file;
 import gov.jiusan.star.annotation.LoggedUser;
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
+import gov.jiusan.star.org.OrgUtil;
+import gov.jiusan.star.org.model.OrgDTO;
 import gov.jiusan.star.user.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,9 +28,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Marcus Lin
@@ -59,10 +61,10 @@ public class FileController {
     @GetMapping(path = "list/children")
     public String getChildrenFiles(Model model, @LoggedUser CustomUserDetails user) {
         List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
-        Map<Org, List<File>> orgFilesMap = new HashMap<>();
+        Map<OrgDTO, List<File>> orgFilesMap = new TreeMap<>();
         for (Org org : subOrgs) {
             String dir = rootDir + org.getCode();
-            orgFilesMap.put(org, fService.getDirFiles(dir));
+            orgFilesMap.put(OrgUtil.convert(org), fService.getDirFiles(dir));
         }
         model.addAttribute("orgFilesMap", orgFilesMap);
         return "file/file_list_children";

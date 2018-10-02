@@ -2,6 +2,8 @@ package gov.jiusan.star.score;
 
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
+import gov.jiusan.star.org.OrgUtil;
+import gov.jiusan.star.org.model.OrgDTO;
 import gov.jiusan.star.score.model.ScoreDTO;
 import gov.jiusan.star.user.User;
 import gov.jiusan.star.user.UserService;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -56,8 +59,10 @@ public class ScoreController {
         User user = uService.findUserByUsername(userAccount);
         // 找到该组织下的子组织
         List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
-        Map<String, List<Score>> orgScoresMap = subOrgs.stream()
-            .collect(Collectors.toMap(Org::getName, o -> o.getScores().stream().filter(s -> s.getSheetPlan().isEffective()).collect(Collectors.toList())));
+        Map<OrgDTO, List<Score>> orgScoresMap = new TreeMap<>();
+        for (Org o : subOrgs) {
+            orgScoresMap.put(OrgUtil.convert(o), o.getScores().stream().filter(s -> s.getSheetPlan().isEffective()).collect(Collectors.toList()));
+        }
         model.addAttribute("orgScoresMap", orgScoresMap);
         return "score/score_list_children";
     }
