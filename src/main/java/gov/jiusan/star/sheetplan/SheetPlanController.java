@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Marcus Lin
  */
 @Controller
-@RequestMapping(path = "sheet_plan")
+@RequestMapping(path = "sheetplan")
 @PreAuthorize("hasRole('ROLE_L1_ADM')")
 public class SheetPlanController {
 
@@ -24,7 +24,7 @@ public class SheetPlanController {
     @RequestMapping(path = "list")
     public String findAllSheetPlans(Model model) {
         model.addAttribute("sheetPlans", service.findAll());
-        return "sheet_plan/sheet_plan_list";
+        return "sheetplan/sheet_plan_list";
     }
 
 }
