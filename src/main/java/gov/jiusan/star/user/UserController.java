@@ -1,6 +1,5 @@
 package gov.jiusan.star.user;
 
-import gov.jiusan.star.annotation.LoggedUser;
 import gov.jiusan.star.user.model.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package gov.jiusan.star.annotation;
+package gov.jiusan.star.user;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 

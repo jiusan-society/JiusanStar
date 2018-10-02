@@ -1,6 +1,6 @@
 package gov.jiusan.star.file;
 
-import gov.jiusan.star.annotation.LoggedUser;
+import gov.jiusan.star.user.LoggedUser;
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.org.OrgUtil;
