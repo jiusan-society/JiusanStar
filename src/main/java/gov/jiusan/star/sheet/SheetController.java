@@ -149,7 +149,7 @@ public class SheetController {
         return "sheet/sheet_list";
     }
 
-    @GetMapping(path = "/dispatch")
+    @GetMapping(path = "dispatch")
     public String dispatchSheet(@RequestParam("seq") Long seq) {
         Optional<Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
@@ -164,7 +164,7 @@ public class SheetController {
         return "redirect:/sheetplan/list";
     }
 
-    @GetMapping(path = "/delete")
+    @GetMapping(path = "delete")
     public String deleteSheet(@RequestParam("seq") Long seq) {
         Optional<Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
