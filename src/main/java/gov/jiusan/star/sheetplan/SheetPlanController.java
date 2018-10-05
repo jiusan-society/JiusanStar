@@ -33,7 +33,7 @@ public class SheetPlanController {
         List<SheetPlan> plans = service.findAll();
         // 用年份来归类，且依照年份从大到小排序
         Map<Integer, List<SheetPlan>> plansOfYear = new TreeMap<>(Collections.reverseOrder());
-        plans.forEach(plan -> plansOfYear.computeIfAbsent(plan.getCreateTime().get(Calendar.YEAR), k -> new ArrayList<>()).add(plan));
+        plans.forEach(plan -> plansOfYear.computeIfAbsent(plan.getEffectiveTime().get(Calendar.YEAR), k -> new ArrayList<>()).add(plan));
         model.addAttribute("plansOfYear", plansOfYear);
         return "sheetplan/sheet_plan_list";
     }
