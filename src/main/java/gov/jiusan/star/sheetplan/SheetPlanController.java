@@ -6,6 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * @author Marcus Lin
  */
@@ -22,8 +29,12 @@ public class SheetPlanController {
     }
 
     @RequestMapping(path = "list")
-    public String findAllSheetPlans(Model model) {
-        model.addAttribute("sheetPlans", service.findAll());
+    public String findAll(Model model) {
+        List<SheetPlan> plans = service.findAll();
+        // 用年份来归类，且依照年份从大到小排序
+        Map<Integer, List<SheetPlan>> plansOfYear = new TreeMap<>(Collections.reverseOrder());
+        plans.forEach(plan -> plansOfYear.computeIfAbsent(plan.getCreateTime().get(Calendar.YEAR), k -> new ArrayList<>()).add(plan));
+        model.addAttribute("plansOfYear", plansOfYear);
         return "sheetplan/sheet_plan_list";
     }
 
