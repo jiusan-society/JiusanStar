@@ -5,6 +5,7 @@ import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.org.OrgUtil;
 import gov.jiusan.star.org.model.OrgDTO;
 import gov.jiusan.star.score.model.ScoreDTO;
+import gov.jiusan.star.sheet.SheetUtil;
 import gov.jiusan.star.user.User;
 import gov.jiusan.star.user.UserService;
 import gov.jiusan.star.util.JacksonUtil;
@@ -59,11 +60,11 @@ public class ScoreController {
         User user = uService.findUserByUsername(userAccount);
         // 找到该组织下的子组织
         List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
-        Map<OrgDTO, List<Score>> orgScoresMap = new TreeMap<>();
+        Map<OrgDTO, List<Score>> scoresOfOrg = new TreeMap<>();
         for (Org o : subOrgs) {
-            orgScoresMap.put(OrgUtil.convert(o), o.getScores().stream().filter(s -> s.getSheetPlan().isEffective()).collect(Collectors.toList()));
+            scoresOfOrg.put(OrgUtil.convert(o), o.getScores().stream().filter(s -> s.getSheetPlan().isEffective()).collect(Collectors.toList()));
         }
-        model.addAttribute("orgScoresMap", orgScoresMap);
+        model.addAttribute("scoresOfOrg", scoresOfOrg);
         return "score/score_list_children";
     }
 
@@ -78,7 +79,7 @@ public class ScoreController {
     @GetMapping
     public String viewScore(@RequestParam("seq") Long seq, Model model) {
         Score score = sService.find(seq);
-        model.addAttribute("sheet", score.getSheetPlan().getSheet());
+        model.addAttribute("sheet", SheetUtil.convert(score.getSheetPlan().getSheet()));
         model.addAttribute("score", ScoreUtil.convert(score));
         return "score/score_viewer";
     }

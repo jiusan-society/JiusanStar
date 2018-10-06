@@ -43,7 +43,7 @@ public class SheetPlan implements Serializable {
      */
     @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
-    private Status status;
+    private SheetPlanStatus status;
 
     /**
      * 完成率
@@ -152,11 +152,11 @@ public class SheetPlan implements Serializable {
         this.effective = effective;
     }
 
-    public Status getStatus() {
+    public SheetPlanStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(SheetPlanStatus status) {
         this.status = status;
     }
 
@@ -184,18 +184,4 @@ public class SheetPlan implements Serializable {
         this.scores = scores;
     }
 
-    public enum Status {
-        /**
-         * 正常可用状态
-         */
-        NORMAL,
-        /**
-         * 超过截止时间后变为逾期失效状态
-         */
-        EXPIRED,
-        /**
-         * 同一年下仅可有一张可用的 SheetPlan，其他需变为不可用状态
-         */
-        INVALID
-    }
 }

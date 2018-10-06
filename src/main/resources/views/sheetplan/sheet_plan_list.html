@@ -45,7 +45,7 @@
                                             <p th:text="${sPStat.count}"></p>
                                         </td>
                                         <td>
-                                            <p th:text="${sP.sheet.name}"></p>
+                                            <p th:text="${sP.sheetName}"></p>
                                         </td>
                                         <td>
                                             <i th:if="${sP.effective}" class="fa fa-check"></i>
@@ -58,6 +58,7 @@
                                             <p th:text="${#dates.format(sP.expirationTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
                                         </td>
                                         <td>
+                                            <p th:text="${sP.finishedScoreNum} + ' / ' + ${sP.allScoreNum}"></p>
                                         </td>
                                         <td>
                                             <p th:if="${sP.status != null and sP.status.name() == 'INVALID'}">

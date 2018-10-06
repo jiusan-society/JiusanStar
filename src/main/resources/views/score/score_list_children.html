@@ -18,7 +18,7 @@
         <div id="wrapper">
             <div th:replace="fragments/navbar_sidebar :: navbar_sidebar"></div>
             <div id="page-wrapper" style="min-height: 808px;">
-                <div th:each="entry : ${orgScoresMap}">
+                <div th:each="entry : ${scoresOfOrg}">
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header" th:text="${entry.key.getName()}"></h1>

@@ -1,5 +1,6 @@
 package gov.jiusan.star.sheetplan;
 
+import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * @author Marcus Lin
@@ -30,9 +32,9 @@ public class SheetPlanController {
 
     @RequestMapping(path = "list")
     public String findAll(Model model) {
-        List<SheetPlan> plans = service.findAll();
+        List<SheetPlanDTO> plans = service.findAll().stream().map(SheetPlanUtil::convert).collect(Collectors.toList());
         // 用年份来归类，且依照年份从大到小排序
-        Map<Integer, List<SheetPlan>> plansOfYear = new TreeMap<>(Collections.reverseOrder());
+        Map<Integer, List<SheetPlanDTO>> plansOfYear = new TreeMap<>(Collections.reverseOrder());
         plans.forEach(plan -> plansOfYear.computeIfAbsent(plan.getEffectiveTime().get(Calendar.YEAR), k -> new ArrayList<>()).add(plan));
         model.addAttribute("plansOfYear", plansOfYear);
         return "sheetplan/sheet_plan_list";

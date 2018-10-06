@@ -87,9 +87,21 @@ public class SheetDTO implements Serializable {
 
     public static class PhaseDTO implements Serializable {
 
+        private Long seq;
         private String name;
         private Integer maxScore;
         private List<DetailsDTO> detailsDTOs;
+
+        public PhaseDTO() {
+        }
+
+        public Long getSeq() {
+            return seq;
+        }
+
+        public void setSeq(Long seq) {
+            this.seq = seq;
+        }
 
         public String getName() {
             return name;
@@ -118,9 +130,21 @@ public class SheetDTO implements Serializable {
 
     public static class DetailsDTO implements Serializable {
 
+        private Long seq;
         private String description;
         private Integer eachScore;
         private Integer maxScore;
+
+        public DetailsDTO() {
+        }
+
+        public Long getSeq() {
+            return seq;
+        }
+
+        public void setSeq(Long seq) {
+            this.seq = seq;
+        }
 
         public String getDescription() {
             return description;

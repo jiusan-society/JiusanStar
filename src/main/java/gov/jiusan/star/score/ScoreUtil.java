@@ -22,4 +22,8 @@ public class ScoreUtil {
         }
         return dto;
     }
+
+    public static boolean isFinished(Score score) {
+        return score.issAFinished() && score.isaAFinished();
+    }
 }

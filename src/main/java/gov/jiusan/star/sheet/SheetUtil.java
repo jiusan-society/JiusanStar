@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 /**
  * @author Marcus Lin
  */
-class SheetUtil {
+public class SheetUtil {
 
-    static SheetDTO convert(Sheet entity) {
+    public static SheetDTO convert(Sheet entity) {
         SheetDTO model = new SheetDTO();
         model.setSeq(entity.getSeq());
         model.setName(entity.getName());
@@ -41,6 +41,7 @@ class SheetUtil {
 
     private static SheetDTO.PhaseDTO convertRatingPhase(Phase phase) {
         SheetDTO.PhaseDTO model = new SheetDTO.PhaseDTO();
+        model.setSeq(phase.getSeq());
         model.setName(phase.getName());
         model.setMaxScore(phase.getMaxScore());
         model.setDetailsDTOs(phase.getDetails().stream().map(SheetUtil::convertRatingDetails).collect(Collectors.toList()));
@@ -57,6 +58,7 @@ class SheetUtil {
 
     private static SheetDTO.DetailsDTO convertRatingDetails(Details details) {
         SheetDTO.DetailsDTO model = new SheetDTO.DetailsDTO();
+        model.setSeq(details.getSeq());
         model.setDescription(details.getDescription());
         model.setEachScore(details.getEachScore());
         model.setMaxScore(details.getMaxScore());
