@@ -70,11 +70,33 @@
                         </div>
                     </tbody>
                     <tfoot>
-                        <tr>
+                        <tr class="alert alert-danger">
                             <td colspan="4">
-                                <p align="center" class="alert alert-danger">
-                                    <strong th:text="${sheet.description}">60 分以上合格，70 分及以上三星级，80 分及以上四星级，90
-                                        分及以上五星级。</strong>
+                                <p align="center">
+                                    <strong th:text="${sheet.description}"></strong>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr class="alert alert-warning">
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <p align="center">
+                                    <strong th:text="*{sATotalScore} ? '总分：' + *{sATotalScore} : '尚未完成'"></strong>
+                                </p>
+                            </td>
+                            <td>
+                                <p align="center">
+                                    <strong th:text="*{aATotalScore} ? '总分：' + *{aATotalScore} : '尚未完成'"></strong>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr class="alert alert-warning">
+                            <td></td>
+                            <td></td>
+                            <td colspan="2">
+                                <p align="center">
+                                    <strong th:text="*{finalScore} ? '最终得分：' + *{finalScore} : '尚未完成'"></strong>
                                 </p>
                             </td>
                         </tr>

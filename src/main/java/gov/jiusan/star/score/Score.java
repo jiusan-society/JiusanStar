@@ -79,7 +79,7 @@ public class Score implements Serializable {
      * 最终得分
      */
     @Column(name = "final_score")
-    private Integer finalScore;
+    private Double finalScore;
 
     /**
      * 创建时间
@@ -162,11 +162,11 @@ public class Score implements Serializable {
         this.aATotalScore = aATotalScore;
     }
 
-    public Integer getFinalScore() {
+    public Double getFinalScore() {
         return finalScore;
     }
 
-    public void setFinalScore(Integer finalScore) {
+    public void setFinalScore(Double finalScore) {
         this.finalScore = finalScore;
     }
 

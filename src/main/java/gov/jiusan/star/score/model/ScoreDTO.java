@@ -17,6 +17,12 @@ public class ScoreDTO implements Serializable {
      */
     private Map<Long, Integer> aADetails;
 
+    private Integer sATotalScore;
+
+    private Integer aATotalScore;
+
+    private Double finalScore;
+
     public ScoreDTO() {
     }
 
@@ -34,5 +40,29 @@ public class ScoreDTO implements Serializable {
 
     public void setaADetails(Map<Long, Integer> aADetails) {
         this.aADetails = aADetails;
+    }
+
+    public Integer getsATotalScore() {
+        return sATotalScore;
+    }
+
+    public void setsATotalScore(Integer sATotalScore) {
+        this.sATotalScore = sATotalScore;
+    }
+
+    public Integer getaATotalScore() {
+        return aATotalScore;
+    }
+
+    public void setaATotalScore(Integer aATotalScore) {
+        this.aATotalScore = aATotalScore;
+    }
+
+    public Double getFinalScore() {
+        return finalScore;
+    }
+
+    public void setFinalScore(Double finalScore) {
+        this.finalScore = finalScore;
     }
 }
