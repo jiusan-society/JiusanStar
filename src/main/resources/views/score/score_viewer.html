@@ -44,7 +44,8 @@
                                     <p th:text="'(每项可得：' + ${phase.detailsDTOs[0].eachScore} + ' 分；最高可得：' + ${phase.detailsDTOs[0].maxScore} + ' 分)'"></p>
                                 </td>
                                 <td style="text-align: center; vertical-align: middle">
-                                    <input class="form-control input-sm" style="text-align: center;" type="number" readonly="readonly"
+                                    <input class="form-control input-sm" style="text-align: center;" type="number"
+                                           readonly="readonly"
                                            th:value="*{sADetails[__${details0Seq}__]}"/>
                                 </td>
                                 <td style="text-align: center; vertical-align: middle">
@@ -58,7 +59,8 @@
                                     <p th:text="'(每项可得：' + ${detail.eachScore} + ' 分；最高可得：' + ${detail.maxScore} + ' 分)'"></p>
                                 </td>
                                 <td style="text-align: center; vertical-align: middle">
-                                    <input class="form-control input-sm" style="text-align: center;" type="number" readonly="readonly"
+                                    <input class="form-control input-sm" style="text-align: center;" type="number"
+                                           readonly="readonly"
                                            th:value="*{sADetails[__${detailsSeq}__]}"/>
                                 </td>
                                 <td style="text-align: center; vertical-align: middle">
