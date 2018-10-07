@@ -10,6 +10,7 @@ import gov.jiusan.star.user.User;
 import gov.jiusan.star.user.UserService;
 import gov.jiusan.star.util.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,12 +69,22 @@ public class ScoreController {
         return "score/score_list_children";
     }
 
-    @GetMapping(path = "editor")
-    public String editScore(@RequestParam("seq") Long seq, Model model) {
+    @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
+    @GetMapping(path = "editor/sa")
+    public String editSAScore(@RequestParam("seq") Long seq, Model model) {
         Score score = sService.find(seq);
-        model.addAttribute("sheet", score.getSheetPlan().getSheet());
+        model.addAttribute("sheet", SheetUtil.convert(score.getSheetPlan().getSheet()));
         model.addAttribute("score", ScoreUtil.convert(score));
-        return "score/score_editor";
+        return "score/score_editor_sa";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_L1_ADM', 'ROLE_L2_ADM')")
+    @GetMapping(path = "editor/aa")
+    public String editAAScore(@RequestParam("seq") Long seq, Model model) {
+        Score score = sService.find(seq);
+        model.addAttribute("sheet", SheetUtil.convert(score.getSheetPlan().getSheet()));
+        model.addAttribute("score", ScoreUtil.convert(score));
+        return "score/score_editor_aa";
     }
 
     @GetMapping
@@ -84,14 +95,28 @@ public class ScoreController {
         return "score/score_viewer";
     }
 
-    @PostMapping(path = "update")
-    public String updateScore(@RequestParam("seq") Long seq, ScoreDTO scoreDTO) {
+    @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
+    @PostMapping(path = "update/sa")
+    public String updateSAScore(@RequestParam("seq") Long seq, ScoreDTO scoreDTO) {
         int sATotalScore = scoreDTO.getsADetails().values().stream().mapToInt(score -> score).sum();
         String sADetailsString = JacksonUtil.toString(scoreDTO.getsADetails()).get();
         Score score = sService.find(seq);
         score.setsATotalScore(sATotalScore);
         score.setsADetails(sADetailsString);
         score.setsAFinished(true);
+        sService.update(score);
+        return "redirect:/score?seq=" + seq;
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_L1_ADM', 'ROLE_L2_ADM')")
+    @PostMapping(path = "update/aa")
+    public String updateAAScore(@RequestParam("seq") Long seq, ScoreDTO scoreDTO) {
+        int aATotalScore = scoreDTO.getaADetails().values().stream().mapToInt(score -> score).sum();
+        String aADetailsString = JacksonUtil.toString(scoreDTO.getaADetails()).get();
+        Score score = sService.find(seq);
+        score.setaATotalScore(aATotalScore);
+        score.setaADetails(aADetailsString);
+        score.setaAFinished(true);
         sService.update(score);
         return "redirect:/score?seq=" + seq;
     }

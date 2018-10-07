@@ -43,8 +43,8 @@
                                     <td th:text="${#dates.format(score.getSheetPlan().getEffectiveTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                     <td th:text="${#dates.format(score.getSheetPlan().getExpirationTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                     <td>
-                                        <a class="btn btn-sm btn-primary" th:href="'/score/editor?seq=' + ${score.seq}">自评</a>
-                                        <a class="btn btn-sm btn-primary" th:href="'/score?seq=' + ${score.seq}">查看</a>
+                                        <a class="btn btn-sm btn-primary" th:href="@{/score/editor/sa(seq=${score.seq})}">自评</a>
+                                        <a class="btn btn-sm btn-primary" th:href="@{/score(seq=${score.seq})}">查看</a>
                                     </td>
                                 </tr>
                             </tbody>

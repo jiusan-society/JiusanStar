@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>星级组织评定系统</title>
+        <link type="text/css" rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css"
+              th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
+        <link type="text/css" rel="stylesheet" href="../../static/dist/css/sb-admin-2.css"
+              th:href="@{/dist/css/sb-admin-2.css}"/>
+        <link href="../../static/fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"
+              th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}"/>
+        <script type="text/javascript" src="../../static/vendor/jquery/jquery-3.2.1.min.js"
+                th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
+        <script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.min.js"
+                th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" src="../../static/vendor/bootbox/bootbox.min.js"
+                th:src="@{/vendor/bootbox/bootbox.min.js}"></script>
+    </head>
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+        <div class="container">
+            <form th:action="'/score/update/sa?seq='+ ${#httpServletRequest.getParameter('seq')}" method="post"
+                  th:object="${score}">
+                <div align="center">
+                    <h3 th:text="${sheet.name}"></h3>
+                </div>
+                <div>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center">指标大类</th>
+                                <th style="text-align: center">指标小类</th>
+                                <th style="text-align: center" class="col-sm-1">自评分</th>
+                                <th style="text-align: center" class="col-sm-1">考评分</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <div th:remove="tag" th:each="phase, phaseStats : ${sheet.phaseDTOs}"
+                                 th:with="details0Seq=${phase.detailsDTOs[0].seq}">
+                                <tr>
+                                    <td style="text-align: center; vertical-align: middle"
+                                        th:rowspan="${phase.detailsDTOs.size()}">
+                                        <p th:text="${phase.name}"></p>
+                                        <p th:text="'(满分 ' + ${phase.maxScore} + ' 分）'"></p>
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle">
+                                        <p th:text="${phase.detailsDTOs[0].description}"></p>
+                                        <p th:text="'(每项可得：' + ${phase.detailsDTOs[0].eachScore} + ' 分；最高可得：' + ${phase.detailsDTOs[0].maxScore} + ' 分)'"></p>
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle">
+                                        <input class="form-control input-sm" type="number" required="required"
+                                               th:field="*{sADetails[__${details0Seq}__]}"/>
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle">
+                                        <input class="form-control input-sm" type="number" readonly="readonly"
+                                               th:value="*{aADetails[__${details0Seq}__]}"
+                                               th:field="*{aADetails[__${details0Seq}__]}"/>
+                                    </td>
+                                </tr>
+                                <tr th:each="detail, stats : ${phase.detailsDTOs}" th:if="${!stats.first}"
+                                    th:with="detailsSeq=${detail.seq}">
+                                    <td style="text-align: center; vertical-align: middle">
+                                        <p th:text="${detail.description}"></p>
+                                        <p th:text="'(每项可得：' + ${detail.eachScore} + ' 分；最高可得：' + ${detail.maxScore} + ' 分)'"></p>
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle">
+                                        <input class="form-control input-sm" type="number" required="required"
+                                               th:field="*{sADetails[__${detailsSeq}__]}"/>
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle">
+                                        <input class="form-control input-sm" type="number" readonly="readonly"
+                                               th:value="*{aADetails[__${detailsSeq}__]}"
+                                               th:field="*{aADetails[__${detailsSeq}__]}"/>
+                                    </td>
+                                </tr>
+                            </div>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <p align="center" class="alert alert-danger">
+                                        <strong th:text="${sheet.description}"></strong>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="text-center">
+                                        <input type="submit" class="btn btn-primary" th:value="提交"/>
+                                        <input type="button" class="btn btn-danger" th:value="退出"
+                                               onclick="confirmExit()"/>
+                                    </div>
+                                    <script>
+                                        function confirmExit() {
+                                            bootbox.confirm({
+                                                title: "确认退出？",
+                                                message: "退出将不保存此次更改的数据",
+                                                buttons: {
+                                                    cancel: {
+                                                        label: '<i class="fa fa-times"></i> 取消'
+                                                    },
+                                                    confirm: {
+                                                        label: '<i class="fa fa-check"></i> 确定'
+                                                    }
+                                                },
+                                                callback: function (result) {
+                                                    if (result) {
+                                                        window.location.replace("/index");
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    </script>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
