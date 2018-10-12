@@ -17,8 +17,16 @@ apply plugin: 'org.springframework.boot'
 
 group = 'gov.jiusan'
 version = '1.0'
-sourceCompatibility = 11
-targetCompatibility = 11
+
+compileJava {
+    sourceCompatibility = 11
+    targetCompatibility = 11
+}
+
+compileTestJava {
+    sourceCompatibility = 11
+    targetCompatibility = 11
+}
 
 repositories {
     mavenCentral()
