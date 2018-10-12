@@ -8,7 +8,7 @@ import gov.jiusan.star.org.model.OrgDTO;
 public class OrgUtil {
 
     public static OrgDTO convert(Org org) {
-        var dto = new OrgDTO();
+        OrgDTO dto = new OrgDTO();
         dto.setCode(org.getCode());
         dto.setName(org.getName());
         return dto;

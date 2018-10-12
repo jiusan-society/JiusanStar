@@ -22,20 +22,20 @@ public class SheetPlanService {
     }
 
     public SheetPlan create(SheetPlan sheetPlan) {
-        var now = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
         sheetPlan.setCreateTime(now);
         sheetPlan.setLastUpdateTime(now);
         return repository.save(sheetPlan);
     }
 
     public List<SheetPlan> findAll() {
-        var sheetPlans = repository.findAll();
+        List<SheetPlan> sheetPlans = repository.findAll();
         sheetPlans.sort(Comparator.comparing(SheetPlan::getCreateTime).reversed());
         return sheetPlans;
     }
 
     public List<SheetPlan> findByCurrentYear() {
-        var now = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
         return repository.findAll().stream()
             .filter(p -> p.getCreateTime().get(Calendar.YEAR) == now.get(Calendar.YEAR))
             .sorted(Comparator.comparing(SheetPlan::getCreateTime).reversed())

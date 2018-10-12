@@ -1,10 +1,11 @@
 package gov.jiusan.star.file;
 
+import gov.jiusan.star.user.LoggedUser;
+import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.org.OrgUtil;
 import gov.jiusan.star.org.model.OrgDTO;
 import gov.jiusan.star.user.CustomUserDetails;
-import gov.jiusan.star.user.LoggedUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -28,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -50,7 +52,7 @@ public class FileController {
 
     @GetMapping(path = "list/own")
     public String getOwnFiles(Model model, @LoggedUser CustomUserDetails user) {
-        var dir = rootDir + user.getOrg().getCode();
+        String dir = rootDir + user.getOrg().getCode();
         model.addAttribute("files", fService.getDirFiles(dir));
         return "file/file_list_own";
     }
@@ -58,9 +60,9 @@ public class FileController {
     @PreAuthorize("hasAnyRole('ROLE_L1_ADM', 'ROLE_L2_ADM')")
     @GetMapping(path = "list/children")
     public String getChildrenFiles(Model model, @LoggedUser CustomUserDetails user) {
-        var subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
-        var orgFilesMap = new TreeMap<OrgDTO, List<File>>();
-        for (var org : subOrgs) {
+        List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
+        Map<OrgDTO, List<File>> orgFilesMap = new TreeMap<>();
+        for (Org org : subOrgs) {
             String dir = rootDir + org.getCode();
             orgFilesMap.put(OrgUtil.convert(org), fService.getDirFiles(dir));
         }
@@ -71,8 +73,8 @@ public class FileController {
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @GetMapping(path = "delete")
     public String deleteFile(@RequestParam("name") String name, @LoggedUser CustomUserDetails user) {
-        var position = rootDir + user.getOrg().getCode();
-        var file = new File(position + "/" + name);
+        String position = rootDir + user.getOrg().getCode();
+        File file = new File(position + "/" + name);
         if (!file.exists()) {
             return "error";
         }
@@ -81,11 +83,11 @@ public class FileController {
 
     @GetMapping(path = "download")
     public ResponseEntity<Resource> downloadFile(@RequestParam("path") String path, @RequestParam("name") String name) throws MalformedURLException, UnsupportedEncodingException {
-        var file = new File(rootDir + path + "/" + name);
+        File file = new File(rootDir + path + "/" + name);
         if (!file.exists()) {
             return ResponseEntity.notFound().build();
         }
-        var resource = new UrlResource(file.toURI());
+        Resource resource = new UrlResource(file.toURI());
         return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + URLEncoder.encode(resource.getFilename(), "utf-8") + "\"")
             .body(resource);
@@ -94,9 +96,9 @@ public class FileController {
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @PostMapping(path = "upload")
     public String uploadDocument(@RequestParam("file") MultipartFile file, @LoggedUser CustomUserDetails user) {
-        var position = rootDir + user.getOrg().getCode();
-        var f = new File(position + "/" + file.getOriginalFilename());
-        try (var fos = new FileOutputStream(f); var bis = new BufferedInputStream(file.getInputStream())) {
+        String position = rootDir + user.getOrg().getCode();
+        File f = new File(position + "/" + file.getOriginalFilename());
+        try (FileOutputStream fos = new FileOutputStream(f); BufferedInputStream bis = new BufferedInputStream(file.getInputStream())) {
             byte[] span = new byte[256];
             for (int len = 0; len != -1; len = bis.read(span)) {
                 fos.write(span, 0, len);

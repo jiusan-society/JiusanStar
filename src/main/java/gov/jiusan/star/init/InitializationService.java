@@ -9,6 +9,7 @@ import gov.jiusan.star.user.UserService;
 import gov.jiusan.star.util.ExcelUtil;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class InitializationService {
     }
 
     private static Org convertOrg(gov.jiusan.star.init.model.Org org) {
-        var o = new Org();
+        Org o = new Org();
         o.setName(org.getName());
         o.setCode(org.getCode());
         o.setParentCode(org.getParentCode());
@@ -55,7 +56,7 @@ public class InitializationService {
     }
 
     private static User convertUser(gov.jiusan.star.init.model.Org org) {
-        var u = new User();
+        User u = new User();
         u.setNickname(org.getAdminUserName());
         u.setAccount(org.getAdminUserAccount());
         u.setPassword(new BCryptPasswordEncoder().encode(org.getAdminUserPassword()));
@@ -73,8 +74,8 @@ public class InitializationService {
         } catch (IOException | InvalidFormatException e) {
             e.printStackTrace();
         }
-        var sheet = wb.getSheetAt(DATA_SHEET_INDEX);
-        var orgs = new ArrayList<gov.jiusan.star.init.model.Org>();
+        Sheet sheet = wb.getSheetAt(DATA_SHEET_INDEX);
+        List<gov.jiusan.star.init.model.Org> orgs = new ArrayList<>();
         for (int i = DATA_START_INDEX; !ExcelUtil.isRowNullOrEmpty(sheet.getRow(i)); i++) {
             Row r = sheet.getRow(i);
             gov.jiusan.star.init.model.Org o = new gov.jiusan.star.init.model.Org();
@@ -98,7 +99,7 @@ public class InitializationService {
     }
 
     private void saveToDB(List<gov.jiusan.star.init.model.Org> orgs) {
-        var users = initUsers(orgs);
+        List<User> users = initUsers(orgs);
         initRoles(orgs, users);
         initOrgs(orgs, users);
     }
@@ -109,48 +110,48 @@ public class InitializationService {
 
     private void initRoles(List<gov.jiusan.star.init.model.Org> orgs, List<User> users) {
         // Level1
-        var l1Admin = new Role();
+        Role l1Admin = new Role();
         l1Admin.setName("ROLE_L1_ADM");
-        var l1AdminAccounts = orgs.stream().filter(o -> LEVEL_1_ORG.equals(parseCode(o.getCode())))
+        List<String> l1AdminAccounts = orgs.stream().filter(o -> LEVEL_1_ORG.equals(parseCode(o.getCode())))
             .map(gov.jiusan.star.init.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
-        var l1AdminUsers = users.stream()
+        List<User> l1AdminUsers = users.stream()
             .filter(u -> l1AdminAccounts.contains(u.getAccount()))
             .collect(Collectors.toList());
         l1Admin.setUsers(l1AdminUsers);
         l1Admin.getUsers().forEach(u -> u.setRole(l1Admin));
         roleService.createRole(l1Admin);
-        var l1Normal = new Role();
+        Role l1Normal = new Role();
         l1Normal.setName("ROLE_L1_USER");
         roleService.createRole(l1Normal);
         // Level2
-        var l2Admin = new Role();
+        Role l2Admin = new Role();
         l2Admin.setName("ROLE_L2_ADM");
-        var l2AdminAccounts = orgs.stream().filter(o -> LEVEL_2_ORG.equals(parseCode(o.getCode())))
+        List<String> l2AdminAccounts = orgs.stream().filter(o -> LEVEL_2_ORG.equals(parseCode(o.getCode())))
             .map(gov.jiusan.star.init.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
-        var l2AdminUsers = users.stream()
+        List<User> l2AdminUsers = users.stream()
             .filter(u -> l2AdminAccounts.contains(u.getAccount()))
             .collect(Collectors.toList());
         l2Admin.setUsers(l2AdminUsers);
         l2Admin.getUsers().forEach(u -> u.setRole(l2Admin));
         roleService.createRole(l2Admin);
-        var l2Normal = new Role();
+        Role l2Normal = new Role();
         l2Normal.setName("ROLE_L2_USER");
         roleService.createRole(l2Normal);
         // Level3
-        var l3Admin = new Role();
+        Role l3Admin = new Role();
         l3Admin.setName("ROLE_L3_ADM");
-        var l3AdminAccounts = orgs.stream().filter(o -> LEVEL_3_ORG.equals(parseCode(o.getCode())))
+        List<String> l3AdminAccounts = orgs.stream().filter(o -> LEVEL_3_ORG.equals(parseCode(o.getCode())))
             .map(gov.jiusan.star.init.model.Org::getAdminUserAccount)
             .collect(Collectors.toList());
-        var l3AdminUsers = users.stream()
+        List<User> l3AdminUsers = users.stream()
             .filter(u -> l3AdminAccounts.contains(u.getAccount()))
             .collect(Collectors.toList());
         l3Admin.setUsers(l3AdminUsers);
         l3Admin.getUsers().forEach(u -> u.setRole(l3Admin));
         roleService.createRole(l3Admin);
-        var l3Normal = new Role();
+        Role l3Normal = new Role();
         l3Normal.setName("ROLE_L3_USER");
         roleService.createRole(l3Normal);
     }
