@@ -1,14 +1,14 @@
 stages:
-  - test
+#  - test
   - build
   - package
   - deploy
 
-unit_test:
- stage: test
- image: gradle:latest
- script:
-   - ./gradlew test
+#unit_test:
+# stage: test
+# image: gradle:latest
+# script:
+#   - ./gradlew test
 
 build_jar:
   stage: build
