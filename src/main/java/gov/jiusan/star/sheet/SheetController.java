@@ -1,6 +1,5 @@
 package gov.jiusan.star.sheet;
 
-import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.sheet.model.SheetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -49,7 +47,7 @@ public class SheetController {
 
     @GetMapping
     public String retrieveSheet(@RequestParam(value = "seq") Long seq, Model model) {
-        Optional<Sheet> sheet = sService.find(seq);
+        var sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
@@ -59,7 +57,7 @@ public class SheetController {
 
     @PostMapping(path = "update")
     public String updateSheet(@RequestParam(value = "seq") Long seq, SheetDTO sheetDTO) {
-        Optional<Sheet> sheet = sService.find(seq);
+        var sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
@@ -132,7 +130,7 @@ public class SheetController {
 
     @PostMapping(path = "update", params = "removeDetails")
     public String removeDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
-        String value = request.getParameter("removeDetails");
+        var value = request.getParameter("removeDetails");
         int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
         int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
         sheetDTO.getPhaseDTOs().get(phaseIndex).getDetailsDTOs().remove(detailsIndex);
@@ -141,7 +139,7 @@ public class SheetController {
 
     @GetMapping(path = "list")
     public String findAllSheets(Model model) {
-        List<SheetDTO> sheetDTOs = sService.findAll().stream()
+        var sheetDTOs = sService.findAll().stream()
             .map(SheetUtil::convert)
             .sorted(Comparator.comparing(SheetDTO::getCreateTime))
             .collect(Collectors.toList());
@@ -151,11 +149,11 @@ public class SheetController {
 
     @GetMapping(path = "dispatch")
     public String dispatchSheet(@RequestParam("seq") Long seq) {
-        Optional<Sheet> sheet = sService.find(seq);
+        var sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
-        List<Org> orgs = oService.findNonRootOrgs();
+        var orgs = oService.findNonRootOrgs();
         // REMIND，当非根组织为空时，不得派发
         if (orgs.isEmpty()) {
             return "error";
@@ -166,7 +164,7 @@ public class SheetController {
 
     @GetMapping(path = "delete")
     public String deleteSheet(@RequestParam("seq") Long seq) {
-        Optional<Sheet> sheet = sService.find(seq);
+        var sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }

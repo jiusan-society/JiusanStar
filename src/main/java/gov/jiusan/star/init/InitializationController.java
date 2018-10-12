@@ -1,6 +1,5 @@
 package gov.jiusan.star.init;
 
-import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +15,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.List;
 
 /**
  * @author Marcus Lin
@@ -45,8 +43,8 @@ public class InitializationController {
 
     @PostMapping
     public String importSeedData(@RequestParam("seedData") MultipartFile seedData) {
-        File file = new File(seedData.getOriginalFilename());
-        try (FileOutputStream fos = new FileOutputStream(file); BufferedInputStream bis = new BufferedInputStream(seedData.getInputStream())) {
+        var file = new File(seedData.getOriginalFilename());
+        try (var fos = new FileOutputStream(file); var bis = new BufferedInputStream(seedData.getInputStream())) {
             byte[] span = new byte[256];
             for (int len = 0; len != -1; len = bis.read(span)) {
                 fos.write(span, 0, len);
@@ -59,9 +57,8 @@ public class InitializationController {
 
     @GetMapping(path = "dirs")
     public String generateDirForEachOrg() {
-        List<Org> orgs = oService.findNonRootOrgs();
-        orgs.forEach(o -> {
-            File dir = new File(rootDir + o.getCode());
+        oService.findNonRootOrgs().forEach(o -> {
+            var dir = new File(rootDir + o.getCode());
             try {
                 Files.createDirectories(dir.toPath());
             } catch (IOException e) {

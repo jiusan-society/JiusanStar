@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping(path = "profile")
     public String getProfile(Model model, @LoggedUser CustomUserDetails userDetails) {
-        Profile p = UserUtil.convertToModel(userDetails.getUser());
+        var p = UserUtil.convertToModel(userDetails.getUser());
         model.addAttribute("profile", p);
         return "user/user_profile";
     }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class SheetUtil {
 
     public static SheetDTO convert(Sheet entity) {
-        SheetDTO model = new SheetDTO();
+        var model = new SheetDTO();
         model.setSeq(entity.getSeq());
         model.setName(entity.getName());
         model.setDescription(entity.getDescription());
@@ -22,7 +22,7 @@ public class SheetUtil {
     }
 
     static Sheet convert(SheetDTO model) {
-        Sheet entity = new Sheet();
+        var entity = new Sheet();
         entity.setName(model.getName());
         entity.setDescription(model.getDescription());
         // 目前均为百分制
@@ -32,7 +32,7 @@ public class SheetUtil {
     }
 
     static Phase convertRatingPhase(SheetDTO.PhaseDTO model) {
-        Phase phase = new Phase();
+        var phase = new Phase();
         phase.setName(model.getName());
         phase.setMaxScore(model.getMaxScore());
         phase.setDetails(model.getDetailsDTOs().stream().map(SheetUtil::convertRatingDetails).collect(Collectors.toList()));
@@ -40,7 +40,7 @@ public class SheetUtil {
     }
 
     private static SheetDTO.PhaseDTO convertRatingPhase(Phase phase) {
-        SheetDTO.PhaseDTO model = new SheetDTO.PhaseDTO();
+        var model = new SheetDTO.PhaseDTO();
         model.setSeq(phase.getSeq());
         model.setName(phase.getName());
         model.setMaxScore(phase.getMaxScore());
@@ -49,7 +49,7 @@ public class SheetUtil {
     }
 
     private static Details convertRatingDetails(SheetDTO.DetailsDTO model) {
-        Details details = new Details();
+        var details = new Details();
         details.setDescription(model.getDescription());
         details.setEachScore(model.getEachScore());
         details.setMaxScore(model.getMaxScore());
@@ -57,7 +57,7 @@ public class SheetUtil {
     }
 
     private static SheetDTO.DetailsDTO convertRatingDetails(Details details) {
-        SheetDTO.DetailsDTO model = new SheetDTO.DetailsDTO();
+        var model = new SheetDTO.DetailsDTO();
         model.setSeq(details.getSeq());
         model.setDescription(details.getDescription());
         model.setEachScore(details.getEachScore());
