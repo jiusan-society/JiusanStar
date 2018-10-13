@@ -9,7 +9,7 @@ import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
 class SheetPlanUtil {
 
     static SheetPlanDTO convert(SheetPlan plan) {
-        SheetPlanDTO model = new SheetPlanDTO();
+        var model = new SheetPlanDTO();
         model.setSheetName(plan.getSheet().getName());
         model.setEffective(plan.isEffective());
         model.setEffectiveTime(plan.getEffectiveTime());

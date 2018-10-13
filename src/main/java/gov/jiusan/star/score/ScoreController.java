@@ -1,12 +1,10 @@
 package gov.jiusan.star.score;
 
-import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.org.OrgUtil;
 import gov.jiusan.star.org.model.OrgDTO;
 import gov.jiusan.star.score.model.ScoreDTO;
 import gov.jiusan.star.sheet.SheetUtil;
-import gov.jiusan.star.user.User;
 import gov.jiusan.star.user.UserService;
 import gov.jiusan.star.util.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -46,9 +43,9 @@ public class ScoreController {
 
     @GetMapping(path = "list/own")
     public String findOwnEffectiveScores(Model model) {
-        String userAccount = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = uService.findUserByUsername(userAccount);
-        List<Score> scores = user.getOrg().getScores().stream()
+        var username = SecurityContextHolder.getContext().getAuthentication().getName();
+        var user = uService.findUserByUsername(username);
+        var scores = user.getOrg().getScores().stream()
             .filter(s -> s.getSheetPlan().isEffective())
             .collect(Collectors.toList());
         model.addAttribute("scores", scores);
@@ -57,12 +54,12 @@ public class ScoreController {
 
     @GetMapping(path = "list/children")
     public String findChildrenEffectiveScores(Model model) {
-        String userAccount = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = uService.findUserByUsername(userAccount);
+        var username = SecurityContextHolder.getContext().getAuthentication().getName();
+        var user = uService.findUserByUsername(username);
         // 找到该组织下的子组织
-        List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
-        Map<OrgDTO, List<Score>> scoresOfOrg = new TreeMap<>();
-        for (Org o : subOrgs) {
+        var subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
+        var scoresOfOrg = new TreeMap<OrgDTO, List<Score>>();
+        for (var o : subOrgs) {
             scoresOfOrg.put(OrgUtil.convert(o), o.getScores().stream().filter(s -> s.getSheetPlan().isEffective()).collect(Collectors.toList()));
         }
         model.addAttribute("scoresOfOrg", scoresOfOrg);
@@ -72,7 +69,7 @@ public class ScoreController {
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @GetMapping(path = "editor/sa")
     public String editSAScore(@RequestParam("seq") Long seq, Model model) {
-        Score score = sService.find(seq);
+        var score = sService.find(seq);
         model.addAttribute("sheet", SheetUtil.convert(score.getSheetPlan().getSheet()));
         model.addAttribute("score", ScoreUtil.convert(score));
         return "score/score_editor_sa";
@@ -81,7 +78,7 @@ public class ScoreController {
     @PreAuthorize("hasAnyRole('ROLE_L1_ADM', 'ROLE_L2_ADM')")
     @GetMapping(path = "editor/aa")
     public String editAAScore(@RequestParam("seq") Long seq, Model model) {
-        Score score = sService.find(seq);
+        var score = sService.find(seq);
         model.addAttribute("sheet", SheetUtil.convert(score.getSheetPlan().getSheet()));
         model.addAttribute("score", ScoreUtil.convert(score));
         return "score/score_editor_aa";
@@ -89,7 +86,7 @@ public class ScoreController {
 
     @GetMapping
     public String viewScore(@RequestParam("seq") Long seq, Model model) {
-        Score score = sService.find(seq);
+        var score = sService.find(seq);
         model.addAttribute("sheet", SheetUtil.convert(score.getSheetPlan().getSheet()));
         model.addAttribute("score", ScoreUtil.convert(score));
         return "score/score_viewer";
@@ -99,8 +96,8 @@ public class ScoreController {
     @PostMapping(path = "update/sa")
     public String updateSAScore(@RequestParam("seq") Long seq, ScoreDTO scoreDTO) {
         int sATotalScore = scoreDTO.getsADetails().values().stream().mapToInt(score -> score).sum();
-        String sADetailsString = JacksonUtil.toString(scoreDTO.getsADetails()).get();
-        Score score = sService.find(seq);
+        var sADetailsString = JacksonUtil.toString(scoreDTO.getsADetails()).get();
+        var score = sService.find(seq);
         score.setsATotalScore(sATotalScore);
         score.setsADetails(sADetailsString);
         score.setsAFinished(true);
@@ -113,8 +110,8 @@ public class ScoreController {
     @PostMapping(path = "update/aa")
     public String updateAAScore(@RequestParam("seq") Long seq, ScoreDTO scoreDTO) {
         int aATotalScore = scoreDTO.getaADetails().values().stream().mapToInt(score -> score).sum();
-        String aADetailsString = JacksonUtil.toString(scoreDTO.getaADetails()).get();
-        Score score = sService.find(seq);
+        var aADetailsString = JacksonUtil.toString(scoreDTO.getaADetails()).get();
+        var score = sService.find(seq);
         score.setaATotalScore(aATotalScore);
         score.setaADetails(aADetailsString);
         score.setaAFinished(true);

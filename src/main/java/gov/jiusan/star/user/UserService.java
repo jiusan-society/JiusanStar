@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        User user = repository.findUserByAccount(account);
+        var user = repository.findUserByAccount(account);
         if (user == null) {
             throw new UsernameNotFoundException(account);
         }
@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User findUserByUsername(String account) throws UsernameNotFoundException {
-        User user = repository.findUserByAccount(account);
+        var user = repository.findUserByAccount(account);
         if (user == null) {
             throw new UsernameNotFoundException(account);
         }

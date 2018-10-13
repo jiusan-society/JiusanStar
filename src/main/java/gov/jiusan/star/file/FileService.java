@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class FileService {
 
     public List<File> getDirFiles(String dirName) {
-        File dir = new File(dirName);
+        var dir = new File(dirName);
         return Arrays.stream(Objects.requireNonNull(dir.listFiles()))
             .sorted(Comparator.comparing(File::lastModified).reversed())
             .collect(Collectors.toList());

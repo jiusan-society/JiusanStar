@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -38,8 +37,8 @@ public class SheetService {
     }
 
     public Long create(SheetDTO model) {
-        Sheet entity = SheetUtil.convert(model);
-        Calendar now = Calendar.getInstance();
+        var entity = SheetUtil.convert(model);
+        var now = Calendar.getInstance();
         entity.setCreateTime(now);
         entity.setLastUpdateTime(now);
         return repository.save(entity).getSeq();
@@ -72,23 +71,23 @@ public class SheetService {
     public void dispatchSheet(Sheet sheet, List<Org> orgs) {
         // 同一年只能有一张 plan 生效
         invalidateOtherPlansInCurrentYear();
-        SheetPlan sheetPlan = new SheetPlan();
+        var sheetPlan = new SheetPlan();
         sheetPlan.setSheet(sheet);
         sheetPlan.setEffective(true);
         sheetPlan.setStatus(SheetPlanStatus.NORMAL);
         sheetPlan.setEffectiveTime(Calendar.getInstance());
-        Calendar expirationTime = Calendar.getInstance();
+        var expirationTime = Calendar.getInstance();
         expirationTime.clear();
         expirationTime.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR) + 1);
         sheetPlan.setExpirationTime(expirationTime);
-        SheetPlan savedSP = sPService.create(sheetPlan);
-        Map<Long, Integer> initScore = new TreeMap<>();
-        List<Details> detailsList = sheet.getPhases().stream().flatMap(p -> p.getDetails().stream()).collect(Collectors.toList());
-        for (Details details : detailsList) {
+        var savedSP = sPService.create(sheetPlan);
+        var initScore = new TreeMap<Long, Integer>();
+        var detailsList = sheet.getPhases().stream().flatMap(p -> p.getDetails().stream()).collect(Collectors.toList());
+        for (var details : detailsList) {
             initScore.put(details.getSeq(), 0);
         }
-        for (Org o : orgs) {
-            Score score = new Score();
+        for (var o : orgs) {
+            var score = new Score();
             score.setOrg(o);
             score.setSheetPlan(savedSP);
             score.setsADetails(JacksonUtil.toString(initScore).get());

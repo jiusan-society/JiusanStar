@@ -19,7 +19,7 @@ public class ScoreService {
     }
 
     public Score create(Score score) {
-        Calendar now = Calendar.getInstance();
+        var now = Calendar.getInstance();
         score.setCreateTime(now);
         score.setLastUpdateTime(now);
         return repository.save(score);
