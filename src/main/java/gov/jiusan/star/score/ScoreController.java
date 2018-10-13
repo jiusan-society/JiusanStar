@@ -115,6 +115,7 @@ public class ScoreController {
         score.setaATotalScore(aATotalScore);
         score.setaADetails(aADetailsString);
         score.setaAFinished(true);
+        score.setFinalScore((score.getsATotalScore() + score.getaATotalScore()) / (double) 2);
         sService.update(score);
         return "redirect:/score?seq=" + seq;
     }
