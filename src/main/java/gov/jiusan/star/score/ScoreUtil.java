@@ -34,17 +34,17 @@ public class ScoreUtil {
     public static final Integer RANK_LV_5 = 5;
 
     static ScoreDTO convert(Score score) {
-        var dto = new ScoreDTO();
-        var sADetails = JacksonUtil.toObj(score.getsADetails(), new TypeReference<Map<Long, Integer>>() {
-        }).get();
-        dto.setsADetails(sADetails);
-        dto.setsATotalScore(score.getsATotalScore());
-        var aADetails = JacksonUtil.toObj(score.getaADetails(), new TypeReference<Map<Long, Integer>>() {
-        }).get();
-        dto.setaADetails(aADetails);
-        dto.setaATotalScore(score.getaATotalScore());
-        dto.setFinalScore(score.getFinalScore());
-        dto.setRank(computeRank(score));
+        ScoreDTO dto = new ScoreDTO();
+        if (!(score.getsADetails() == null || score.getsADetails().isEmpty())) {
+            Map<Long, Integer> sADetails = JacksonUtil.toObj(score.getsADetails(), new TypeReference<Map<Long, Integer>>() {
+            }).get();
+            dto.setsADetails(sADetails);
+        }
+        if (!(score.getaADetails() == null || score.getaADetails().isEmpty())) {
+            Map<Long, Integer> aADetails = JacksonUtil.toObj(score.getaADetails(), new TypeReference<Map<Long, Integer>>() {
+            }).get();
+            dto.setaADetails(aADetails);
+        }
         return dto;
     }
 
