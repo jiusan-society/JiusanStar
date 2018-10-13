@@ -49,7 +49,8 @@
                                            th:value="*{sADetails[__${details0Seq}__]}"/>
                                 </td>
                                 <td style="text-align: center; vertical-align: middle">
-                                    <input class="form-control input-sm" type="number" readonly="readonly" th:value="*{aADetails[__${details0Seq}__]}"/>
+                                    <input class="form-control input-sm" type="number" readonly="readonly"
+                                           th:value="*{aADetails[__${details0Seq}__]}"/>
                                 </td>
                             </tr>
                             <tr th:each="detail, stats : ${phase.detailsDTOs}" th:if="${!stats.first}"
@@ -64,7 +65,8 @@
                                            th:value="*{sADetails[__${detailsSeq}__]}"/>
                                 </td>
                                 <td style="text-align: center; vertical-align: middle">
-                                    <input class="form-control input-sm" type="number" readonly="readonly" th:value="*{aADetails[__${detailsSeq}__]}"/>
+                                    <input class="form-control input-sm" type="number" readonly="readonly"
+                                           th:value="*{aADetails[__${detailsSeq}__]}"/>
                                 </td>
                             </tr>
                         </div>
@@ -98,6 +100,54 @@
                                 <p align="center">
                                     <strong th:text="*{finalScore} ? '最终得分：' + *{finalScore} : '尚未完成'"></strong>
                                 </p>
+                            </td>
+                        </tr>
+                        <tr class="alert alert-warning">
+                            <td colspan="4">
+                                <th:block th:switch="*{rank}">
+                                    <div th:case="-1">
+                                        <p align="center">
+                                            <strong th:text="'评分等级：尚未完成'"></strong>
+                                        </p>
+                                    </div>
+                                    <div th:case="1">
+                                        <p align="center">
+                                            <strong th:text="'评分等级：不合格'"></strong>
+                                        </p>
+                                    </div>
+                                    <div th:case="2">
+                                        <p align="center">
+                                            <strong th:text="'评分等级：合格'"></strong>
+                                        </p>
+                                    </div>
+                                    <div th:case="3">
+                                        <p align="center">
+                                            <strong th:text="'评分等级：'"></strong>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                        </p>
+                                    </div>
+                                    <div th:case="4">
+                                        <p align="center">
+                                            <strong th:text="'评分等级：'"></strong>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                        </p>
+                                    </div>
+                                    <div th:case="5">
+                                        <p align="center">
+                                            <strong th:text="'评分等级：'"></strong>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                        </p>
+                                    </div>
+                                </th:block>
                             </td>
                         </tr>
                     </tfoot>

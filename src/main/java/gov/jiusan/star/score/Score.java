@@ -147,7 +147,7 @@ public class Score implements Serializable {
     }
 
     public Integer getsATotalScore() {
-        return sATotalScore;
+        return sATotalScore == null ? sATotalScore = 0 : sATotalScore;
     }
 
     public void setsATotalScore(Integer sATotalScore) {
@@ -155,7 +155,7 @@ public class Score implements Serializable {
     }
 
     public Integer getaATotalScore() {
-        return aATotalScore;
+        return aATotalScore ==null ? aATotalScore = 0 : aATotalScore;
     }
 
     public void setaATotalScore(Integer aATotalScore) {

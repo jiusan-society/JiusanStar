@@ -23,6 +23,8 @@ public class ScoreDTO implements Serializable {
 
     private Double finalScore;
 
+    private Integer rank;
+
     public ScoreDTO() {
     }
 
@@ -64,5 +66,13 @@ public class ScoreDTO implements Serializable {
 
     public void setFinalScore(Double finalScore) {
         this.finalScore = finalScore;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 }
