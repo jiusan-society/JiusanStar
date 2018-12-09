@@ -1,5 +1,7 @@
 package gov.jiusan.star.sheetplan;
 
+import gov.jiusan.star.score.ScoreUtil;
+import gov.jiusan.star.sheetplan.model.ReportDTO;
 import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,6 +40,21 @@ public class SheetPlanController {
         plans.forEach(plan -> plansOfYear.computeIfAbsent(plan.getEffectiveTime().get(Calendar.YEAR), k -> new ArrayList<>()).add(plan));
         model.addAttribute("plansOfYear", plansOfYear);
         return "sheetplan/sheet_plan_list";
+    }
+
+    /**
+     * 统计报表
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(path = "report")
+    public String findReport(Model model) {
+        List<SheetPlan> plans = service.findAll().stream().filter(SheetPlan::isEffective).collect(Collectors.toList());
+        Map<Integer, ReportDTO> reportsOfYear = new TreeMap<>(Collections.reverseOrder());
+        plans.forEach(p -> reportsOfYear.put(p.getEffectiveTime().get(Calendar.YEAR), SheetPlanUtil.convertToReport(p)));
+        model.addAttribute("reportsOfYear", reportsOfYear);
+        return "sheetplan/report_list";
     }
 
 }

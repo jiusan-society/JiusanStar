@@ -63,7 +63,7 @@ public class ScoreUtil {
      * @param score
      * @return
      */
-    private static int computeRank(Score score) {
+    public static int computeRank(Score score) {
         int rank = RANK_NOT_AVAILABLE;
         if (score.getFinalScore() != null) {
             double s = score.getFinalScore();
