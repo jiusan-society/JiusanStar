@@ -1,6 +1,5 @@
 package gov.jiusan.star.sheetplan;
 
-import gov.jiusan.star.score.ScoreUtil;
 import gov.jiusan.star.sheetplan.model.ReportDTO;
 import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class SheetPlanController {
      * @param model
      * @return
      */
-    @RequestMapping(path = "report")
+    @RequestMapping(path = "reports")
     public String findReport(Model model) {
         List<SheetPlan> plans = service.findAll().stream().filter(SheetPlan::isEffective).collect(Collectors.toList());
         Map<Integer, ReportDTO> reportsOfYear = new TreeMap<>(Collections.reverseOrder());
