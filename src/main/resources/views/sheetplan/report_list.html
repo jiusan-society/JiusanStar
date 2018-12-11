@@ -13,20 +13,87 @@
                 th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
         <script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.min.js"
                 th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="../../static/vendor/highcharts/js/highcharts.js"
+                th:src="@{/vendor/highcharts/js/highcharts.js}"></script>
     </head>
     <body>
         <div id="wrapper">
             <div th:replace="fragments/navbar_sidebar :: navbar_sidebar"></div>
             <div id="page-wrapper" style="min-height: 808px;">
-                <div th:each="entry : ${reportsOfYear}">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h1 class="page-header" th:text="${entry.getKey()}"></h1>
-                        </div>
-                    </div>
-                    <div class="row">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header" th:text="统计报表"></h1>
                     </div>
                 </div>
+                <div class="row">
+                    <div id="hc-container-finish-info" class="col-lg-12"></div>
+                </div>
+                <div class="row">
+                    <div id="hc-container-rating-info" class="col-lg-12"></div>
+                </div>
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    var entrySet = /*[[${reportsOfYear.entrySet()}]]*/ null;
+                    // 图表配置
+                    var options = {
+                        chart: {
+                            type: 'column'                          //指定图表的类型，默认是折线图（line）
+                        },
+                        title: {
+                            text: '评定完成情况图示'                 // 标题
+                        },
+                        xAxis: {
+                            categories: ['总数', '已完成', '未完成']   // x 轴分类
+                        },
+                        yAxis: {
+                            title: {
+                                text: '组织数量'                // y 轴标题
+                            }
+                        },
+                        series: entrySet.map(entry => {
+                            var value = entry['value'];
+                            return {
+                                name: entry['key'] + " 年",
+                                data: [value['totalNum'], value['completeNum'], value['incompleteNum']]
+                            }
+                        })
+                    };
+                    // 图表初始化函数
+                    Highcharts.chart('hc-container-finish-info', options);
+                    /*]]>*/
+                </script>
+
+                <script th:inline="javascript">
+                    /*<![CDATA[*/
+                    var entrySet = /*[[${reportsOfYear.entrySet()}]]*/ null;
+                    // 图表配置
+                    var options = {
+                        chart: {
+                            type: 'column'                          //指定图表的类型，默认是折线图（line）
+                        },
+                        title: {
+                            text: '评定完成情况图示'                 // 标题
+                        },
+                        xAxis: {
+                            categories: ['总数', '已完成', '未完成']   // x 轴分类
+                        },
+                        yAxis: {
+                            title: {
+                                text: '组织数量'                // y 轴标题
+                            }
+                        },
+                        series: entrySet.map(entry => {
+                            var value = entry['value'];
+                            return {
+                                name: entry['key'] + " 年",
+                                data: [value['lv5Num'], value['lv4Num'], value['lv3Num'], value['qualifiedNum'], value['unqualifiedNum']]
+                            }
+                        })
+                    };
+                    // 图表初始化函数
+                    Highcharts.chart('hc-container-rating-info', options);
+                    /*]]>*/
+                </script>
             </div>
         </div>
     </body>

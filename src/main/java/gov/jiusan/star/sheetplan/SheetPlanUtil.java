@@ -1,12 +1,8 @@
 package gov.jiusan.star.sheetplan;
 
 import gov.jiusan.star.score.ScoreUtil;
-import gov.jiusan.star.sheet.Sheet;
 import gov.jiusan.star.sheetplan.model.ReportDTO;
 import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
-
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * @author Marcus Lin
@@ -59,13 +55,11 @@ class SheetPlanUtil {
         report.setTotalNum(totalNum);
         report.setCompleteNum(completeNum);
         report.setIncompleteNum(incompleteNum);
-        Map<String, Integer> levelInfo = new TreeMap<>();
-        levelInfo.put(RANK_LV_5, lv5Num);
-        levelInfo.put(RANK_LV_4, lv4Num);
-        levelInfo.put(RANK_LV_3, lv3Num);
-        levelInfo.put(RANK_QUALIFIED, qualifiedNum);
-        levelInfo.put(RANK_UNQUALIFIED, unqualifiedNum);
-        report.setLevelInfo(levelInfo);
+        report.setLv5Num(lv5Num);
+        report.setLv4Num(lv4Num);
+        report.setLv3Num(lv3Num);
+        report.setQualifiedNum(qualifiedNum);
+        report.setUnqualifiedNum(unqualifiedNum);
         return report;
     }
 }
