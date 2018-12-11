@@ -49,10 +49,10 @@ deploy_on_server:
   script:
     - whoami
     - docker container ls
-    - docker pull $DOCKER_CN_REGISTRY_IMAGE:latest
+    - docker pull $DOCKER_REGISTRY_IMAGE:latest
     - docker container rm -f jiusan-star
   after_script:
-    - docker run --name="jiusan-star" -e "SPRING_PROFILES_ACTIVE=prod" -e TZ=Asia/Shanghai --net host -v 93Star:/Data -d $DOCKER_CN_REGISTRY_IMAGE
+    - docker run --name="jiusan-star" -e "SPRING_PROFILES_ACTIVE=prod" -e TZ=Asia/Shanghai --net host -v 93Star:/Data -d $DOCKER_REGISTRY_IMAGE
   only:
     - master
   tags:
