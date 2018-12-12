@@ -30,10 +30,6 @@
 
         <!-- Custom Theme JavaScript -->
         <script src="../static/dist/js/sb-admin-2.js" th:src="@{/dist/js/sb-admin-2.js}"></script>
-
-        <!-- HighCharts JavaScript-->
-        <script src="../static/vendor/highcharts/js/highcharts.js"
-                th:src="@{/vendor/highcharts/js/highcharts.js}"></script>
     </head>
 
     <body>
@@ -48,73 +44,9 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">首页</h1>
                     </div>
-                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.row -->
-                <div class="row">
-                    <div id="hc-container-finish-info" class="col-lg-12"></div>
-                </div>
-                <!-- /.row -->
-                <div class="row">
-                    <div id="hc-container-rating-info" class="col-lg-12"></div>
-                </div>
-                <!-- /.row -->
             </div>
             <!-- /#page-wrapper -->
-
-            <script>
-                // 图表配置
-                var options = {
-                    chart: {
-                        type: 'column'                          //指定图表的类型，默认是折线图（line）
-                    },
-                    title: {
-                        text: '评定完成情况图示'                 // 标题
-                    },
-                    xAxis: {
-                        categories: ['总数', '已完成', '未完成']   // x 轴分类
-                    },
-                    yAxis: {
-                        title: {
-                            text: '组织数量'                // y 轴标题
-                        }
-                    },
-                    series: [{                              // 数据列
-                        data: [30, 24, 6]                     // 数据
-                    }]
-                };
-                // 图表初始化函数
-                Highcharts.chart('hc-container-finish-info', options);
-            </script>
-
-            <script>
-                // 图表配置
-                var options = {
-                    chart: {
-                        type: 'column'                          //指定图表的类型，默认是折线图（line）
-                    },
-                    title: {
-                        text: '评定等级情况图示'                 // 标题
-                    },
-                    xAxis: {
-                        categories: ['5 星级', '4 星级', '3 星级', '合格', '不合格']   // x 轴分类
-                    },
-                    yAxis: {
-                        title: {
-                            text: '组织数量'                // y 轴标题
-                        }
-                    },
-                    series: [{                              // 数据列
-                        name: "2018 年",
-                        data: [3, 5, 6, 3, 0]                     // 数据
-                    }, {
-                        name: "2019 年",
-                        data: [4, 5, 7, 2, 1]
-                    }]
-                };
-                // 图表初始化函数
-                Highcharts.chart('hc-container-rating-info', options);
-            </script>
         </div>
         <!-- /#wrapper -->
 
