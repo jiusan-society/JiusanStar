@@ -28,10 +28,14 @@ public class SheetPlanService {
         return repository.save(sheetPlan);
     }
 
-    public List<SheetPlan> findAll() {
+    List<SheetPlan> findAll() {
         List<SheetPlan> sheetPlans = repository.findAll();
         sheetPlans.sort(Comparator.comparing(SheetPlan::getCreateTime).reversed());
         return sheetPlans;
+    }
+
+    List<SheetPlan> findEffectives() {
+        return repository.findSheetPlanByEffectiveIsTrue();
     }
 
     public List<SheetPlan> findByCurrentYear() {

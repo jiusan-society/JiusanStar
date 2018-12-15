@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -33,11 +32,11 @@ public class SheetPlanController {
 
     @RequestMapping(path = "list")
     public String findAll(Model model) {
-        List<SheetPlanDTO> plans = service.findAll().stream().map(SheetPlanUtil::convert).collect(Collectors.toList());
+        List<SheetPlanDTO> plans = service.findEffectives().stream().map(SheetPlanUtil::convert).collect(Collectors.toList());
         // 用年份来归类，且依照年份从大到小排序
-        Map<Integer, List<SheetPlanDTO>> plansOfYear = new TreeMap<>(Collections.reverseOrder());
-        plans.forEach(p -> plansOfYear.computeIfAbsent(p.getEffectiveTime().get(Calendar.YEAR), k -> new ArrayList<>()).add(p));
-        model.addAttribute("plansOfYear", plansOfYear);
+        Map<Integer, SheetPlanDTO> planOfYear = new TreeMap<>(Collections.reverseOrder());
+        plans.forEach(p -> planOfYear.put(p.getEffectiveTime().get(Calendar.YEAR), p));
+        model.addAttribute("planOfYear", planOfYear);
         return "sheetplan/sheet_plan_list";
     }
 

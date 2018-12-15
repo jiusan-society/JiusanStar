@@ -18,7 +18,7 @@
         <div id="wrapper">
             <div th:replace="fragments/navbar_sidebar :: navbar_sidebar"></div>
             <div id="page-wrapper" style="min-height: 808px;">
-                <div th:each="entry : ${plansOfYear}">
+                <div th:each="entry : ${planOfYear}">
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header" th:text="${entry.getKey()}"></h1>
@@ -35,7 +35,6 @@
                                         <th>生效时间</th>
                                         <th>失效时间</th>
                                         <th>完成情况</th>
-                                        <th>不可用原因</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,11 +58,6 @@
                                         </td>
                                         <td>
                                             <p th:text="${sP.finishedScoreNum} + ' / ' + ${sP.allScoreNum}"></p>
-                                        </td>
-                                        <td>
-                                            <p th:if="${sP.status != null and sP.status.name() == 'INVALID'}">
-                                                同一年仅可有一张可用的评分表</p>
-                                            <p th:if="${sP.status != null and sP.status.name() == 'EXPIRED'}">已逾期</p>
                                         </td>
                                     </tr>
                                 </tbody>
