@@ -43,7 +43,10 @@ public class ScoreUtil {
         }).get();
         dto.setaADetails(aADetails);
         dto.setaATotalScore(score.getaATotalScore());
-        dto.setFinalScore(score.getFinalScore());
+        if (isFinished(score)) {
+            dto.setFinalScore(score.getFinalScore());
+            dto.setRank(computeRank(score));
+        }
         return dto;
     }
 
