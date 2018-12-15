@@ -9,27 +9,6 @@ import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
  */
 class SheetPlanUtil {
 
-    /**
-     * 评级：不合格
-     */
-    private static final String RANK_UNQUALIFIED = "不合格";
-    /**
-     * 评级：合格
-     */
-    private static final String RANK_QUALIFIED = "合格";
-    /**
-     * 评级：三星级
-     */
-    private static final String RANK_LV_3 = "3 星级";
-    /**
-     * 评级：四星级
-     */
-    private static final String RANK_LV_4 = "4 星级";
-    /**
-     * 评级：五星级
-     */
-    private static final String RANK_LV_5 = "5 星级";
-
     static SheetPlanDTO convert(SheetPlan plan) {
         SheetPlanDTO model = new SheetPlanDTO();
         model.setSheetName(plan.getSheet().getName());
