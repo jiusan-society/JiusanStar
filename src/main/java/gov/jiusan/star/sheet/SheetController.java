@@ -44,7 +44,7 @@ public class SheetController {
         if (bindingResult.hasErrors()) {
             return "sheet/sheet_editor";
         }
-        return "redirect:/sheetDTO?seq=" + sService.create(sheetDTO);
+        return "redirect:/sheet?seq=" + sService.create(sheetDTO);
     }
 
     @GetMapping
