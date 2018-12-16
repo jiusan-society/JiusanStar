@@ -34,7 +34,7 @@ public class SheetPlanService {
         return sheetPlans;
     }
 
-    List<SheetPlan> findEffectives() {
+    public List<SheetPlan> findEffectives() {
         return repository.findSheetPlanByEffectiveIsTrue();
     }
 

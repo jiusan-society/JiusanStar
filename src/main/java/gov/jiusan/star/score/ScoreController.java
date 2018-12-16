@@ -2,10 +2,11 @@ package gov.jiusan.star.score;
 
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
-import gov.jiusan.star.org.OrgUtil;
-import gov.jiusan.star.org.model.OrgDTO;
 import gov.jiusan.star.score.model.ScoreDTO;
 import gov.jiusan.star.sheet.SheetUtil;
+import gov.jiusan.star.sheetplan.SheetPlanService;
+import gov.jiusan.star.sheetplan.SheetPlanUtil;
+import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
 import gov.jiusan.star.user.User;
 import gov.jiusan.star.user.UserService;
 import gov.jiusan.star.util.JacksonUtil;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -37,11 +41,14 @@ public class ScoreController {
 
     private final OrgService oService;
 
+    private final SheetPlanService sPService;
+
     @Autowired
-    public ScoreController(UserService uService, ScoreService sService, OrgService oService) {
+    public ScoreController(UserService uService, ScoreService sService, OrgService oService, SheetPlanService sPService) {
         this.uService = uService;
         this.sService = sService;
         this.oService = oService;
+        this.sPService = sPService;
     }
 
     @GetMapping(path = "list/own")
@@ -57,15 +64,23 @@ public class ScoreController {
 
     @GetMapping(path = "list/children")
     public String findChildrenEffectiveScores(Model model) {
+        // 用年份来归类，一年只有一个生效的 SheetPlan
+        // K -> year, V -> Effective SheetPlan
+        Map<Integer, SheetPlanDTO> planOfYear = sPService.findEffectives().stream()
+            .map(SheetPlanUtil::convert)
+            .collect(Collectors.toMap(p -> p.getEffectiveTime().get(Calendar.YEAR), Function.identity()));
+        model.addAttribute("planOfYear", planOfYear);
+        // 找到该组织下的子组织
         String userAccount = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = uService.findUserByUsername(userAccount);
-        // 找到该组织下的子组织
         List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
-        Map<OrgDTO, List<Score>> scoresOfOrg = new TreeMap<>();
-        for (Org o : subOrgs) {
-            scoresOfOrg.put(OrgUtil.convert(o), o.getScores().stream().filter(s -> s.getSheetPlan().isEffective()).collect(Collectors.toList()));
-        }
-        model.addAttribute("scoresOfOrg", scoresOfOrg);
+        // K -> SheetPlan's name, V -> sub orgs' score of this SheetPlan
+        Map<String, List<ScoreDTO>> scoresOfPlan = new TreeMap<>();
+        subOrgs.stream()
+            .flatMap(o -> o.getScores().stream())
+            .filter(s -> s.getSheetPlan().isEffective())
+            .forEach(s -> scoresOfPlan.computeIfAbsent(s.getSheetPlan().getSheet().getName(), v -> new ArrayList<>()).add(ScoreUtil.convert(s)));
+        model.addAttribute("scoresOfPlan", scoresOfPlan);
         return "score/score_list_children";
     }
 

@@ -18,55 +18,141 @@
         <div id="wrapper">
             <div th:replace="fragments/navbar_sidebar :: navbar_sidebar"></div>
             <div id="page-wrapper" style="min-height: 808px;">
-                <div th:each="entry : ${scoresOfOrg}">
+                <div th:each="entry : ${planOfYear}">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header" th:text="${entry.key.getName()}"></h1>
+                            <h1 class="page-header" th:text="${entry.key}"></h1>
                         </div>
                     </div>
                     <br/>
                     <div class="row">
                         <div class="col-lg-12">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
                                         <th>评分表名称</th>
                                         <th>生效时间</th>
                                         <th>截止时间</th>
-                                        <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="score, stat : ${entry.value}">
-                                        <td th:text="${stat.count}"></td>
-                                        <td th:text="${score.getSheetPlan().getSheet().getName()}"></td>
-                                        <td th:text="${#dates.format(score.getSheetPlan().getEffectiveTime(), 'yyyy-MM-dd HH:mm')}"></td>
-                                        <td th:text="${#dates.format(score.getSheetPlan().getExpirationTime(), 'yyyy-MM-dd HH:mm')}"></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary"
-                                                    th:disabled="${!score.issAFinished()}"
-                                                    th:onclick="'javascript:rate('+${score.seq}+')'">考评
-                                            </button>
-                                            <button class="btn btn-sm btn-primary"
-                                                    th:disabled="${!score.issAFinished()}"
-                                                    th:onclick="'javascript:view('+${score.seq}+')'">查看
-                                            </button>
-                                        </td>
-                                        <script>
-                                            function rate(seq) {
-                                                let url = "/score/editor/aa?seq=" + seq;
-                                                window.open(url, "_self");
-                                            }
-
-                                            function view(seq) {
-                                                let url = "/score?seq=" + seq;
-                                                window.open(url, "_self");
-                                            }
-                                        </script>
+                                    <tr th:each="plan : ${entry.getValue()}">
+                                        <td th:text="${plan.getSheetName()}"></td>
+                                        <td th:text="${#dates.format(plan.getEffectiveTime(), 'yyyy-MM-dd HH:mm')}"></td>
+                                        <td th:text="${#dates.format(plan.getExpirationTime(), 'yyyy-MM-dd HH:mm')}"></td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                进行考评（点击展开）
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
+                                         aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <table class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>组织名称</th>
+                                                        <th>操作</th>
+                                                        <th>状态</th>
+                                                        <th>星级情况</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:class="${score.isFinished() ? 'success' : ''}"
+                                                        th:each="score, stat : ${scoresOfPlan.get(entry.getValue().getSheetName())}">
+                                                        <td th:text="${stat.count}"></td>
+                                                        <td th:text="${score.getOrgName()}"></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-primary"
+                                                                    th:disabled="${!score.issAFinished()}"
+                                                                    th:onclick="'javascript:rate('+${score.seq}+')'">考评
+                                                            </button>
+                                                            <button class="btn btn-sm btn-primary"
+                                                                    th:disabled="${!score.issAFinished()}"
+                                                                    th:onclick="'javascript:view('+${score.seq}+')'">查看
+                                                            </button>
+                                                        </td>
+                                                        <td>
+                                                            <p th:if="${score.isFinished()}" th:text="已完成"></p>
+                                                            <p th:if="${score.issAFinished() and !score.isaAFinished()}"
+                                                               th:text="待完成考评"></p>
+                                                            <p th:if="${!score.issAFinished()}" th:text="自评尚未完成"></p>
+                                                        </td>
+                                                        <td>
+                                                            <th:block th:switch="*{score.getRank()}">
+                                                                <div th:case="-1">
+                                                                    <p align="center">
+                                                                        <strong th:text="'评分等级：尚未完成'"></strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div th:case="1">
+                                                                    <p align="center">
+                                                                        <strong th:text="'评分等级：不合格'"></strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div th:case="2">
+                                                                    <p align="center">
+                                                                        <strong th:text="'评分等级：合格'"></strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div th:case="3">
+                                                                    <p align="center">
+                                                                        <strong th:text="'评分等级：'"></strong>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                    </p>
+                                                                </div>
+                                                                <div th:case="4">
+                                                                    <p align="center">
+                                                                        <strong th:text="'评分等级：'"></strong>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                    </p>
+                                                                </div>
+                                                                <div th:case="5">
+                                                                    <p align="center">
+                                                                        <strong th:text="'评分等级：'"></strong>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                        <span class="fa fa-star checked"></span>
+                                                                    </p>
+                                                                </div>
+                                                            </th:block>
+                                                        </td>
+                                                        <script>
+                                                            function rate(seq) {
+                                                                let url = "/score/editor/aa?seq=" + seq;
+                                                                window.open(url, "_self");
+                                                            }
+
+                                                            function view(seq) {
+                                                                let url = "/score?seq=" + seq;
+                                                                window.open(url, "_self");
+                                                            }
+                                                        </script>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

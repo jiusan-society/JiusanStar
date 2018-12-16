@@ -3,7 +3,20 @@ package gov.jiusan.star.score.model;
 import java.io.Serializable;
 import java.util.Map;
 
+/**
+ * @author Marcus Lin
+ */
 public class ScoreDTO implements Serializable {
+
+    private Long seq;
+
+    private String orgName;
+
+    private boolean sAFinished;
+
+    private boolean aAFinished;
+
+    private boolean finished;
 
     /**
      * K -> Details' Id
@@ -26,6 +39,46 @@ public class ScoreDTO implements Serializable {
     private Integer rank;
 
     public ScoreDTO() {
+    }
+
+    public Long getSeq() {
+        return seq;
+    }
+
+    public void setSeq(Long seq) {
+        this.seq = seq;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public boolean issAFinished() {
+        return sAFinished;
+    }
+
+    public void setsAFinished(boolean sAFinished) {
+        this.sAFinished = sAFinished;
+    }
+
+    public boolean isaAFinished() {
+        return aAFinished;
+    }
+
+    public void setaAFinished(boolean aAFinished) {
+        this.aAFinished = aAFinished;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public Map<Long, Integer> getsADetails() {

@@ -35,17 +35,26 @@ public class ScoreUtil {
 
     static ScoreDTO convert(Score score) {
         ScoreDTO dto = new ScoreDTO();
-        Map<Long, Integer> sADetails = JacksonUtil.toObj(score.getsADetails(), new TypeReference<Map<Long, Integer>>() {
-        }).get();
-        dto.setsADetails(sADetails);
-        dto.setsATotalScore(score.getsATotalScore());
-        Map<Long, Integer> aADetails = JacksonUtil.toObj(score.getaADetails(), new TypeReference<Map<Long, Integer>>() {
-        }).get();
-        dto.setaADetails(aADetails);
-        dto.setaATotalScore(score.getaATotalScore());
+        dto.setSeq(score.getSeq());
+        dto.setOrgName(score.getOrg().getName());
+        if (score.issAFinished()) {
+            Map<Long, Integer> sADetails = JacksonUtil.toObj(score.getsADetails(), new TypeReference<Map<Long, Integer>>() {
+            }).get();
+            dto.setsADetails(sADetails);
+            dto.setsATotalScore(score.getsATotalScore());
+            dto.setsAFinished(true);
+        }
+        if (score.isaAFinished()) {
+            Map<Long, Integer> aADetails = JacksonUtil.toObj(score.getaADetails(), new TypeReference<Map<Long, Integer>>() {
+            }).get();
+            dto.setaADetails(aADetails);
+            dto.setaATotalScore(score.getaATotalScore());
+            dto.setaAFinished(true);
+        }
         if (isFinished(score)) {
             dto.setFinalScore(score.getFinalScore());
             dto.setRank(computeRank(score));
+            dto.setFinished(true);
         }
         return dto;
     }

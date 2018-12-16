@@ -7,9 +7,9 @@ import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
 /**
  * @author Marcus Lin
  */
-class SheetPlanUtil {
+public class SheetPlanUtil {
 
-    static SheetPlanDTO convert(SheetPlan plan) {
+    public static SheetPlanDTO convert(SheetPlan plan) {
         SheetPlanDTO model = new SheetPlanDTO();
         model.setSheetName(plan.getSheet().getName());
         model.setEffective(plan.isEffective());
