@@ -58,7 +58,10 @@ public class SheetController {
     }
 
     @PostMapping(path = "update")
-    public String updateSheet(@RequestParam(value = "seq") Long seq, SheetDTO sheetDTO) {
+    public String updateSheet(@RequestParam(value = "seq") Long seq, @ModelAttribute("sheet") @Valid SheetDTO sheetDTO, final BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "sheet/sheet_editor";
+        }
         Optional<Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";

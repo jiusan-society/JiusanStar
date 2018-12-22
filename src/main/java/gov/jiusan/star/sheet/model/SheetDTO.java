@@ -1,8 +1,11 @@
 package gov.jiusan.star.sheet.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.validation.constraints.Size;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,8 +18,7 @@ public class SheetDTO implements Serializable {
 
     private Long seq;
 
-    @NotEmpty
-    @Size(min = 3, max = 20)
+    @NotBlank
     private String name;
 
     private String description;
@@ -24,7 +26,7 @@ public class SheetDTO implements Serializable {
     private Integer maxScore;
 
     @NotEmpty
-    private List<PhaseDTO> phaseDTOs;
+    private List<@Valid PhaseDTO> phaseDTOs;
 
     private Calendar createTime;
     private Calendar lastUpdateTime;
@@ -88,9 +90,16 @@ public class SheetDTO implements Serializable {
     public static class PhaseDTO implements Serializable {
 
         private Long seq;
+
+        @NotEmpty
         private String name;
+
+        @NotNull
+        @Positive
         private Integer maxScore;
-        private List<DetailsDTO> detailsDTOs;
+
+        @NotEmpty
+        private List<@Valid DetailsDTO> detailsDTOs;
 
         public PhaseDTO() {
         }
@@ -131,8 +140,16 @@ public class SheetDTO implements Serializable {
     public static class DetailsDTO implements Serializable {
 
         private Long seq;
+
+        @NotEmpty
         private String description;
+
+        @NotNull
+        @PositiveOrZero
         private Integer eachScore;
+
+        @NotNull
+        @Positive
         private Integer maxScore;
 
         public DetailsDTO() {
