@@ -18,21 +18,21 @@
         <div id="wrapper">
             <div th:replace="fragments/navbar_sidebar :: navbar_sidebar"></div>
             <div id="page-wrapper" style="min-height: 808px;">
-                <div th:each="entry : ${orgFilesMap}">
+                <br/>
+                <div th:each="entry, stat : ${orgFilesMap}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
+                                    <div class="panel-heading" role="tab" th:id="'heading' + ${stat.count}">
                                         <h4 class="panel-title">
                                             <a role="button" data-toggle="collapse" data-parent="#accordion"
-                                               href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                <p th:text="${entry.getKey().getName()}"></p>
+                                               th:href="'#collapse' + ${stat.count}">
+                                                <p th:text="${entry.getKey().getName() + '（点击展开）'}"></p>
                                             </a>
                                         </h4>
                                     </div>
-                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
-                                         aria-labelledby="headingOne">
+                                    <div th:id="'collapse' + ${stat.count}" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <table class="table table-hover">
                                                 <thead>
@@ -73,5 +73,6 @@
                     </div>
                 </div>
             </div>
+        </div>
     </body>
 </html>
