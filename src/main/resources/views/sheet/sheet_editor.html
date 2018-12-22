@@ -22,7 +22,7 @@
             <form th:action="${#httpServletRequest.getParameter('seq')} != null ? '/sheet/update?seq='+ ${#httpServletRequest.getParameter('seq')} :'/sheet'"
                   th:object="${sheet}" method="post">
                 <div>
-                    <h3><input class="form-control input-lg text-center" placeholder="请输入标题" name="name"
+                    <h3><input class="form-control input-lg text-center" required="required" placeholder="请输入标题" name="name"
                                th:field="*{name}"/></h3>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger"></p>
                 </div>
@@ -40,9 +40,9 @@
                         <tbody>
                             <tr th:each="phase, phaseStat : *{phaseDTOs}">
                                 <td class="col-sm-2">
-                                    名称：<input class="form-control input-sm" type="text"
+                                    名称：<input class="form-control input-sm" type="text" required="required"
                                               th:field="*{phaseDTOs[__${phaseStat.index}__].name}"/>
-                                    最高可得：<input class="form-control input-sm" type="number"
+                                    最高可得：<input class="form-control input-sm" type="number" min="0" required="required"
                                                 th:field="*{phaseDTOs[__${phaseStat.index}__].maxScore}"/>
                                     <br/>
                                     <button class="btn btn-sm btn-danger" name="removePhase" type="submit"
@@ -55,11 +55,11 @@
                                 <td>
                                     <ul th:each="details, detailsStat : ${phase.detailsDTOs}">
                                         <li>
-                                            评分标准：<input class="form-control input-sm" type="text"
+                                            评分标准：<input class="form-control input-sm" type="text" required="required"
                                                         th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].description}"/>
-                                            每项可得：<input class="form-control input-sm" type="number"
+                                            每项可得：<input class="form-control input-sm" type="number" min="0" required="required"
                                                         th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].eachScore}"/>
-                                            最高可得：<input class="form-control input-sm" type="number"
+                                            最高可得：<input class="form-control input-sm" type="number" min="0" required="required"
                                                         th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].maxScore}"/>
                                             <br/>
                                             <button class="btn btn-sm btn-danger" name="removeDetails" type="submit"
