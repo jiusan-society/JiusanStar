@@ -1,6 +1,7 @@
 package gov.jiusan.star.sheetplan;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -44,6 +45,13 @@ public class SheetPlanService {
             .filter(p -> p.getCreateTime().get(Calendar.YEAR) == now.get(Calendar.YEAR))
             .sorted(Comparator.comparing(SheetPlan::getCreateTime).reversed())
             .collect(Collectors.toList());
+    }
+
+    // TODO 待补充逻辑
+    // 每年的 1 月 1 日 0 时 0 分 0 秒，使原本的 sheetPlan 失效
+    @Scheduled(cron = "0 0 0 1 JAN ? *")
+    private void invalidateCurrent() {
+
     }
 
 }
