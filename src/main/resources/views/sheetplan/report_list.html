@@ -21,6 +21,13 @@
                 th:src="@{/vendor/highcharts/js/offline-exporting.js}"></script>
         <script src="../../static/vendor/highcharts/js/export-data.js"
                 th:src="@{/vendor/highcharts/js/export-data.js}"></script>
+        <style type="text/css">
+            @media print {
+                .areaToHide {
+                    display: none;
+                }
+            }
+        </style>
     </head>
     <body>
         <div id="wrapper">
@@ -29,8 +36,24 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header" th:text="统计图表"></h1>
+                        <button class="areaToHide btn btn-success" onclick="printArea()">打印此页所有图表</button>
                     </div>
+                    <script>
+                        function printArea() {
+                            // 取得原始的长宽
+                            let containerWidth = $("#hc-container-finish-info").highcharts().chartWidth;
+                            let containerHeight = $("#hc-container-finish-info").highcharts().chartHeight;
+                            // resize 并 print, 否则 print 预览无法显示全部的图表信息
+                            $("#hc-container-finish-info").highcharts().setSize(600, 400, false);
+                            $("#hc-container-rating-info").highcharts().setSize(600, 400, false);
+                            window.print();
+                            // after print, restore
+                            $("#hc-container-finish-info").highcharts().setSize(containerWidth, containerHeight, false);
+                            $("#hc-container-rating-info").highcharts().setSize(containerWidth, containerHeight, false);
+                        }
+                    </script>
                 </div>
+                <br/>
                 <div class="row">
                     <div id="hc-container-finish-info" class="col-lg-12"></div>
                 </div>
