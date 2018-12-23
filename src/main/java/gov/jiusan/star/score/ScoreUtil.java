@@ -1,6 +1,7 @@
 package gov.jiusan.star.score;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import gov.jiusan.star.org.OrgUtil;
 import gov.jiusan.star.score.model.ScoreDTO;
 import gov.jiusan.star.util.JacksonUtil;
 
@@ -36,7 +37,7 @@ public class ScoreUtil {
     static ScoreDTO convert(Score score) {
         ScoreDTO dto = new ScoreDTO();
         dto.setSeq(score.getSeq());
-        dto.setOrgName(score.getOrg().getName());
+        dto.setOrg(OrgUtil.convert(score.getOrg()));
         Map<Long, Integer> sADetails = JacksonUtil.toObj(score.getsADetails(), new TypeReference<Map<Long, Integer>>() {
         }).get();
         dto.setsADetails(sADetails);

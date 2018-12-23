@@ -72,15 +72,20 @@
                                                     <tr th:class="${score.isFinished() ? 'success' : ''}"
                                                         th:each="score, stat : ${scoresOfPlan.get(entry.getValue().getSheetName())}">
                                                         <td th:text="${stat.count}"></td>
-                                                        <td th:text="${score.getOrgName()}"></td>
+                                                        <td th:text="${score.org.name}"></td>
                                                         <td>
+                                                            <button class="btn btn-sm btn-success"
+                                                                    th:onclick="'javascript:viewDocs('+${score.org.seq}+')'">
+                                                                审查资料
+                                                            </button>
                                                             <button class="btn btn-sm btn-primary"
                                                                     th:disabled="${!score.issAFinished()}"
                                                                     th:onclick="'javascript:rate('+${score.seq}+')'">考评
                                                             </button>
                                                             <button class="btn btn-sm btn-primary"
                                                                     th:disabled="${!score.issAFinished()}"
-                                                                    th:onclick="'javascript:view('+${score.seq}+')'">查看
+                                                                    th:onclick="'javascript:viewScore('+${score.seq}+')'">
+                                                                查看
                                                             </button>
                                                         </td>
                                                         <td>
@@ -136,12 +141,17 @@
                                                             </th:block>
                                                         </td>
                                                         <script>
+                                                            function viewDocs(seq) {
+                                                                let url = "/file/list/org?seq=" + seq;
+                                                                window.open(url, "_blank");
+                                                            }
+
                                                             function rate(seq) {
                                                                 let url = "/score/editor/aa?seq=" + seq;
                                                                 window.open(url, "_blank");
                                                             }
 
-                                                            function view(seq) {
+                                                            function viewScore(seq) {
                                                                 let url = "/score?seq=" + seq;
                                                                 window.open(url, "_blank");
                                                             }

@@ -1,5 +1,7 @@
 package gov.jiusan.star.score.model;
 
+import gov.jiusan.star.org.model.OrgDTO;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Map;
@@ -11,7 +13,7 @@ public class ScoreDTO implements Serializable {
 
     private Long seq;
 
-    private String orgName;
+    private OrgDTO org;
 
     private boolean sAFinished;
 
@@ -50,12 +52,12 @@ public class ScoreDTO implements Serializable {
         this.seq = seq;
     }
 
-    public String getOrgName() {
-        return orgName;
+    public OrgDTO getOrg() {
+        return org;
     }
 
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
+    public void setOrg(OrgDTO org) {
+        this.org = org;
     }
 
     public boolean issAFinished() {

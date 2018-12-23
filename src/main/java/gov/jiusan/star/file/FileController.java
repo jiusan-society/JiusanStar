@@ -30,7 +30,9 @@ import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * @author Marcus Lin
@@ -51,15 +53,38 @@ public class FileController {
     }
 
     @GetMapping(path = "list/own")
-    public String getOwnFiles(Model model, @LoggedUser CustomUserDetails user) {
+    public String findOwnFiles(Model model, @LoggedUser CustomUserDetails user) {
         String dir = rootDir + user.getOrg().getCode();
         model.addAttribute("files", fService.getDirFiles(dir));
         return "file/file_list_own";
     }
 
+    @GetMapping(path = "list/org")
+    public String findOrgFilesByCode(@RequestParam("seq") Long seq, Model model, @LoggedUser CustomUserDetails user) {
+        // seq 不存在时，返回错误页面
+        if (seq == null) {
+            return "error";
+        }
+        // 所查组织不属于自己可见范围内时，返回错误页面
+        List<Long> subOrgSeqs = oService.findOrgsByParentCode(user.getOrg().getCode()).stream().map(Org::getSeq).collect(Collectors.toList());
+        if (!subOrgSeqs.contains(seq)) {
+            return "error";
+        }
+        // seq 有误时导致找不到组织时，返回错误页面
+        Optional<Org> org = oService.findOrgBySeq(seq);
+        if (!org.isPresent()) {
+            return "error";
+        }
+        // 取出这个 org 下的文件并返回
+        String dir = rootDir + org.get().getCode();
+        model.addAttribute("orgName", org.get().getName());
+        model.addAttribute("files", fService.getDirFiles(dir));
+        return "file/file_list_org";
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_L1_ADM', 'ROLE_L2_ADM')")
     @GetMapping(path = "list/children")
-    public String getChildrenFiles(Model model, @LoggedUser CustomUserDetails user) {
+    public String findChildrenFiles(Model model, @LoggedUser CustomUserDetails user) {
         List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
         Map<OrgDTO, List<File>> orgFilesMap = new TreeMap<>();
         for (Org org : subOrgs) {

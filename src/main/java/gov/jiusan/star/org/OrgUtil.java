@@ -9,6 +9,7 @@ public class OrgUtil {
 
     public static OrgDTO convert(Org org) {
         OrgDTO dto = new OrgDTO();
+        dto.setSeq(org.getSeq());
         dto.setCode(org.getCode());
         dto.setName(org.getName());
         return dto;

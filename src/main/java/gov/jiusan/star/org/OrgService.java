@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Marcus Lin
@@ -30,8 +31,12 @@ public class OrgService {
         return repository.save(org);
     }
 
-    public Org findByCode(String code) {
-        return repository.findByCode(code);
+    public Optional<Org> findOrgBySeq(Long seq) {
+        return Optional.ofNullable(repository.findOne(seq));
+    }
+
+    public Optional<Org> findOrgByCode(String code) {
+        return Optional.ofNullable(repository.findByCode(code));
     }
 
 }
