@@ -15,6 +15,12 @@
                 th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
         <script src="../../static/vendor/highcharts/js/highcharts.js"
                 th:src="@{/vendor/highcharts/js/highcharts.js}"></script>
+        <script src="../../static/vendor/highcharts/js/exporting.js"
+                th:src="@{/vendor/highcharts/js/exporting.js}"></script>
+        <script src="../../static/vendor/highcharts/js/offline-exporting.js"
+                th:src="@{/vendor/highcharts/js/offline-exporting.js}"></script>
+        <script src="../../static/vendor/highcharts/js/export-data.js"
+                th:src="@{/vendor/highcharts/js/export-data.js}"></script>
     </head>
     <body>
         <div id="wrapper">
@@ -28,6 +34,7 @@
                 <div class="row">
                     <div id="hc-container-finish-info" class="col-lg-12"></div>
                 </div>
+                <br/>
                 <div class="row">
                     <div id="hc-container-rating-info" class="col-lg-12"></div>
                 </div>
@@ -57,7 +64,24 @@
                                 name: entry['key'] + " 年",
                                 data: [value['totalNum'], value['completeNum'], value['incompleteNum']]
                             }
-                        })
+                        }),
+                        exporting: {
+                            filename: "评定完成情况图示"
+                        },
+                        lang: {
+                            contextButtonTitle: "图表导出菜单",
+                            downloadJPEG: "下载 JPEG 图片",
+                            downloadPDF: "下载 PDF 文件",
+                            downloadPNG: "下载 PNG 文件",
+                            downloadSVG: "下载 SVG 文件",
+                            printChart: "打印图表",
+                            downloadCSV: '下载 CSV 文件',
+                            downloadXLS: '下载 XLS 文件',
+                            viewData: '查看数据表格'
+                        },
+                        credits: {
+                            text: '九三学社星级组织评定系统'
+                        }
                     };
                     // 图表初始化函数
                     Highcharts.chart('hc-container-finish-info', options);
@@ -89,7 +113,24 @@
                                 name: entry['key'] + " 年",
                                 data: [value['lv5Num'], value['lv4Num'], value['lv3Num'], value['qualifiedNum'], value['unqualifiedNum']]
                             }
-                        })
+                        }),
+                        exporting: {
+                            filename: "评定等级情况图"
+                        },
+                        lang: {
+                            contextButtonTitle: "图表导出菜单",
+                            downloadJPEG: "下载 JPEG 图片",
+                            downloadPDF: "下载 PDF 文件",
+                            downloadPNG: "下载 PNG 文件",
+                            downloadSVG: "下载 SVG 文件",
+                            printChart: "打印图表",
+                            downloadCSV: '下载 CSV 文件',
+                            downloadXLS: '下载 XLS 文件',
+                            viewData: '查看数据表格'
+                        },
+                        credits: {
+                            text: '九三学社星级组织评定系统'
+                        }
                     };
                     // 图表初始化函数
                     Highcharts.chart('hc-container-rating-info', options);
