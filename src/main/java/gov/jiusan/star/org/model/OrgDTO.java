@@ -12,6 +12,7 @@ public class OrgDTO implements Comparable<OrgDTO>, Serializable {
     private Long seq;
     private String code;
     private String name;
+    private boolean fileExisted;
 
     public OrgDTO() {
     }
@@ -44,5 +45,13 @@ public class OrgDTO implements Comparable<OrgDTO>, Serializable {
     public int compareTo(OrgDTO o) {
         Collator collator = Collator.getInstance(Locale.CHINA);
         return collator.compare(this.name, o.getName());
+    }
+
+    public boolean isFileExisted() {
+        return fileExisted;
+    }
+
+    public void setFileExisted(boolean fileExisted) {
+        this.fileExisted = fileExisted;
     }
 }

@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
  * @author Marcus Lin
  */
 @Service
-public class FileService {
+public class FileUtil {
 
-    public List<File> getDirFiles(String dirName) {
+    public static List<File> getDirFiles(String dirName) {
         File dir = new File(dirName);
         return Arrays.stream(Objects.requireNonNull(dir.listFiles()))
             .sorted(Comparator.comparing(File::lastModified).reversed())
             .collect(Collectors.toList());
     }
 
-    public List<File> getDirFiles(File dir) {
+    public static List<File> getDirFiles(File dir) {
         return Arrays.stream(Objects.requireNonNull(dir.listFiles()))
             .sorted(Comparator.comparing(File::lastModified).reversed())
             .collect(Collectors.toList());

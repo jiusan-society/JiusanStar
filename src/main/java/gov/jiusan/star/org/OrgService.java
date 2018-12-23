@@ -1,6 +1,8 @@
 package gov.jiusan.star.org;
 
+import gov.jiusan.star.file.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +13,9 @@ import java.util.Optional;
  */
 @Service
 public class OrgService {
+
+    @Value("${app.root-dir}")
+    private String rootDir;
 
     private final OrgRepository repository;
 
@@ -37,6 +42,10 @@ public class OrgService {
 
     public Optional<Org> findOrgByCode(String code) {
         return Optional.ofNullable(repository.findByCode(code));
+    }
+
+    public void loadFiles(Org org) {
+        org.setFiles(FileUtil.getDirFiles(rootDir + org.getCode()));
     }
 
 }

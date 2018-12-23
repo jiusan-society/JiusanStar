@@ -12,6 +12,9 @@ public class OrgUtil {
         dto.setSeq(org.getSeq());
         dto.setCode(org.getCode());
         dto.setName(org.getName());
+        if (org.getFiles() != null && !org.getFiles().isEmpty()) {
+            dto.setFileExisted(true);
+        }
         return dto;
     }
 }

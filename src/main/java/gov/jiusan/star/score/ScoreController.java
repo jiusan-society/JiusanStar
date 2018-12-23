@@ -74,6 +74,8 @@ public class ScoreController {
         String userAccount = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = uService.findUserByUsername(userAccount);
         List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
+        // 加载各个组织的资料列表
+        subOrgs.forEach(oService::loadFiles);
         // K -> SheetPlan's name, V -> sub orgs' score of this SheetPlan
         Map<String, List<ScoreDTO>> scoresOfPlan = new TreeMap<>();
         subOrgs.stream()

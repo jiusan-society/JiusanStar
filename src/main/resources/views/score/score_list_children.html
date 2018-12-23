@@ -75,6 +75,7 @@
                                                         <td th:text="${score.org.name}"></td>
                                                         <td>
                                                             <button class="btn btn-sm btn-success"
+                                                                    th:disabled="${!score.org.isFileExisted()}"
                                                                     th:onclick="'javascript:viewDocs('+${score.org.seq}+')'">
                                                                 审查资料
                                                             </button>

@@ -10,7 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -42,6 +45,9 @@ public class Org implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "org", orphanRemoval = true)
     private List<User> users;
+
+    @Transient
+    private List<File> files;
 
     public Org() {
     }
@@ -100,5 +106,18 @@ public class Org implements Serializable {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
+
+    @PostLoad
+    private void clear() {
+        this.files = null;
     }
 }

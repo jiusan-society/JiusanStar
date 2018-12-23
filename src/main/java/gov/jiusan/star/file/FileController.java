@@ -42,20 +42,18 @@ import java.util.stream.Collectors;
 public class FileController {
 
     private final OrgService oService;
-    private final FileService fService;
     @Value("${app.root-dir}")
     private String rootDir;
 
     @Autowired
-    public FileController(OrgService oService, FileService fService) {
+    public FileController(OrgService oService) {
         this.oService = oService;
-        this.fService = fService;
     }
 
     @GetMapping(path = "list/own")
     public String findOwnFiles(Model model, @LoggedUser CustomUserDetails user) {
         String dir = rootDir + user.getOrg().getCode();
-        model.addAttribute("files", fService.getDirFiles(dir));
+        model.addAttribute("files", FileUtil.getDirFiles(dir));
         return "file/file_list_own";
     }
 
@@ -78,7 +76,7 @@ public class FileController {
         // 取出这个 org 下的文件并返回
         String dir = rootDir + org.get().getCode();
         model.addAttribute("orgName", org.get().getName());
-        model.addAttribute("files", fService.getDirFiles(dir));
+        model.addAttribute("files", FileUtil.getDirFiles(dir));
         return "file/file_list_org";
     }
 
@@ -89,7 +87,7 @@ public class FileController {
         Map<OrgDTO, List<File>> orgFilesMap = new TreeMap<>();
         for (Org org : subOrgs) {
             String dir = rootDir + org.getCode();
-            orgFilesMap.put(OrgUtil.convert(org), fService.getDirFiles(dir));
+            orgFilesMap.put(OrgUtil.convert(org), FileUtil.getDirFiles(dir));
         }
         model.addAttribute("orgFilesMap", orgFilesMap);
         return "file/file_list_children";
