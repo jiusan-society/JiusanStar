@@ -93,6 +93,19 @@ public class FileController {
         return "file/file_list_children";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_L1_ADM')")
+    @GetMapping(path = "list/children/all")
+    public String findAllOrgsFiles(Model model, @LoggedUser CustomUserDetails user) {
+        List<Org> allOrgs = oService.findNonRootOrgs();
+        Map<OrgDTO, List<File>> orgFilesMap = new TreeMap<>();
+        for (Org org : allOrgs) {
+            String dir = rootDir + org.getCode();
+            orgFilesMap.put(OrgUtil.convert(org), FileUtil.getDirFiles(dir));
+        }
+        model.addAttribute("orgFilesMap", orgFilesMap);
+        return "file/file_list_children";
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @GetMapping(path = "delete")
     public String deleteFile(@RequestParam("name") String name, @LoggedUser CustomUserDetails user) {
