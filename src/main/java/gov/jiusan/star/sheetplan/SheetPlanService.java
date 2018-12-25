@@ -29,12 +29,7 @@ public class SheetPlanService {
         return repository.save(sheetPlan);
     }
 
-    List<SheetPlan> findAll() {
-        List<SheetPlan> sheetPlans = repository.findAll();
-        sheetPlans.sort(Comparator.comparing(SheetPlan::getCreateTime).reversed());
-        return sheetPlans;
-    }
-
+    // 每年只会有一个生效的 plan
     public List<SheetPlan> findEffectives() {
         return repository.findSheetPlanByEffectiveIsTrue();
     }
@@ -47,11 +42,11 @@ public class SheetPlanService {
             .collect(Collectors.toList());
     }
 
-    // TODO 待补充逻辑
-    // 每年的 1 月 1 日 0 时 0 分 0 秒，使原本的 sheetPlan 失效
+    // TODO 没完成的那些 score 应该标记为 "不合格"
+    // 每年的 1 月 1 日 0 时 0 分 0 秒执行，使当前的 plan 变为 "已逾期" 状态
     @Scheduled(cron = "0 0 0 1 JAN ?")
     private void invalidateCurrent() {
-
+        findEffectives().forEach(p -> p.setStatus(SheetPlanStatus.EXPIRED));
     }
 
 }

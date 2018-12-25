@@ -80,7 +80,7 @@
                                                                 审查资料
                                                             </button>
                                                             <button class="btn btn-sm btn-primary"
-                                                                    th:disabled="${!score.issAFinished()}"
+                                                                    th:disabled="${!score.issAFinished() || score.plan.status.name() == 'EXPIRED'}"
                                                                     th:onclick="'javascript:rate('+${score.seq}+')'">考评
                                                             </button>
                                                             <button class="btn btn-sm btn-primary"

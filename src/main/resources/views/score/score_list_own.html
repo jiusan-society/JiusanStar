@@ -39,12 +39,28 @@
                             <tbody>
                                 <tr th:each="score, stat : ${scores}">
                                     <td th:text="${stat.count}"></td>
-                                    <td th:text="${score.getSheetPlan().getSheet().getName()}"></td>
-                                    <td th:text="${#dates.format(score.getSheetPlan().getEffectiveTime(), 'yyyy-MM-dd HH:mm')}"></td>
-                                    <td th:text="${#dates.format(score.getSheetPlan().getExpirationTime(), 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${score.plan.sheetName}"></td>
+                                    <td th:text="${#dates.format(score.plan.effectiveTime, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${#dates.format(score.plan.expirationTime, 'yyyy-MM-dd HH:mm')}"></td>
                                     <td>
-                                        <a class="btn btn-sm btn-primary" th:href="@{/score/editor/sa(seq=${score.seq})}" target="_blank">自评</a>
-                                        <a class="btn btn-sm btn-primary" th:href="@{/score(seq=${score.seq})}" target="_blank">查看</a>
+                                        <button class="btn btn-sm btn-primary"
+                                                th:disabled="${score.plan.status.name() == 'EXPIRED'}"
+                                                th:onclick="'javascript:rate('+${score.seq}+')'">自评
+                                        </button>
+                                        <button class="btn btn-sm btn-primary"
+                                                th:onclick="'javascript:viewScore('+${score.seq}+')'">查看
+                                        </button>
+                                        <script>
+                                            function rate(seq) {
+                                                let url = "/score/editor/sa?seq=" + seq;
+                                                window.open(url, "_blank");
+                                            }
+
+                                            function viewScore(seq) {
+                                                let url = "/score?seq=" + seq;
+                                                window.open(url, "_blank");
+                                            }
+                                        </script>
                                     </td>
                                 </tr>
                             </tbody>

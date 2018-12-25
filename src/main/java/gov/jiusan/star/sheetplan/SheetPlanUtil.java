@@ -1,8 +1,12 @@
 package gov.jiusan.star.sheetplan;
 
+import gov.jiusan.star.score.Score;
 import gov.jiusan.star.score.ScoreUtil;
 import gov.jiusan.star.sheetplan.model.ReportDTO;
 import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * @author Marcus Lin
@@ -22,14 +26,15 @@ public class SheetPlanUtil {
     }
 
     static ReportDTO convertToReport(SheetPlan plan) {
-        int totalNum = plan.getScores().size();
-        int completeNum = (int) plan.getScores().stream().filter(ScoreUtil::isFinished).count();
+        List<Score> scores = plan.getScores();
+        int totalNum = scores.size();
+        int completeNum = getCounts(scores, ScoreUtil::isFinished);
         int incompleteNum = totalNum - completeNum;
-        int lv5Num = (int) plan.getScores().stream().filter(s -> ScoreUtil.computeRank(s) == ScoreUtil.RANK_LV_5).count();
-        int lv4Num = (int) plan.getScores().stream().filter(s -> ScoreUtil.computeRank(s) == ScoreUtil.RANK_LV_4).count();
-        int lv3Num = (int) plan.getScores().stream().filter(s -> ScoreUtil.computeRank(s) == ScoreUtil.RANK_LV_3).count();
-        int qualifiedNum = (int) plan.getScores().stream().filter(s -> ScoreUtil.computeRank(s) == ScoreUtil.RANK_QUALIFIED).count();
-        int unqualifiedNum = (int) plan.getScores().stream().filter(s -> ScoreUtil.computeRank(s) == ScoreUtil.RANK_UNQUALIFIED).count();
+        int lv5Num = getCounts(scores, s -> ScoreUtil.computeRank(s) == ScoreUtil.RANK_LV_5);
+        int lv4Num = getCounts(scores, s -> ScoreUtil.computeRank(s) == ScoreUtil.RANK_LV_4);
+        int lv3Num = getCounts(scores, s -> ScoreUtil.computeRank(s) == ScoreUtil.RANK_LV_3);
+        int qualifiedNum = getCounts(scores, s -> ScoreUtil.computeRank(s) == ScoreUtil.RANK_QUALIFIED);
+        int unqualifiedNum = getCounts(scores, s -> ScoreUtil.computeRank(s) == ScoreUtil.RANK_UNQUALIFIED);
         ReportDTO report = new ReportDTO();
         report.setTotalNum(totalNum);
         report.setCompleteNum(completeNum);
@@ -40,5 +45,13 @@ public class SheetPlanUtil {
         report.setQualifiedNum(qualifiedNum);
         report.setUnqualifiedNum(unqualifiedNum);
         return report;
+    }
+
+    private static int getCounts(List<Score> scores, Predicate<Score> predicate) {
+        return (int) scores.stream().filter(predicate).count();
+    }
+
+    public static boolean isExpired(SheetPlan plan) {
+        return SheetPlanStatus.EXPIRED == plan.getStatus();
     }
 }

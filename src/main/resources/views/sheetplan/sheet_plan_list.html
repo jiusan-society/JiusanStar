@@ -31,7 +31,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>评分表名称</th>
-                                        <th>是否可用</th>
+                                        <th>状态</th>
                                         <th>生效时间</th>
                                         <th>失效时间</th>
                                         <th>完成情况</th>
@@ -39,7 +39,7 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="sP, sPStat : ${entry.getValue()}"
-                                        th:class="${sP.effective ? 'success' : 'danger'}">
+                                        th:class="${sP.status.name() == 'EXPIRED' ? 'danger' : 'success'}">
                                         <td>
                                             <p th:text="${sPStat.count}"></p>
                                         </td>
@@ -47,8 +47,7 @@
                                             <p th:text="${sP.sheetName}"></p>
                                         </td>
                                         <td>
-                                            <i th:if="${sP.effective}" class="fa fa-check"></i>
-                                            <i th:unless="${sP.effective}" class="fa fa-times"></i>
+                                            <p th:text="${sP.status.name()}"></p>
                                         </td>
                                         <td>
                                             <p th:text="${#dates.format(sP.effectiveTime, 'yyyy-MM-dd HH:mm:ss')}"></p>

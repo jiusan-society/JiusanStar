@@ -3,6 +3,7 @@ package gov.jiusan.star.score;
 import com.fasterxml.jackson.core.type.TypeReference;
 import gov.jiusan.star.org.OrgUtil;
 import gov.jiusan.star.score.model.ScoreDTO;
+import gov.jiusan.star.sheetplan.SheetPlanUtil;
 import gov.jiusan.star.util.JacksonUtil;
 
 import java.util.Map;
@@ -38,6 +39,7 @@ public class ScoreUtil {
         ScoreDTO dto = new ScoreDTO();
         dto.setSeq(score.getSeq());
         dto.setOrg(OrgUtil.convert(score.getOrg()));
+        dto.setPlan(SheetPlanUtil.convert(score.getSheetPlan()));
         Map<Long, Integer> sADetails = JacksonUtil.toObj(score.getsADetails(), new TypeReference<Map<Long, Integer>>() {
         }).get();
         dto.setsADetails(sADetails);
@@ -74,7 +76,7 @@ public class ScoreUtil {
      */
     public static int computeRank(Score score) {
         int rank = RANK_NOT_AVAILABLE;
-        if (score.getFinalScore() != null) {
+        if (isFinished(score) && score.getFinalScore() != null) {
             double s = score.getFinalScore();
             if (s < 60) {
                 rank = RANK_UNQUALIFIED;

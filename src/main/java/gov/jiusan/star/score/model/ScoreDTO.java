@@ -1,6 +1,7 @@
 package gov.jiusan.star.score.model;
 
 import gov.jiusan.star.org.model.OrgDTO;
+import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -12,6 +13,8 @@ import java.util.Map;
 public class ScoreDTO implements Serializable {
 
     private Long seq;
+
+    private SheetPlanDTO plan;
 
     private OrgDTO org;
 
@@ -50,6 +53,14 @@ public class ScoreDTO implements Serializable {
 
     public void setSeq(Long seq) {
         this.seq = seq;
+    }
+
+    public SheetPlanDTO getPlan() {
+        return plan;
+    }
+
+    public void setPlan(SheetPlanDTO plan) {
+        this.plan = plan;
     }
 
     public OrgDTO getOrg() {

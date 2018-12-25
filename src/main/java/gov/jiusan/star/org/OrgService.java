@@ -40,10 +40,6 @@ public class OrgService {
         return Optional.ofNullable(repository.findOne(seq));
     }
 
-    public Optional<Org> findOrgByCode(String code) {
-        return Optional.ofNullable(repository.findByCode(code));
-    }
-
     public void loadFiles(Org org) {
         org.setFiles(FileUtil.getDirFiles(rootDir + org.getCode()));
     }

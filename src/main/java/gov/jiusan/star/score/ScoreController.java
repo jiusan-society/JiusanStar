@@ -55,8 +55,9 @@ public class ScoreController {
     public String findOwnEffectiveScores(Model model) {
         String userAccount = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = uService.findUserByUsername(userAccount);
-        List<Score> scores = user.getOrg().getScores().stream()
+        List<ScoreDTO> scores = user.getOrg().getScores().stream()
             .filter(s -> s.getSheetPlan().isEffective())
+            .map(ScoreUtil::convert)
             .collect(Collectors.toList());
         model.addAttribute("scores", scores);
         return "score/score_list_own";
@@ -90,6 +91,10 @@ public class ScoreController {
     @GetMapping(path = "editor/sa")
     public String editSAScore(@RequestParam("seq") Long seq, Model model) {
         Score score = sService.find(seq);
+        // plan 逾期后 score 不能再编辑
+        if (SheetPlanUtil.isExpired(score.getSheetPlan())) {
+            return "error";
+        }
         model.addAttribute("sheet", SheetUtil.convert(score.getSheetPlan().getSheet()));
         model.addAttribute("score", ScoreUtil.convert(score));
         return "score/score_editor_sa";
@@ -99,6 +104,10 @@ public class ScoreController {
     @GetMapping(path = "editor/aa")
     public String editAAScore(@RequestParam("seq") Long seq, Model model) {
         Score score = sService.find(seq);
+        // plan 逾期后 score 不能再编辑
+        if (SheetPlanUtil.isExpired(score.getSheetPlan())) {
+            return "error";
+        }
         model.addAttribute("sheet", SheetUtil.convert(score.getSheetPlan().getSheet()));
         model.addAttribute("score", ScoreUtil.convert(score));
         return "score/score_editor_aa";
@@ -115,9 +124,13 @@ public class ScoreController {
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @PostMapping(path = "update/sa")
     public String updateSAScore(@RequestParam("seq") Long seq, ScoreDTO scoreDTO) {
-        int sATotalScore = scoreDTO.getsADetails().values().stream().mapToInt(score -> score).sum();
-        String sADetailsString = JacksonUtil.toString(scoreDTO.getsADetails()).get();
         Score score = sService.find(seq);
+        // plan 逾期后 score 不能再编辑
+        if (SheetPlanUtil.isExpired(score.getSheetPlan())) {
+            return "error";
+        }
+        int sATotalScore = scoreDTO.getsADetails().values().stream().mapToInt(s -> s).sum();
+        String sADetailsString = JacksonUtil.toString(scoreDTO.getsADetails()).get();
         score.setsATotalScore(sATotalScore);
         score.setsADetails(sADetailsString);
         score.setsAFinished(true);
@@ -129,9 +142,13 @@ public class ScoreController {
     @PreAuthorize("hasAnyRole('ROLE_L1_ADM', 'ROLE_L2_ADM')")
     @PostMapping(path = "update/aa")
     public String updateAAScore(@RequestParam("seq") Long seq, ScoreDTO scoreDTO) {
-        int aATotalScore = scoreDTO.getaADetails().values().stream().mapToInt(score -> score).sum();
-        String aADetailsString = JacksonUtil.toString(scoreDTO.getaADetails()).get();
         Score score = sService.find(seq);
+        // plan 逾期后 score 不能再编辑
+        if (SheetPlanUtil.isExpired(score.getSheetPlan())) {
+            return "error";
+        }
+        int aATotalScore = scoreDTO.getaADetails().values().stream().mapToInt(s -> s).sum();
+        String aADetailsString = JacksonUtil.toString(scoreDTO.getaADetails()).get();
         score.setaATotalScore(aATotalScore);
         score.setaADetails(aADetailsString);
         score.setaAFinished(true);

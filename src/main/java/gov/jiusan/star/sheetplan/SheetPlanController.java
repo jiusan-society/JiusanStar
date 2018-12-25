@@ -48,7 +48,7 @@ public class SheetPlanController {
      */
     @RequestMapping(path = "reports")
     public String findReport(Model model) {
-        List<SheetPlan> plans = service.findAll().stream().filter(SheetPlan::isEffective).collect(Collectors.toList());
+        List<SheetPlan> plans = service.findEffectives();
         Map<Integer, ReportDTO> reportsOfYear = new TreeMap<>(Collections.reverseOrder());
         plans.forEach(p -> reportsOfYear.put(p.getEffectiveTime().get(Calendar.YEAR), SheetPlanUtil.convertToReport(p)));
         model.addAttribute("reportsOfYear", reportsOfYear);
