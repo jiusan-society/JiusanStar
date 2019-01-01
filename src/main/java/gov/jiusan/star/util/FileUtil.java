@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package gov.jiusan.star.file;
+package gov.jiusan.star.util;
 
-import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -28,7 +31,6 @@ import java.util.stream.Collectors;
 /**
  * @author Marcus Lin
  */
-@Service
 public class FileUtil {
 
     public static List<File> getDirFiles(String dirName) {
@@ -42,5 +44,26 @@ public class FileUtil {
         return Arrays.stream(Objects.requireNonNull(dir.listFiles()))
             .sorted(Comparator.comparing(File::lastModified).reversed())
             .collect(Collectors.toList());
+    }
+
+    public static void saveToFile(MultipartFile file, String dirPath) {
+        File f = new File(dirPath + file.getOriginalFilename());
+        saveToFile(file, f);
+    }
+
+    public static void saveToFile(MultipartFile file) {
+        File f = new File(file.getOriginalFilename());
+        saveToFile(file, f);
+    }
+
+    private static void saveToFile(MultipartFile file, File f) {
+        try (FileOutputStream fos = new FileOutputStream(f); BufferedInputStream bis = new BufferedInputStream(file.getInputStream())) {
+            byte[] span = new byte[256];
+            for (int len = 0; len != -1; len = bis.read(span)) {
+                fos.write(span, 0, len);
+            }
+        } catch (IOException e) {
+            // TODO 待加入 logger 机制
+        }
     }
 }

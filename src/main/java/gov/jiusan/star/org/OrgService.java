@@ -16,7 +16,7 @@
 
 package gov.jiusan.star.org;
 
-import gov.jiusan.star.file.FileUtil;
+import gov.jiusan.star.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

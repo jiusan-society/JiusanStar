@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package gov.jiusan.star.file;
+package gov.jiusan.star.doc;
 
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
@@ -22,6 +22,7 @@ import gov.jiusan.star.org.OrgUtil;
 import gov.jiusan.star.org.model.OrgDTO;
 import gov.jiusan.star.user.CustomUserDetails;
 import gov.jiusan.star.user.LoggedUser;
+import gov.jiusan.star.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -37,10 +38,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
@@ -55,14 +53,14 @@ import java.util.stream.Collectors;
  */
 @Controller
 @RequestMapping(path = "file")
-public class FileController {
+public class DocController {
 
     private final OrgService oService;
     @Value("${app.root-dir}")
     private String rootDir;
 
     @Autowired
-    public FileController(OrgService oService) {
+    public DocController(OrgService oService) {
         this.oService = oService;
     }
 
@@ -98,28 +96,29 @@ public class FileController {
 
     @PreAuthorize("hasAnyRole('ROLE_L1_ADM', 'ROLE_L2_ADM')")
     @GetMapping(path = "list/children")
-    public String findChildrenFiles(Model model, @LoggedUser CustomUserDetails user) {
+    public String findSubOrgsFiles(Model model, @LoggedUser CustomUserDetails user) {
         List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
-        Map<OrgDTO, List<File>> orgFilesMap = new TreeMap<>();
-        for (Org org : subOrgs) {
-            String dir = rootDir + org.getCode();
-            orgFilesMap.put(OrgUtil.convert(org), FileUtil.getDirFiles(dir));
-        }
+        Map<OrgDTO, List<File>> orgFilesMap = getFilesOfOrg(subOrgs);
         model.addAttribute("orgFilesMap", orgFilesMap);
         return "file/file_list_children";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_L1_ADM')")
     @GetMapping(path = "list/children/all")
-    public String findAllOrgsFiles(Model model, @LoggedUser CustomUserDetails user) {
+    public String findAllOrgsFiles(Model model) {
         List<Org> allOrgs = oService.findNonRootOrgs();
+        Map<OrgDTO, List<File>> orgFilesMap = getFilesOfOrg(allOrgs);
+        model.addAttribute("orgFilesMap", orgFilesMap);
+        return "file/file_list_children";
+    }
+
+    private Map<OrgDTO, List<File>> getFilesOfOrg(List<Org> orgs) {
         Map<OrgDTO, List<File>> orgFilesMap = new TreeMap<>();
-        for (Org org : allOrgs) {
+        for (Org org : orgs) {
             String dir = rootDir + org.getCode();
             orgFilesMap.put(OrgUtil.convert(org), FileUtil.getDirFiles(dir));
         }
-        model.addAttribute("orgFilesMap", orgFilesMap);
-        return "file/file_list_children";
+        return orgFilesMap;
     }
 
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
@@ -148,15 +147,8 @@ public class FileController {
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @PostMapping(path = "upload")
     public String uploadDocument(@RequestParam("file") MultipartFile file, @LoggedUser CustomUserDetails user) {
-        String position = rootDir + user.getOrg().getCode();
-        File f = new File(position + "/" + file.getOriginalFilename());
-        try (FileOutputStream fos = new FileOutputStream(f); BufferedInputStream bis = new BufferedInputStream(file.getInputStream())) {
-            byte[] span = new byte[256];
-            for (int len = 0; len != -1; len = bis.read(span)) {
-                fos.write(span, 0, len);
-            }
-        } catch (IOException e) {
-        }
+        String dirPath = rootDir + user.getOrg().getCode() + "/";
+        FileUtil.saveToFile(file, dirPath);
         return "redirect:/file/list/own";
     }
 
