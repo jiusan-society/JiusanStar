@@ -52,7 +52,7 @@ import java.util.stream.Collectors;
  * @author Marcus Lin
  */
 @Controller
-@RequestMapping(path = "file")
+@RequestMapping(path = "doc")
 public class DocController {
 
     private final OrgService oService;
@@ -68,7 +68,7 @@ public class DocController {
     public String findOwnFiles(Model model, @LoggedUser CustomUserDetails user) {
         String dir = rootDir + user.getOrg().getCode();
         model.addAttribute("files", FileUtil.getDirFiles(dir));
-        return "file/file_list_own";
+        return "doc/doc_list_own";
     }
 
     @GetMapping(path = "list/org")
@@ -91,7 +91,7 @@ public class DocController {
         String dir = rootDir + org.get().getCode();
         model.addAttribute("orgName", org.get().getName());
         model.addAttribute("files", FileUtil.getDirFiles(dir));
-        return "file/file_list_org";
+        return "doc/doc_list_org";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_L1_ADM', 'ROLE_L2_ADM')")
@@ -100,7 +100,7 @@ public class DocController {
         List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
         Map<OrgDTO, List<File>> orgFilesMap = getFilesOfOrg(subOrgs);
         model.addAttribute("orgFilesMap", orgFilesMap);
-        return "file/file_list_children";
+        return "doc/doc_list_children";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_L1_ADM')")
@@ -109,7 +109,7 @@ public class DocController {
         List<Org> allOrgs = oService.findNonRootOrgs();
         Map<OrgDTO, List<File>> orgFilesMap = getFilesOfOrg(allOrgs);
         model.addAttribute("orgFilesMap", orgFilesMap);
-        return "file/file_list_children";
+        return "doc/doc_list_children";
     }
 
     private Map<OrgDTO, List<File>> getFilesOfOrg(List<Org> orgs) {
@@ -129,7 +129,7 @@ public class DocController {
         if (!file.exists()) {
             return "error";
         }
-        return file.delete() ? "redirect:/file/list/own" : "error";
+        return file.delete() ? "redirect:/doc/list/own" : "error";
     }
 
     @GetMapping(path = "download")
@@ -149,7 +149,7 @@ public class DocController {
     public String uploadDocument(@RequestParam("file") MultipartFile file, @LoggedUser CustomUserDetails user) {
         String dirPath = rootDir + user.getOrg().getCode() + "/";
         FileUtil.saveToFile(file, dirPath);
-        return "redirect:/file/list/own";
+        return "redirect:/doc/list/own";
     }
 
 }

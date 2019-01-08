@@ -99,18 +99,18 @@
                             <a th:href="@{/file/list/children}"><i class="fa fa-files-o fa-fw"></i> 组织资料管理</a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a th:href="@{/file/list/children}"><i class="fa fa-sitemap fa-fw"></i> 仅直接下级组织</a>
+                                    <a th:href="@{/doc/list/children}"><i class="fa fa-sitemap fa-fw"></i> 仅直接下级组织</a>
                                 </li>
                                 <li>
-                                    <a th:href="@{/file/list/children/all}"><i class="fa fa-sitemap fa-fw"></i> 所有组织</a>
+                                    <a th:href="@{/doc/list/children/all}"><i class="fa fa-sitemap fa-fw"></i> 所有组织</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <a th:if="${#authorization.expression('hasAnyRole(''ROLE_L2_ADM'')')}"
-                               th:href="@{/file/list/children}"><i class="fa fa-files-o fa-fw"></i> 下级组织资料管理</a>
+                               th:href="@{/doc/list/children}"><i class="fa fa-files-o fa-fw"></i> 下级组织资料管理</a>
                             <a th:if="${#authorization.expression('hasAnyRole(''ROLE_L2_ADM'', ''ROLE_L3_ADM'')')}"
-                               th:href="@{/file/list/own}"><i class="fa fa-files-o fa-fw"></i> 资料管理</a>
+                               th:href="@{/doc/list/own}"><i class="fa fa-files-o fa-fw"></i> 资料管理</a>
                         </li>
                         <li th:if="${#authorization.expression('hasAnyRole(''ROLE_L1_ADM'', ''ROLE_L2_ADM'')')}">
                             <a th:href="@{/score/list/children}"><i class="fa fa-edit fa-fw"></i> 考评</a>
