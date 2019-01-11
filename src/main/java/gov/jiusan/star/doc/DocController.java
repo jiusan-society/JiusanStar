@@ -67,6 +67,7 @@ public class DocController {
     @GetMapping(path = "list/own")
     public String findOwnFiles(Model model, @LoggedUser CustomUserDetails user) {
         String dir = rootDir + user.getOrg().getCode();
+        model.addAttribute("orgCode", user.getOrg().getCode());
         model.addAttribute("files", FileUtil.getDirFiles(dir));
         return "doc/doc_list_own";
     }
@@ -90,6 +91,7 @@ public class DocController {
         // 取出这个 org 下的文件并返回
         String dir = rootDir + org.get().getCode();
         model.addAttribute("orgName", org.get().getName());
+        model.addAttribute("orgCode", org.get().getCode());
         model.addAttribute("files", FileUtil.getDirFiles(dir));
         return "doc/doc_list_org";
     }

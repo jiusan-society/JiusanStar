@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <form method="post" enctype="multipart/form-data"
-                              th:action="'/file/upload?' + ${_csrf.parameterName} + '=' + ${_csrf.token}">
+                              th:action="'/doc/upload?' + ${_csrf.parameterName} + '=' + ${_csrf.token}">
                             <input id="input-file" type="file" name="file"/>
                         </form>
                         <script>
@@ -94,8 +94,8 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-primary"
-                                           th:href="'/file/download?name=' + ${file.name}">下载</a>
-                                        <a class="btn btn-sm btn-danger" th:href="'/file/delete?name=' + ${file.name}">删除</a>
+                                           th:href="'/doc/download?path=' + ${orgCode} + '&amp;name=' + ${file.name}">下载</a>
+                                        <a class="btn btn-sm btn-danger" th:href="'/doc/delete?name=' + ${file.name}">删除</a>
                                     </td>
                                 </tr>
                             </tbody>
