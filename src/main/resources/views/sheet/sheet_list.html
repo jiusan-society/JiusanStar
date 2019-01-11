@@ -87,9 +87,10 @@
                                     </td>
                                     <script>
                                         function dispatchSheet(seq) {
+                                            let expirationYear = new Date().getFullYear() + 1;
                                             bootbox.confirm({
                                                 title: "确认派发？",
-                                                message: "派发后立即生效，截至时间为 " + new Date().getFullYear() + " 年 12 月 31 日，" +
+                                                message: "派发后立即生效，截至时间为 " + expirationYear + " 年 1 月 1 日 0 时 0 分，" +
                                                     "同一年下仅可有一张可用的评分表，重复派发将使其他已派发的评分表不可用",
                                                 buttons: {
                                                     cancel: {
