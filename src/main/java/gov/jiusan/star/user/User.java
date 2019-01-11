@@ -48,7 +48,7 @@ public class User implements Serializable {
     @Column(name = "sex_type")
     private SexType sexType;
 
-    @Column(name = "account", nullable = false)
+    @Column(name = "account", nullable = false, unique = true)
     private String account;
 
     @Column(name = "password", nullable = false)

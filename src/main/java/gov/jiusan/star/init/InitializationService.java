@@ -98,7 +98,7 @@ public class InitializationService {
             String orgName = ExcelUtil.extractStringData(r, OrgDataColumn.ORG_NAME.getColIndex());
             String orgCode = ExcelUtil.extractStringData(r, OrgDataColumn.ORG_CODE.getColIndex());
             String parentCode = ExcelUtil.extractStringData(r, OrgDataColumn.ORG_PARENT_CODE.getColIndex());
-            String rootCode = ExcelUtil.extractStringData(r, OrgDataColumn.IS_ROOT_ORG.getColIndex());
+            String rootCode = ExcelUtil.extractStringData(r, OrgDataColumn.ROOT_CODE.getColIndex());
             String username = ExcelUtil.extractStringData(r, OrgDataColumn.ADMIN_USER_NAME.getColIndex());
             String account = ExcelUtil.extractStringData(r, OrgDataColumn.ADMIN_USER_ACCOUNT.getColIndex());
             String pwd = ExcelUtil.extractStringData(r, OrgDataColumn.ADMIN_USER_PWD.getColIndex());
@@ -187,7 +187,7 @@ public class InitializationService {
         ORG_NAME(0),
         ORG_CODE(1),
         ORG_PARENT_CODE(2),
-        IS_ROOT_ORG(3),
+        ROOT_CODE(3),
         ADMIN_USER_NAME(4),
         ADMIN_USER_ACCOUNT(5),
         ADMIN_USER_PWD(6);
