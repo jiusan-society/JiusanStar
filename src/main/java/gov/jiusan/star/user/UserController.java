@@ -16,13 +16,20 @@
 
 package gov.jiusan.star.user;
 
+import gov.jiusan.star.user.model.Password;
 import gov.jiusan.star.user.model.Profile;
+import gov.jiusan.star.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+
+import java.util.Objects;
 
 /**
  * @author Marcus Lin
@@ -52,6 +59,28 @@ public class UserController {
         userDetails.getUser().setPhoneNum(model.getPhoneNum());
         repository.save(userDetails.getUser());
         return "redirect:/user/profile";
+    }
+
+    @GetMapping(path = "password")
+    public String getChangePasswordPage(Model model) {
+        model.addAttribute("password", new Password());
+        return "user/change_password";
+    }
+
+    @PostMapping(path = "password")
+    public String changePassword(@Valid Password password, BindingResult result, @LoggedUser UserDetailsImpl userDetails) {
+        if (result.hasErrors()) {
+            return "user/change_password";
+        }
+        if (!PasswordUtil.matches(password.getCurrentPwd(), userDetails.getUser().getPassword())) {
+            return "error";
+        }
+        if (!Objects.equals(password.getNewPwd(), password.getConfirmNewPwd())) {
+            return "error";
+        }
+        userDetails.getUser().setPassword(PasswordUtil.encode(password.getNewPwd()));
+        repository.save(userDetails.getUser());
+        return "redirect:/index";
     }
 
 }

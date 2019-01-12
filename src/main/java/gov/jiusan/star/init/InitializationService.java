@@ -23,13 +23,13 @@ import gov.jiusan.star.org.RoleService;
 import gov.jiusan.star.user.User;
 import gov.jiusan.star.user.UserService;
 import gov.jiusan.star.util.ExcelUtil;
+import gov.jiusan.star.util.PasswordUtil;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -75,7 +75,7 @@ public class InitializationService {
         User u = new User();
         u.setNickname(org.getAdminUserName());
         u.setAccount(org.getAdminUserAccount());
-        u.setPassword(new BCryptPasswordEncoder().encode(org.getAdminUserPassword()));
+        u.setPassword(PasswordUtil.encode(org.getAdminUserPassword()));
         return u;
     }
 
