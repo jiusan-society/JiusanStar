@@ -28,10 +28,9 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-
-import java.util.Objects;
 
 /**
  * @author Marcus Lin
@@ -73,20 +72,16 @@ public class UserController {
     }
 
     @PostMapping(path = "password")
-    public String changePassword(@Valid Password password, BindingResult result, @LoggedUser UserDetailsImpl userDetails) {
+    public String changePassword(@Valid Password password, BindingResult result, @LoggedUser UserDetailsImpl userDetails, RedirectAttributes redirAttrs) {
         validator.validate(password, result);
         if (result.hasErrors()) {
             return "user/change_password";
         }
-        if (!PasswordUtil.matches(password.getCurrentPwd(), userDetails.getUser().getPassword())) {
-            return "error";
-        }
-        if (!Objects.equals(password.getNewPwd(), password.getConfirmNewPwd())) {
-            return "error";
-        }
         userDetails.getUser().setPassword(PasswordUtil.encode(password.getNewPwd()));
         repository.save(userDetails.getUser());
-        return "redirect:/index";
+        // TODO 这边文字后面要移到 messages.properties 里
+        redirAttrs.addFlashAttribute("successMsg", "密码更新成功，将于下一次登录时生效");
+        return "redirect:/user/password";
     }
 
 }
