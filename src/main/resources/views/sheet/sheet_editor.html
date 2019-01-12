@@ -56,9 +56,9 @@
                         <tbody>
                             <tr th:each="phase, phaseStat : *{phaseDTOs}">
                                 <td class="col-sm-2">
-                                    名称：<input class="form-control input-sm" type="text" required="required"
+                                    名称：<input class="form-control input-sm" type="text"
                                               th:field="*{phaseDTOs[__${phaseStat.index}__].name}"/>
-                                    最高可得：<input class="form-control input-sm" type="number" min="0" required="required"
+                                    最高可得：<input class="form-control input-sm" type="number" min="0"
                                                 th:field="*{phaseDTOs[__${phaseStat.index}__].maxScore}"/>
                                     <br/>
                                     <button class="btn btn-sm btn-danger" name="removePhase" type="submit"
@@ -71,11 +71,11 @@
                                 <td>
                                     <ul th:each="details, detailsStat : ${phase.detailsDTOs}">
                                         <li>
-                                            评分标准：<input class="form-control input-sm" type="text" required="required"
+                                            评分标准：<input class="form-control input-sm" type="text"
                                                         th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].description}"/>
-                                            每项可得：<input class="form-control input-sm" type="number" min="0" required="required"
+                                            每项可得：<input class="form-control input-sm" type="number" min="0"
                                                         th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].eachScore}"/>
-                                            最高可得：<input class="form-control input-sm" type="number" min="0" required="required"
+                                            最高可得：<input class="form-control input-sm" type="number" min="0"
                                                         th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].maxScore}"/>
                                             <br/>
                                             <button class="btn btn-sm btn-danger" name="removeDetails" type="submit"

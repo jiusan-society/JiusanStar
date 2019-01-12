@@ -73,6 +73,7 @@ public class SheetService {
         entity.setDescription(model.getDescription());
         entity.getPhases().clear();
         entity.getPhases().addAll(model.getPhaseDTOs().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        entity.setMaxScore(entity.getPhases().stream().mapToInt(Phase::getMaxScore).sum());
         entity.setLastUpdateTime(Calendar.getInstance());
         // 更新既有的评分卷，将使今年已派发过的变作失效
         invalidatePlansInCurrentYear();
