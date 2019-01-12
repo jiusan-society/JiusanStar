@@ -74,6 +74,8 @@ public class SheetService {
         entity.getPhases().clear();
         entity.getPhases().addAll(model.getPhaseDTOs().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
         entity.setLastUpdateTime(Calendar.getInstance());
+        // 更新既有的评分卷，将使今年已派发过的变作失效
+        invalidatePlansInCurrentYear();
         return repository.save(entity);
     }
 
@@ -85,9 +87,9 @@ public class SheetService {
         return repository.findAll();
     }
 
-    public void dispatchSheet(Sheet sheet, List<Org> orgs) {
+    void dispatchSheet(Sheet sheet, List<Org> orgs) {
         // 同一年只能有一张 plan 生效
-        invalidateOtherPlansInCurrentYear();
+        invalidatePlansInCurrentYear();
         SheetPlan sheetPlan = new SheetPlan();
         sheetPlan.setSheet(sheet);
         sheetPlan.setEffective(true);
@@ -116,9 +118,11 @@ public class SheetService {
     }
 
     /**
-     * 如果同一年有其他生效的 plans，均需使它们失效
+     * 使同一年中生效的 plans 失效
+     * 1. 当重新派发评分卷时
+     * 2. 当既有的评分卷被更新时
      */
-    private void invalidateOtherPlansInCurrentYear() {
+     private void invalidatePlansInCurrentYear() {
         sPService.findByCurrentYear().stream()
             .filter(SheetPlan::isEffective)
             .forEach(p -> {

@@ -61,7 +61,7 @@ public class Sheet implements Serializable {
      * 该评分表的最高可得分
      */
     @Column(name = "max_score", nullable = false)
-    private Integer maxScore = 100;
+    private Integer maxScore;
 
     /**
      * 评分大类
