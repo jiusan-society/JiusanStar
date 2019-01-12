@@ -41,8 +41,7 @@ public class SheetUtil {
         Sheet entity = new Sheet();
         entity.setName(model.getName());
         entity.setDescription(model.getDescription());
-        // 目前均为百分制
-        entity.setMaxScore(100);
+        entity.setMaxScore(model.getPhaseDTOs().stream().mapToInt(SheetDTO.PhaseDTO::getMaxScore).sum());
         entity.setPhases(model.getPhaseDTOs().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
         return entity;
     }
