@@ -16,8 +16,6 @@
 
 package gov.jiusan.star.user.model;
 
-import javax.validation.constraints.NotBlank;
-
 import java.io.Serializable;
 
 /**
@@ -25,11 +23,8 @@ import java.io.Serializable;
  */
 public class Password implements Serializable {
 
-    @NotBlank
     private String currentPwd;
-    @NotBlank
     private String newPwd;
-    @NotBlank
     private String confirmNewPwd;
 
     public Password() {

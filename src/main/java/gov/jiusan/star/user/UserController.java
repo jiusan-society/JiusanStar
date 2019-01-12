@@ -20,9 +20,11 @@ import gov.jiusan.star.user.model.Password;
 import gov.jiusan.star.user.model.Profile;
 import gov.jiusan.star.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,9 +42,12 @@ public class UserController {
 
     private final UserRepository repository;
 
+    private final Validator validator;
+
     @Autowired
-    public UserController(UserRepository repository) {
+    public UserController(UserRepository repository, @Qualifier("passwordValidator") Validator validator) {
         this.repository = repository;
+        this.validator = validator;
     }
 
     @GetMapping(path = "profile")
@@ -69,6 +74,7 @@ public class UserController {
 
     @PostMapping(path = "password")
     public String changePassword(@Valid Password password, BindingResult result, @LoggedUser UserDetailsImpl userDetails) {
+        validator.validate(password, result);
         if (result.hasErrors()) {
             return "user/change_password";
         }
