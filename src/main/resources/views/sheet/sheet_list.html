@@ -79,13 +79,34 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-sm btn-primary" th:href="'/sheet?seq=' + ${sheet.seq}">查看</a>
-                                        <a class="btn btn-sm btn-warning" th:href="'/sheet/editor?seq=' + ${sheet.seq}">编辑</a>
+                                        <a class="btn btn-sm btn-warning" th:href="'javascript:editSheet('+${sheet.seq}+')'">编辑</a>
                                         <a class="btn btn-sm btn-warning"
                                            th:onclick="'javascript:dispatchSheet('+${sheet.seq}+')'">派发</a>
                                         <a class="btn btn-sm btn-danger"
                                            th:href="'javascript:deleteSheet('+${sheet.seq}+')'">删除</a>
                                     </td>
                                     <script>
+                                        function editSheet(seq) {
+                                            bootbox.confirm({
+                                                title: "确认编辑？",
+                                                message: "编辑后将使得同一年下已派发过的评分表不可用，需要重新再派发",
+                                                buttons: {
+                                                    cancel: {
+                                                        label: '<i class="fa fa-times"></i> 取消'
+                                                    },
+                                                    confirm: {
+                                                        label: '<i class="fa fa-check"></i> 确定'
+                                                    }
+                                                },
+                                                callback: function (result) {
+                                                    if (result) {
+                                                        let url = "/sheet/editor?seq=" + seq;
+                                                        window.location.replace(url);
+                                                    }
+                                                }
+                                            });
+                                        }
+
                                         function dispatchSheet(seq) {
                                             let expirationYear = new Date().getFullYear() + 1;
                                             bootbox.confirm({
