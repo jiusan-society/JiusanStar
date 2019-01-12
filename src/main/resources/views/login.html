@@ -24,6 +24,8 @@
               th:href="@{/dist/css/util.css}"/>
         <link rel="stylesheet" type="text/css" href="../static/dist/css/main.css"
               th:href="@{/dist/css/main.css}"/>
+        <link type="text/css" rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css"
+              th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
     </head>
     <body>
 
@@ -32,25 +34,28 @@
                 <div class="wrap-login100 p-t-50 p-b-90">
                     <form class="login100-form validate-form flex-sb flex-w" method="post" th:action="@{/login}">
 					    <span class="login100-form-title p-b-51">
-						    Login
+						    系统登录
 					    </span>
 
                         <div class="wrap-input100 validate-input m-b-16">
-                            <input class="input100" type="text" name="username" placeholder="Username"
+                            <input class="input100" type="text" name="username" placeholder="账户名"
                                    required="required"/>
                             <span class="focus-input100"></span>
                         </div>
 
 
                         <div class="wrap-input100 validate-input m-b-16">
-                            <input class="input100" type="password" name="password" placeholder="Password"
+                            <input class="input100" type="password" name="password" placeholder="密码"
                                    required="required"/>
                             <span class="focus-input100"></span>
                         </div>
 
+                        <p class="alert alert-danger" th:if="${#httpServletRequest.getParameter('error')} != null"
+                           th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></p>
+
                         <div class="container-login100-form-btn m-t-17">
                             <button class="login100-form-btn" type="submit">
-                                Login
+                                LOGIN
                             </button>
                         </div>
 
