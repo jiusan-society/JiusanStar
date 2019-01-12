@@ -39,14 +39,14 @@ public class UserController {
     }
 
     @GetMapping(path = "profile")
-    public String getProfile(Model model, @LoggedUser CustomUserDetails userDetails) {
+    public String getProfile(Model model, @LoggedUser UserDetailsImpl userDetails) {
         Profile p = UserUtil.convertToModel(userDetails.getUser());
         model.addAttribute("profile", p);
         return "user/user_profile";
     }
 
     @PostMapping(path = "profile")
-    public String updateProfile(Profile model, @LoggedUser CustomUserDetails userDetails) {
+    public String updateProfile(Profile model, @LoggedUser UserDetailsImpl userDetails) {
         userDetails.getUser().setNickname(model.getNickName());
         userDetails.getUser().setEmail(model.getEmail());
         userDetails.getUser().setPhoneNum(model.getPhoneNum());

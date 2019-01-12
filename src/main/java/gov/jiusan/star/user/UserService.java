@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(account);
         }
-        return new CustomUserDetails(user);
+        return new UserDetailsImpl(user);
     }
 
     public User findUserByUsername(String account) throws UsernameNotFoundException {

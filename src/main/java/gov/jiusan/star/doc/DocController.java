@@ -20,7 +20,7 @@ import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.org.OrgUtil;
 import gov.jiusan.star.org.model.OrgDTO;
-import gov.jiusan.star.user.CustomUserDetails;
+import gov.jiusan.star.user.UserDetailsImpl;
 import gov.jiusan.star.user.LoggedUser;
 import gov.jiusan.star.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +65,7 @@ public class DocController {
     }
 
     @GetMapping(path = "list/own")
-    public String findOwnFiles(Model model, @LoggedUser CustomUserDetails user) {
+    public String findOwnFiles(Model model, @LoggedUser UserDetailsImpl user) {
         String dir = rootDir + user.getOrg().getCode();
         model.addAttribute("orgCode", user.getOrg().getCode());
         model.addAttribute("files", FileUtil.getDirFiles(dir));
@@ -73,7 +73,7 @@ public class DocController {
     }
 
     @GetMapping(path = "list/org")
-    public String findOrgFilesByCode(@RequestParam("seq") Long seq, Model model, @LoggedUser CustomUserDetails user) {
+    public String findOrgFilesByCode(@RequestParam("seq") Long seq, Model model, @LoggedUser UserDetailsImpl user) {
         // seq 不存在时，返回错误页面
         if (seq == null) {
             return "error";
@@ -98,7 +98,7 @@ public class DocController {
 
     @PreAuthorize("hasAnyRole('ROLE_L1_ADM', 'ROLE_L2_ADM')")
     @GetMapping(path = "list/children")
-    public String findSubOrgsFiles(Model model, @LoggedUser CustomUserDetails user) {
+    public String findSubOrgsFiles(Model model, @LoggedUser UserDetailsImpl user) {
         List<Org> subOrgs = oService.findOrgsByParentCode(user.getOrg().getCode());
         Map<OrgDTO, List<File>> orgFilesMap = getFilesOfOrg(subOrgs);
         model.addAttribute("orgFilesMap", orgFilesMap);
@@ -125,7 +125,7 @@ public class DocController {
 
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @GetMapping(path = "delete")
-    public String deleteFile(@RequestParam("name") String name, @LoggedUser CustomUserDetails user) {
+    public String deleteFile(@RequestParam("name") String name, @LoggedUser UserDetailsImpl user) {
         String position = rootDir + user.getOrg().getCode();
         File file = new File(position + "/" + name);
         if (!file.exists()) {
@@ -148,7 +148,7 @@ public class DocController {
 
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @PostMapping(path = "upload")
-    public String uploadDocument(@RequestParam("file") MultipartFile file, @LoggedUser CustomUserDetails user) {
+    public String uploadDocument(@RequestParam("file") MultipartFile file, @LoggedUser UserDetailsImpl user) {
         String dirPath = rootDir + user.getOrg().getCode() + "/";
         FileUtil.saveToFile(file, dirPath);
         return "redirect:/doc/list/own";
