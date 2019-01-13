@@ -68,7 +68,8 @@
                                                th:field="*{sADetails[__${details0Seq}__]}"/>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
-                                        <input class="form-control input-sm" type="number" min="0" required="required"
+                                        <input class="form-control input-sm" type="number" min="0"
+                                               th:max="${phase.detailsDTOs[0].maxScore}" required="required"
                                                th:value="*{aADetails[__${details0Seq}__]}"
                                                th:field="*{aADetails[__${details0Seq}__]}"/>
                                     </td>
@@ -84,7 +85,8 @@
                                                th:field="*{sADetails[__${detailsSeq}__]}"/>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
-                                        <input class="form-control input-sm" type="number" min="0" required="required"
+                                        <input class="form-control input-sm" type="number" min="0"
+                                               th:max="${detail.maxScore}" required="required"
                                                th:value="*{aADetails[__${detailsSeq}__]}"
                                                th:field="*{aADetails[__${detailsSeq}__]}"/>
                                     </td>

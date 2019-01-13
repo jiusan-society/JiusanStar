@@ -42,13 +42,13 @@ public class ScoreDTO implements Serializable {
 
     /**
      * K -> Details' Id
-     * V -> Details' SA ScoreDTO
+     * V -> Details' SA Score
      */
     private Map<Long, @NotNull Integer> sADetails;
 
     /**
      * K -> Details' Id
-     * V -> Details' AA ScoreDTO
+     * V -> Details' AA Score
      */
     private Map<Long, @NotNull Integer> aADetails;
 
