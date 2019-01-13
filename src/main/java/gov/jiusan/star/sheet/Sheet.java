@@ -48,7 +48,7 @@ public class Sheet implements Serializable {
     /**
      * 评分表名称
      */
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     /**

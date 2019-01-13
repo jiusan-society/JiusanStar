@@ -55,6 +55,33 @@ CREATE TABLE `app_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for sheet
+-- ----------------------------
+CREATE TABLE `sheet` (
+  `seq` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `last_update_time` datetime NOT NULL,
+  `max_score` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  UNIQUE KEY `uni_sheet_name` (`name`) USING BTREE,
+  PRIMARY KEY (`seq`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for phase
+-- ----------------------------
+CREATE TABLE `phase` (
+  `seq` bigint(20) NOT NULL AUTO_INCREMENT,
+  `max_score` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `sheet_seq` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`seq`) USING BTREE,
+  UNIQUE KEY `uni_phase_name` (`name`) USING BTREE,
+  KEY `idx_phase_sheet_seq` (`sheet_seq`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for details
 -- ----------------------------
 CREATE TABLE `details` (
@@ -68,15 +95,21 @@ CREATE TABLE `details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for phase
+-- Table structure for sheet_plan
 -- ----------------------------
-CREATE TABLE `phase` (
+CREATE TABLE `sheet_plan` (
   `seq` bigint(20) NOT NULL AUTO_INCREMENT,
-  `max_score` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `effective` bit(1) DEFAULT NULL,
   `sheet_seq` bigint(20) DEFAULT NULL,
+  `finish_rate` double DEFAULT NULL,
+  `finish_time` datetime DEFAULT NULL,
+  `effective_time` datetime NOT NULL,
+  `expiration_time` datetime NOT NULL,
+  `create_time` datetime NOT NULL,
+  `last_update_time` datetime NOT NULL,
   PRIMARY KEY (`seq`) USING BTREE,
-  KEY `idx_phase_sheet_seq` (`sheet_seq`) USING BTREE
+  KEY `idx_sheet_plan_sheet_seq` (`sheet_seq`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -99,36 +132,4 @@ CREATE TABLE `score` (
   PRIMARY KEY (`seq`) USING BTREE,
   KEY `idx_score_org_seq` (`org_seq`) USING BTREE,
   KEY `idx_score_sheet_plan_seq` (`sheet_plan_seq`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for sheet
--- ----------------------------
-CREATE TABLE `sheet` (
-  `seq` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `last_update_time` datetime NOT NULL,
-  `max_score` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`seq`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for sheet_plan
--- ----------------------------
-DROP TABLE IF EXISTS `sheet_plan`;
-CREATE TABLE `sheet_plan` (
-  `seq` bigint(20) NOT NULL AUTO_INCREMENT,
-  `status` varchar(255) DEFAULT NULL,
-  `effective` bit(1) DEFAULT NULL,
-  `sheet_seq` bigint(20) DEFAULT NULL,
-  `finish_rate` double DEFAULT NULL,
-  `finish_time` datetime DEFAULT NULL,
-  `effective_time` datetime NOT NULL,
-  `expiration_time` datetime NOT NULL,
-  `create_time` datetime NOT NULL,
-  `last_update_time` datetime NOT NULL,
-  PRIMARY KEY (`seq`) USING BTREE,
-  KEY `idx_sheet_plan_sheet_seq` (`sheet_seq`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
