@@ -38,7 +38,8 @@
             <form th:action="${#httpServletRequest.getParameter('seq')} != null ? '/sheet/update?seq='+ ${#httpServletRequest.getParameter('seq')} :'/sheet'"
                   th:object="${sheet}" method="post">
                 <div>
-                    <h3><input class="form-control input-lg text-center" required="required" placeholder="请输入标题" name="name"
+                    <h3><input class="form-control input-lg text-center" required="required" placeholder="请输入标题"
+                               name="name"
                                th:field="*{name}"/></h3>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger"></p>
                 </div>
@@ -58,8 +59,14 @@
                                 <td class="col-sm-2">
                                     名称：<input class="form-control input-sm" type="text"
                                               th:field="*{phaseDTOs[__${phaseStat.index}__].name}"/>
+                                    <p class="alert alert-danger"
+                                       th:if="${#fields.hasErrors('phaseDTOs[__${phaseStat.index}__].name')}"
+                                       th:errors="*{phaseDTOs[__${phaseStat.index}__].name}"></p>
                                     最高可得：<input class="form-control input-sm" type="number" min="0"
                                                 th:field="*{phaseDTOs[__${phaseStat.index}__].maxScore}"/>
+                                    <p class="alert alert-danger"
+                                       th:if="${#fields.hasErrors('phaseDTOs[__${phaseStat.index}__].maxScore')}"
+                                       th:errors="*{phaseDTOs[__${phaseStat.index}__].maxScore}"></p>
                                     <br/>
                                     <button class="btn btn-sm btn-danger" name="removePhase" type="submit"
                                             th:value="${phaseStat.index}">删除大类
@@ -73,10 +80,19 @@
                                         <li>
                                             评分标准：<input class="form-control input-sm" type="text"
                                                         th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].description}"/>
+                                            <p class="alert alert-danger"
+                                               th:if="${#fields.hasErrors('phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].description')}"
+                                               th:errors="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].description}"></p>
                                             每项可得：<input class="form-control input-sm" type="number" min="0"
                                                         th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].eachScore}"/>
+                                            <p class="alert alert-danger"
+                                               th:if="${#fields.hasErrors('phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].eachScore')}"
+                                               th:errors="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].eachScore}"></p>
                                             最高可得：<input class="form-control input-sm" type="number" min="0"
                                                         th:field="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].maxScore}"/>
+                                            <p class="alert alert-danger"
+                                               th:if="${#fields.hasErrors('phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].maxScore')}"
+                                               th:errors="*{phaseDTOs[__${phaseStat.index}__].detailsDTOs[__${detailsStat.index}__].maxScore}"></p>
                                             <br/>
                                             <button class="btn btn-sm btn-danger" name="removeDetails" type="submit"
                                                     th:value="${phaseStat.index} + '|' + ${detailsStat.index}">删除小类
