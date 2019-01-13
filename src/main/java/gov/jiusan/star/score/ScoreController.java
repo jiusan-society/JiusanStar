@@ -150,7 +150,6 @@ public class ScoreController {
         score.setsATotalScore(sATotalScore);
         score.setsADetails(sADetailsString);
         score.setsAFinished(true);
-        score.setFinalScore((score.getsATotalScore() + score.getaATotalScore()) / (double) 2);
         sService.update(score);
         return "redirect:/score?seq=" + seq;
     }
@@ -168,7 +167,8 @@ public class ScoreController {
         score.setaATotalScore(aATotalScore);
         score.setaADetails(aADetailsString);
         score.setaAFinished(true);
-        score.setFinalScore((score.getsATotalScore() + score.getaATotalScore()) / (double) 2);
+        // 最终成绩是看考评分的，自评分只是作为参考而已
+        score.setFinalScore((double) score.getaATotalScore());
         sService.update(score);
         return "redirect:/score?seq=" + seq;
     }
