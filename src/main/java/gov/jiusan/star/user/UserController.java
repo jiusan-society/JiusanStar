@@ -57,11 +57,16 @@ public class UserController {
     }
 
     @PostMapping(path = "profile")
-    public String updateProfile(Profile model, @LoggedUser UserDetailsImpl userDetails) {
-        userDetails.getUser().setNickname(model.getNickName());
-        userDetails.getUser().setEmail(model.getEmail());
-        userDetails.getUser().setPhoneNum(model.getPhoneNum());
+    public String updateProfile(@Valid Profile profile, BindingResult result, @LoggedUser UserDetailsImpl userDetails, RedirectAttributes redirAttrs) {
+        if (result.hasErrors()) {
+            return "user/user_profile";
+        }
+        userDetails.getUser().setNickname(profile.getNickName());
+        userDetails.getUser().setEmail(profile.getEmail());
+        userDetails.getUser().setPhoneNum(profile.getPhoneNum());
         repository.save(userDetails.getUser());
+        // TODO 这边文字后面要移到 messages.properties 里
+        redirAttrs.addFlashAttribute("successMsg", "信息更新成功");
         return "redirect:/user/profile";
     }
 

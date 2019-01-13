@@ -16,6 +16,8 @@
 
 package gov.jiusan.star.user.model;
 
+import javax.validation.constraints.Email;
+
 import java.io.Serializable;
 
 /**
@@ -28,6 +30,7 @@ public class Profile implements Serializable {
     private String orgName;
     private String roleName;
     private String phoneNum;
+    @Email
     private String email;
 
     public Profile() {
