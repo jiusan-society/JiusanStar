@@ -62,9 +62,6 @@ public class SheetService {
     }
 
     public Optional<Sheet> find(Long seq) {
-        if (seq == null) {
-            return Optional.empty();
-        }
         return Optional.ofNullable(repository.findOne(seq));
     }
 

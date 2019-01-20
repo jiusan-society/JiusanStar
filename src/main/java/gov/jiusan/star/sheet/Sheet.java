@@ -25,6 +25,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -67,8 +68,7 @@ public class Sheet implements Serializable {
     /**
      * 评分大类
      */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "sheet_seq")
+    @ManyToMany
     private List<Phase> phases;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sheet", orphanRemoval = true)
@@ -145,7 +145,7 @@ public class Sheet implements Serializable {
     }
 
     public List<SheetPlan> getSheetPlans() {
-        return sheetPlans;
+        return sheetPlans == null ? sheetPlans = new ArrayList<>() : sheetPlans;
     }
 
     public void setSheetPlans(List<SheetPlan> sheetPlans) {
