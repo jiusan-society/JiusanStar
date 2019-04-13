@@ -16,6 +16,10 @@
 
 package gov.jiusan.star.sheet;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,11 +30,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
+ * 测评表中的指标大类
+ *
  * @author Marcus Lin
  */
 @Entity

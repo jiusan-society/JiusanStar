@@ -68,6 +68,6 @@ public class SheetPlanUtil {
     }
 
     public static boolean isExpired(SheetPlan plan) {
-        return SheetPlanStatus.EXPIRED == plan.getStatus();
+        return SheetPlan.Status.EXPIRED == plan.getStatus();
     }
 }

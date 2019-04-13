@@ -19,6 +19,10 @@ package gov.jiusan.star.sheetplan;
 import gov.jiusan.star.score.Score;
 import gov.jiusan.star.sheet.Sheet;
 
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,11 +38,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.List;
-
 /**
+ * 测评表被派发后所产生的虚拟视图
+ * 用于记录各组织对于该次所派发的测评表的完成情况 & 成绩情况
+ *
  * @author Marcus Lin
  */
 @Entity
@@ -60,7 +63,7 @@ public class SheetPlan implements Serializable {
      */
     @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
-    private SheetPlanStatus status;
+    private Status status;
 
     /**
      * 完成率
@@ -169,11 +172,11 @@ public class SheetPlan implements Serializable {
         this.effective = effective;
     }
 
-    public SheetPlanStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(SheetPlanStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -201,4 +204,18 @@ public class SheetPlan implements Serializable {
         this.scores = scores;
     }
 
+    public enum Status {
+        /**
+         * 正常可用状态
+         */
+        NORMAL,
+        /**
+         * 超过截止时间后变为逾期失效状态
+         */
+        EXPIRED,
+        /**
+         * 同一年下仅可有一张可用的 SheetPlan，其他需变为不可用状态
+         */
+        INVALID
+    }
 }

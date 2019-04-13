@@ -16,7 +16,7 @@
 
 package gov.jiusan.star.sheetplan.model;
 
-import gov.jiusan.star.sheetplan.SheetPlanStatus;
+import gov.jiusan.star.sheetplan.SheetPlan;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -32,7 +32,7 @@ public class SheetPlanDTO implements Serializable {
     private Calendar expirationTime;
     private int finishedScoreNum;
     private int allScoreNum;
-    private SheetPlanStatus status;
+    private SheetPlan.Status status;
 
     public SheetPlanDTO() {
     }
@@ -85,11 +85,11 @@ public class SheetPlanDTO implements Serializable {
         this.allScoreNum = allScoreNum;
     }
 
-    public SheetPlanStatus getStatus() {
+    public SheetPlan.Status getStatus() {
         return status;
     }
 
-    public void setStatus(SheetPlanStatus status) {
+    public void setStatus(SheetPlan.Status status) {
         this.status = status;
     }
 }

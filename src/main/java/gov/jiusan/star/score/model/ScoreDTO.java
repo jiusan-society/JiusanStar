@@ -19,10 +19,10 @@ package gov.jiusan.star.score.model;
 import gov.jiusan.star.org.model.OrgDTO;
 import gov.jiusan.star.sheetplan.model.SheetPlanDTO;
 
-import javax.validation.constraints.NotNull;
-
 import java.io.Serializable;
 import java.util.Map;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Marcus Lin

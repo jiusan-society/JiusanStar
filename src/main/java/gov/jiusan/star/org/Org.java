@@ -19,6 +19,10 @@ package gov.jiusan.star.org;
 import gov.jiusan.star.score.Score;
 import gov.jiusan.star.user.User;
 
+import java.io.File;
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,10 +33,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import java.io.File;
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author Marcus Lin

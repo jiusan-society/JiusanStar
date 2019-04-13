@@ -16,6 +16,8 @@
 
 package gov.jiusan.star.sheet;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,9 +25,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import java.io.Serializable;
-
 /**
+ * 指标大类中的指标细则
+ *
  * @author Marcus Lin
  */
 @Entity

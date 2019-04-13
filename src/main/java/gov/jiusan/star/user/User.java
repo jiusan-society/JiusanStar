@@ -19,6 +19,8 @@ package gov.jiusan.star.user;
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.Role;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -29,9 +31,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import java.io.Serializable;
-
 /**
+ * 用户信息
+ *
  * @author Marcus Lin
  */
 @Entity
@@ -42,22 +44,40 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
+    /**
+     * 昵称
+     */
     @Column(name = "nick_name", nullable = false)
     private String nickname;
 
+    /**
+     * 性别
+     */
     @Enumerated
     @Column(name = "sex_type")
     private SexType sexType;
 
+    /**
+     * 账号（作为登录使用）
+     */
     @Column(name = "account", nullable = false, unique = true)
     private String account;
 
+    /**
+     * 密码
+     */
     @Column(name = "password", nullable = false)
     private String password;
 
+    /**
+     * 电话号码
+     */
     @Column(name = "phone_number")
     private String phoneNum;
 
+    /**
+     * EMail
+     */
     @Column(name = "email")
     private String email;
 

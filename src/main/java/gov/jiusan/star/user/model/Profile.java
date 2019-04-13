@@ -16,9 +16,9 @@
 
 package gov.jiusan.star.user.model;
 
-import javax.validation.constraints.Email;
-
 import java.io.Serializable;
+
+import javax.validation.constraints.Email;
 
 /**
  * @author Marcus Lin

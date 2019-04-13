@@ -19,6 +19,9 @@ package gov.jiusan.star.score;
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.sheetplan.SheetPlan;
 
+import java.io.Serializable;
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,10 +33,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import java.io.Serializable;
-import java.util.Calendar;
-
 /**
+ * 测评得分情况表
+ *
  * @author Marcus Lin
  */
 @Entity

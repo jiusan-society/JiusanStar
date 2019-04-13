@@ -62,7 +62,7 @@ public class SheetPlanService {
     // 每年的 1 月 1 日 0 时 0 分 0 秒执行，使当前的 plan 变为 "已逾期" 状态
     @Scheduled(cron = "0 0 0 1 JAN ?")
     private void invalidateCurrent() {
-        findEffectives().forEach(p -> p.setStatus(SheetPlanStatus.EXPIRED));
+        findEffectives().forEach(p -> p.setStatus(SheetPlan.Status.EXPIRED));
     }
 
 }

@@ -22,7 +22,6 @@ import gov.jiusan.star.score.ScoreService;
 import gov.jiusan.star.sheet.model.SheetDTO;
 import gov.jiusan.star.sheetplan.SheetPlan;
 import gov.jiusan.star.sheetplan.SheetPlanService;
-import gov.jiusan.star.sheetplan.SheetPlanStatus;
 import gov.jiusan.star.util.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,7 +90,7 @@ public class SheetService {
         SheetPlan sheetPlan = new SheetPlan();
         sheetPlan.setSheet(sheet);
         sheetPlan.setEffective(true);
-        sheetPlan.setStatus(SheetPlanStatus.NORMAL);
+        sheetPlan.setStatus(SheetPlan.Status.NORMAL);
         sheetPlan.setEffectiveTime(Calendar.getInstance());
         Calendar expirationTime = Calendar.getInstance();
         expirationTime.clear();
@@ -125,7 +124,7 @@ public class SheetService {
             .filter(SheetPlan::isEffective)
             .forEach(p -> {
                 p.setEffective(false);
-                p.setStatus(SheetPlanStatus.INVALID);
+                p.setStatus(SheetPlan.Status.INVALID);
             });
     }
 }
