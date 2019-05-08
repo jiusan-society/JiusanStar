@@ -50,7 +50,7 @@
                                 <th style="text-align: center">指标大类</th>
                                 <th style="text-align: center">指标小类</th>
                                 <th class="text-center">
-                                    <button class="btn btn-sm btn-primary" name="addcategory" type="submit">添加大类</button>
+                                    <button class="btn btn-sm btn-primary" name="addCategory" type="submit">添加大类</button>
                                 </th>
                             </tr>
                         </thead>
@@ -68,7 +68,7 @@
                                        th:if="${#fields.hasErrors('categoryDTOS[__${categoryStat.index}__].maxScore')}"
                                        th:errors="*{categoryDTOS[__${categoryStat.index}__].maxScore}"></p>
                                     <br/>
-                                    <button class="btn btn-sm btn-danger" name="removecategory" type="submit"
+                                    <button class="btn btn-sm btn-danger" name="removeCategory" type="submit"
                                             th:value="${categoryStat.index}">删除大类
                                     </button>
                                     <button class="btn btn-sm btn-primary" name="addDetails" type="submit"

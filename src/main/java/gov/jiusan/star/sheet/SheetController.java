@@ -101,15 +101,15 @@ public class SheetController {
         return "sheet/sheet_editor";
     }
 
-    @PostMapping(params = "addPhase")
-    public String addPhase(@ModelAttribute("sheet") SheetDTO sheetDTO) {
+    @PostMapping(params = "addCategory")
+    public String addCategory(@ModelAttribute("sheet") SheetDTO sheetDTO) {
         sheetDTO.getCategoryDTOS().add(new SheetDTO.CategoryDTO());
         return "sheet/sheet_editor";
     }
 
-    @PostMapping(params = "removePhase")
-    public String removePhase(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
-        int rowId = Integer.valueOf(request.getParameter("removePhase"));
+    @PostMapping(params = "removeCategory")
+    public String removeCategory(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
+        int rowId = Integer.valueOf(request.getParameter("removeCategory"));
         sheetDTO.getCategoryDTOS().remove(rowId);
         return "sheet/sheet_editor";
     }
@@ -124,21 +124,21 @@ public class SheetController {
     @PostMapping(params = "removeDetails")
     public String removeDetails(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         String value = request.getParameter("removeDetails");
-        int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
+        int CategoryIndex = Integer.valueOf(value.split("\\|")[0]);
         int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheetDTO.getCategoryDTOS().get(phaseIndex).getDetailsDTOs().remove(detailsIndex);
+        sheetDTO.getCategoryDTOS().get(CategoryIndex).getDetailsDTOs().remove(detailsIndex);
         return "sheet/sheet_editor";
     }
 
-    @PostMapping(path = "update", params = "addPhase")
-    public String addPhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO) {
+    @PostMapping(path = "update", params = "addCategory")
+    public String addCategory(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO) {
         sheetDTO.getCategoryDTOS().add(new SheetDTO.CategoryDTO());
         return "sheet/sheet_editor";
     }
 
-    @PostMapping(path = "update", params = "removePhase")
-    public String removePhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
-        int rowId = Integer.valueOf(request.getParameter("removePhase"));
+    @PostMapping(path = "update", params = "removeCategory")
+    public String removeCategory(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
+        int rowId = Integer.valueOf(request.getParameter("removeCategory"));
         sheetDTO.getCategoryDTOS().remove(rowId);
         return "sheet/sheet_editor";
     }
@@ -153,9 +153,9 @@ public class SheetController {
     @PostMapping(path = "update", params = "removeDetails")
     public String removeDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         String value = request.getParameter("removeDetails");
-        int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
+        int CategoryIndex = Integer.valueOf(value.split("\\|")[0]);
         int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheetDTO.getCategoryDTOS().get(phaseIndex).getDetailsDTOs().remove(detailsIndex);
+        sheetDTO.getCategoryDTOS().get(CategoryIndex).getDetailsDTOs().remove(detailsIndex);
         return "sheet/sheet_editor";
     }
 
