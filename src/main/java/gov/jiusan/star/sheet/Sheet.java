@@ -70,7 +70,7 @@ public class Sheet implements Serializable {
      * 评分大类
      */
     @ManyToMany
-    private List<Phase> phases;
+    private List<Category> phases;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sheet", orphanRemoval = true)
     private List<SheetPlan> sheetPlans;
@@ -121,11 +121,11 @@ public class Sheet implements Serializable {
         this.maxScore = maxScore;
     }
 
-    public List<Phase> getPhases() {
+    public List<Category> getPhases() {
         return phases == null ? phases = new ArrayList<>() : phases;
     }
 
-    void setPhases(List<Phase> phases) {
+    void setPhases(List<Category> phases) {
         this.phases = phases;
     }
 

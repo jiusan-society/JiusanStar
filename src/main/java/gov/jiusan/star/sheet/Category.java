@@ -36,8 +36,8 @@ import javax.persistence.Table;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "phase")
-public class Phase implements Serializable {
+@Table(name = "category")
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

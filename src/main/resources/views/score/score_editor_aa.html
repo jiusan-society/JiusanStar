@@ -51,17 +51,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <div th:remove="tag" th:each="phase, phaseStats : ${sheet.phaseDTOs}"
-                                 th:with="details0Seq=${phase.detailsDTOs[0].seq}">
+                            <div th:remove="tag" th:each="category, categoryStats : ${sheet.categoryDTOS}"
+                                 th:with="details0Seq=${category.detailsDTOs[0].seq}">
                                 <tr>
                                     <td style="text-align: center; vertical-align: middle"
-                                        th:rowspan="${phase.detailsDTOs.size()}">
-                                        <p th:text="${phase.name}"></p>
-                                        <p th:text="'(满分 ' + ${phase.maxScore} + ' 分）'"></p>
+                                        th:rowspan="${category.detailsDTOs.size()}">
+                                        <p th:text="${category.name}"></p>
+                                        <p th:text="'(满分 ' + ${category.maxScore} + ' 分）'"></p>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
-                                        <p th:text="${phase.detailsDTOs[0].description}"></p>
-                                        <p th:text="'(每项可得：' + ${phase.detailsDTOs[0].eachScore} + ' 分；最高可得：' + ${phase.detailsDTOs[0].maxScore} + ' 分)'"></p>
+                                        <p th:text="${category.detailsDTOs[0].description}"></p>
+                                        <p th:text="'(每项可得：' + ${category.detailsDTOs[0].eachScore} + ' 分；最高可得：' + ${category.detailsDTOs[0].maxScore} + ' 分)'"></p>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
                                         <input class="form-control input-sm" type="number" readonly="readonly"
@@ -69,12 +69,12 @@
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
                                         <input class="form-control input-sm" type="number" min="0"
-                                               th:max="${phase.detailsDTOs[0].maxScore}" required="required"
+                                               th:max="${category.detailsDTOs[0].maxScore}" required="required"
                                                th:value="*{aADetails[__${details0Seq}__]}"
                                                th:field="*{aADetails[__${details0Seq}__]}"/>
                                     </td>
                                 </tr>
-                                <tr th:each="detail, stats : ${phase.detailsDTOs}" th:if="${!stats.first}"
+                                <tr th:each="detail, stats : ${category.detailsDTOs}" th:if="${!stats.first}"
                                     th:with="detailsSeq=${detail.seq}">
                                     <td style="text-align: center; vertical-align: middle">
                                         <p th:text="${detail.description}"></p>

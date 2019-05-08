@@ -25,6 +25,6 @@ import java.util.Optional;
  * @author Marcus Lin
  */
 @Repository
-interface PhaseRepository extends JpaRepository<Phase, Long> {
-    Optional<Phase> findByName(String name);
+interface CategoryRepository extends JpaRepository<Category, Long> {
+    Optional<Category> findByName(String name);
 }
