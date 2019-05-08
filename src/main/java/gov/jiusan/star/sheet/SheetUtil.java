@@ -31,7 +31,7 @@ public class SheetUtil {
         model.setName(entity.getName());
         model.setDescription(entity.getDescription());
         model.setMaxScore(entity.getMaxScore());
-        model.setCategoryDTOS(entity.getPhases().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        model.setCategoryDTOS(entity.getCategories().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
         model.setCreateTime(entity.getCreateTime());
         model.setLastUpdateTime(entity.getLastUpdateTime());
         return model;
@@ -42,7 +42,7 @@ public class SheetUtil {
         entity.setName(model.getName());
         entity.setDescription(model.getDescription());
         entity.setMaxScore(model.getCategoryDTOS().stream().mapToInt(SheetDTO.CategoryDTO::getMaxScore).sum());
-        entity.setPhases(model.getCategoryDTOS().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        entity.setCategories(model.getCategoryDTOS().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
         return entity;
     }
 
