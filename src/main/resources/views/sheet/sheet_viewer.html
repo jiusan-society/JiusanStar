@@ -47,15 +47,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="phase : *{phaseDTOs}">
+                        <tr th:each="category : *{categoryDTOS}">
                             <td style="text-align: center; vertical-align: middle">
                                 <div>
-                                    <p th:text="${phase.name}"></p>
-                                    <p th:text="'(满分 ' + ${phase.maxScore} + ' 分)'"></p>
+                                    <p th:text="${category.name}"></p>
+                                    <p th:text="'(满分 ' + ${category.maxScore} + ' 分)'"></p>
                                 </div>
                             </td>
                             <td>
-                                <ul th:each="details : ${phase.detailsDTOs}">
+                                <ul th:each="details : ${category.detailsDTOs}">
                                     <li>
                                         <p th:text="${details.description}"></p>
                                         <ul>

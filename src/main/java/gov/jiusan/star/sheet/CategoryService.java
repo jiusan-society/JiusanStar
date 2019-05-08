@@ -26,24 +26,24 @@ import java.util.Optional;
  * @author Marcus Lin
  */
 @Service
-public class PhaseService {
+public class CategoryService {
 
-    private final PhaseRepository repository;
+    private final CategoryRepository repository;
 
     @Autowired
-    public PhaseService(PhaseRepository repository) {
+    public CategoryService(CategoryRepository repository) {
         this.repository = repository;
     }
 
-    public Optional<Phase> findByName(String name) {
+    public Optional<Category> findByName(String name) {
         return repository.findByName(name);
     }
 
-    public Optional<Phase> find(Long seq) {
+    public Optional<Category> find(Long seq) {
         return Optional.ofNullable(repository.findOne(seq));
     }
 
-    public List<Phase> findAll() {
+    public List<Category> findAll() {
         return repository.findAll();
     }
 

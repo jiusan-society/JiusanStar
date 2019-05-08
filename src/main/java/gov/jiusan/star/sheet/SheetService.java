@@ -67,9 +67,9 @@ public class SheetService {
     public Sheet update(Sheet entity, SheetDTO model) {
         entity.setName(model.getName());
         entity.setDescription(model.getDescription());
-        entity.getPhases().clear();
-        entity.getPhases().addAll(model.getPhaseDTOs().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
-        entity.setMaxScore(entity.getPhases().stream().mapToInt(Phase::getMaxScore).sum());
+        entity.getCategories().clear();
+        entity.getCategories().addAll(model.getCategoryDTOS().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        entity.setMaxScore(entity.getCategories().stream().mapToInt(Category::getMaxScore).sum());
         entity.setLastUpdateTime(Calendar.getInstance());
         // 更新既有的评分卷，将使今年已派发过的变作失效
         invalidatePlansInCurrentYear();
@@ -98,7 +98,7 @@ public class SheetService {
         sheetPlan.setExpirationTime(expirationTime);
         SheetPlan savedSP = sPService.create(sheetPlan);
         Map<Long, Integer> initScore = new TreeMap<>();
-        List<Details> detailsList = sheet.getPhases().stream().flatMap(p -> p.getDetails().stream()).collect(Collectors.toList());
+        List<Details> detailsList = sheet.getCategories().stream().flatMap(p -> p.getDetails().stream()).collect(Collectors.toList());
         for (Details details : detailsList) {
             initScore.put(details.getSeq(), 0);
         }

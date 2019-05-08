@@ -103,21 +103,21 @@ public class SheetController {
 
     @PostMapping(params = "addPhase")
     public String addPhase(@ModelAttribute("sheet") SheetDTO sheetDTO) {
-        sheetDTO.getPhaseDTOs().add(new SheetDTO.PhaseDTO());
+        sheetDTO.getCategoryDTOS().add(new SheetDTO.CategoryDTO());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(params = "removePhase")
     public String removePhase(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("removePhase"));
-        sheetDTO.getPhaseDTOs().remove(rowId);
+        sheetDTO.getCategoryDTOS().remove(rowId);
         return "sheet/sheet_editor";
     }
 
     @PostMapping(params = "addDetails")
     public String addDetails(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheetDTO.getPhaseDTOs().get(rowId).getDetailsDTOs().add(new SheetDTO.DetailsDTO());
+        sheetDTO.getCategoryDTOS().get(rowId).getDetailsDTOs().add(new SheetDTO.DetailsDTO());
         return "sheet/sheet_editor";
     }
 
@@ -126,27 +126,27 @@ public class SheetController {
         String value = request.getParameter("removeDetails");
         int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
         int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheetDTO.getPhaseDTOs().get(phaseIndex).getDetailsDTOs().remove(detailsIndex);
+        sheetDTO.getCategoryDTOS().get(phaseIndex).getDetailsDTOs().remove(detailsIndex);
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "addPhase")
     public String addPhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO) {
-        sheetDTO.getPhaseDTOs().add(new SheetDTO.PhaseDTO());
+        sheetDTO.getCategoryDTOS().add(new SheetDTO.CategoryDTO());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "removePhase")
     public String removePhase(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("removePhase"));
-        sheetDTO.getPhaseDTOs().remove(rowId);
+        sheetDTO.getCategoryDTOS().remove(rowId);
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "addDetails")
     public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheetDTO.getPhaseDTOs().get(rowId).getDetailsDTOs().add(new SheetDTO.DetailsDTO());
+        sheetDTO.getCategoryDTOS().get(rowId).getDetailsDTOs().add(new SheetDTO.DetailsDTO());
         return "sheet/sheet_editor";
     }
 
@@ -155,7 +155,7 @@ public class SheetController {
         String value = request.getParameter("removeDetails");
         int phaseIndex = Integer.valueOf(value.split("\\|")[0]);
         int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheetDTO.getPhaseDTOs().get(phaseIndex).getDetailsDTOs().remove(detailsIndex);
+        sheetDTO.getCategoryDTOS().get(phaseIndex).getDetailsDTOs().remove(detailsIndex);
         return "sheet/sheet_editor";
     }
 

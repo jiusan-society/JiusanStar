@@ -31,7 +31,7 @@ public class SheetUtil {
         model.setName(entity.getName());
         model.setDescription(entity.getDescription());
         model.setMaxScore(entity.getMaxScore());
-        model.setPhaseDTOs(entity.getPhases().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        model.setCategoryDTOS(entity.getCategories().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
         model.setCreateTime(entity.getCreateTime());
         model.setLastUpdateTime(entity.getLastUpdateTime());
         return model;
@@ -41,21 +41,21 @@ public class SheetUtil {
         Sheet entity = new Sheet();
         entity.setName(model.getName());
         entity.setDescription(model.getDescription());
-        entity.setMaxScore(model.getPhaseDTOs().stream().mapToInt(SheetDTO.PhaseDTO::getMaxScore).sum());
-        entity.setPhases(model.getPhaseDTOs().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        entity.setMaxScore(model.getCategoryDTOS().stream().mapToInt(SheetDTO.CategoryDTO::getMaxScore).sum());
+        entity.setCategories(model.getCategoryDTOS().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
         return entity;
     }
 
-    static Phase convertRatingPhase(SheetDTO.PhaseDTO model) {
-        Phase phase = new Phase();
+    static Category convertRatingPhase(SheetDTO.CategoryDTO model) {
+        Category phase = new Category();
         phase.setName(model.getName());
         phase.setMaxScore(model.getMaxScore());
         phase.setDetails(model.getDetailsDTOs().stream().map(SheetUtil::convertRatingDetails).collect(Collectors.toList()));
         return phase;
     }
 
-    private static SheetDTO.PhaseDTO convertRatingPhase(Phase phase) {
-        SheetDTO.PhaseDTO model = new SheetDTO.PhaseDTO();
+    private static SheetDTO.CategoryDTO convertRatingPhase(Category phase) {
+        SheetDTO.CategoryDTO model = new SheetDTO.CategoryDTO();
         model.setSeq(phase.getSeq());
         model.setName(phase.getName());
         model.setMaxScore(phase.getMaxScore());

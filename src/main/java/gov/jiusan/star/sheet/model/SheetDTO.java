@@ -43,7 +43,7 @@ public class SheetDTO implements Serializable {
     private Integer maxScore;
 
     @NotEmpty
-    private List<@Valid PhaseDTO> phaseDTOs;
+    private List<@Valid CategoryDTO> categoryDTOS;
 
     private Calendar createTime;
     private Calendar lastUpdateTime;
@@ -80,12 +80,12 @@ public class SheetDTO implements Serializable {
         this.maxScore = maxScore;
     }
 
-    public List<PhaseDTO> getPhaseDTOs() {
-        return phaseDTOs == null ? phaseDTOs = new ArrayList<>() : phaseDTOs;
+    public List<CategoryDTO> getCategoryDTOS() {
+        return categoryDTOS == null ? categoryDTOS = new ArrayList<>() : categoryDTOS;
     }
 
-    public void setPhaseDTOs(List<PhaseDTO> phaseDTOs) {
-        this.phaseDTOs = phaseDTOs;
+    public void setCategoryDTOS(List<CategoryDTO> categoryDTOS) {
+        this.categoryDTOS = categoryDTOS;
     }
 
     public Calendar getCreateTime() {
@@ -104,7 +104,7 @@ public class SheetDTO implements Serializable {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public static class PhaseDTO implements Serializable {
+    public static class CategoryDTO implements Serializable {
 
         private Long seq;
 
@@ -118,7 +118,7 @@ public class SheetDTO implements Serializable {
         @NotEmpty
         private List<@Valid DetailsDTO> detailsDTOs;
 
-        public PhaseDTO() {
+        public CategoryDTO() {
         }
 
         public Long getSeq() {
