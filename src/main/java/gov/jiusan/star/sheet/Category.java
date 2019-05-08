@@ -50,19 +50,13 @@ public class Category implements Serializable {
     private String name;
 
     /**
-     * 某个指标大类下每上传一次文件可得到的分数（目前仅用作日常分数参考使用）
-     */
-    @Column(name = "each_file_score", nullable = false)
-    private Integer eachFileScore;
-
-    /**
-     * 该指标大类的最高可得分
+     * 指标大类的最高可得分
      */
     @Column(name = "max_score", nullable = false)
     private Integer maxScore;
 
     /**
-     * 指标细则
+     * 指标大类下的指标细则
      */
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "phase_seq")
@@ -82,14 +76,6 @@ public class Category implements Serializable {
 
     void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getEachFileScore() {
-        return eachFileScore;
-    }
-
-    public void setEachFileScore(Integer eachFileScore) {
-        this.eachFileScore = eachFileScore;
     }
 
     public Integer getMaxScore() {
