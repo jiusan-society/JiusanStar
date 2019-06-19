@@ -16,19 +16,17 @@
 
 package gov.jiusan.star.sheet;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * 测评表中的指标大类
@@ -50,17 +48,30 @@ public class Category implements Serializable {
     private String name;
 
     /**
+     * 某个指标大类下每上传一次文件可得到的分数（目前仅用作日常分数参考使用）
+     */
+    @Column(name = "each_file_score", nullable = false)
+    private Integer eachFileScore;
+
+    /**
      * 指标大类的最高可得分
      */
     @Column(name = "max_score", nullable = false)
     private Integer maxScore;
 
     /**
-     * 指标大类下的指标细则
+     * 创建时间
      */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "phase_seq")
-    private List<Details> details;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", nullable = false)
+    private Calendar createTime;
+
+    /**
+     * 更新时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_update_time", nullable = false)
+    private Calendar lastUpdateTime;
 
     public Long getSeq() {
         return seq;
@@ -78,6 +89,14 @@ public class Category implements Serializable {
         this.name = name;
     }
 
+    public Integer getEachFileScore() {
+        return eachFileScore;
+    }
+
+    public void setEachFileScore(Integer eachFileScore) {
+        this.eachFileScore = eachFileScore;
+    }
+
     public Integer getMaxScore() {
         return maxScore;
     }
@@ -86,11 +105,19 @@ public class Category implements Serializable {
         this.maxScore = maxScore;
     }
 
-    public List<Details> getDetails() {
-        return details == null ? details = new ArrayList<>() : details;
+    public Calendar getCreateTime() {
+        return createTime;
     }
 
-    void setDetails(List<Details> details) {
-        this.details = details;
+    public void setCreateTime(Calendar createTime) {
+        this.createTime = createTime;
+    }
+
+    public Calendar getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Calendar lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }

@@ -16,8 +16,12 @@
 
 package gov.jiusan.star.sheet;
 
-import gov.jiusan.star.sheet.model.SheetDTO;
+import gov.jiusan.star.sheet.model.Sheet;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -25,58 +29,38 @@ import java.util.stream.Collectors;
  */
 public class SheetUtil {
 
-    public static SheetDTO convert(Sheet entity) {
-        SheetDTO model = new SheetDTO();
+    public static Sheet convert(gov.jiusan.star.sheet.Sheet entity) {
+        Sheet model = new Sheet();
         model.setSeq(entity.getSeq());
         model.setName(entity.getName());
         model.setDescription(entity.getDescription());
         model.setMaxScore(entity.getMaxScore());
-        model.setCategoryDTOS(entity.getCategories().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
+        Map<Long, List<Item>> itemsOfCategory = new TreeMap<>();
+        for (Item item : entity.getDetails()) {
+            itemsOfCategory.computeIfAbsent(item.getCategory().getSeq(), v -> new ArrayList<>()).add(item);
+        }
+        model.setCategories(entity.getCategories().stream().map(c -> convertCategory(c, itemsOfCategory)).collect(Collectors.toList()));
         model.setCreateTime(entity.getCreateTime());
         model.setLastUpdateTime(entity.getLastUpdateTime());
         return model;
     }
 
-    static Sheet convert(SheetDTO model) {
-        Sheet entity = new Sheet();
-        entity.setName(model.getName());
-        entity.setDescription(model.getDescription());
-        entity.setMaxScore(model.getCategoryDTOS().stream().mapToInt(SheetDTO.CategoryDTO::getMaxScore).sum());
-        entity.setCategories(model.getCategoryDTOS().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
-        return entity;
-    }
-
-    static Category convertRatingPhase(SheetDTO.CategoryDTO model) {
-        Category phase = new Category();
-        phase.setName(model.getName());
-        phase.setMaxScore(model.getMaxScore());
-        phase.setDetails(model.getDetailsDTOs().stream().map(SheetUtil::convertRatingDetails).collect(Collectors.toList()));
-        return phase;
-    }
-
-    private static SheetDTO.CategoryDTO convertRatingPhase(Category phase) {
-        SheetDTO.CategoryDTO model = new SheetDTO.CategoryDTO();
-        model.setSeq(phase.getSeq());
-        model.setName(phase.getName());
-        model.setMaxScore(phase.getMaxScore());
-        model.setDetailsDTOs(phase.getDetails().stream().map(SheetUtil::convertRatingDetails).collect(Collectors.toList()));
+    private static Sheet.Category convertCategory(Category category, Map<Long, List<Item>> itemsOfCategory) {
+        Sheet.Category model = new Sheet.Category();
+        model.setSeq(category.getSeq());
+        model.setName(category.getName());
+        model.setMaxScore(category.getMaxScore());
+        List<Item> items = itemsOfCategory.get(category.getSeq());
+        model.setItems(items.stream().map(SheetUtil::convertItem).collect(Collectors.toList()));
         return model;
     }
 
-    private static Details convertRatingDetails(SheetDTO.DetailsDTO model) {
-        Details details = new Details();
-        details.setDescription(model.getDescription());
-        details.setEachScore(model.getEachScore());
-        details.setMaxScore(model.getMaxScore());
-        return details;
-    }
-
-    private static SheetDTO.DetailsDTO convertRatingDetails(Details details) {
-        SheetDTO.DetailsDTO model = new SheetDTO.DetailsDTO();
-        model.setSeq(details.getSeq());
-        model.setDescription(details.getDescription());
-        model.setEachScore(details.getEachScore());
-        model.setMaxScore(details.getMaxScore());
+    private static Sheet.Item convertItem(Item item) {
+        Sheet.Item model = new Sheet.Item();
+        model.setSeq(item.getSeq());
+        model.setEachScore(item.getEachScore());
+        model.setMaxScore(item.getMaxScore());
+        model.setDescription(model.getDescription());
         return model;
     }
 }

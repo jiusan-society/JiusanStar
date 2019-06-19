@@ -19,7 +19,7 @@ package gov.jiusan.star.sheet;
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.score.Score;
 import gov.jiusan.star.score.ScoreService;
-import gov.jiusan.star.sheet.model.SheetDTO;
+import gov.jiusan.star.sheet.model.Sheet;
 import gov.jiusan.star.sheetplan.SheetPlan;
 import gov.jiusan.star.sheetplan.SheetPlanService;
 import gov.jiusan.star.util.JacksonUtil;
@@ -39,52 +39,94 @@ import java.util.stream.Collectors;
 @Service
 public class SheetService {
 
-    private final SheetRepository repository;
+    private final SheetRepository sRepository;
+
+    private final CategoryRepository cRepository;
 
     private final ScoreService sService;
 
     private final SheetPlanService sPService;
 
     @Autowired
-    public SheetService(SheetRepository repository, ScoreService sService, SheetPlanService sPService) {
-        this.repository = repository;
+    public SheetService(SheetRepository sRepository, ScoreService sService, SheetPlanService sPService, CategoryRepository cRepository) {
+        this.sRepository = sRepository;
         this.sService = sService;
         this.sPService = sPService;
+        this.cRepository = cRepository;
     }
 
-    public Long create(SheetDTO model) {
-        Sheet entity = SheetUtil.convert(model);
+    public gov.jiusan.star.sheet.Sheet create(Sheet model) {
+        gov.jiusan.star.sheet.Sheet sheet = new gov.jiusan.star.sheet.Sheet();
+        sheet.setName(model.getName());
+        sheet.setDescription(model.getDescription());
+        sheet.setMaxScore(model.getCategories().stream().mapToInt(Sheet.Category::getMaxScore).sum());
+        for (Sheet.Category c : model.getCategories()) {
+            Optional<Category> category_o = cRepository.findByName(c.getName());
+            if (!category_o.isPresent()) {
+                continue;
+            }
+            sheet.getCategories().add(category_o.get());
+            List<Item> details = c.getItems().stream().map(i -> {
+                Item item = new Item();
+                item.setSheet(sheet);
+                item.setCategory(category_o.get());
+                item.setDescription(i.getDescription());
+                item.setEachScore(i.getEachScore());
+                item.setMaxScore(i.getMaxScore());
+                return item;
+            }).collect(Collectors.toList());
+            sheet.getDetails().addAll(details);
+        }
         Calendar now = Calendar.getInstance();
-        entity.setCreateTime(now);
-        entity.setLastUpdateTime(now);
-        return repository.save(entity).getSeq();
+        sheet.setCreateTime(now);
+        sheet.setLastUpdateTime(now);
+        return sRepository.save(sheet);
     }
 
-    public Optional<Sheet> find(Long seq) {
-        return Optional.ofNullable(repository.findOne(seq));
+
+
+    public Optional<gov.jiusan.star.sheet.Sheet> find(Long seq) {
+        return Optional.ofNullable(sRepository.findOne(seq));
     }
 
-    public Sheet update(Sheet entity, SheetDTO model) {
-        entity.setName(model.getName());
-        entity.setDescription(model.getDescription());
-        entity.getCategories().clear();
-        entity.getCategories().addAll(model.getCategoryDTOS().stream().map(SheetUtil::convertRatingPhase).collect(Collectors.toList()));
-        entity.setMaxScore(entity.getCategories().stream().mapToInt(Category::getMaxScore).sum());
-        entity.setLastUpdateTime(Calendar.getInstance());
+    public gov.jiusan.star.sheet.Sheet update(gov.jiusan.star.sheet.Sheet sheet, Sheet model) {
+        sheet.setName(model.getName());
+        sheet.setDescription(model.getDescription());
+        sheet.setMaxScore(sheet.getCategories().stream().mapToInt(gov.jiusan.star.sheet.Category::getMaxScore).sum());
+        sheet.getCategories().clear();
+        sheet.getDetails().clear();
+        for (Sheet.Category c : model.getCategories()) {
+            Optional<Category> category_o = cRepository.findByName(c.getName());
+            if (!category_o.isPresent()) {
+                continue;
+            }
+            sheet.getCategories().add(category_o.get());
+            List<Item> details = c.getItems().stream().map(i -> {
+                Item item = new Item();
+                item.setSheet(sheet);
+                item.setCategory(category_o.get());
+                item.setDescription(i.getDescription());
+                item.setEachScore(i.getEachScore());
+                item.setMaxScore(i.getMaxScore());
+                return item;
+            }).collect(Collectors.toList());
+            sheet.getDetails().addAll(details);
+        }
+        sheet.setLastUpdateTime(Calendar.getInstance());
         // 更新既有的评分卷，将使今年已派发过的变作失效
         invalidatePlansInCurrentYear();
-        return repository.save(entity);
+        return sRepository.save(sheet);
     }
 
-    public void delete(Sheet entity) {
-        repository.delete(entity);
+    public void delete(gov.jiusan.star.sheet.Sheet entity) {
+        sRepository.delete(entity);
     }
 
-    public List<Sheet> findAll() {
-        return repository.findAll();
+    public List<gov.jiusan.star.sheet.Sheet> findAll() {
+        return sRepository.findAll();
     }
 
-    void dispatchSheet(Sheet sheet, List<Org> orgs) {
+    void dispatchSheet(gov.jiusan.star.sheet.Sheet sheet, List<Org> orgs) {
         // 同一年只能有一张 plan 生效
         invalidatePlansInCurrentYear();
         SheetPlan sheetPlan = new SheetPlan();
@@ -98,8 +140,7 @@ public class SheetService {
         sheetPlan.setExpirationTime(expirationTime);
         SheetPlan savedSP = sPService.create(sheetPlan);
         Map<Long, Integer> initScore = new TreeMap<>();
-        List<Details> detailsList = sheet.getCategories().stream().flatMap(p -> p.getDetails().stream()).collect(Collectors.toList());
-        for (Details details : detailsList) {
+        for (Item details : sheet.getDetails()) {
             initScore.put(details.getSeq(), 0);
         }
         for (Org o : orgs) {
@@ -111,7 +152,7 @@ public class SheetService {
             sService.create(score);
         }
         sheet.getSheetPlans().add(savedSP);
-        repository.save(sheet);
+        sRepository.save(sheet);
     }
 
     /**
@@ -119,7 +160,7 @@ public class SheetService {
      * 1. 当重新派发评分卷时
      * 2. 当既有的评分卷被更新时
      */
-     private void invalidatePlansInCurrentYear() {
+    private void invalidatePlansInCurrentYear() {
         sPService.findByCurrentYear().stream()
             .filter(SheetPlan::isEffective)
             .forEach(p -> {

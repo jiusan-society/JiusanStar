@@ -18,11 +18,6 @@ package gov.jiusan.star.sheet;
 
 import gov.jiusan.star.sheetplan.SheetPlan;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,10 +25,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * 测评表
@@ -69,9 +71,15 @@ public class Sheet implements Serializable {
     /**
      * 评分大类
      */
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "sheet_seq")
+    @ManyToMany
+    @JoinTable(
+        name = "sheet_category",
+        joinColumns = @JoinColumn(name = "sheet_seq"),
+        inverseJoinColumns = @JoinColumn(name = "category_seq"))
     private List<Category> categories;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sheet", orphanRemoval = true)
+    private List<Item> details;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sheet", orphanRemoval = true)
     private List<SheetPlan> sheetPlans;
@@ -130,6 +138,22 @@ public class Sheet implements Serializable {
         this.categories = categories;
     }
 
+    public List<Item> getDetails() {
+        return details == null ? details = new ArrayList<>() : details;
+    }
+
+    public void setDetails(List<Item> details) {
+        this.details = details;
+    }
+
+    public List<SheetPlan> getSheetPlans() {
+        return sheetPlans == null ? sheetPlans = new ArrayList<>() : sheetPlans;
+    }
+
+    public void setSheetPlans(List<SheetPlan> sheetPlans) {
+        this.sheetPlans = sheetPlans;
+    }
+
     public Calendar getCreateTime() {
         return createTime;
     }
@@ -144,13 +168,5 @@ public class Sheet implements Serializable {
 
     void setLastUpdateTime(Calendar lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
-    }
-
-    public List<SheetPlan> getSheetPlans() {
-        return sheetPlans == null ? sheetPlans = new ArrayList<>() : sheetPlans;
-    }
-
-    public void setSheetPlans(List<SheetPlan> sheetPlans) {
-        this.sheetPlans = sheetPlans;
     }
 }

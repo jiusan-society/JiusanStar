@@ -47,7 +47,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="category : *{categoryDTOS}">
+                        <tr th:each="category : *{categories}">
                             <td style="text-align: center; vertical-align: middle">
                                 <div>
                                     <p th:text="${category.name}"></p>
@@ -55,7 +55,7 @@
                                 </div>
                             </td>
                             <td>
-                                <ul th:each="details : ${category.detailsDTOs}">
+                                <ul th:each="details : ${category.items}">
                                     <li>
                                         <p th:text="${details.description}"></p>
                                         <ul>
