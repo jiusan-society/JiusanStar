@@ -15,11 +15,25 @@
  */
 
 pipeline {
-    agent any
+    agent none
     stages {
-        stage('Hello') {
+        stage('Build') {
+            agent { docker 'gradle:latest' }
             steps {
-                echo 'Hello jenkins, nice to meet you!'
+                sh './gradlew build'
+            }
+        }
+        stage('Test') {
+            agent { docker 'gradle:latest' }
+            steps {
+                sh './gradlew test'
+            }
+        }
+        stage('Generate_Jar') {
+            agent { docker 'gradle:latest' }
+            steps {
+                sh './gradlew bootRepackage'
+                sh './gradlew copyJarToRootDir'
             }
         }
     }
