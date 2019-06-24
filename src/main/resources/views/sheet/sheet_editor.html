@@ -48,7 +48,7 @@
                         <thead>
                             <tr>
                                 <th style="text-align: center">指标大类</th>
-                                <th style="text-align: center">指标小类</th>
+                                <th style="text-align: center">指标细则</th>
                                 <th class="text-center">
                                     <button class="btn btn-sm btn-primary" name="addCategory" type="submit">添加大类</button>
                                 </th>
@@ -71,31 +71,31 @@
                                     <button class="btn btn-sm btn-danger" name="removeCategory" type="submit"
                                             th:value="${categoryStat.index}">删除大类
                                     </button>
-                                    <button class="btn btn-sm btn-primary" name="addDetails" type="submit"
-                                            th:value="${categoryStat.index}">添加小类
+                                    <button class="btn btn-sm btn-primary" name="addItem" type="submit"
+                                            th:value="${categoryStat.index}">添加细则
                                     </button>
                                 </td>
                                 <td>
-                                    <ul th:each="details, detailsStat : ${category.items}">
+                                    <ul th:each="item, itemStat : ${category.items}">
                                         <li>
                                             评分标准：<input class="form-control input-sm" type="text"
-                                                        th:field="*{categories[__${categoryStat.index}__].items[__${detailsStat.index}__].description}"/>
+                                                        th:field="*{categories[__${categoryStat.index}__].items[__${itemStat.index}__].description}"/>
                                             <p class="alert alert-danger"
-                                               th:if="${#fields.hasErrors('categories[__${categoryStat.index}__].items[__${detailsStat.index}__].description')}"
-                                               th:errors="*{categories[__${categoryStat.index}__].items[__${detailsStat.index}__].description}"></p>
+                                               th:if="${#fields.hasErrors('categories[__${categoryStat.index}__].items[__${itemStat.index}__].description')}"
+                                               th:errors="*{categories[__${categoryStat.index}__].items[__${itemStat.index}__].description}"></p>
                                             每项可得：<input class="form-control input-sm" type="number" min="0"
-                                                        th:field="*{categories[__${categoryStat.index}__].items[__${detailsStat.index}__].eachScore}"/>
+                                                        th:field="*{categories[__${categoryStat.index}__].items[__${itemStat.index}__].eachScore}"/>
                                             <p class="alert alert-danger"
-                                               th:if="${#fields.hasErrors('categories[__${categoryStat.index}__].items[__${detailsStat.index}__].eachScore')}"
-                                               th:errors="*{categories[__${categoryStat.index}__].items[__${detailsStat.index}__].eachScore}"></p>
+                                               th:if="${#fields.hasErrors('categories[__${categoryStat.index}__].items[__${itemStat.index}__].eachScore')}"
+                                               th:errors="*{categories[__${categoryStat.index}__].items[__${itemStat.index}__].eachScore}"></p>
                                             最高可得：<input class="form-control input-sm" type="number" min="0"
-                                                        th:field="*{categories[__${categoryStat.index}__].items[__${detailsStat.index}__].maxScore}"/>
+                                                        th:field="*{categories[__${categoryStat.index}__].items[__${itemStat.index}__].maxScore}"/>
                                             <p class="alert alert-danger"
-                                               th:if="${#fields.hasErrors('categories[__${categoryStat.index}__].items[__${detailsStat.index}__].maxScore')}"
-                                               th:errors="*{categories[__${categoryStat.index}__].items[__${detailsStat.index}__].maxScore}"></p>
+                                               th:if="${#fields.hasErrors('categories[__${categoryStat.index}__].items[__${itemStat.index}__].maxScore')}"
+                                               th:errors="*{categories[__${categoryStat.index}__].items[__${itemStat.index}__].maxScore}"></p>
                                             <br/>
-                                            <button class="btn btn-sm btn-danger" name="removeDetails" type="submit"
-                                                    th:value="${categoryStat.index} + '|' + ${detailsStat.index}">删除小类
+                                            <button class="btn btn-sm btn-danger" name="removeItem" type="submit"
+                                                    th:value="${categoryStat.index} + '|' + ${itemStat.index}">删除细则
                                             </button>
                                         </li>
                                     </ul>

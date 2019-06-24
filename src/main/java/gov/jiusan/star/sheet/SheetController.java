@@ -57,11 +57,11 @@ public class SheetController {
     }
 
     @PostMapping
-    public String createSheet(@ModelAttribute("sheet") @Valid Sheet sheetDTO, final BindingResult bindingResult) {
+    public String createSheet(@ModelAttribute("sheet") @Valid Sheet dto, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sheet/sheet_editor";
         }
-        return "redirect:/sheet?seq=" + sService.create(sheetDTO).getSeq();
+        return "redirect:/sheet?seq=" + sService.create(dto).getSeq();
     }
 
     @GetMapping
@@ -75,7 +75,7 @@ public class SheetController {
     }
 
     @PostMapping(path = "update")
-    public String updateSheet(@RequestParam(value = "seq") Long seq, @ModelAttribute("sheet") @Valid Sheet sheetDTO, final BindingResult bindingResult) {
+    public String updateSheet(@RequestParam(value = "seq") Long seq, @ModelAttribute("sheet") @Valid Sheet dto, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sheet/sheet_editor";
         }
@@ -83,7 +83,7 @@ public class SheetController {
         if (!sheet.isPresent()) {
             return "error";
         }
-        return "redirect:/sheet?seq=" + sService.update(sheet.get(), sheetDTO).getSeq();
+        return "redirect:/sheet?seq=" + sService.update(sheet.get(), dto).getSeq();
     }
 
     @GetMapping(path = "editor")
@@ -101,60 +101,60 @@ public class SheetController {
     }
 
     @PostMapping(params = "addCategory")
-    public String addCategory(@ModelAttribute("sheet") Sheet sheetDTO) {
-        sheetDTO.getCategories().add(new Sheet.Category());
+    public String addCategory(@ModelAttribute("sheet") Sheet dto) {
+        dto.getCategories().add(new Sheet.Category());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(params = "removeCategory")
-    public String removeCategory(@ModelAttribute("sheet") Sheet sheetDTO, final HttpServletRequest request) {
+    public String removeCategory(@ModelAttribute("sheet") Sheet dto, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("removeCategory"));
-        sheetDTO.getCategories().remove(rowId);
+        dto.getCategories().remove(rowId);
         return "sheet/sheet_editor";
     }
 
-    @PostMapping(params = "addDetails")
-    public String addDetails(@ModelAttribute("sheet") Sheet sheetDTO, final HttpServletRequest request) {
-        int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheetDTO.getCategories().get(rowId).getItems().add(new Sheet.Item());
+    @PostMapping(params = "addItem")
+    public String addDetails(@ModelAttribute("sheet") Sheet dto, final HttpServletRequest request) {
+        int rowId = Integer.valueOf(request.getParameter("addItem"));
+        dto.getCategories().get(rowId).getItems().add(new Sheet.Item());
         return "sheet/sheet_editor";
     }
 
-    @PostMapping(params = "removeDetails")
-    public String removeDetails(@ModelAttribute("sheet") Sheet sheetDTO, final HttpServletRequest request) {
-        String value = request.getParameter("removeDetails");
-        int CategoryIndex = Integer.valueOf(value.split("\\|")[0]);
-        int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheetDTO.getCategories().get(CategoryIndex).getItems().remove(detailsIndex);
+    @PostMapping(params = "removeItem")
+    public String removeDetails(@ModelAttribute("sheet") Sheet dto, final HttpServletRequest request) {
+        String value = request.getParameter("removeItem");
+        int categoryIdx = Integer.valueOf(value.split("\\|")[0]);
+        int itemIdx = Integer.valueOf(value.split("\\|")[1]);
+        dto.getCategories().get(categoryIdx).getItems().remove(itemIdx);
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "addCategory")
-    public String addCategory(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet sheetDTO) {
-        sheetDTO.getCategories().add(new Sheet.Category());
+    public String addCategory(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet dto) {
+        dto.getCategories().add(new Sheet.Category());
         return "sheet/sheet_editor";
     }
 
     @PostMapping(path = "update", params = "removeCategory")
-    public String removeCategory(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet sheetDTO, final HttpServletRequest request) {
+    public String removeCategory(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet dto, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("removeCategory"));
-        sheetDTO.getCategories().remove(rowId);
+        dto.getCategories().remove(rowId);
         return "sheet/sheet_editor";
     }
 
-    @PostMapping(path = "update", params = "addDetails")
-    public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet sheetDTO, final HttpServletRequest request) {
-        int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheetDTO.getCategories().get(rowId).getItems().add(new Sheet.Item());
+    @PostMapping(path = "update", params = "addItem")
+    public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet dto, final HttpServletRequest request) {
+        int rowId = Integer.valueOf(request.getParameter("addItem"));
+        dto.getCategories().get(rowId).getItems().add(new Sheet.Item());
         return "sheet/sheet_editor";
     }
 
-    @PostMapping(path = "update", params = "removeDetails")
-    public String removeDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet sheetDTO, final HttpServletRequest request) {
-        String value = request.getParameter("removeDetails");
-        int CategoryIndex = Integer.valueOf(value.split("\\|")[0]);
-        int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheetDTO.getCategories().get(CategoryIndex).getItems().remove(detailsIndex);
+    @PostMapping(path = "update", params = "removeItem")
+    public String removeDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet dto, final HttpServletRequest request) {
+        String value = request.getParameter("removeItem");
+        int categoryIdx = Integer.valueOf(value.split("\\|")[0]);
+        int itemIdx = Integer.valueOf(value.split("\\|")[1]);
+        dto.getCategories().get(categoryIdx).getItems().remove(itemIdx);
         return "sheet/sheet_editor";
     }
 
