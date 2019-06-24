@@ -34,7 +34,7 @@ import java.util.Calendar;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "category")
+@Table(name = "js_category")
 public class Category implements Serializable {
 
     @Id

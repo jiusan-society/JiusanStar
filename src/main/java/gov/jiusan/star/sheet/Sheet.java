@@ -43,7 +43,7 @@ import java.util.List;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "sheet")
+@Table(name = "js_sheet")
 public class Sheet implements Serializable {
 
     @Id
@@ -73,7 +73,7 @@ public class Sheet implements Serializable {
      */
     @ManyToMany
     @JoinTable(
-        name = "sheet_category",
+        name = "js_sheet_category",
         joinColumns = @JoinColumn(name = "sheet_seq"),
         inverseJoinColumns = @JoinColumn(name = "category_seq"))
     private List<Category> categories;

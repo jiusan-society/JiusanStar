@@ -19,10 +19,6 @@ package gov.jiusan.star.sheetplan;
 import gov.jiusan.star.score.Score;
 import gov.jiusan.star.sheet.Sheet;
 
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +34,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.List;
+
 /**
  * 测评表被派发后所产生的虚拟视图
  * 用于记录各组织对于该次所派发的测评表的完成情况 & 成绩情况
@@ -45,7 +45,7 @@ import javax.persistence.TemporalType;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "sheet_plan")
+@Table(name = "js_sheet_plan")
 public class SheetPlan implements Serializable {
 
     @Id

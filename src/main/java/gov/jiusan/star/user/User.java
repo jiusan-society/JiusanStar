@@ -19,8 +19,6 @@ package gov.jiusan.star.user;
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.Role;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -31,13 +29,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import java.io.Serializable;
+
 /**
  * 用户信息
  *
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "app_user")
+@Table(name = "js_user")
 public class User implements Serializable {
 
     @Id

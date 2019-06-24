@@ -36,7 +36,7 @@ import java.util.Calendar;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "item")
+@Table(name = "js_item")
 public class Item implements Serializable {
 
     @Id
