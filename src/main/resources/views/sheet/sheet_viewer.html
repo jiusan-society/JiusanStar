@@ -55,12 +55,12 @@
                                 </div>
                             </td>
                             <td>
-                                <ul th:each="details : ${category.items}">
+                                <ul th:each="items : ${category.items}">
                                     <li>
-                                        <p th:text="${details.description}"></p>
+                                        <p th:text="${items.description}"></p>
                                         <ul>
                                             <li>
-                                                <p th:text="'每项可得：' + ${details.eachScore} + ' 分；最高可得：' + ${details.maxScore} + ' 分'"></p>
+                                                <p th:text="'每项可得：' + ${items.eachScore} + ' 分；最高可得：' + ${items.maxScore} + ' 分'"></p>
                                             </li>
                                         </ul>
                                     </li>

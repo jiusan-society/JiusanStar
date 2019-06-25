@@ -50,10 +50,13 @@ public class SheetController {
 
     private final OrgService oService;
 
+    private final CategoryService cService;
+
     @Autowired
-    public SheetController(SheetService service, OrgService oService) {
+    public SheetController(SheetService service, OrgService oService, CategoryService cService) {
         this.sService = service;
         this.oService = oService;
+        this.cService = cService;
     }
 
     @PostMapping
@@ -87,9 +90,10 @@ public class SheetController {
     }
 
     @GetMapping(path = "editor")
-    public String editSheet(@RequestParam(value = "seq", required = false) Long seq, Model model) {
+    public String getSheetEditor(@RequestParam(value = "seq", required = false) Long seq, Model model) {
         if (seq == null) {
             model.addAttribute("sheet", new Sheet());
+            model.addAttribute("categories", cService.findAll());
             return "sheet/sheet_editor";
         }
         Optional<gov.jiusan.star.sheet.Sheet> sheet = sService.find(seq);
@@ -97,6 +101,7 @@ public class SheetController {
             return "error";
         }
         model.addAttribute("sheet", SheetUtil.convert(sheet.get()));
+        model.addAttribute("categories", cService.findAll());
         return "sheet/sheet_editor";
     }
 
@@ -114,7 +119,7 @@ public class SheetController {
     }
 
     @PostMapping(params = "addItem")
-    public String addDetails(@ModelAttribute("sheet") Sheet dto, final HttpServletRequest request) {
+    public String addItem(@ModelAttribute("sheet") Sheet dto, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("addItem"));
         dto.getCategories().get(rowId).getItems().add(new Sheet.Item());
         return "sheet/sheet_editor";
@@ -143,7 +148,7 @@ public class SheetController {
     }
 
     @PostMapping(path = "update", params = "addItem")
-    public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet dto, final HttpServletRequest request) {
+    public String addItem(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet dto, final HttpServletRequest request) {
         int rowId = Integer.valueOf(request.getParameter("addItem"));
         dto.getCategories().get(rowId).getItems().add(new Sheet.Item());
         return "sheet/sheet_editor";

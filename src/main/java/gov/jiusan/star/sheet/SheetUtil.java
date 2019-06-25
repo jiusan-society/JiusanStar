@@ -36,7 +36,7 @@ public class SheetUtil {
         model.setDescription(entity.getDescription());
         model.setMaxScore(entity.getMaxScore());
         Map<Long, List<Item>> itemsOfCategory = new TreeMap<>();
-        for (Item item : entity.getDetails()) {
+        for (Item item : entity.getItems()) {
             itemsOfCategory.computeIfAbsent(item.getCategory().getSeq(), v -> new ArrayList<>()).add(item);
         }
         model.setCategories(entity.getCategories().stream().map(c -> convertCategory(c, itemsOfCategory)).collect(Collectors.toList()));

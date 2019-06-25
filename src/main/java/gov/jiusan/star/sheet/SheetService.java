@@ -66,16 +66,16 @@ public class SheetService {
                 continue;
             }
             sheet.getCategories().add(category_o.get());
-            List<Item> details = c.getItems().stream().map(i -> {
+            List<Item> items = c.getItems().stream().map(i -> {
                 Item item = new Item();
                 item.setSheet(sheet);
                 item.setCategory(category_o.get());
-                item.setDescription(i.getDescription());
-                item.setEachScore(i.getEachScore());
-                item.setMaxScore(i.getMaxScore());
+                item.setDescription(item.getDescription());
+                item.setEachScore(item.getEachScore());
+                item.setMaxScore(item.getMaxScore());
                 return item;
             }).collect(Collectors.toList());
-            sheet.getDetails().addAll(details);
+            sheet.getItems().addAll(items);
         }
         Calendar now = Calendar.getInstance();
         sheet.setCreateTime(now);
@@ -94,14 +94,14 @@ public class SheetService {
         sheet.setDescription(model.getDescription());
         sheet.setMaxScore(sheet.getCategories().stream().mapToInt(gov.jiusan.star.sheet.Category::getMaxScore).sum());
         sheet.getCategories().clear();
-        sheet.getDetails().clear();
+        sheet.getItems().clear();
         for (Sheet.Category c : model.getCategories()) {
             Optional<Category> category_o = cRepository.findByName(c.getName());
             if (!category_o.isPresent()) {
                 continue;
             }
             sheet.getCategories().add(category_o.get());
-            List<Item> details = c.getItems().stream().map(i -> {
+            List<Item> items = c.getItems().stream().map(i -> {
                 Item item = new Item();
                 item.setSheet(sheet);
                 item.setCategory(category_o.get());
@@ -110,7 +110,7 @@ public class SheetService {
                 item.setMaxScore(i.getMaxScore());
                 return item;
             }).collect(Collectors.toList());
-            sheet.getDetails().addAll(details);
+            sheet.getItems().addAll(items);
         }
         sheet.setLastUpdateTime(Calendar.getInstance());
         // 更新既有的评分卷，将使今年已派发过的变作失效
@@ -140,8 +140,8 @@ public class SheetService {
         sheetPlan.setExpirationTime(expirationTime);
         SheetPlan savedSP = sPService.create(sheetPlan);
         Map<Long, Integer> initScore = new TreeMap<>();
-        for (Item details : sheet.getDetails()) {
-            initScore.put(details.getSeq(), 0);
+        for (Item i : sheet.getItems()) {
+            initScore.put(i.getSeq(), 0);
         }
         for (Org o : orgs) {
             Score score = new Score();

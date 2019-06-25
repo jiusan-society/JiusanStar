@@ -79,7 +79,7 @@ public class Sheet implements Serializable {
     private List<Category> categories;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sheet", orphanRemoval = true)
-    private List<Item> details;
+    private List<Item> items;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sheet", orphanRemoval = true)
     private List<SheetPlan> sheetPlans;
@@ -138,12 +138,12 @@ public class Sheet implements Serializable {
         this.categories = categories;
     }
 
-    public List<Item> getDetails() {
-        return details == null ? details = new ArrayList<>() : details;
+    public List<Item> getItems() {
+        return items == null ? items = new ArrayList<>() : items;
     }
 
-    public void setDetails(List<Item> details) {
-        this.details = details;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     public List<SheetPlan> getSheetPlans() {
