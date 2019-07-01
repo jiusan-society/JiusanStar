@@ -16,14 +16,19 @@
 
 package gov.jiusan.star.sheet;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * 指标大类中的指标细则
@@ -31,12 +36,20 @@ import javax.persistence.Table;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "details")
-public class Details implements Serializable {
+@Table(name = "js_item")
+public class Item implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long seq;
+
+    @ManyToOne
+    @JoinColumn(name = "sheet_seq")
+    private Sheet sheet;
+
+    @ManyToOne
+    @JoinColumn(name = "category_seq")
+    private Category category;
 
     /**
      * 指标细则的描述
@@ -56,12 +69,42 @@ public class Details implements Serializable {
     @Column(name = "max_score", nullable = false)
     private Integer maxScore;
 
+    /**
+     * 创建时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", nullable = false)
+    private Calendar createTime;
+
+    /**
+     * 更新时间
+     */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_update_time", nullable = false)
+    private Calendar lastUpdateTime;
+
     public Long getSeq() {
         return seq;
     }
 
     void setSeq(Long seq) {
         this.seq = seq;
+    }
+
+    public Sheet getSheet() {
+        return sheet;
+    }
+
+    public void setSheet(Sheet sheet) {
+        this.sheet = sheet;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getDescription() {
@@ -86,5 +129,21 @@ public class Details implements Serializable {
 
     void setMaxScore(Integer maxScore) {
         this.maxScore = maxScore;
+    }
+
+    public Calendar getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Calendar createTime) {
+        this.createTime = createTime;
+    }
+
+    public Calendar getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Calendar lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }

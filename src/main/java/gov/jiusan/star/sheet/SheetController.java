@@ -18,7 +18,7 @@ package gov.jiusan.star.sheet;
 
 import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
-import gov.jiusan.star.sheet.model.SheetDTO;
+import gov.jiusan.star.sheet.model.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -30,13 +30,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 /**
  * @author Marcus Lin
@@ -50,23 +50,42 @@ public class SheetController {
 
     private final OrgService oService;
 
+    private final CategoryService cService;
+
     @Autowired
-    public SheetController(SheetService service, OrgService oService) {
+    public SheetController(SheetService service, OrgService oService, CategoryService cService) {
         this.sService = service;
         this.oService = oService;
+        this.cService = cService;
+    }
+
+    @GetMapping(path = "editor")
+    public String getSheetEditor(@RequestParam(value = "seq", required = false) Long seq, Model model) {
+        if (seq == null) {
+            model.addAttribute("sheet", new Sheet());
+            model.addAttribute("selectableCategories", cService.findAll());
+            return "sheet/sheet_editor";
+        }
+        Optional<gov.jiusan.star.sheet.Sheet> sheet = sService.find(seq);
+        if (!sheet.isPresent()) {
+            return "error";
+        }
+        model.addAttribute("sheet", SheetUtil.convert(sheet.get()));
+        model.addAttribute("selectableCategories", cService.findAll());
+        return "sheet/sheet_editor";
     }
 
     @PostMapping
-    public String createSheet(@ModelAttribute("sheet") @Valid SheetDTO sheetDTO, final BindingResult bindingResult) {
+    public String createSheet(@ModelAttribute("sheet") @Valid Sheet dto, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sheet/sheet_editor";
         }
-        return "redirect:/sheet?seq=" + sService.create(sheetDTO);
+        return "redirect:/sheet?seq=" + sService.create(dto).getSeq();
     }
 
     @GetMapping
     public String retrieveSheet(@RequestParam(value = "seq") Long seq, Model model) {
-        Optional<Sheet> sheet = sService.find(seq);
+        Optional<gov.jiusan.star.sheet.Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
@@ -75,103 +94,30 @@ public class SheetController {
     }
 
     @PostMapping(path = "update")
-    public String updateSheet(@RequestParam(value = "seq") Long seq, @ModelAttribute("sheet") @Valid SheetDTO sheetDTO, final BindingResult bindingResult) {
+    public String updateSheet(@RequestParam(value = "seq") Long seq, @ModelAttribute("sheet") @Valid Sheet dto, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sheet/sheet_editor";
         }
-        Optional<Sheet> sheet = sService.find(seq);
+        Optional<gov.jiusan.star.sheet.Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
-        sService.update(sheet.get(), sheetDTO);
-        return "redirect:/sheet?seq=" + seq;
-    }
-
-    @GetMapping(path = "editor")
-    public String editSheet(@RequestParam(value = "seq", required = false) Long seq, Model model) {
-        if (seq == null) {
-            model.addAttribute("sheet", new SheetDTO());
-            return "sheet/sheet_editor";
-        }
-        Optional<Sheet> sheet = sService.find(seq);
-        if (!sheet.isPresent()) {
-            return "error";
-        }
-        model.addAttribute("sheet", SheetUtil.convert(sheet.get()));
-        return "sheet/sheet_editor";
-    }
-
-    @PostMapping(params = "addCategory")
-    public String addCategory(@ModelAttribute("sheet") SheetDTO sheetDTO) {
-        sheetDTO.getCategoryDTOS().add(new SheetDTO.CategoryDTO());
-        return "sheet/sheet_editor";
-    }
-
-    @PostMapping(params = "removeCategory")
-    public String removeCategory(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
-        int rowId = Integer.valueOf(request.getParameter("removeCategory"));
-        sheetDTO.getCategoryDTOS().remove(rowId);
-        return "sheet/sheet_editor";
-    }
-
-    @PostMapping(params = "addDetails")
-    public String addDetails(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
-        int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheetDTO.getCategoryDTOS().get(rowId).getDetailsDTOs().add(new SheetDTO.DetailsDTO());
-        return "sheet/sheet_editor";
-    }
-
-    @PostMapping(params = "removeDetails")
-    public String removeDetails(@ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
-        String value = request.getParameter("removeDetails");
-        int CategoryIndex = Integer.valueOf(value.split("\\|")[0]);
-        int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheetDTO.getCategoryDTOS().get(CategoryIndex).getDetailsDTOs().remove(detailsIndex);
-        return "sheet/sheet_editor";
-    }
-
-    @PostMapping(path = "update", params = "addCategory")
-    public String addCategory(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO) {
-        sheetDTO.getCategoryDTOS().add(new SheetDTO.CategoryDTO());
-        return "sheet/sheet_editor";
-    }
-
-    @PostMapping(path = "update", params = "removeCategory")
-    public String removeCategory(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
-        int rowId = Integer.valueOf(request.getParameter("removeCategory"));
-        sheetDTO.getCategoryDTOS().remove(rowId);
-        return "sheet/sheet_editor";
-    }
-
-    @PostMapping(path = "update", params = "addDetails")
-    public String addDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
-        int rowId = Integer.valueOf(request.getParameter("addDetails"));
-        sheetDTO.getCategoryDTOS().get(rowId).getDetailsDTOs().add(new SheetDTO.DetailsDTO());
-        return "sheet/sheet_editor";
-    }
-
-    @PostMapping(path = "update", params = "removeDetails")
-    public String removeDetails(@RequestParam("seq") Long seq, @ModelAttribute("sheet") SheetDTO sheetDTO, final HttpServletRequest request) {
-        String value = request.getParameter("removeDetails");
-        int CategoryIndex = Integer.valueOf(value.split("\\|")[0]);
-        int detailsIndex = Integer.valueOf(value.split("\\|")[1]);
-        sheetDTO.getCategoryDTOS().get(CategoryIndex).getDetailsDTOs().remove(detailsIndex);
-        return "sheet/sheet_editor";
+        return "redirect:/sheet?seq=" + sService.update(sheet.get(), dto).getSeq();
     }
 
     @GetMapping(path = "list")
     public String findAllSheets(Model model) {
-        List<SheetDTO> sheetDTOs = sService.findAll().stream()
+        List<Sheet> sheets = sService.findAll().stream()
             .map(SheetUtil::convert)
-            .sorted(Comparator.comparing(SheetDTO::getCreateTime))
+            .sorted(Comparator.comparing(Sheet::getCreateTime))
             .collect(Collectors.toList());
-        model.addAttribute("sheets", sheetDTOs);
+        model.addAttribute("sheets", sheets);
         return "sheet/sheet_list";
     }
 
     @GetMapping(path = "dispatch")
     public String dispatchSheet(@RequestParam("seq") Long seq) {
-        Optional<Sheet> sheet = sService.find(seq);
+        Optional<gov.jiusan.star.sheet.Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
@@ -186,12 +132,85 @@ public class SheetController {
 
     @GetMapping(path = "delete")
     public String deleteSheet(@RequestParam("seq") Long seq) {
-        Optional<Sheet> sheet = sService.find(seq);
+        Optional<gov.jiusan.star.sheet.Sheet> sheet = sService.find(seq);
         if (!sheet.isPresent()) {
             return "error";
         }
         sService.delete(sheet.get());
         return "redirect:/sheet/list";
+    }
+
+    /**
+     * =============================================
+     * 以下区块用于动态新增或删除评分表中的评分大类或细则
+     * =============================================
+     */
+
+    @PostMapping(params = "addCategory")
+    public String addCategory(@ModelAttribute("sheet") Sheet dto, Model model) {
+        dto.getCategories().add(new Sheet.Category());
+        model.addAttribute("selectableCategories", cService.findAll());
+        return "sheet/sheet_editor";
+    }
+
+    @PostMapping(params = "removeCategory")
+    public String removeCategory(@ModelAttribute("sheet") Sheet dto, final HttpServletRequest request, Model model) {
+        int rowId = Integer.valueOf(request.getParameter("removeCategory"));
+        dto.getCategories().remove(rowId);
+        model.addAttribute("selectableCategories", cService.findAll());
+        return "sheet/sheet_editor";
+    }
+
+    @PostMapping(params = "addItem")
+    public String addItem(@ModelAttribute("sheet") Sheet dto, final HttpServletRequest request, Model model) {
+        int rowId = Integer.valueOf(request.getParameter("addItem"));
+        dto.getCategories().get(rowId).getItems().add(new Sheet.Item());
+        model.addAttribute("selectableCategories", cService.findAll());
+        return "sheet/sheet_editor";
+    }
+
+
+    @PostMapping(params = "removeItem")
+    public String removeItem(@ModelAttribute("sheet") Sheet dto, final HttpServletRequest request, Model model) {
+        String value = request.getParameter("removeItem");
+        int categoryIdx = Integer.valueOf(value.split("\\|")[0]);
+        int itemIdx = Integer.valueOf(value.split("\\|")[1]);
+        dto.getCategories().get(categoryIdx).getItems().remove(itemIdx);
+        model.addAttribute("selectableCategories", cService.findAll());
+        return "sheet/sheet_editor";
+    }
+
+    @PostMapping(path = "update", params = "addCategory")
+    public String addCategory(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet dto, Model model) {
+        dto.getCategories().add(new Sheet.Category());
+        model.addAttribute("selectableCategories", cService.findAll());
+        return "sheet/sheet_editor";
+    }
+
+    @PostMapping(path = "update", params = "removeCategory")
+    public String removeCategory(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet dto, final HttpServletRequest request, Model model) {
+        int rowId = Integer.valueOf(request.getParameter("removeCategory"));
+        dto.getCategories().remove(rowId);
+        model.addAttribute("selectableCategories", cService.findAll());
+        return "sheet/sheet_editor";
+    }
+
+    @PostMapping(path = "update", params = "addItem")
+    public String addItem(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet dto, final HttpServletRequest request, Model model) {
+        int rowId = Integer.valueOf(request.getParameter("addItem"));
+        dto.getCategories().get(rowId).getItems().add(new Sheet.Item());
+        model.addAttribute("selectableCategories", cService.findAll());
+        return "sheet/sheet_editor";
+    }
+
+    @PostMapping(path = "update", params = "removeItem")
+    public String removeItem(@RequestParam("seq") Long seq, @ModelAttribute("sheet") Sheet dto, final HttpServletRequest request, Model model) {
+        String value = request.getParameter("removeItem");
+        int categoryIdx = Integer.valueOf(value.split("\\|")[0]);
+        int itemIdx = Integer.valueOf(value.split("\\|")[1]);
+        dto.getCategories().get(categoryIdx).getItems().remove(itemIdx);
+        model.addAttribute("selectableCategories", cService.findAll());
+        return "sheet/sheet_editor";
     }
 
 }

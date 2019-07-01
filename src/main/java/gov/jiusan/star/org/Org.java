@@ -38,7 +38,7 @@ import javax.persistence.Transient;
  * @author Marcus Lin
  */
 @Entity
-@Table(name = "app_org")
+@Table(name = "js_org")
 public class Org implements Serializable {
 
     @Id

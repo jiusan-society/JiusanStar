@@ -51,21 +51,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <div th:remove="tag" th:each="category, categoryStats : ${sheet.categoryDTOS}"
-                                 th:with="details0Seq=${category.detailsDTOs[0].seq}">
+                            <div th:remove="tag" th:each="category, categoryStats : ${sheet.categories}"
+                                 th:with="details0Seq=${category.items[0].seq}">
                                 <tr>
                                     <td style="text-align: center; vertical-align: middle"
-                                        th:rowspan="${category.detailsDTOs.size()}">
+                                        th:rowspan="${category.items.size()}">
                                         <p th:text="${category.name}"></p>
                                         <p th:text="'(满分 ' + ${category.maxScore} + ' 分）'"></p>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
-                                        <p th:text="${category.detailsDTOs[0].description}"></p>
-                                        <p th:text="'(每项可得：' + ${category.detailsDTOs[0].eachScore} + ' 分；最高可得：' + ${category.detailsDTOs[0].maxScore} + ' 分)'"></p>
+                                        <p th:text="${category.items[0].description}"></p>
+                                        <p th:text="'(每项可得：' + ${category.items[0].eachScore} + ' 分；最高可得：' + ${category.items[0].maxScore} + ' 分)'"></p>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
                                         <input class="form-control input-sm" type="number" min="0"
-                                               th:max="${category.detailsDTOs[0].maxScore}" required="required"
+                                               th:max="${category.items[0].maxScore}" required="required"
                                                th:field="*{sADetails[__${details0Seq}__]}"/>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle">
@@ -74,7 +74,7 @@
                                                th:field="*{aADetails[__${details0Seq}__]}"/>
                                     </td>
                                 </tr>
-                                <tr th:each="detail, stats : ${category.detailsDTOs}" th:if="${!stats.first}"
+                                <tr th:each="detail, stats : ${category.items}" th:if="${!stats.first}"
                                     th:with="detailsSeq=${detail.seq}">
                                     <td style="text-align: center; vertical-align: middle">
                                         <p th:text="${detail.description}"></p>

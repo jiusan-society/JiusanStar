@@ -16,11 +16,6 @@
 
 package gov.jiusan.star.sheet.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -28,10 +23,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 /**
  * @author Marcus Lin
  */
-public class SheetDTO implements Serializable {
+public class Sheet implements Serializable {
 
     private Long seq;
 
@@ -43,7 +43,7 @@ public class SheetDTO implements Serializable {
     private Integer maxScore;
 
     @NotEmpty
-    private List<@Valid CategoryDTO> categoryDTOS;
+    private List<@Valid Category> categories;
 
     private Calendar createTime;
     private Calendar lastUpdateTime;
@@ -80,12 +80,12 @@ public class SheetDTO implements Serializable {
         this.maxScore = maxScore;
     }
 
-    public List<CategoryDTO> getCategoryDTOS() {
-        return categoryDTOS == null ? categoryDTOS = new ArrayList<>() : categoryDTOS;
+    public List<Category> getCategories() {
+        return categories == null ? categories = new ArrayList<>() : categories;
     }
 
-    public void setCategoryDTOS(List<CategoryDTO> categoryDTOS) {
-        this.categoryDTOS = categoryDTOS;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public Calendar getCreateTime() {
@@ -104,29 +104,16 @@ public class SheetDTO implements Serializable {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public static class CategoryDTO implements Serializable {
+    public static class Category implements Serializable {
 
-        private Long seq;
-
-        @NotEmpty
         private String name;
 
-        @NotNull
-        @Positive
         private Integer maxScore;
 
         @NotEmpty
-        private List<@Valid DetailsDTO> detailsDTOs;
+        private List<@Valid Item> items;
 
-        public CategoryDTO() {
-        }
-
-        public Long getSeq() {
-            return seq;
-        }
-
-        public void setSeq(Long seq) {
-            this.seq = seq;
+        public Category() {
         }
 
         public String getName() {
@@ -145,16 +132,16 @@ public class SheetDTO implements Serializable {
             this.maxScore = maxScore;
         }
 
-        public List<DetailsDTO> getDetailsDTOs() {
-            return detailsDTOs == null ? detailsDTOs = new ArrayList<>() : detailsDTOs;
+        public List<Item> getItems() {
+            return items == null ? items = new ArrayList<>() : items;
         }
 
-        public void setDetailsDTOs(List<DetailsDTO> detailsDTOs) {
-            this.detailsDTOs = detailsDTOs;
+        public void setItems(List<Item> items) {
+            this.items = items;
         }
     }
 
-    public static class DetailsDTO implements Serializable {
+    public static class Item implements Serializable {
 
         private Long seq;
 
@@ -169,7 +156,7 @@ public class SheetDTO implements Serializable {
         @Positive
         private Integer maxScore;
 
-        public DetailsDTO() {
+        public Item() {
         }
 
         public Long getSeq() {
