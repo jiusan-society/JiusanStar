@@ -1,13 +1,12 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.7.RELEASE'
+        springBootVersion = '1.5.21.RELEASE'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath('org.springframework:springloaded:1.2.6.RELEASE')
     }
 }
 
@@ -44,7 +43,6 @@ dependencies {
     compile('com.fasterxml.jackson.core:jackson-core:2.8.8')
     compile('org.apache.commons:commons-lang3:3.4')
     compile('mysql:mysql-connector-java')
-    compile('com.sendgrid:sendgrid-java:4.0.1')
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-security')
