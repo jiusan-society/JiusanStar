@@ -20,6 +20,8 @@ import gov.jiusan.star.org.Org;
 import gov.jiusan.star.org.OrgService;
 import gov.jiusan.star.org.OrgUtil;
 import gov.jiusan.star.org.model.OrgDTO;
+import gov.jiusan.star.sheet.Category;
+import gov.jiusan.star.sheet.CategoryService;
 import gov.jiusan.star.user.LoggedUser;
 import gov.jiusan.star.user.UserDetailsImpl;
 import gov.jiusan.star.util.FileUtil;
@@ -53,20 +55,25 @@ import java.util.stream.Collectors;
  */
 @Controller
 @RequestMapping(path = "doc")
-public class DocController {
+public class DocumentController {
 
     private final OrgService oService;
+    private final CategoryService cService;
+    private final DocumentService dService;
     @Value("${app.root-dir}")
     private String rootDir;
 
     @Autowired
-    public DocController(OrgService oService) {
+    public DocumentController(OrgService oService, CategoryService cService, DocumentService dService) {
         this.oService = oService;
+        this.cService = cService;
+        this.dService = dService;
     }
 
     @GetMapping(path = "list/own")
     public String findOwnFiles(Model model, @LoggedUser UserDetailsImpl user) {
         String dir = rootDir + user.getOrg().getCode();
+        model.addAttribute("selectableCategories", cService.findAll());
         model.addAttribute("orgCode", user.getOrg().getCode());
         model.addAttribute("files", FileUtil.getDirFiles(dir));
         return "doc/doc_list_own";
@@ -126,11 +133,12 @@ public class DocController {
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @GetMapping(path = "delete")
     public String deleteFile(@RequestParam("name") String name, @LoggedUser UserDetailsImpl user) {
-        String position = rootDir + user.getOrg().getCode();
-        File file = new File(position + "/" + name);
+        String url = rootDir + user.getOrg().getCode() + "/" + name;
+        File file = new File(url);
         if (!file.exists()) {
             return "error";
         }
+        dService.deleteDocument(url);
         return file.delete() ? "redirect:/doc/list/own" : "error";
     }
 
@@ -148,9 +156,13 @@ public class DocController {
 
     @PreAuthorize("hasAnyRole('ROLE_L2_ADM', 'ROLE_L3_ADM')")
     @PostMapping(path = "upload")
-    public String uploadDocument(@RequestParam("file") MultipartFile file, @LoggedUser UserDetailsImpl user) {
+    public String uploadDocument(@RequestParam("category") String category, @RequestParam("file") MultipartFile file, @LoggedUser UserDetailsImpl user) {
+        Optional<Category> category_o = cService.findByName(category);
+        if (!category_o.isPresent()) {
+            return "error";
+        }
         String dirPath = rootDir + user.getOrg().getCode() + "/";
-        FileUtil.saveToFile(file, dirPath);
+        dService.saveDocument(category_o.get(), user.getOrg(), dirPath, file);
         return "redirect:/doc/list/own";
     }
 
