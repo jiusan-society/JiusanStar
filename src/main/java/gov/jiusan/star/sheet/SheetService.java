@@ -59,24 +59,28 @@ public class SheetService {
         gov.jiusan.star.sheet.Sheet sheet = new gov.jiusan.star.sheet.Sheet();
         sheet.setName(model.getName());
         sheet.setDescription(model.getDescription());
-        sheet.setMaxScore(model.getCategories().stream().mapToInt(Sheet.Category::getMaxScore).sum());
+        int maxScore = 0;
         for (Sheet.Category c : model.getCategories()) {
             Optional<Category> category_o = cRepository.findByName(c.getName());
             if (!category_o.isPresent()) {
                 continue;
             }
+            maxScore += category_o.get().getMaxScore();
             sheet.getCategories().add(category_o.get());
             List<Item> items = c.getItems().stream().map(i -> {
                 Item item = new Item();
                 item.setSheet(sheet);
                 item.setCategory(category_o.get());
-                item.setDescription(item.getDescription());
-                item.setEachScore(item.getEachScore());
-                item.setMaxScore(item.getMaxScore());
+                item.setDescription(i.getDescription());
+                item.setEachScore(i.getEachScore());
+                item.setMaxScore(i.getMaxScore());
+                item.setCreateTime(Calendar.getInstance());
+                item.setLastUpdateTime(Calendar.getInstance());
                 return item;
             }).collect(Collectors.toList());
             sheet.getItems().addAll(items);
         }
+        sheet.setMaxScore(maxScore);
         Calendar now = Calendar.getInstance();
         sheet.setCreateTime(now);
         sheet.setLastUpdateTime(now);
@@ -92,14 +96,15 @@ public class SheetService {
     public gov.jiusan.star.sheet.Sheet update(gov.jiusan.star.sheet.Sheet sheet, Sheet model) {
         sheet.setName(model.getName());
         sheet.setDescription(model.getDescription());
-        sheet.setMaxScore(sheet.getCategories().stream().mapToInt(gov.jiusan.star.sheet.Category::getMaxScore).sum());
         sheet.getCategories().clear();
         sheet.getItems().clear();
+        int maxScore = 0;
         for (Sheet.Category c : model.getCategories()) {
             Optional<Category> category_o = cRepository.findByName(c.getName());
             if (!category_o.isPresent()) {
                 continue;
             }
+            maxScore += category_o.get().getMaxScore();
             sheet.getCategories().add(category_o.get());
             List<Item> items = c.getItems().stream().map(i -> {
                 Item item = new Item();
@@ -108,10 +113,13 @@ public class SheetService {
                 item.setDescription(i.getDescription());
                 item.setEachScore(i.getEachScore());
                 item.setMaxScore(i.getMaxScore());
+                item.setCreateTime(Calendar.getInstance());
+                item.setLastUpdateTime(Calendar.getInstance());
                 return item;
             }).collect(Collectors.toList());
             sheet.getItems().addAll(items);
         }
+        sheet.setMaxScore(maxScore);
         sheet.setLastUpdateTime(Calendar.getInstance());
         // 更新既有的评分卷，将使今年已派发过的变作失效
         invalidatePlansInCurrentYear();

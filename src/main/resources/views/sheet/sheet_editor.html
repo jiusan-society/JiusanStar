@@ -56,24 +56,22 @@
                         </thead>
                         <tbody>
                             <tr th:each="category, categoryStat : *{categories}">
-                                <td class="col-sm-2">
-                                    名称：<input class="form-control input-sm" type="text"
-                                              th:field="*{categories[__${categoryStat.index}__].name}"/>
-                                    <p class="alert alert-danger"
-                                       th:if="${#fields.hasErrors('categories[__${categoryStat.index}__].name')}"
-                                       th:errors="*{categories[__${categoryStat.index}__].name}"></p>
-                                    最高可得：<input class="form-control input-sm" type="number" min="0"
-                                                th:field="*{categories[__${categoryStat.index}__].maxScore}"/>
-                                    <p class="alert alert-danger"
-                                       th:if="${#fields.hasErrors('categories[__${categoryStat.index}__].maxScore')}"
-                                       th:errors="*{categories[__${categoryStat.index}__].maxScore}"></p>
+                                <td style="text-align: center; vertical-align: middle" class="col-sm-2">
+                                    <select class="form-control"
+                                            th:field="*{categories[__${categoryStat.index}__].name}">
+                                        <option th:value="empty" th:disabled="disabled">请选择大类名称</option>
+                                        <option th:each="c : ${selectableCategories}" th:value="${c.name}"
+                                                th:text="${c.name} + ' (满分 ' + ${c.maxScore} + ' 分)'"></option>
+                                    </select>
                                     <br/>
-                                    <button class="btn btn-sm btn-danger" name="removeCategory" type="submit"
-                                            th:value="${categoryStat.index}">删除大类
-                                    </button>
-                                    <button class="btn btn-sm btn-primary" name="addItem" type="submit"
-                                            th:value="${categoryStat.index}">添加细则
-                                    </button>
+                                    <div class="text-center">
+                                        <button class="btn btn-sm btn-danger" name="removeCategory" type="submit"
+                                                th:value="${categoryStat.index}">删除大类
+                                        </button>
+                                        <button class="btn btn-sm btn-primary" name="addItem" type="submit"
+                                                th:value="${categoryStat.index}">添加细则
+                                        </button>
+                                    </div>
                                 </td>
                                 <td>
                                     <ul th:each="item, itemStat : ${category.items}">

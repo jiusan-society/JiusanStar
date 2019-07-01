@@ -47,7 +47,6 @@ public class SheetUtil {
 
     private static Sheet.Category convertCategory(Category category, Map<Long, List<Item>> itemsOfCategory) {
         Sheet.Category model = new Sheet.Category();
-        model.setSeq(category.getSeq());
         model.setName(category.getName());
         model.setMaxScore(category.getMaxScore());
         List<Item> items = itemsOfCategory.get(category.getSeq());
@@ -60,7 +59,7 @@ public class SheetUtil {
         model.setSeq(item.getSeq());
         model.setEachScore(item.getEachScore());
         model.setMaxScore(item.getMaxScore());
-        model.setDescription(model.getDescription());
+        model.setDescription(item.getDescription());
         return model;
     }
 }

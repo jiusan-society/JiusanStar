@@ -106,27 +106,14 @@ public class Sheet implements Serializable {
 
     public static class Category implements Serializable {
 
-        private Long seq;
-
-        @NotEmpty
         private String name;
 
-        @NotNull
-        @Positive
         private Integer maxScore;
 
         @NotEmpty
         private List<@Valid Item> items;
 
         public Category() {
-        }
-
-        public Long getSeq() {
-            return seq;
-        }
-
-        public void setSeq(Long seq) {
-            this.seq = seq;
         }
 
         public String getName() {
