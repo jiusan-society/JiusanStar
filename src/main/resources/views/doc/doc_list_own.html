@@ -51,6 +51,20 @@
                     <div class="col-lg-12">
                         <form method="post" enctype="multipart/form-data"
                               th:action="'/doc/upload?' + ${_csrf.parameterName} + '=' + ${_csrf.token}">
+                            <select class="form-control" th:onchange="'javascript:setCategory(event)'">
+                                <option th:value="empty">请选择文件所归属的大类</option>
+                                <option th:each="c : ${selectableCategories}" th:value="${c.name}"
+                                        th:text="${c.name} + ' (每份文档可得 ' + ${c.eachFileScore} + ' 分)'"></option>
+                            </select>
+                            <script th:inline="javascript">
+                                // 当选单 change 的时候设定值到 input 里，从而让后台能接到这个值
+                                /*<![CDATA[*/
+                                function setCategory(e) {
+                                    $("#input-category").val(e.target.value);
+                                }
+                                /*]]>*/
+                            </script>
+                            <input th:hidden="hidden" id="input-category" type="text" name="category"/>
                             <input id="input-file" type="file" name="file"/>
                         </form>
                         <script>
@@ -95,7 +109,8 @@
                                     <td>
                                         <a class="btn btn-sm btn-primary"
                                            th:href="'/doc/download?path=' + ${orgCode} + '&amp;name=' + ${file.name}">下载</a>
-                                        <a class="btn btn-sm btn-danger" th:href="'/doc/delete?name=' + ${file.name}">删除</a>
+                                        <a class="btn btn-sm btn-danger"
+                                           th:href="'/doc/delete?name=' + ${file.name}">删除</a>
                                     </td>
                                 </tr>
                             </tbody>
